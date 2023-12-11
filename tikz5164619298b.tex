@@ -1,0 +1,27 @@
+\documentclass[
+%% TIKZ_CLASSOPTION %%
+tikz
+]{standalone}
+\usepackage{amsmath}
+\usetikzlibrary{matrix}
+%% EXTRA_TIKZ_PREAMBLE_CODE %%
+\begin{document}
+%% TIKZ_CODE %%
+
+
+\usetikzlibrary{mindmap}
+\begin{tikzpicture}[scale=0.80]
+\path[mindmap,concept color=orange,text=white]
+node[concept] {Variables}
+[clockwise from=0]
+child[concept color=green!50!black] {
+node[concept] {Cuantitativas}
+[clockwise from=0]
+child { node[concept] {Discretas} }
+child { node[concept] {Continuas} }
+}  
+child[concept color=blue] {
+node[concept] {Cualitativas}
+};
+\end{tikzpicture}
+\end{document}
