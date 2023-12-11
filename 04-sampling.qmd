@@ -1,0 +1,4 @@
+# Muestreo {#sampl}
+
+
+## Técnicas de muestreo

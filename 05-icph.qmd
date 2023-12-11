@@ -1,0 +1,22 @@
+# Estadística Inferencial {#icph}
+
+## Estimación puntual y por intervalos
+
+## Intervalos de confianza
+
+
+## Pruebas de hipótesis
+
+### Para la media (Prueba $t$)
+
+#### 1 sola muestra
+
+#### 2 muestras independientes
+
+#### 2 muestras pareadas
+
+### Para la proporción
+
+### Para la varianza
+
+## Pruebas de hipótesis no paramétricas

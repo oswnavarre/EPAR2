@@ -1,0 +1,32 @@
+{
+  "index.qmd": {
+    "index.html": "1340f3d3"
+  },
+  "intro.qmd": {
+    "intro.html": "66a4b4fb"
+  },
+  "01-concepts.qmd": {
+    "01-concepts.html": "ce8d0577"
+  },
+  "02-estdesc.qmd": {
+    "02-estdesc.html": "bbed0829"
+  },
+  "03-distr.qmd": {
+    "03-distr.html": "69590a23"
+  },
+  "04-sampling.qmd": {
+    "04-sampling.html": "491a2dc9"
+  },
+  "05-icph.qmd": {
+    "05-icph.html": "7c238354"
+  },
+  "06-regresion.qmd": {
+    "06-regresion.html": "f9cab69f"
+  },
+  "07-DOE.qmd": {
+    "07-DOE.html": "32768d8a"
+  },
+  "references.qmd": {
+    "references.html": "577e2ffb"
+  }
+}

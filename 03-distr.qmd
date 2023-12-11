@@ -1,0 +1,7 @@
+# Distribuciones de probabilidad {#distr}
+
+## Definiciones
+
+## Distribución Normal
+
+## Distribución $t$ de Student
