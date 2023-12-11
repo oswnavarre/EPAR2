@@ -1,0 +1,1372 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.361">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Análisis de Datos en Agricultura con R y RStudio - 3&nbsp; Estadística Descriptiva</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="site_libs/quarto-nav/headroom.min.js"></script>
+<script src="site_libs/clipboard/clipboard.min.js"></script>
+<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="site_libs/quarto-search/fuse.min.js"></script>
+<script src="site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="./">
+<link href="./03-distr.html" rel="next">
+<link href="./01-concepts.html" rel="prev">
+<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/popper.min.js"></script>
+<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="site_libs/quarto-html/anchor.min.js"></script>
+<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "sidebar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "start",
+  "type": "textbox",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "Sín resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la busqueda",
+    "search-hide-matches-text": "Esconder resultados adicionales",
+    "search-more-match-text": "hay más resultados en este documento",
+    "search-more-matches-text": "más resultados en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Eviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+</head>
+
+<body class="nav-sidebar floating">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./02-estdesc.html"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></a></li></ol></nav>
+      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+      </a>
+      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <i class="bi bi-search"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+    <div class="pt-lg-2 mt-2 text-left sidebar-header">
+    <div class="sidebar-title mb-0 py-0">
+      <a href="./">Análisis de Datos en Agricultura con R y RStudio</a> 
+    </div>
+      </div>
+        <div class="mt-2 flex-shrink-0 align-items-center">
+        <div class="sidebar-search">
+        <div id="quarto-search" class="" title="Buscar"></div>
+        </div>
+        </div>
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">A modo de introducción</span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./intro.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./03-distr.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./05-icph.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span></a>
+  </div>
+</li>
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="./references.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Referencias</span></a>
+  </div>
+</li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Indice de contenidos</h2>
+   
+  <ul>
+  <li><a href="#tablas-y-gráficos-para-resumir-datos" id="toc-tablas-y-gráficos-para-resumir-datos" class="nav-link active" data-scroll-target="#tablas-y-gráficos-para-resumir-datos"><span class="header-section-number">3.1</span> Tablas y gráficos para resumir datos</a>
+  <ul class="collapse">
+  <li><a href="#tablas-para-variables-cualitativas" id="toc-tablas-para-variables-cualitativas" class="nav-link" data-scroll-target="#tablas-para-variables-cualitativas"><span class="header-section-number">3.1.1</span> Tablas para variables cualitativas</a></li>
+  <li><a href="#tablas-para-variables-cuantitativas" id="toc-tablas-para-variables-cuantitativas" class="nav-link" data-scroll-target="#tablas-para-variables-cuantitativas"><span class="header-section-number">3.1.2</span> Tablas para variables cuantitativas</a></li>
+  <li><a href="#gráficos" id="toc-gráficos" class="nav-link" data-scroll-target="#gráficos"><span class="header-section-number">3.1.3</span> Gráficos</a></li>
+  </ul></li>
+  <li><a href="#medidas-numéricas-de-resumen" id="toc-medidas-numéricas-de-resumen" class="nav-link" data-scroll-target="#medidas-numéricas-de-resumen"><span class="header-section-number">3.2</span> Medidas numéricas de resumen</a>
+  <ul class="collapse">
+  <li><a href="#medidas-de-tendencia-central" id="toc-medidas-de-tendencia-central" class="nav-link" data-scroll-target="#medidas-de-tendencia-central"><span class="header-section-number">3.2.1</span> Medidas de tendencia central</a></li>
+  <li><a href="#cómo-escoger-la-medida-de-tendencia-central-adecuada" id="toc-cómo-escoger-la-medida-de-tendencia-central-adecuada" class="nav-link" data-scroll-target="#cómo-escoger-la-medida-de-tendencia-central-adecuada"><span class="header-section-number">3.2.2</span> ¿Cómo escoger la medida de tendencia central adecuada?</a></li>
+  <li><a href="#simetría-y-sesgo" id="toc-simetría-y-sesgo" class="nav-link" data-scroll-target="#simetría-y-sesgo"><span class="header-section-number">3.2.3</span> Simetría y sesgo</a></li>
+  <li><a href="#medidas-de-dispersión" id="toc-medidas-de-dispersión" class="nav-link" data-scroll-target="#medidas-de-dispersión"><span class="header-section-number">3.2.4</span> Medidas de dispersión</a></li>
+  <li><a href="#medidas-de-posición" id="toc-medidas-de-posición" class="nav-link" data-scroll-target="#medidas-de-posición"><span class="header-section-number">3.2.5</span> Medidas de posición</a></li>
+  </ul></li>
+  <li><a href="#sec-pprs" id="toc-sec-pprs" class="nav-link" data-scroll-target="#sec-pprs"><span class="header-section-number">3.3</span> Primeros pasos en RStudio</a>
+  <ul class="collapse">
+  <li><a href="#creación-de-proyectos-en-rstudio" id="toc-creación-de-proyectos-en-rstudio" class="nav-link" data-scroll-target="#creación-de-proyectos-en-rstudio"><span class="header-section-number">3.3.1</span> Creación de proyectos en RStudio</a></li>
+  <li><a href="#creando-nuestros-primeros-gráficos." id="toc-creando-nuestros-primeros-gráficos." class="nav-link" data-scroll-target="#creando-nuestros-primeros-gráficos."><span class="header-section-number">3.3.2</span> Creando nuestros primeros gráficos.</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title"><span id="estdesc" class="quarto-section-identifier"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span></h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+  
+    
+  </div>
+  
+
+</header>
+
+<section id="tablas-y-gráficos-para-resumir-datos" class="level2" data-number="3.1">
+<h2 data-number="3.1" class="anchored" data-anchor-id="tablas-y-gráficos-para-resumir-datos"><span class="header-section-number">3.1</span> Tablas y gráficos para resumir datos</h2>
+<p>Un primer paso en el análisis de datos es resumir los datos. En esta sección exploraremos dos formas de resumir la información usando tablas o gráficos.</p>
+<p>Las tablas y los gráficos se escogen de acuerdo al tipo de variable que está siendo analizada. Empezaremos por revisar las tablas para variables cualitativas y cuantitativas.</p>
+<section id="tablas-para-variables-cualitativas" class="level3" data-number="3.1.1">
+<h3 data-number="3.1.1" class="anchored" data-anchor-id="tablas-para-variables-cualitativas"><span class="header-section-number">3.1.1</span> Tablas para variables cualitativas</h3>
+<p>Una tabla o tabla de frecuencias para variables cualitativas o categóricas generalmente tiene 3 columnas:</p>
+<ol type="1">
+<li><strong>Categoría</strong>: muestra el nombre de cada categoría. Vamos a suponer que en el conjunto de datos para nuestra variable de interés existen <span class="math inline">\(k\)</span> categorías.</li>
+<li><strong>Frecuencia</strong>: (<span class="math inline">\(f_i\)</span>) la frecuencia o frecuencia absoluta corresponde al número de observaciones correspondientes a la categoría, la suma de todas las frecuencias absolutas debe ser igual al número de observaciones <span class="math inline">\(n\)</span>. <span class="math inline">\(\sum_{i=1}^{k} f_i=n\)</span></li>
+</ol>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El símbolo <span class="math inline">\(\sum\)</span> se utiliza para representar la sumatoria de un conjunto de elementos. En este caso <span class="math inline">\(\sum_{i=1}^{k} f_i\)</span> se lee sumatoría desde <span class="math inline">\(i\)</span> igual a <span class="math inline">\(1\)</span> hasta <span class="math inline">\(k\)</span> de <span class="math inline">\(f_i\)</span>.</p>
+</div>
+</div>
+<ol start="3" type="1">
+<li><strong>Porcentaje</strong>: el porcentaje se lo obtiene multiplicando la frecuencia relativa <span class="math inline">\(h_i\)</span> por <span class="math inline">\(100\)</span>. La frecuencia relativa es igual a la frecuencia absoluta <span class="math inline">\(f_i\)</span> dividida por el número <span class="math inline">\(n\)</span> de observaciones. La frecuencia relativa también recibe el nombre de proporción. <span class="math inline">\(h_i = \dfrac{f_i}{n}\)</span></li>
+</ol>
+<p>Supongamos que en un estudio se utilizaron 50 semillas de 3 variedades de tomate. En la <a href="#tbl-cars">Tabla&nbsp;<span>3.1</span></a> se muestra un resumen del número de semillas usadas de cada variedad, esta tabla es un ejemplo de una tabla para variables cualitativas. De la tabla se deduce que la menor proporción de semillas utilizadas corresponde a la variedad 2, mientras que la mayor proporción de semillas corresponde a la variedad 1.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-cars" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Tabla&nbsp;3.1: Ejemplo de tabla para variables cualitativas</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Categoría</th>
+<th style="text-align: right;">Frecuencia</th>
+<th style="text-align: right;">Porcentaje</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Variedad 1</td>
+<td style="text-align: right;">20</td>
+<td style="text-align: right;">40</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Variedad 2</td>
+<td style="text-align: right;">14</td>
+<td style="text-align: right;">28</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Variedad 3</td>
+<td style="text-align: right;">16</td>
+<td style="text-align: right;">32</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="tablas-para-variables-cuantitativas" class="level3" data-number="3.1.2">
+<h3 data-number="3.1.2" class="anchored" data-anchor-id="tablas-para-variables-cuantitativas"><span class="header-section-number">3.1.2</span> Tablas para variables cuantitativas</h3>
+<p>Una tabla de frecuencias para variables cuantitativas tiene 6 columnas:</p>
+<ol type="1">
+<li>Clase: una clase es un intervalo semi abierto o semicerrado con la forma <span class="math display">\[\left[ \text{Límite Inferior}, \text{Límite Superior} \right)\]</span></li>
+<li>Marca de Clase <span class="math inline">\(X_i\)</span>: es un valor igual al promedio de los dos límites de la clase. <span id="eq-mc"><span class="math display">\[X_i = \dfrac{\text{Límite Superior} + \text{Límite inferior}}{2}  \tag{3.1}\]</span></span></li>
+<li>Frecuencia <span class="math inline">\(f_i\)</span>: la frecuencia es igual al número de observaciones de la variable que están dentro del intervalo o clase. También se la conoce como frecuencia absoluta.</li>
+<li>Frecuencia relativa <span class="math inline">\(h_i\)</span>: la frecuencia relativa se la calcula como la frecuencia dividida para el total de valores de la variable. <span id="eq-frtab"><span class="math display">\[h_i = \frac{f_i}{n} \tag{3.2}\]</span></span></li>
+<li>Frecuencia acumulada <span class="math inline">\(F_i\)</span>: se la calcula sumando las frecuencias desde la primera clase hasta la clase en consideración. <span id="eq-facum"><span class="math display">\[F_i = \sum_{j=1}^{i}f_j  \tag{3.3}\]</span></span></li>
+<li>Frecuencia Relativa acumulada <span class="math inline">\(H_i\)</span>: se la calcula sumando las frecuencias relativas desde la primera clase hasta la clase en consideración. <span id="eq-fracum"><span class="math display">\[F_i = \sum_{j=1}^{i}h_j  \tag{3.4}\]</span></span></li>
+</ol>
+<p>Exiten expresiones matemáticas que nos permiten conocer el número de clases necesarias y la amplitud de las clases sin embargo, por el enfoque de este texto en algunas ocasiones dejaremos eso a criterio del investigador o trabajaremos con las clases que por defecto obtengamos de las funciones que aprenderemos a usar de R.</p>
+<p>El ingeniero Yorky Gil realizó un experimento con el fin de estimar una curva fenológica para el cultivo de girasol en condiciones del trópico humedo. Recogió datos durante 8 semanas de la altura en centímetros y el número de hojas de las plantas de girasol de determinada variedad. En la <a href="#tbl-girasoles">Tabla&nbsp;<span>3.2</span></a> se muestra la distribución de frecuencias de la altura para la semana 8. Este es un ejemplo de una tabla de frecuencias para variables cuantitativas. En secciones posteriores discutiremos paso a paso la elaboración de esta tabla.</p>
+<p>De la interpretación de esta tabla se obtienen datos importantes. Si nos fijamos en la sexta clase podemos afirmar que en la semana <span class="math inline">\(8\)</span>, <span class="math inline">\(78\)</span> observaciones es decir el <span class="math inline">\(32.4\%\)</span> de las plantas tenían una altura entre <span class="math inline">\(130\)</span> y <span class="math inline">\(154\)</span> centímetros. De la misma clase podemos decir que <span class="math inline">\(196\)</span> plantas o el <span class="math inline">\(81.3 \%\)</span> tienen una altura menor a <span class="math inline">\(154\)</span> centímetros. En la última clase se observa que la frecuencia absoluta acumulada es de <span class="math inline">\(241\)</span>, este número corresponde al <span class="math inline">\(100\%\)</span> de las observaciones.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-girasoles" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Tabla&nbsp;3.2: Ejemplo de tabla de frecuencia para variables cuantitativas</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Clase</th>
+<th style="text-align: right;">Marca de Clase</th>
+<th style="text-align: right;">Frec.</th>
+<th style="text-align: right;">Frec. Rel.</th>
+<th style="text-align: right;">Frec. Acu.</th>
+<th style="text-align: right;">Rel. Acu.</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">[10,34)</td>
+<td style="text-align: right;">22</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.008</td>
+<td style="text-align: right;">2</td>
+<td style="text-align: right;">0.008</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">[34,58)</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">6</td>
+<td style="text-align: right;">0.025</td>
+<td style="text-align: right;">8</td>
+<td style="text-align: right;">0.033</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">[58,82)</td>
+<td style="text-align: right;">70</td>
+<td style="text-align: right;">21</td>
+<td style="text-align: right;">0.087</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.120</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">[82,106)</td>
+<td style="text-align: right;">94</td>
+<td style="text-align: right;">39</td>
+<td style="text-align: right;">0.162</td>
+<td style="text-align: right;">68</td>
+<td style="text-align: right;">0.282</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">[106,130)</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">50</td>
+<td style="text-align: right;">0.207</td>
+<td style="text-align: right;">118</td>
+<td style="text-align: right;">0.490</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">[130,154)</td>
+<td style="text-align: right;">142</td>
+<td style="text-align: right;">78</td>
+<td style="text-align: right;">0.324</td>
+<td style="text-align: right;">196</td>
+<td style="text-align: right;">0.813</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">[154,178)</td>
+<td style="text-align: right;">166</td>
+<td style="text-align: right;">29</td>
+<td style="text-align: right;">0.120</td>
+<td style="text-align: right;">225</td>
+<td style="text-align: right;">0.934</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">[178,202)</td>
+<td style="text-align: right;">190</td>
+<td style="text-align: right;">13</td>
+<td style="text-align: right;">0.054</td>
+<td style="text-align: right;">238</td>
+<td style="text-align: right;">0.988</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">[202,226)</td>
+<td style="text-align: right;">214</td>
+<td style="text-align: right;">3</td>
+<td style="text-align: right;">0.012</td>
+<td style="text-align: right;">241</td>
+<td style="text-align: right;">1.000</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</section>
+<section id="gráficos" class="level3" data-number="3.1.3">
+<h3 data-number="3.1.3" class="anchored" data-anchor-id="gráficos"><span class="header-section-number">3.1.3</span> Gráficos</h3>
+<section id="diagrama-de-barras" class="level4" data-number="3.1.3.1">
+<h4 data-number="3.1.3.1" class="anchored" data-anchor-id="diagrama-de-barras"><span class="header-section-number">3.1.3.1</span> Diagrama de barras</h4>
+<p>Un gráfico de barras es la representación visual de una tabla de distribución de frecuencias. En el eje de las <span class="math inline">\(x\)</span> se colocan los niveles de la variable cualitativa y en el eje de las <span class="math inline">\(y\)</span> los valores de las frecuencias o de los porcentajes. En la <a href="#fig-grafico1">Figura&nbsp;<span>3.1</span></a> se presenta el gráfico de barras para la <a href="#tbl-cars">Tabla&nbsp;<span>3.1</span></a>. Mientras que en la <a href="#fig-tablabar">Figura&nbsp;<span>3.2</span></a> se muestra la relación entre estos dos objetos. En general cuando se tiene una variable categórica <strong>única</strong> que se quiere desglosar y cuantificar por cada categoría este es el tipo de gráfico adecuado.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-grafico1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-grafico1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.1: Gráfico de Barras para la <a href="#tbl-cars">Tabla&nbsp;<span>3.1</span></a></figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="fig-tablabar" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/tabla_barplot.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.2: Relación entre la <a href="#tbl-cars">Tabla&nbsp;<span>3.1</span></a> y la <a href="#fig-grafico1">Figura&nbsp;<span>3.1</span></a></figcaption>
+</figure>
+</div>
+</section>
+<section id="diagrama-de-barras-agrupadas" class="level4" data-number="3.1.3.2">
+<h4 data-number="3.1.3.2" class="anchored" data-anchor-id="diagrama-de-barras-agrupadas"><span class="header-section-number">3.1.3.2</span> Diagrama de barras agrupadas</h4>
+<p>En un diagrama de barras agrupadas, al igual que en un diagrama de barras, se muestran los conteos para un grupo, pero además se desglosa para una variable cuantitativa adicional. Por ejemplo en la <a href="#fig-grafico2">Figura&nbsp;<span>3.3</span></a> se muestran los porcentajes de nitrógeno, fosforo y potasio para cuatro variedades diferentes de maíz.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-grafico2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-grafico2-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.3: Diagrama de Barras Agrupadas</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="diagrama-de-barras-apiladas" class="level4" data-number="3.1.3.3">
+<h4 data-number="3.1.3.3" class="anchored" data-anchor-id="diagrama-de-barras-apiladas"><span class="header-section-number">3.1.3.3</span> Diagrama de barras apiladas</h4>
+<p>Una variación muy útil de los diagramas de barras son los diagramas de barras apiladas. A diferencia de los diagramas de barras agrupadas en este caso se apilan las barras una sobre otra. Esto es útil cuando las barras suman un <span class="math inline">\(100 \%\)</span>. En la <a href="#fig-grafico3">Figura&nbsp;<span>3.4</span></a> se muestra la relación Humedad, Materia Seca para cuatro variedades de maíz.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-grafico3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-grafico3-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.4: Diagrama de Barras Apiladas</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="histograma" class="level4" data-number="3.1.3.4">
+<h4 data-number="3.1.3.4" class="anchored" data-anchor-id="histograma"><span class="header-section-number">3.1.3.4</span> Histograma</h4>
+<p>Un histograma es un gráfico que utiliza barras para representar las frecuencias absolutas o las frecuencias relativas de los posibles resultados de una variable cuantitativa y ayuda a entender los valores que se tienen en un conjunto de datos, cuando hablamos de un histograma o histograma de frecuencias nos referimos a las frecuencias absolutas. Con un histograma se puede conocer la forma, el centro y la variabilidad de la distribución. La altura de las barras corresponde a las frecuencias absolutas.</p>
+<p>Es importante tener en cuenta que un histograma no debe ser usado para hacer inferencias ya que nos dan una rápida visión de la distribución de los datos y solo sugieren información sobre ciertas características. En la <a href="#fig-histograma1">Figura&nbsp;<span>3.5</span></a> se aprecia el histograma de la altura de los girasoles. En la figura <a href="#fig-tablahist">Figura&nbsp;<span>3.6</span></a> se esquematiza la relación entre la tabla de frecuencias y el histograma de frecuencias absolutas.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-histograma1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-histograma1-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.5: Histograma de la altura de girasoles</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="fig-tablahist" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/table_to_hist.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.6: Relación entre la <a href="#tbl-girasoles">Tabla&nbsp;<span>3.2</span></a> y la <a href="#fig-histograma1">Figura&nbsp;<span>3.5</span></a></figcaption>
+</figure>
+</div>
+<p>En algunas ocasiones es de interés graficar las frecuencias relativas. El histograma de las frecuencias relativas tiene la misma forma que el histograma de las frecuencias absolutas, pero las alturas ahora corresponden a las frecuencias relativas. En la <a href="#fig-histfr">Figura&nbsp;<span>3.7</span></a> se muestra el histograma de frecuencias relativas para las alturas de los girasoles. Se puede apreciar que este histograma tiene la misma forma que el histograma de la <a href="#fig-histograma1">Figura&nbsp;<span>3.5</span></a>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-histfr" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-histfr-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.7: Histograma de frecuencias relativas para las alturas de los girasoles</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div id="fig-tablahistfr" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/table_to_hist_REL.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.8: Relación entre la <a href="#tbl-girasoles">Tabla&nbsp;<span>3.2</span></a> y la <a href="#fig-histfr">Figura&nbsp;<span>3.7</span></a></figcaption>
+</figure>
+</div>
+</section>
+<section id="gráficos-de-densidad" class="level4" data-number="3.1.3.5">
+<h4 data-number="3.1.3.5" class="anchored" data-anchor-id="gráficos-de-densidad"><span class="header-section-number">3.1.3.5</span> Gráficos de densidad</h4>
+<p>Un gráfico de densidad es una representación de la distribución de una variable numérica. Es una versión suavizada del histograma. Los gráficos de densidad son usados para estudiar la distribución de una variable. Los picos de un gráfico de densidad muestran donde los se concentran los valores en el rango de la variable. Una ventaja que tienen los gráficos de densidad sobre los histogramas es que son mejores para determinar la forma de la distribución de los datos porque no se ven afectados por el número de barras usadas.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-density" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-density-1.png" class="img-fluid figure-img" width="672"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.9: Gráfico de Densidad para la altura de los girasoles</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="sec-cajas" class="level4" data-number="3.1.3.6">
+<h4 data-number="3.1.3.6" class="anchored" data-anchor-id="sec-cajas"><span class="header-section-number">3.1.3.6</span> Diagramas de caja</h4>
+<p>Un diagrama de caja resume los valores numéricos de una variable categórica, pero no se limitan solamente a la comparación de los valores sino que además ofrece una idea del rango de valores que puede tomar cada categoría dentro de la variable. En la <a href="#fig-boxplot">Figura&nbsp;<span>3.10</span></a> se muestra el diagrama de caja para la altura de plantas de caña de azúcar que fueron sometidas a 3 tratamientos diferentes de riego y fertilización, estas mediciones corresponden a los 149 días después de la siembra.</p>
+<p>Para la interpretación de un diagrama de caja principalmente hay que fijarse en la línea central de la caja. Este valor corresponde a la mediana, en secciones posteriores desarrollaremos este concepto, por el momento podemos decir que el <span class="math inline">\(50 \%\)</span> de los valores son menores a esta cantidad. Cuando la distribución de los datos es simétrica, la mediana se ubicará justo en el centro de la caja. Cuando la distribución de los datos es sesgada, la mediana estará posicionada más cerca de la parte superior o inferior de la caja. Los puntos que se ven sobre o bajo la caja son considerados valores atípicos. En secciones subsiguientes se desarrollarán en detalle los conceptos de sesgo, simetría y valores atípicos.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-boxplot" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-boxplot-1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.10: Diagrama de Caja para la Altura de plantas de caña de azúcar 149 días después del día de siembra</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="gráficos-de-líneas" class="level4" data-number="3.1.3.7">
+<h4 data-number="3.1.3.7" class="anchored" data-anchor-id="gráficos-de-líneas"><span class="header-section-number">3.1.3.7</span> Gráficos de líneas</h4>
+<p>Estos gráficos son útiles para mostrar la tendencia de una variable cuantitativa en el tiempo. En la <a href="#fig-lineas">Figura&nbsp;<span>3.11</span></a> se muestra la evolución de la altura de las plantas de caña separadas por tratamiento.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-lineas" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-lineas-1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.11: Evolución de la altura de las plantas de caña de azúcar</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+</section>
+<section id="medidas-numéricas-de-resumen" class="level2" data-number="3.2">
+<h2 data-number="3.2" class="anchored" data-anchor-id="medidas-numéricas-de-resumen"><span class="header-section-number">3.2</span> Medidas numéricas de resumen</h2>
+<p>Una medida numérica de resumen es un número único que se calcula a partir de una muestra que transmite una característica específica de toda la muestra. Las medidas numéricas sirven para medir la tendencia central, la dispersión o la posición de los datos.</p>
+<section id="medidas-de-tendencia-central" class="level3" data-number="3.2.1">
+<h3 data-number="3.2.1" class="anchored" data-anchor-id="medidas-de-tendencia-central"><span class="header-section-number">3.2.1</span> Medidas de tendencia central</h3>
+<p>Las medidas de tendencia central indican alrededor de qué valor se centra, agrupa o aglutina la mayoría de datos. Existen algunas medidas de tendencia central. Como se mencionó antes, en todas se combina la información de una muestra en un único número y cada medida tiene ventajas y desventajas en su uso.</p>
+<section id="media" class="level4" data-number="3.2.1.1">
+<h4 data-number="3.2.1.1" class="anchored" data-anchor-id="media"><span class="header-section-number">3.2.1.1</span> Media</h4>
+<div id="def-mean" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.1 </strong></span>La media o media aritmética es simplemente el promedio de los valores observados. Es decir, para los <span class="math inline">\(n\)</span> valores de una muestra <span class="math inline">\(x_1,\,x_2, \ldots,\,x_n\)</span> la media muestral <span class="math inline">\(\bar{x}\)</span> se define como la suma de todos los valores dividida para el número de valores:</p>
+<p><span id="eq-mean"><span class="math display">\[
+\bar{x}= \dfrac{\sum_{i=1}^nx_i}{n}
+\tag{3.5}\]</span></span></p>
+<p>La media poblacional es denotada por la letra griega <span class="math inline">\(\mu\)</span>, en este caso se divide para <span class="math inline">\(N\)</span> que representa el tamaño poblacional.</p>
+<p><span id="eq-mu"><span class="math display">\[
+\mu = \dfrac{\sum_{i=1}^Nx_i}{N}
+\tag{3.6}\]</span></span></p>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Propiedades de la media</strong></p>
+<ol type="1">
+<li>Si a todos los valores <span class="math inline">\(\left\{x_1, x_2, \ldots,x_n \right\}\)</span> de una variable <span class="math inline">\(x\)</span> con media <span class="math inline">\(\bar{x}\)</span> se les suma una constante <span class="math inline">\(k\)</span>, la nueva media es <span class="math inline">\(\bar{x}+k\)</span></li>
+<li>Si todos los valores <span class="math inline">\(\left\{x_1, x_2, \ldots,x_n \right\}\)</span> de una variable <span class="math inline">\(x\)</span> con media <span class="math inline">\(\bar{x}\)</span> se los multiplica por una constante <span class="math inline">\(k\)</span>, la nueva media es <span class="math inline">\(\bar{x}k\)</span></li>
+<li>Si todos los valores <span class="math inline">\(\left\{x_1, x_2, \ldots,x_n \right\}\)</span> de una variable <span class="math inline">\(x\)</span> con media <span class="math inline">\(\bar{x}\)</span> se los divide por una constante <span class="math inline">\(k\)</span> diferente de <span class="math inline">\(0\)</span>, la nueva media es <span class="math inline">\(\dfrac{\bar{x}}{k}\)</span></li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Ventajas de la media</strong></p>
+<ol type="1">
+<li>Es fácil de entender y calcular.</li>
+<li>Depende de todos los valores.</li>
+<li>Es susceptible de cálculos aritméticos posteriores.</li>
+<li>No se ve afectada por las fluctuaciones producto del muestreo</li>
+</ol>
+<p><strong>Desventajas de la media</strong></p>
+<ol type="1">
+<li>Es susceptible a valores extremos.</li>
+<li>Al depender de todos los valores de un conjunto de datos, si existe uno o varios valores perdidos no es posible calcularla.</li>
+<li>No se usa para variables cualitativas.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="media-geométrica" class="level4" data-number="3.2.1.2">
+<h4 data-number="3.2.1.2" class="anchored" data-anchor-id="media-geométrica"><span class="header-section-number">3.2.1.2</span> Media geométrica</h4>
+<div id="def-mg" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.2 </strong></span>La media geométrica <span class="math inline">\(MG\)</span> de un conjunto de <span class="math inline">\(n\)</span> observaciones <span class="math inline">\(\left\{x_1, x_2, \ldots,x_n \right\}\)</span> se define como la raíz enésima del producto de todas las observaciones. Entonces la media geométrica <span class="math inline">\(MG\)</span> viene dada por:</p>
+<p><span id="eq-mg"><span class="math display">\[
+MG = \sqrt[n]{x_1 \, x_2\, \ldots \,x_n} = \sqrt[n]{\Pi_{i=1}^{n} x_i}
+\tag{3.7}\]</span></span></p>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Propiedades de la media geométrica</strong></p>
+<ol type="1">
+<li>La media geométrica es menor que la media aritmética.</li>
+<li>El producto de los valores de un conjunto de datos se mantiene si cada término es reemplazado por la media geométrica. <span id="eq-propgm2"><span class="math display">\[x_1 \times x_2 \times \ldots \times x_n = \overbrace{GM_x \times \cdots \times GM_x}^{n\,veces}  \tag{3.8}\]</span></span></li>
+<li>La media geométrica del cociente de las observaciones correspondientes en dos series es igual a los cocientes de sus medias geométricas.</li>
+<li>La media geométrica del producto de las observaciones correspondientes en dos series es igual a los productos de sus medias geométricas.</li>
+</ol>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>¿Cuándo usar la media aritmética o la media geométrica?</strong> La media <span class="math inline">\(\bar{x}\)</span> es usada en la mayoría de las situaciones, sin embargo, la media geométrica <span class="math inline">\(GM\)</span> es preferida cuando los cambios en los valores de una distribución ocurren de forma multiplicativa. Es decir que se la puede usar para promediar datos que siguen progresiones geométricas, por ejemplo razones, interés compuesto, tasas de depreciación, crecimientos de bacterias en microbiología. La media geométrica es muy útil para construir índices</p>
+</div>
+</div>
+<p>Los <strong>valores atípicos</strong> son valores que están muy lejos del resto de los datos. Cuando un conjunto de datos tiene valores atípicos la media podría no ser la mejor medida de tendencia central para describirlo. Los valores atípicos tienen mucha influencia sobre la media y tienden a arrastrar la media en dirección hacia ellos.</p>
+</section>
+<section id="mediana" class="level4" data-number="3.2.1.3">
+<h4 data-number="3.2.1.3" class="anchored" data-anchor-id="mediana"><span class="header-section-number">3.2.1.3</span> Mediana</h4>
+<div id="def-median" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.3 </strong></span>La mediana muestral denotada con <span class="math inline">\(\tilde{x}\)</span> de <span class="math inline">\(n\)</span> observaciones <span class="math inline">\(x_1,\,x_2,\,\ldots,x_n\)</span> es el valor central cuando las observaciones están ordenadas en forma ascendente. Cuando el número de observaciones es impar, la mediana es el único valor que está en la mitad de los datos. Mientras que cuando el número de observaciones es par, la mediana es el promedio de los dos valores centrales. En términos matemáticos, supongamos que <span class="math inline">\(\left\{X\right\}\)</span> denota al conjunto de datos <span class="math inline">\(X\)</span> ordenado de forma ascendente y <span class="math inline">\({X}_i\)</span> representa el i-ésimo elemento del conjunto ordenado. La mediana <span class="math inline">\(\tilde{x}\)</span> es:</p>
+<p><span id="eq-median"><span class="math display">\[
+\tilde{x} = \begin{cases}
+      \left \{ X \right\}_{\frac{n+1}{2}} &amp; ; n \quad \textrm{impar}  \\
+      \dfrac{\left \{ X  \right \}_{\frac{n}{2}} + \left \{ X  \right \}_{\frac{n}{2}+1} }{2} &amp; ; n \quad \textrm{par}
+   \end{cases}
+\tag{3.9}\]</span></span></p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Ventajas de usar la mediana</strong></p>
+<ol type="1">
+<li>Es fácil de calcular y comprender</li>
+<li>Solo existe una mediana para un conjunto de datos.</li>
+<li>No se ve afectada por valores extremos</li>
+<li>Se puede determinar para escalas ordinales, nominales, de razón e intervalo</li>
+</ol>
+<p><strong>Desventajas de usar la mediana</strong></p>
+<ol type="1">
+<li>No toma en cuenta el valor exacto de cada dato y por tanto no usa toda la información disponible.</li>
+<li>Si se agrupan los valores de dos grupos, la mediana de cada grupo no puede ser expresada en términos del grupo agrupado. Dicho de otra forma si se calculan las medianas de subconjuntos de un conjunto de datos, estas medianas no pueden ser combinadas para calcular la mediana de todo el conjunto.</li>
+</ol>
+</div>
+</div>
+</section>
+<section id="moda" class="level4" data-number="3.2.1.4">
+<h4 data-number="3.2.1.4" class="anchored" data-anchor-id="moda"><span class="header-section-number">3.2.1.4</span> Moda</h4>
+<div id="def-mode" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.4 </strong></span>La moda denotada por <span class="math inline">\(Mo\)</span> es el valor que tiene la mayor frecuencia absoluta. Hay conjuntos de datos que no tienen moda, también existen conjuntos de datos con más de una moda. A un conjunto de datos con 2 modas se los llama bimodal, cuando existen más de 2 modas un conjunto recibe el nombre de multimodal.</p>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Ventajas de usar la moda</strong></p>
+<ol type="1">
+<li>Fácil de determinar.</li>
+<li>Se puede usar para datos con escala nominal u ordinal.</li>
+</ol>
+<p><strong>Desventajas de usar la moda</strong></p>
+<ol type="1">
+<li>Debido a que la moda no está definida algebraicamente no se acostumbra a usarla en análisis estadístico.</li>
+</ol>
+</div>
+</div>
+</section>
+</section>
+<section id="cómo-escoger-la-medida-de-tendencia-central-adecuada" class="level3" data-number="3.2.2">
+<h3 data-number="3.2.2" class="anchored" data-anchor-id="cómo-escoger-la-medida-de-tendencia-central-adecuada"><span class="header-section-number">3.2.2</span> ¿Cómo escoger la medida de tendencia central adecuada?</h3>
+<p>En la mayoría de situaciones se prefiere la media como la medida de tendencia central que se reporta, sin embargo, en algunas situaciones se recomienda usar la mediana por ejemplo:</p>
+<ol type="1">
+<li>Hay algunos valores extremos en la distribución.</li>
+<li>Algunas observaciones tienen valores no determinados.</li>
+<li>Los datos se miden en una escala ordinal</li>
+</ol>
+<p>Cuando los datos se encuentran en una escala nominal, se prefiere a la moda.</p>
+</section>
+<section id="simetría-y-sesgo" class="level3" data-number="3.2.3">
+<h3 data-number="3.2.3" class="anchored" data-anchor-id="simetría-y-sesgo"><span class="header-section-number">3.2.3</span> Simetría y sesgo</h3>
+<p>La forma de una distribución unimodal, puede ser simétrica o sesgada. Una distribución es <strong>simétrica</strong> si hacia la derecha y la izquierda de un valor central tiene la misma forma como se observa en el histograma de la <a href="#fig-simetria">Figura&nbsp;<span>3.14</span></a>, además en esta figura se muestra un diagrama de caja y un gráfico de densidad para una distribución simétrica.</p>
+<p>Una distribución es <strong>sesgada a la derecha</strong> si la cola derecha es más larga que la izquierda, en la <a href="#fig-derecha">Figura&nbsp;<span>3.12</span></a> se muestran el histograma, el diagrama de caja y el gráfico de densidad para una distribución sesgada a la derecha. Finalmente, cuando la cola izquierda es más larga que la derecha la distribución es <strong>sesgada a la izquierda</strong> en la <a href="#fig-izquierda">Figura&nbsp;<span>3.13</span></a> se aprecia una distribución sesgada a la izquierda.</p>
+<p>Entre el sesgo y las medidas de tendencia central existen las siguientes relaciones.</p>
+<ol type="1">
+<li>Cuando la distribución es sesgada a la derecha se cumple <span class="math inline">\(Mo&lt; \tilde{x}&lt; \bar{x}\)</span>. En el gráfico de densidad de la <a href="#fig-derecha">Figura&nbsp;<span>3.12</span></a> la línea vertical de color azul representa la moda, la línea vertical de color rojo representa a la mediana y la línea vertical de color naranja representa la media<br>
+</li>
+<li>Cuando la distribución es sesgada a la izquierda se cumple que <span class="math inline">\(\bar{x} &lt; \tilde{x} &lt; Mo\)</span>. Con los mismos códigos de colores anteriores podemos observar la ubicación de estos valores en la <a href="#fig-izquierda">Figura&nbsp;<span>3.13</span></a>.</li>
+<li>Cuando la distribución es simétrica se cumple que <span class="math inline">\(\bar{x} = \tilde{x} = Mo\)</span>.</li>
+</ol>
+<div id="fig-derecha" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/derecha.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.12: Distribución sesgada a a la derecha</figcaption>
+</figure>
+</div>
+<div id="fig-izquierda" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/izquierda.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.13: Distribución sesgada a a la izquierda</figcaption>
+</figure>
+</div>
+<div id="fig-simetria" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/simetrico.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.14: Distribución Simétrica</figcaption>
+</figure>
+</div>
+<div style="page-break-after: always;"></div>
+</section>
+<section id="medidas-de-dispersión" class="level3" data-number="3.2.4">
+<h3 data-number="3.2.4" class="anchored" data-anchor-id="medidas-de-dispersión"><span class="header-section-number">3.2.4</span> Medidas de dispersión</h3>
+<p>Supongamos que en una empresa distribuidora de agroquímicos se forman dos equipos de ventas, la empresa ofrece un bono al equipo que tiene el mejor desempeño en las ventas mensuales promedio. En la <a href="#tbl-ventas">Tabla&nbsp;<span>3.3</span></a> se muestra el mínimo, la media, la mediana, el máximo y el total para las ventas mensuales de ambos equipos. Se observa que ambos equipos vendieron la misma cantidad total durante el mes por lo que tuvieron la misma media para las ventas mensuales. Es decir, que si se quisiera escoger al mejor equipo por el total de ventas mensuales o por el promedio de ventas mensuales no hay un equipo que haya tenido un mejor desempeño. Por otro lado el equipo 2 tiene un valor mínimo menor que el equipo 1 y en cuanto al máximo el equipo 2 tiene un valor máximo mayor al del equipo 1, esto nos llevaría a pensar que aunque ambos equipos tienen la misma media mensual la distribución de los datos para ambos equipos es diferente.</p>
+<p>En la <a href="#fig-puntosventas">Figura&nbsp;<span>3.15</span></a> se muestra un gráfico de puntos de las ventas por equipo, se ha incluido una línea punteada de color negro en la media de ambos conjuntos (<span class="math inline">\(20000.00\)</span>), con este gráfico se puede notar que las ventas del equipo 2 están más <em>dispersas</em> que las ventas del equipo 1. El histograma que se muestra en la <a href="#fig-histventas">Figura&nbsp;<span>3.16</span></a> permite visualizar la distribución de las ventas, y finalmente en el diagrama de caja de la <a href="#fig-cajaventas">Figura&nbsp;<span>3.17</span></a> se aprecia que el equipo 2 tuvo valores atípicos en sus ventas.</p>
+<div class="cell">
+<div class="cell-output-display">
+<div id="tbl-ventas" class="anchored">
+<table class="table table-sm table-striped small">
+<caption>Tabla&nbsp;3.3: Estadística descriptiva de las ventas por Equipo</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Equipo</th>
+<th style="text-align: right;">Mínimo</th>
+<th style="text-align: left;">Media</th>
+<th style="text-align: right;">Mediana</th>
+<th style="text-align: right;">Máximo</th>
+<th style="text-align: left;">Total</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Team1</td>
+<td style="text-align: right;">18174.56</td>
+<td style="text-align: left;">20000.00</td>
+<td style="text-align: right;">19946.35</td>
+<td style="text-align: right;">21620.26</td>
+<td style="text-align: left;">400000.00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Team2</td>
+<td style="text-align: right;">16947.96</td>
+<td style="text-align: left;">20000.00</td>
+<td style="text-align: right;">20033.14</td>
+<td style="text-align: right;">22918.67</td>
+<td style="text-align: left;">400000.00</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-puntosventas" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-puntosventas-1.png" class="img-fluid figure-img" style="width:60.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.15: Gráfica de puntos de las ventas por equipo</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-histventas" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-histventas-1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.16: Histograma de las ventas por equipo</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-cajaventas" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="02-estdesc_files/figure-html/fig-cajaventas-1.png" class="img-fluid figure-img" style="width:70.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.17: Diagrama de caja de las ventas por equipo</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Regresando a nuestra pregunta inicial ¿qué equipo tiene un mayor desempeño en sus ventas mensuales? Para contestar esta pregunta vamos a cuantificar la <strong>dispersión</strong> de los datos, esta cuantificación la haremos con las tres medidas de dispersión más usadas.</p>
+<section id="rango" class="level4" data-number="3.2.4.1">
+<h4 data-number="3.2.4.1" class="anchored" data-anchor-id="rango"><span class="header-section-number">3.2.4.1</span> Rango</h4>
+<p>El rango es la medida de dispersión más fácil de calcular, resulta de la diferencia entre el máximo y el mínimo de un conjunto de datos.</p>
+<p><span class="math display">\[
+Rango = \text{Máximo} - \text{Mínimo}
+\]</span></p>
+</section>
+<section id="varianza-poblacional-y-muestral" class="level4" data-number="3.2.4.2">
+<h4 data-number="3.2.4.2" class="anchored" data-anchor-id="varianza-poblacional-y-muestral"><span class="header-section-number">3.2.4.2</span> Varianza poblacional y muestral</h4>
+<p>Una forma de definir la dispersión es “la desviación de los datos respecto a la media”. La desviación de una observación respecto a la media se la calcula como la diferencia entre la observación y la media, supongamos un conjunto <span class="math inline">\(x\)</span> de <span class="math inline">\(n\)</span> observaciones <span class="math inline">\(x_1,\, x_2,\, \ldots, x_n\)</span> la desviación i-ésima respecto a la media es igual a <span class="math inline">\(x_i-\bar{x}\)</span>. La media puede ser interpretada como un punto de balance por lo que en un conjunto cualquiera de <span class="math inline">\(n\)</span> observaciones las desviaciones respecto a la media positivas (<span class="math inline">\(x_i-\bar{x}&gt;0\)</span>) hacen contrapeso a las desviaciones respecto a la media negativas (<span class="math inline">\(x_i-\bar{x}&lt;0\)</span>), es decir que <span class="math inline">\(\sum_{i=1}^n(x_i-\bar{x})=0\)</span>. Por esta razón las medidas de dispersión respecto a la media utilizan las desviaciones cuadráticas o el valor absoluto de estas.</p>
+<div id="def-varp" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.5 </strong></span>La <strong>varianza poblacional</strong> que se denota con <span class="math inline">\(\sigma^2\)</span> se la calcula como el promedio de las desviaciones cuadráticas respecto a la media:</p>
+<p><span id="eq-varp"><span class="math display">\[
+\sigma^2 = \dfrac{\sum_{i=1}^N(x_i-\mu)^2}{N}
+\tag{3.10}\]</span></span></p>
+</div>
+<div id="def-varm" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.6 </strong></span>La <strong>varianza muestral</strong> que se denota con <span class="math inline">\(s^2\)</span> se la calcula con la expresión: <span id="eq-varm"><span class="math display">\[
+s^2 = \dfrac{\sum_{i=1}^n(x_i-\bar{x})^2}{n-1}
+\tag{3.11}\]</span></span></p>
+</div>
+</section>
+<section id="desviación-poblacional-y-muestral" class="level4" data-number="3.2.4.3">
+<h4 data-number="3.2.4.3" class="anchored" data-anchor-id="desviación-poblacional-y-muestral"><span class="header-section-number">3.2.4.3</span> Desviación poblacional y muestral</h4>
+<div id="def-desv" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 3.7 </strong></span>La varianza poblacional o muestral está expresada en unidades cuadráticas, para nuestro ejemplo de las ventas la varianza se expresaría en dólares al cuadrado. Es más fácil interpretar la raíz cuadrada de la varianza. Esta raíz cuadrada se llama <strong>desviación estándar</strong>. La desviación estándar poblacional se la calcula con:</p>
+<p><span id="eq-desvp"><span class="math display">\[
+\sigma = \sqrt{\sigma^2} = \sqrt{\dfrac{\sum_{i=1}^N(x_i-\mu)^2}{N}}
+\tag{3.12}\]</span></span></p>
+<p>La desviación estándar muestral se la calcula con:</p>
+<p><span id="eq-desvm"><span class="math display">\[
+s = \sqrt{s^2} = \sqrt{\dfrac{\sum_{i=1}^n(x_i-\bar{x})^2}{n-1}}
+\tag{3.13}\]</span></span></p>
+</div>
+</section>
+</section>
+<section id="medidas-de-posición" class="level3" data-number="3.2.5">
+<h3 data-number="3.2.5" class="anchored" data-anchor-id="medidas-de-posición"><span class="header-section-number">3.2.5</span> Medidas de posición</h3>
+<p>Las medidas de posición no central permiten conocer otros puntos característicos de la distribución que no son los valores centrales. Entre las medidas de posición no central más importantes están los cuantiles. El término cuantil fue usado por primera vez por Kendall en 1940.</p>
+<p>El cuantil de orden <span class="math inline">\(p\)</span> de una distribución con <span class="math inline">\(0&lt;p&lt;1\)</span> es el valor <span class="math inline">\(x_{i}\)</span> de la variable <span class="math inline">\(X\)</span> que marca un corte de modo que una proporción <span class="math inline">\(p\)</span> o un porcentaje <span class="math inline">\(100p\)</span>% de valores de la población es menor o igual que <span class="math inline">\(x_{i}\)</span> Por ejemplo el cuantil de orden <span class="math inline">\(0.35\)</span> dejaría un 35% de valores por debajo de él.</p>
+<section id="tipos-de-cuantiles" class="level4" data-number="3.2.5.1">
+<h4 data-number="3.2.5.1" class="anchored" data-anchor-id="tipos-de-cuantiles"><span class="header-section-number">3.2.5.1</span> Tipos de Cuantiles</h4>
+<ul>
+<li><em>Cuartiles</em>: son 3 valores (<span class="math inline">\(Q_{1}, Q_{2}, Q_{3}\)</span>) que dividen a la distribución en 4 partes iguales.</li>
+<li><em>Quintiles</em>: son 4 valores (<span class="math inline">\(K_{1}, K_{2}, K_{3}, K_{4}\)</span>) que dividen a la distribución en 5 partes iguales.</li>
+<li><em>Deciles</em>: son 9 valores (<span class="math inline">\(D_1, D_2, D_3, D_4, D_5, D_6, D_7, D_8, D_9\)</span>) que dividen a la distribución en 10 partes iguales.</li>
+<li><em>Percentiles</em>, son 99 valores (<span class="math inline">\(P_1, P_2, \ldots P_{99}\)</span>) que dividen a la distribución en 100 partes iguales.</li>
+</ul>
+<div id="fig-cuantiles" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/cuantiles.png" class="img-fluid figure-img"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.18: Cuantiles</figcaption>
+</figure>
+</div>
+</section>
+<section id="cálculo-de-cuantiles" class="level4" data-number="3.2.5.2">
+<h4 data-number="3.2.5.2" class="anchored" data-anchor-id="cálculo-de-cuantiles"><span class="header-section-number">3.2.5.2</span> Cálculo de cuantiles</h4>
+<p>Es fácil darse cuenta que existen equivalencias importantes entre los cuantiles, algunos ejemplos de estas equivalencias:</p>
+<ul>
+<li><span class="math inline">\(D_5=Q_2=P_{50}\)</span></li>
+<li><span class="math inline">\(D_4=K_2=P_{40}\)</span></li>
+<li><span class="math inline">\(D_3=P_{30}\)</span></li>
+</ul>
+<p>Se deduce entonces que no es necesario tener una expresión para cada tipo de cuantiles, basta con conocer una expresión para calcular percentiles. Para esto debemos conocer dos cosas:</p>
+<ol type="1">
+<li>La posición del percentil en nuestro conjunto de datos.</li>
+<li>El valor del percentil tomando en cuenta su posición.</li>
+</ol>
+<p>Para calcular la posición del percentil <span class="math inline">\(i\)</span> que acumula el 100<span class="math inline">\(p\)</span>% en un conjunto de datos no agrupado <span class="math inline">\(X\)</span>, de tamaño <span class="math inline">\(n\)</span> y ordenado en forma ascendente primero determinamos la posición del percentil con la expresión:</p>
+<p><span id="eq-posperc)"><span class="math display">\[
+  \text{Posición} = p(n-1)+1
+\tag{3.14}\]</span></span></p>
+<p>Para determinar el valor <span class="math inline">\(X_{i.a}\)</span> utilizamos la expresión:</p>
+<p><span id="eq-valperc"><span class="math display">\[
+  X_{i.a}=X_{i}+0.a(X_{i+1}-X_{i})
+\tag{3.15}\]</span></span></p>
+</section>
+<section id="relación-entre-los-cuartiles-y-el-diagrama-de-caja." class="level4" data-number="3.2.5.3">
+<h4 data-number="3.2.5.3" class="anchored" data-anchor-id="relación-entre-los-cuartiles-y-el-diagrama-de-caja."><span class="header-section-number">3.2.5.3</span> Relación entre los cuartiles y el diagrama de caja.</h4>
+<p>En la <a href="#sec-cajas"><span>Sección&nbsp;3.1.3.6</span></a> se dijo que la línea central de la caja corresponde a la mediana de los datos, ahora que conocemos a los cuartiles es útil saber cuál es la relación entre los cuartiles y los diagramas de caja. En la <a href="#fig-boxparts">Figura&nbsp;<span>3.19</span></a> se muestran las partes del diagrama de cajas. El límite inferior y el límite superior se calculan en función del <strong>rango intercuartílico</strong> (<span class="math inline">\(IQR\)</span> por sus siglas en inglés) que es igual a la diferencia entre el tercer y primer cuartil.</p>
+<p><span id="eq-iqr"><span class="math display">\[
+IQR = Q_3 - Q_1
+\tag{3.16}\]</span></span></p>
+<p>El límite superior (<span class="math inline">\(LS\)</span>) y el límite inferior (<span class="math inline">\(LI\)</span>) se calculan con las siguientes expresiones, respectivamente:</p>
+<p><span id="eq-lsdc"><span class="math display">\[
+LS = Q_3 + 1.5IQR
+\tag{3.17}\]</span></span></p>
+<p><span id="eq-lidc"><span class="math display">\[
+LI = Q_1 - 1.5IQR
+\tag{3.18}\]</span></span></p>
+<div id="fig-boxparts" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/boxplot3.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.19: Partes de un diagrama de caja</figcaption>
+</figure>
+</div>
+</section>
+</section>
+</section>
+<section id="sec-pprs" class="level2" data-number="3.3">
+<h2 data-number="3.3" class="anchored" data-anchor-id="sec-pprs"><span class="header-section-number">3.3</span> Primeros pasos en RStudio</h2>
+<p>En la <a href="intro.html#sec-basicsR"><span>Sección&nbsp;1.5</span></a>, se presentaron algunos conceptos básicos de R utilizando la consola de R. Cuando se trabaja con conjuntos de datos, o cuando se desea guardar y compartir el trabajo realizado es conveniente usar <strong>scripts</strong>, un script es un archivo de texto que contiene los mismos comandos que ingresaría en la línea de comandos de R.</p>
+<p>Una vez abierto RStudio, para crear un script hay dos opciones. La primera es en la barra de herramientas principal escoger <code>File | New File | R Script</code>, la segunda opción es escribir la combinación de teclas (en Windows) <code>Ctrl + Shift + N</code> o <code>Cmd + Shift + N</code> (en Mac).</p>
+<p>Cuando el script está creado se puede escribir código como se visualiza a la derecha de la <a href="#fig-script">Figura&nbsp;<span>3.20</span></a>. Para ejecutar el código se puede ubicar en cualquier parte de la línea y presionar la combinación de teclas <code>Ctrl + Enter</code>o <code>Cmd + Enter</code>, otra opción es dar clic en el botón <code>Run</code> ubicado en la parte superior derecha del script (encerrada en rectángulo rojo de la <a href="#fig-script2">Figura&nbsp;<span>3.21</span></a>). Si solo es una línea de código no es necesario seleccionarla para poder ejecutarla. Al momento de ejecutar el código, el código se ejecuta en la consola (rectángulo azul de la <a href="#fig-script2">Figura&nbsp;<span>3.21</span></a>) y además se visualiza el objeto en el ambiente (rectángulo negro de la <a href="#fig-script2">Figura&nbsp;<span>3.21</span></a>).</p>
+<div id="fig-script" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/script.png" class="img-fluid figure-img" style="width:75.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.20: Creación de un script</figcaption>
+</figure>
+</div>
+<div id="fig-script2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/script2.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.21: Ejecución de comandos desde un script</figcaption>
+</figure>
+</div>
+<p>En el proceso de análisis de datos, adicional a los scripts, la mayoría de ocasiones es necesario tener los datos almacenados en algún directorio de la computadora (en algunas ocasiones los datos se leen desde internet). Las tablas y los gráficos que se generen, también pueden ser almacenados en la computadora. Una forma de manejar esto de forma eficiente es trabajando con <em>directorios de trabajo</em>, un directorio de trabajo es una ruta dentro de la computadora que especifica la ubicación predeterminada de los archivos que leamos en R o que guardemos desde R.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Para conocer el directorio de trabajo actual se usa la función <code>getwd()</code>.</li>
+<li>Para fijar el directorio de trabajo se usa la función <code>setwd(dir = "directorio")</code></li>
+</ul>
+</div>
+</div>
+<section id="creación-de-proyectos-en-rstudio" class="level3" data-number="3.3.1">
+<h3 data-number="3.3.1" class="anchored" data-anchor-id="creación-de-proyectos-en-rstudio"><span class="header-section-number">3.3.1</span> Creación de proyectos en RStudio</h3>
+<p>RStudio tiene una forma más eficiente de manejar los directorios de trabajo, utilizando <strong>proyectos</strong>. Un proyecto es simplemente un directorio de trabajo designado con un archivo de extensión <code>.Rproj</code>. Al momento de abrir un proyecto, se configura automáticamente el directorio de trabajo como el directorio donde se encuentra el archivo <code>.Rproj</code>.</p>
+<p>Una buena práctica es crear un proyecto en RStudio por cada investigación, tarea o proyecto de análisis que se desee trabajar. Dentro de la carpeta del proyecto es recomendable tener subcarpetas que permitan almacenar los datos que van a ser leídos y producidos como parte de nuestro análisis. Una sugerencia es tener cuatro carpetas como mínimo:</p>
+<ol type="1">
+<li><code>datos</code>: en esta carpeta se encuentran los datos que van a ser analizados.</li>
+<li><code>graficos</code>: para guardar los gráficos producidos.</li>
+<li><code>resultados</code>: para guardar las tablas resultado del análisis de datos.</li>
+<li><code>scripts</code>: en esta carpeta se guardan todos los scripts utilizados en el análisis.</li>
+</ol>
+<p>En este texto se utilizará un solo proyecto al que llamaremos <strong>r4agro</strong>. En cualquier ubicación de nuestra computadora vamos a crear la carpeta llamada <strong>r4agro</strong> y dentro de esta carpeta las carpetas <strong>datos</strong>, <strong>graficos</strong>, <strong>resultados</strong> y <strong>scripts</strong> como se muestra en la <a href="#fig-project1">Figura&nbsp;<span>3.22</span></a>.</p>
+<div id="fig-project1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/rproject1.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.22: Carpeta del proyecto r4agro</figcaption>
+</figure>
+</div>
+<p>Para crear un proyecto, se debe dar clic en <code>File -&gt; New Project</code> y aparecerá la ventana mostrada en la <a href="#fig-project2">Figura&nbsp;<span>3.23</span></a>.</p>
+<div id="fig-project2" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/newproject.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.23: Crear un nuevo proyecto</figcaption>
+</figure>
+</div>
+<p>Escogemos la opción de acuerdo a nuestras necesidades:</p>
+<ul>
+<li><strong>New Directory</strong>: escogemos esta opción si vamos a crear un nuevo directorio desde 0. Cuando se da clic, aparece una nueva ventana como se muestra en la <a href="#fig-project3">Figura&nbsp;<span>3.24</span></a></li>
+</ul>
+<div id="fig-project3" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/rpoject2_np.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.24: Opción New Directory</figcaption>
+</figure>
+</div>
+<ul>
+<li><p><strong>Existing Directory</strong>: escogemos esta opción si ya tenemos creada la carpeta de nuestro proyecto. En este libro vamos a trabajar siempre escogiendo esta opción. Más adelante explicaremos en detalle como crear un proyecto escogiendo esta opción.</p></li>
+<li><p><strong>Version Control</strong>: El control de versiones ayuda a los equipos de desarrollo de software a controlar y gestionar los cambios en el código fuente a lo largo del tiempo. Los programas y plataformas de control de versiones mantienen un registro de las modificaciones hechas al código. Si se comete un error, los desarrolladores pueden comparar versiones anteriores del código para ayudar a corregir el error al tiempo que se minimizan las molestias para todos los miembros del equipo. RStudio trabaja con dos sistemas de código abierto para el control de versiones: <strong>Git</strong> y <strong>Subversion</strong>.</p></li>
+</ul>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Creación de proyectos (Existing Directory)
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li><code>File -&gt; New Project</code></li>
+<li><code>Existing Directory</code></li>
+<li>Se abre una ventana como la de la <a href="#fig-project4">Figura&nbsp;<span>3.25</span></a> y damos clic en <code>Browse</code>.</li>
+<li>Se abre una ventana en la que buscamos la ubicación de la carpeta de nuestro proyecto y damos clic en <code>Open</code> (<a href="#fig-project5">Figura&nbsp;<span>3.26</span></a>).</li>
+<li>Posteriormente, escogemos la opción <code>Create New Project</code> (<a href="#fig-project6">Figura&nbsp;<span>3.27</span></a>).</li>
+<li>Finalmente, el proyecto se crea. Identificamos que el proyecto ha sido creado porque ahora aparece el nombre del proyecto en las esquinas superior izquierda y derecha de nuestra ventana de RStudio (<a href="#fig-project7">Figura&nbsp;<span>3.28</span></a>).</li>
+</ul>
+</div>
+</div>
+<div id="fig-project4" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/rproject_ed.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.25: Existing Directory</figcaption>
+</figure>
+</div>
+<div id="fig-project5" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/rproject_ed2.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.26: Escoger carpeta</figcaption>
+</figure>
+</div>
+<div id="fig-project6" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/rproject_ed3.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.27: Crear proyecto</figcaption>
+</figure>
+</div>
+<div id="fig-project7" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/rproject_ed4.png" class="img-fluid figure-img" style="width:50.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.28: Proyecto creado</figcaption>
+</figure>
+</div>
+</section>
+<section id="creando-nuestros-primeros-gráficos." class="level3" data-number="3.3.2">
+<h3 data-number="3.3.2" class="anchored" data-anchor-id="creando-nuestros-primeros-gráficos."><span class="header-section-number">3.3.2</span> Creando nuestros primeros gráficos.</h3>
+<p>En esta sección trabajaremos con el conjunto de datos <code>alt_almacigo.csv</code>, este conjunto de datos corresponde a las alturas de 105 plantas de tomate de 5 variedades, 20 días después de la siembra en los almácigos.</p>
+<p>El primer paso es guardar nuestros datos en la carpeta <code>datos</code> de nuestro proyecto, creado anteriormente, <code>r4agro</code>. Posteriormente creamos un script, en esta oportunidad guardaremos nuestro script en la carpeta <code>scripts</code> con el nombre <code>01_visualizacion.R</code>.</p>
+<p>Existen muchas formas de trabajar en un script, sin embargo, se recomienda seguir el siguiente flujo:</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Cargar los paquetes que sean necesarios para el análisis que se va a trabajar.</li>
+<li>Cargar los datos que se van a utilizar en el análisis.</li>
+<li>Trabajar con los datos, esto incluye realizar gráficos, analizar los datos o crear modelos.</li>
+</ol>
+</div>
+</div>
+<p>En este primer script trabajaremos solamente con los paquetes <strong>dplyr</strong> y <strong>ggplot2</strong> descritos en la <a href="intro.html#sec-packs"><span>Sección&nbsp;1.4</span></a>. En las primeras líneas escribiremos las siguientes líneas de código.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Una vez cargados los paquetes procedemos a leer los datos. El archivo con el que vamos a trabajar es un archivo de valores separados por comas (<strong>c</strong>omma ¨<strong>s</strong>eparted <strong>v</strong>alues). Existen muchas funciones que podemos usar para leer este tipo de archivos, sin embargo, vamos a trabajar con la función <code>read.csv</code>. Para no cometer errores al momento de la lectura de los datos es importante identificar si nuestros valores efectivamente están separados por coma (,) y si el archivo utiliza el punto (.) como separador de decimales. El archivo de nuestros datos tiene como separador de los valores el punto y coma, y como separador de decimales la coma.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Un archivo <code>csv</code> no necesariamente, tiene sus valores separados por coma. Dependiendo del sistema operativo o la región geográfica, los valores se guardan separados por coma (,) o por punto y coma (;).</li>
+<li>Si los valores están separados por coma, generalmente el separador de decimales es el punto (.).</li>
+<li>Cuando los valores están separados por punto y coma, el separador de decimales es la coma.</li>
+</ol>
+</div>
+</div>
+<p>Para leer los datos escribimos la siguiente línea de código.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>datos <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="st">"datos/alt_almacigo.csv"</span>,<span class="at">sep =</span> <span class="st">";"</span>, <span class="at">dec =</span> <span class="st">","</span>)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Entendiendo el código">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Entendiendo el código
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div id="fig-codigo1" class="quarto-figure quarto-figure-center anchored">
+<figure class="figure">
+<p><img src="imagenes/codigo1.png" class="img-fluid figure-img" style="width:90.0%"></p>
+<figcaption class="figure-caption">Figura&nbsp;3.29: Leer datos con la función <code>read.csv()</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copiada");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copiada");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="./01-concepts.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="./03-distr.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+
+
+
+</body></html>
