@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de Datos en Agricultura con R y RStudio - 6&nbsp; Estadística Inferencial</title>
+<title>Análisis de Datos en Agricultura con R y RStudio - Estadística Inferencial</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,6 +65,7 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="_extensions/fredguth/tufte/styles.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -76,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-icph.html"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./05-icph.html"><span class="chapter-title">Estadística Inferencial</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -86,7 +87,7 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
@@ -109,50 +110,42 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R y RStudio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span></a>
+  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística. Conceptos Básicos.</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span></a>
+  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Descriptiva</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-distr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span></a>
+  <a href="./03-distr.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Distribuciones de probabilidad</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span></a>
+  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Muestreo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-icph.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span></a>
+  <a href="./05-icph.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Estadística Inferencial</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span></a>
+  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Correlación y Regresión</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span></a>
+  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diseño de experimentos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -163,75 +156,68 @@ ul.task-list li input[type="checkbox"] {
 </li>
     </ul>
     </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#estimación-puntual-y-por-intervalos" id="toc-estimación-puntual-y-por-intervalos" class="nav-link active" data-scroll-target="#estimación-puntual-y-por-intervalos">Estimación puntual y por intervalos</a></li>
+  <li><a href="#intervalos-de-confianza" id="toc-intervalos-de-confianza" class="nav-link" data-scroll-target="#intervalos-de-confianza">Intervalos de confianza</a></li>
+  <li><a href="#pruebas-de-hipótesis" id="toc-pruebas-de-hipótesis" class="nav-link" data-scroll-target="#pruebas-de-hipótesis">Pruebas de hipótesis</a>
+  <ul>
+  <li><a href="#para-la-media-prueba-t" id="toc-para-la-media-prueba-t" class="nav-link" data-scroll-target="#para-la-media-prueba-t">Para la media (Prueba <span class="math inline">\(t\)</span>)</a>
+  <ul class="collapse">
+  <li><a href="#sola-muestra" id="toc-sola-muestra" class="nav-link" data-scroll-target="#sola-muestra">1 sola muestra</a></li>
+  <li><a href="#muestras-independientes" id="toc-muestras-independientes" class="nav-link" data-scroll-target="#muestras-independientes">2 muestras independientes</a></li>
+  <li><a href="#muestras-pareadas" id="toc-muestras-pareadas" class="nav-link" data-scroll-target="#muestras-pareadas">2 muestras pareadas</a></li>
+  </ul></li>
+  <li><a href="#para-la-proporción" id="toc-para-la-proporción" class="nav-link" data-scroll-target="#para-la-proporción">Para la proporción</a></li>
+  <li><a href="#para-la-varianza" id="toc-para-la-varianza" class="nav-link" data-scroll-target="#para-la-varianza">Para la varianza</a></li>
+  </ul></li>
+  <li><a href="#pruebas-de-hipótesis-no-paramétricas" id="toc-pruebas-de-hipótesis-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-hipótesis-no-paramétricas">Pruebas de hipótesis no paramétricas</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Indice de contenidos</h2>
-   
-  <ul>
-  <li><a href="#estimación-puntual-y-por-intervalos" id="toc-estimación-puntual-y-por-intervalos" class="nav-link active" data-scroll-target="#estimación-puntual-y-por-intervalos"><span class="header-section-number">6.1</span> Estimación puntual y por intervalos</a></li>
-  <li><a href="#intervalos-de-confianza" id="toc-intervalos-de-confianza" class="nav-link" data-scroll-target="#intervalos-de-confianza"><span class="header-section-number">6.2</span> Intervalos de confianza</a></li>
-  <li><a href="#pruebas-de-hipótesis" id="toc-pruebas-de-hipótesis" class="nav-link" data-scroll-target="#pruebas-de-hipótesis"><span class="header-section-number">6.3</span> Pruebas de hipótesis</a>
-  <ul class="collapse">
-  <li><a href="#para-la-media-prueba-t" id="toc-para-la-media-prueba-t" class="nav-link" data-scroll-target="#para-la-media-prueba-t"><span class="header-section-number">6.3.1</span> Para la media (Prueba <span class="math inline">\(t\)</span>)</a></li>
-  <li><a href="#para-la-proporción" id="toc-para-la-proporción" class="nav-link" data-scroll-target="#para-la-proporción"><span class="header-section-number">6.3.2</span> Para la proporción</a></li>
-  <li><a href="#para-la-varianza" id="toc-para-la-varianza" class="nav-link" data-scroll-target="#para-la-varianza"><span class="header-section-number">6.3.3</span> Para la varianza</a></li>
-  </ul></li>
-  <li><a href="#pruebas-de-hipótesis-no-paramétricas" id="toc-pruebas-de-hipótesis-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-hipótesis-no-paramétricas"><span class="header-section-number">6.4</span> Pruebas de hipótesis no paramétricas</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="icph" class="quarto-section-identifier"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
+<header id="title-block-header">
+<h1 class="title display-7"><span class="chapter-title">Estadística Inferencial</span></h1>
 
 </header>
 
-<section id="estimación-puntual-y-por-intervalos" class="level2" data-number="6.1">
-<h2 data-number="6.1" class="anchored" data-anchor-id="estimación-puntual-y-por-intervalos"><span class="header-section-number">6.1</span> Estimación puntual y por intervalos</h2>
+<section id="estimación-puntual-y-por-intervalos" class="level2">
+<h2 class="anchored" data-anchor-id="estimación-puntual-y-por-intervalos">Estimación puntual y por intervalos</h2>
 </section>
-<section id="intervalos-de-confianza" class="level2" data-number="6.2">
-<h2 data-number="6.2" class="anchored" data-anchor-id="intervalos-de-confianza"><span class="header-section-number">6.2</span> Intervalos de confianza</h2>
+<section id="intervalos-de-confianza" class="level2">
+<h2 class="anchored" data-anchor-id="intervalos-de-confianza">Intervalos de confianza</h2>
 </section>
-<section id="pruebas-de-hipótesis" class="level2" data-number="6.3">
-<h2 data-number="6.3" class="anchored" data-anchor-id="pruebas-de-hipótesis"><span class="header-section-number">6.3</span> Pruebas de hipótesis</h2>
-<section id="para-la-media-prueba-t" class="level3" data-number="6.3.1">
-<h3 data-number="6.3.1" class="anchored" data-anchor-id="para-la-media-prueba-t"><span class="header-section-number">6.3.1</span> Para la media (Prueba <span class="math inline">\(t\)</span>)</h3>
-<section id="sola-muestra" class="level4" data-number="6.3.1.1">
-<h4 data-number="6.3.1.1" class="anchored" data-anchor-id="sola-muestra"><span class="header-section-number">6.3.1.1</span> 1 sola muestra</h4>
+<section id="pruebas-de-hipótesis" class="level2">
+<h2 class="anchored" data-anchor-id="pruebas-de-hipótesis">Pruebas de hipótesis</h2>
+<section id="para-la-media-prueba-t" class="level3">
+<h3 class="anchored" data-anchor-id="para-la-media-prueba-t">Para la media (Prueba <span class="math inline">\(t\)</span>)</h3>
+<section id="sola-muestra" class="level4">
+<h4 class="anchored" data-anchor-id="sola-muestra">1 sola muestra</h4>
 </section>
-<section id="muestras-independientes" class="level4" data-number="6.3.1.2">
-<h4 data-number="6.3.1.2" class="anchored" data-anchor-id="muestras-independientes"><span class="header-section-number">6.3.1.2</span> 2 muestras independientes</h4>
+<section id="muestras-independientes" class="level4">
+<h4 class="anchored" data-anchor-id="muestras-independientes">2 muestras independientes</h4>
 </section>
-<section id="muestras-pareadas" class="level4" data-number="6.3.1.3">
-<h4 data-number="6.3.1.3" class="anchored" data-anchor-id="muestras-pareadas"><span class="header-section-number">6.3.1.3</span> 2 muestras pareadas</h4>
-</section>
-</section>
-<section id="para-la-proporción" class="level3" data-number="6.3.2">
-<h3 data-number="6.3.2" class="anchored" data-anchor-id="para-la-proporción"><span class="header-section-number">6.3.2</span> Para la proporción</h3>
-</section>
-<section id="para-la-varianza" class="level3" data-number="6.3.3">
-<h3 data-number="6.3.3" class="anchored" data-anchor-id="para-la-varianza"><span class="header-section-number">6.3.3</span> Para la varianza</h3>
+<section id="muestras-pareadas" class="level4">
+<h4 class="anchored" data-anchor-id="muestras-pareadas">2 muestras pareadas</h4>
 </section>
 </section>
-<section id="pruebas-de-hipótesis-no-paramétricas" class="level2" data-number="6.4">
-<h2 data-number="6.4" class="anchored" data-anchor-id="pruebas-de-hipótesis-no-paramétricas"><span class="header-section-number">6.4</span> Pruebas de hipótesis no paramétricas</h2>
+<section id="para-la-proporción" class="level3">
+<h3 class="anchored" data-anchor-id="para-la-proporción">Para la proporción</h3>
+</section>
+<section id="para-la-varianza" class="level3">
+<h3 class="anchored" data-anchor-id="para-la-varianza">Para la varianza</h3>
+</section>
+</section>
+<section id="pruebas-de-hipótesis-no-paramétricas" class="level2">
+<h2 class="anchored" data-anchor-id="pruebas-de-hipótesis-no-paramétricas">Pruebas de hipótesis no paramétricas</h2>
 
 
 </section>
@@ -470,15 +456,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
       <a href="./04-sampling.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Muestreo</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./06-regresion.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Correlación y Regresión</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

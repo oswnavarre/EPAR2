@@ -38,7 +38,7 @@ El proceso estadístico tiene como principal entrada a los datos. Sin embargo, e
 -   **Parámetro**: un parámetro es una cantidad numérica que caracteriza a una población.
 -   **Estadístico**: un estadístico es una cantidad numérica que caracteriza a una muestra.
 
-## Clasificación de la estadística.
+## Clasificación de la estadística. {#sec-estypes}
 
 De manera general, la estadística se clasifica en dos grandes ramas : estadística descriptiva y estadística inferencial.
 
@@ -104,6 +104,7 @@ node[concept] {Cualitativas}
 ```
 
 ## Ejercicios {.unnumbered}
+
 
 ::: {#exr-first}
 **Clasifique las siguientes variables en cuantitativas o cualitativas**

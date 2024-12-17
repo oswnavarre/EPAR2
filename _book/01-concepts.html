@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de Datos en Agricultura con R y RStudio - 2&nbsp; Estadística. Conceptos Básicos.</title>
+<title>2&nbsp; Estadística. Conceptos Básicos. – Análisis de Datos en Agricultura con R y RStudio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -24,6 +24,7 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -56,17 +57,25 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7da2cd4d758cc02249fc92bd4cce19a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Sín resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -75,14 +84,44 @@ div.csl-indent {
     "search-more-match-text": "hay más resultados en este documento",
     "search-more-matches-text": "más resultados en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Eviar",
+    "search-submit-button-title": "Enviar",
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -92,13 +131,13 @@ div.csl-indent {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-concepts.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-concepts.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -107,7 +146,7 @@ div.csl-indent {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Análisis de Datos en Agricultura con R y RStudio</a> 
@@ -183,16 +222,16 @@ div.csl-indent {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="-1">
     <h2 id="toc-title">Indice de contenidos</h2>
    
   <ul>
   <li><a href="#etapas-del-proceso-estadístico." id="toc-etapas-del-proceso-estadístico." class="nav-link active" data-scroll-target="#etapas-del-proceso-estadístico."><span class="header-section-number">2.1</span> Etapas del proceso estadístico.</a></li>
   <li><a href="#definiciones-importantes" id="toc-definiciones-importantes" class="nav-link" data-scroll-target="#definiciones-importantes"><span class="header-section-number">2.2</span> Definiciones importantes</a></li>
-  <li><a href="#clasificación-de-la-estadística." id="toc-clasificación-de-la-estadística." class="nav-link" data-scroll-target="#clasificación-de-la-estadística."><span class="header-section-number">2.3</span> Clasificación de la estadística.</a></li>
+  <li><a href="#sec-estypes" id="toc-sec-estypes" class="nav-link" data-scroll-target="#sec-estypes"><span class="header-section-number">2.3</span> Clasificación de la estadística.</a></li>
   <li><a href="#tipos-de-estudio" id="toc-tipos-de-estudio" class="nav-link" data-scroll-target="#tipos-de-estudio"><span class="header-section-number">2.4</span> Tipos de estudio</a></li>
   <li><a href="#variables-clasificación-y-niveles-de-medición." id="toc-variables-clasificación-y-niveles-de-medición." class="nav-link" data-scroll-target="#variables-clasificación-y-niveles-de-medición."><span class="header-section-number">2.5</span> Variables, clasificación y niveles de medición.</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
@@ -217,7 +256,9 @@ div.csl-indent {
   </div>
   
 
+
 </header>
+
 
 <p>El término <em>estadística</em> tiene su origen en la palabra alemana <em>statistik</em> acuñada por el economista aleman Gottfried Achenwall, la palabra tuvo su génesis en el latín <em>statisticus</em> que se podría traducir como <em>relativo al estado</em>, pues lo que hoy conocemos como estadística estuvo incialmente relacionado con datos relativos a los gobiernos o estados, dichos datos podían provenir de censos, registros de salud, pago de impuestos, etc. En los siglos XVI y XVII hubo un fuerte interés por las probabilidades, más que nada por el deseo de obtener ventaja en juegos de cartas y otras formas de apuesta.</p>
 <p>La ciencia estadística como tal evolucionó al punto que hoy encontramos estadísticas y estadística en muchos aspectos de nuestra vida cotidiana. Cuando hablamos de estadística nos referimos a la ciencia (que definiremos formalmente un poco más adelante), mientras que al usar el termino estadísticas nos referimos a datos, o a la presentación de hechos, gráficas o información. Por ejemplo cuando en una hacienda cacaotera se presenta la información relativa a la producción en kilogramos de los híbridos usados en la plantación estamos hablando de estadísticas, mientras que el problema de analizar, y establecer las diferencias en el rendimiento medido en kilogramos por hectárea para diferentes híbridos con el fin de aumentar las ganancias de la finca puede ser resuelto usando estadística.</p>
@@ -257,8 +298,8 @@ Importante
 <li><strong>Estadístico</strong>: un estadístico es una cantidad numérica que caracteriza a una muestra.</li>
 </ul>
 </section>
-<section id="clasificación-de-la-estadística." class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="clasificación-de-la-estadística."><span class="header-section-number">2.3</span> Clasificación de la estadística.</h2>
+<section id="sec-estypes" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="sec-estypes"><span class="header-section-number">2.3</span> Clasificación de la estadística.</h2>
 <p>De manera general, la estadística se clasifica en dos grandes ramas : estadística descriptiva y estadística inferencial.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -286,11 +327,15 @@ Importante
 <p><strong>Estadística Inferencial</strong> se refiere a los métodos para sacar conclusiones, hacer predicciones o tomar decisiones sobre una población, basándose en datos de una muestra perteneciente a una población.</p>
 </div>
 </div>
-<p>En la <a href="#fig-popsample">Figura&nbsp;<span>2.1</span></a> se muestra la relación entre algunos conceptos revisados hasta ahora. Supongamos que en una finca lechera se desea hacer un estudio sobre el efecto de una dieta en la producción de leche en una determinada raza de vacas lecheras. El conjunto de todas las vacas representa a toda la <strong>población</strong>. El objetivo de estudio es determinar el rendimiento promedio de todas las vacas, esta medida de toda la población es un <strong>parámetro</strong>. Debido a ser un producto de prueba el estudio no es aplicado a toda la población, por lo que se utiliza técnicas de <strong>muestreo</strong> para escoger una <strong>muestra</strong> representativa, con <strong>estadística descriptiva</strong> se determina el rendimiento promedio de la muestra, este valor es un <strong>estadístico</strong>. Con técnicas de <strong>estadística inferencial</strong> se estima el valor del parámetro de interés.</p>
-<div id="fig-popsample" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="imagenes/popsample3.png" class="img-fluid figure-img"></p>
-<figcaption class="figure-caption">Figura&nbsp;2.1: Relación entre algunos conceptos estadísticos</figcaption>
+<p>En la <a href="#fig-popsample" class="quarto-xref">Figura&nbsp;<span>2.1</span></a> se muestra la relación entre algunos conceptos revisados hasta ahora. Supongamos que en una finca lechera se desea hacer un estudio sobre el efecto de una dieta en la producción de leche en una determinada raza de vacas lecheras. El conjunto de todas las vacas representa a toda la <strong>población</strong>. El objetivo de estudio es determinar el rendimiento promedio de todas las vacas, esta medida de toda la población es un <strong>parámetro</strong>. Debido a ser un producto de prueba el estudio no es aplicado a toda la población, por lo que se utiliza técnicas de <strong>muestreo</strong> para escoger una <strong>muestra</strong> representativa, con <strong>estadística descriptiva</strong> se determina el rendimiento promedio de la muestra, este valor es un <strong>estadístico</strong>. Con técnicas de <strong>estadística inferencial</strong> se estima el valor del parámetro de interés.</p>
+<div id="fig-popsample" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-popsample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="imagenes/popsample3.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-popsample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.1: Relación entre algunos conceptos estadísticos
+</figcaption>
 </figure>
 </div>
 </section>
@@ -329,7 +374,7 @@ Importante
 <h2 data-number="2.5" class="anchored" data-anchor-id="variables-clasificación-y-niveles-de-medición."><span class="header-section-number">2.5</span> Variables, clasificación y niveles de medición.</h2>
 <p>En un estudio sobre características fenotípicas de girasoles cultivadas en el trópico húmedo se registra información sobre el número de planta, el número de parcela donde se encuentra la planta, la variedad de girasol observada, el número de fila, la altura de las plantas, la circunferencia del tallo, el color de las flores, el número de pétalos de las flores y número de hojas. Estas características, medidas o valores de interés para la persona que investiga reciben el nombre de <strong>variables</strong>.</p>
 <p>En la variable <strong>Variedad de Girasol</strong> se puede almacenar respuestas como Almonte, Ariadna, Candela, etc. Mientras que en la variable <strong>Color de las flores</strong> se puede registrar valores como Marfil, Amarillo pálido, Naranja, Púrpura, Rojo o Multicolor. Estas dos variables son <strong>variables cualitativas</strong>, pues describen una cualidad o categoría.</p>
-<p>En las variables <strong>altura de las plantas</strong>, <strong>circunferencia del tallo</strong>, <strong>número de pétalos de las flores</strong> y <strong>número de hojas</strong> se almacenan respuestas numéricas. Estas variables son ejemplo de <strong>variables cuantitativas</strong>. Para la altura de las plantas en centímetros ejemplos de respuestas son <span class="math inline">\(75.23\)</span>, <span class="math inline">\(92.15\)</span>, etc. Mientras que para el número de pétalos o para el número de hojas las respuestas pueden ser, por ejemplo, <span class="math inline">\(10\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(20\)</span>, etc. Para el caso de la altura, como se observa, aceptamos respuestas con decimales, en este caso la variable es <strong>cuantitativa continua</strong>. La variable número de hojas es un ejemplo de variable <strong>cuantitativa discreta</strong> pues es una variable que solo acepta números enteros. En la <a href="#fig-clasvars">Figura&nbsp;<span>2.2</span></a> se presenta un resumen de la clasificación de las variables.</p>
+<p>En las variables <strong>altura de las plantas</strong>, <strong>circunferencia del tallo</strong>, <strong>número de pétalos de las flores</strong> y <strong>número de hojas</strong> se almacenan respuestas numéricas. Estas variables son ejemplo de <strong>variables cuantitativas</strong>. Para la altura de las plantas en centímetros ejemplos de respuestas son <span class="math inline">\(75.23\)</span>, <span class="math inline">\(92.15\)</span>, etc. Mientras que para el número de pétalos o para el número de hojas las respuestas pueden ser, por ejemplo, <span class="math inline">\(10\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(20\)</span>, etc. Para el caso de la altura, como se observa, aceptamos respuestas con decimales, en este caso la variable es <strong>cuantitativa continua</strong>. La variable número de hojas es un ejemplo de variable <strong>cuantitativa discreta</strong> pues es una variable que solo acepta números enteros. En la <a href="#fig-clasvars" class="quarto-xref">Figura&nbsp;<span>2.2</span></a> se presenta un resumen de la clasificación de las variables.</p>
 <p>Las variables además presentan <strong>niveles de medición</strong>, estos pueden ser:</p>
 <ol type="1">
 <li>Ordinal: toman valores que se ordenan o clasifican de forma lógica, ejemplos de variables con este nivel de medición pueden ser <strong>fila en que se encuentra una planta</strong>, <strong>nivel de aceptación de un producto (muy alto, alto, medio, bajo, muy bajo)</strong></li>
@@ -339,10 +384,14 @@ Importante
 </ol>
 <div class="cell">
 <div class="cell-output-display">
-<div id="fig-clasvars" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="01-concepts_files/figure-html/fig-clasvars-1.png" class="img-fluid figure-img" style="width:80.0%"></p>
-<figcaption class="figure-caption">Figura&nbsp;2.2: Clasificación de las variables</figcaption>
+<div id="fig-clasvars" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-clasvars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="01-concepts_files/figure-html/fig-clasvars-1.png" class="img-fluid figure-img" style="width:80.0%" data-fig-pos="H">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-clasvars-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2.2: Clasificación de las variables
+</figcaption>
 </figure>
 </div>
 </div>
@@ -351,7 +400,7 @@ Importante
 <section id="ejercicios" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-first" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.1 </strong></span><strong>Clasifique las siguientes variables en cuantitativas o cualitativas</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.1</strong></span> <strong>Clasifique las siguientes variables en cuantitativas o cualitativas</strong></p>
 </div>
 <ol type="a">
 <li>Diámetro del tallo de una planta de banano.</li>
@@ -369,14 +418,28 @@ Importante
 <li>Temperatura medida en grados Kelvin</li>
 </ol>
 <div id="exr-second" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.2 </strong></span><strong>Clasifique las variables cuantitativas del <a href="#exr-first">Ejercicio&nbsp;<span>2.1</span></a> como continuas o discretas.</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.2</strong></span> <strong>Clasifique las variables cuantitativas del <a href="#exr-first" class="quarto-xref">Ejercicio&nbsp;<span>2.1</span></a> como continuas o discretas.</strong></p>
 </div>
 <div id="exr-third" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.3 </strong></span><strong>Determine el nivel de medición de las variables cuantitativas del <a href="#exr-first">Ejercicio&nbsp;<span>2.1</span></a>.</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.3</strong></span> <strong>Determine el nivel de medición de las variables cuantitativas del <a href="#exr-first" class="quarto-xref">Ejercicio&nbsp;<span>2.1</span></a>.</strong></p>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list" style="display: none">
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-agresti2023" class="csl-entry" role="listitem">
 Agresti, A., Franklin, C., y Klingenberg, B. (2023). <em>Statistics. The Art and Science of Learning from Data</em> (5a. ed.). Pearson.
 </div>
@@ -387,6 +450,17 @@ Cleff, T. (2013). <em>Exploratory Data Analysis in Business and Economics</em> (
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -422,18 +496,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -465,11 +528,48 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -479,8 +579,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -492,7 +601,129 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -536,6 +767,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -561,6 +793,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -622,17 +880,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./intro.html" class="pagination-link">
+      <a href="./intro.html" class="pagination-link" aria-label="R y RStudio">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./02-estdesc.html" class="pagination-link">
+      <a href="./02-estdesc.html" class="pagination-link" aria-label="Estadística Descriptiva">
         <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

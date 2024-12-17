@@ -124,7 +124,7 @@ g1
 
 #### Diagrama de barras agrupadas
 
-En un diagrama de barras agrupadas, al igual que en un diagrama de barras, se muestran los conteos para un grupo, pero además se desglosa para una variable cuantitativa adicional. Por ejemplo en la @fig-grafico2 se muestran los porcentajes de nitrógeno, fosforo y potasio para cuatro variedades diferentes de maíz.
+En un diagrama de barras agrupadas, al igual que en un diagrama de barras, se muestran los conteos para un grupo, pero además se desglosa para una variable cuantitativa adicional. Por ejemplo en la @fig-grafico2 se muestran los porcentajes de nitrógeno (N), fósforo (P) y potasio (K) para cuatro variedades diferentes de maíz.
 
 ```{r fig-grafico2, echo=FALSE, message=FALSE}
 #| fig-cap: Diagrama de Barras Agrupadas
@@ -152,7 +152,7 @@ g1
 
 #### Diagrama de barras apiladas
 
-Una variación muy útil de los diagramas de barras son los diagramas de barras apiladas. A diferencia de los diagramas de barras agrupadas en este caso se apilan las barras una sobre otra. Esto es útil cuando las barras suman un $100 \%$. En la @fig-grafico3 se muestra la relación Humedad, Materia Seca para cuatro variedades de maíz.
+Una variación muy útil de los diagramas de barras son los diagramas de barras apiladas. A diferencia de los diagramas de barras agrupadas en este caso se apilan las barras una sobre otra. Esto es útil cuando las barras suman $100 \%$, o la suma de los porcentajes o frecuencias es constante. En la @fig-grafico3 se muestra la relación Humedad, Materia Seca para cuatro variedades de maíz.
 
 ```{r fig-grafico3, echo=FALSE, message=FALSE}
 #| fig-cap: Diagrama de Barras Apiladas
@@ -295,7 +295,7 @@ ggplot(atoc_149, aes(x = Tratamiento, y = Altura)) +
   )
 ```
 
-#### Gráficos de líneas
+#### Gráficos de líneas {#sec-gralin}
 
 Estos gráficos son útiles para mostrar la tendencia de una variable cuantitativa en el tiempo. En la @fig-lineas se muestra la evolución de la altura de las plantas de caña separadas por tratamiento.
 
@@ -474,7 +474,7 @@ Entre el sesgo y las medidas de tendencia central existen las siguientes relacio
 
 {{< pagebreak >}}
 
-### Medidas de dispersión
+### Medidas de dispersión {#sec-disp}
 
 Supongamos que en una empresa distribuidora de agroquímicos se forman dos equipos de ventas, la empresa ofrece un bono al equipo que tiene el mejor desempeño en las ventas mensuales promedio. En la @tbl-ventas se muestra el mínimo, la media, la mediana, el máximo y el total para las ventas mensuales de ambos equipos. Se observa que ambos equipos vendieron la misma cantidad total durante el mes por lo que tuvieron la misma media para las ventas mensuales. Es decir, que si se quisiera escoger al mejor equipo por el total de ventas mensuales o por el promedio de ventas mensuales no hay un equipo que haya tenido un mejor desempeño. Por otro lado el equipo 2 tiene un valor mínimo menor que el equipo 1 y en cuanto al máximo el equipo 2 tiene un valor máximo mayor al del equipo 1, esto nos llevaría a pensar que aunque ambos equipos tienen la misma media mensual la distribución de los datos para ambos equipos es diferente.
 
@@ -548,7 +548,7 @@ g7
 g8
 ```
 
-Regresando a nuestra pregunta inicial ¿qué equipo tiene un mayor desempeño en sus ventas mensuales? Para contestar esta pregunta vamos a cuantificar la **dispersión** de los datos, esta cuantificación la haremos con las tres medidas de dispersión más usadas.
+Regresando a nuestra pregunta inicial ¿qué equipo tiene un mayor desempeño en sus ventas mensuales? Para contestar esta pregunta podemos calcular la **dispersión** de los datos, esta cuantificación la haremos con las tres medidas de dispersión más usadas.
 
 #### Rango
 
@@ -592,6 +592,25 @@ s = \sqrt{s^2} = \sqrt{\dfrac{\sum_{i=1}^n(x_i-\bar{x})^2}{n-1}}
 $$ {#eq-desvm}
 :::
 
+Finalmente, en la @tbl-dispventas podemos apreciar que el equipo 1 tiene un rango menor que el equipo 2, lo mismo ocurre con las otras dos medidas de dispersión. El hecho de que las medidas de dispersión del equipo 1 sean menores a las del equipo 2 nos da a entender que aunque ambos equipos tienen el mismo promedio de ventas, en el equipo 1 las ventas son más homogéneas.
+
+```{r}
+#| label: tbl-dispventas
+#| tbl-cap: Medidas de Dispersión de las ventas por Equipo
+#| echo: false
+#| message: false
+#| warning: false
+
+tbl3 <- ventas |>
+  group_by(Equipo) |>
+  summarise(
+    Rango = max(Ventas)- min(Ventas),
+    Varianza = format(var(Ventas), scientific = F, nsmall=2),
+    Desviación = sd(Ventas)
+  )
+kable(tbl3,booktabs = TRUE,format = "pandoc", digits = 2)
+```
+
 ### Medidas de posición
 
 Las medidas de posición no central permiten conocer otros puntos característicos de la distribución que no son los valores centrales. Entre las medidas de posición no central más importantes están los cuantiles. El término cuantil fue usado por primera vez por Kendall en 1940.
@@ -632,6 +651,8 @@ $$
   X_{i.a}=X_{i}+0.a(X_{i+1}-X_{i})
 $$ {#eq-valperc}
 
+Estas expresiones matemáticas no serán usadas para el cálculo de percentiles en este texto. Más adelante aprenderemos una función en R que nos permite calcular cualquier percentil.
+
 #### Relación entre los cuartiles y el diagrama de caja.
 
 En la @sec-cajas se dijo que la línea central de la caja corresponde a la mediana de los datos, ahora que conocemos a los cuartiles es útil saber cuál es la relación entre los cuartiles y los diagramas de caja. En la @fig-boxparts se muestran las partes del diagrama de cajas. El límite inferior y el límite superior se calculan en función del **rango intercuartílico** ($IQR$ por sus siglas en inglés) que es igual a la diferencia entre el tercer y primer cuartil.
@@ -652,17 +673,7 @@ $$ {#eq-lidc}
 
 ![Partes de un diagrama de caja](imagenes/boxplot3.png){#fig-boxparts width="50%"}
 
-## Primeros pasos en RStudio {#sec-pprs}
-
-En la @sec-basicsR, se presentaron algunos conceptos básicos de R utilizando la consola de R. Cuando se trabaja con conjuntos de datos, o cuando se desea guardar y compartir el trabajo realizado es conveniente usar **scripts**, un script es un archivo de texto que contiene los mismos comandos que ingresaría en la línea de comandos de R.
-
-Una vez abierto RStudio, para crear un script hay dos opciones. La primera es en la barra de herramientas principal escoger `File | New File | R Script`, la segunda opción es escribir la combinación de teclas (en Windows) `Ctrl + Shift + N` o `Cmd + Shift + N` (en Mac).
-
-Cuando el script está creado se puede escribir código como se visualiza a la derecha de la @fig-script. Para ejecutar el código se puede ubicar en cualquier parte de la línea y presionar la combinación de teclas `Ctrl + Enter`o `Cmd + Enter`, otra opción es dar clic en el botón `Run` ubicado en la parte superior derecha del script (encerrada en rectángulo rojo de la @fig-script2). Si solo es una línea de código no es necesario seleccionarla para poder ejecutarla. Al momento de ejecutar el código, el código se ejecuta en la consola (rectángulo azul de la @fig-script2) y además se visualiza el objeto en el ambiente (rectángulo negro de la @fig-script2).
-
-![Creación de un script](imagenes/script.png){#fig-script width="75%"}
-
-![Ejecución de comandos desde un script](imagenes/script2.png){#fig-script2 width="50%"}
+## Primeros pasos en RStudio. Elaboración de gráficos y obtención de medidas de resumen. {#sec-pprs}
 
 En el proceso de análisis de datos, adicional a los scripts, la mayoría de ocasiones es necesario tener los datos almacenados en algún directorio de la computadora (en algunas ocasiones los datos se leen desde internet). Las tablas y los gráficos que se generen, también pueden ser almacenados en la computadora. Una forma de manejar esto de forma eficiente es trabajando con *directorios de trabajo*, un directorio de trabajo es una ruta dentro de la computadora que especifica la ubicación predeterminada de los archivos que leamos en R o que guardemos desde R.
 
@@ -671,7 +682,7 @@ En el proceso de análisis de datos, adicional a los scripts, la mayoría de oca
 -   Para fijar el directorio de trabajo se usa la función `setwd(dir = "directorio")`
 :::
 
-### Creación de proyectos en RStudio
+### Creación de proyectos en RStudio {#sec-projectR}
 
 RStudio tiene una forma más eficiente de manejar los directorios de trabajo, utilizando **proyectos**. Un proyecto es simplemente un directorio de trabajo designado con un archivo de extensión `.Rproj`. Al momento de abrir un proyecto, se configura automáticamente el directorio de trabajo como el directorio donde se encuentra el archivo `.Rproj`.
 
@@ -692,6 +703,7 @@ Para crear un proyecto, se debe dar clic en `File -> New Project` y aparecerá l
 
 Escogemos la opción de acuerdo a nuestras necesidades:
 
+::: callout-tip
 -   **New Directory**: escogemos esta opción si vamos a crear un nuevo directorio desde 0. Cuando se da clic, aparece una nueva ventana como se muestra en la @fig-project3
 
 ![Opción New Directory](imagenes/rpoject2_np.png){#fig-project3 width="50%"}
@@ -699,10 +711,11 @@ Escogemos la opción de acuerdo a nuestras necesidades:
 -   **Existing Directory**: escogemos esta opción si ya tenemos creada la carpeta de nuestro proyecto. En este libro vamos a trabajar siempre escogiendo esta opción. Más adelante explicaremos en detalle como crear un proyecto escogiendo esta opción.
 
 -   **Version Control**: El control de versiones ayuda a los equipos de desarrollo de software a controlar y gestionar los cambios en el código fuente a lo largo del tiempo. Los programas y plataformas de control de versiones mantienen un registro de las modificaciones hechas al código. Si se comete un error, los desarrolladores pueden comparar versiones anteriores del código para ayudar a corregir el error al tiempo que se minimizan las molestias para todos los miembros del equipo. RStudio trabaja con dos sistemas de código abierto para el control de versiones: **Git** y **Subversion**.
+:::
+
+#### Creación de proyectos (Existing Directory)
 
 ::: callout-tip
-## Creación de proyectos (Existing Directory)
-
 -   `File -> New Project`
 -   `Existing Directory`
 -   Se abre una ventana como la de la @fig-project4 y damos clic en `Browse`.
@@ -719,36 +732,63 @@ Escogemos la opción de acuerdo a nuestras necesidades:
 
 ![Proyecto creado](imagenes/rproject_ed4.png){#fig-project7 width="50%"}
 
-### Creando nuestros primeros gráficos.
+## Creando visualizaciones con `ggplot2`.
 
-En esta sección trabajaremos con el conjunto de datos `alt_almacigo.csv`, este conjunto de datos corresponde a las alturas de 105 plantas de tomate de 5 variedades, 20 días después de la siembra en los almácigos. 
+### Los datos
 
-El primer paso es guardar nuestros datos en la carpeta `datos` de nuestro proyecto, creado anteriormente, `r4agro`. Posteriormente creamos un script, en esta oportunidad guardaremos nuestro script en la carpeta `scripts` con el nombre `01_visualizacion.R`. 
+En esta sección trabajaremos con el conjunto de datos `alt_almacigo.csv`, este conjunto de datos corresponde a las alturas de 105 plantas de tomate de 5 variedades, 20 días después de la siembra en los almácigos. Las variables presentes en el archivo son:
+
+1.  **Planta**: número de planta estudiada.
+2.  **Variedad**: variedad de la planta.
+3.  **DDS**: días después de siembra.
+4.  **Altura**: altura de la planta en centímetros.
+5.  **NHV**: Número de hojas verdaderas.
+
+En la @sec-bars1, explicaremos paso a paso como obtener el gráfico mostrado en la figura @fig-bars1:
+
+```{r fig-bars1,  echo=FALSE, warning=FALSE, message=FALSE}
+#| fig-cap: Diagrama de barras de las variedades de tomate
+#| fig-pos: 'H'
+#| out-width: 60%
+
+library(dplyr)
+library(ggplot2)
+
+datos <- read.csv("datos/alt_almacigo.csv",sep = ";", dec = ",")
+
+ggplot(data = datos, mapping = aes(x = Variedad)) + 
+  geom_bar() +
+  ylab("Frecuencia")
+```
+
+### Cargar paquetes y leer datos
+
+El primer paso es guardar nuestros datos en la carpeta `datos` de nuestro proyecto, creado anteriormente, `r4agro`. Posteriormente creamos un script, en esta oportunidad guardaremos nuestro script en la carpeta `scripts` con el nombre `01_visualizacion.R`.
 
 Existen muchas formas de trabajar en un script, sin embargo, se recomienda seguir el siguiente flujo:
 
 ::: callout-tip
-1. Cargar los paquetes que sean necesarios para el análisis que se va a trabajar. 
-2. Cargar los datos que se van a utilizar en el análisis. 
-3. Trabajar con los datos, esto incluye realizar gráficos, analizar los datos o crear modelos.
+1.  Cargar los paquetes que sean necesarios para el análisis que se va a trabajar.
+2.  Cargar los datos que se van a utilizar en el análisis.
+3.  Trabajar con los datos, esto incluye realizar gráficos, analizar los datos o crear modelos.
 :::
 
-En este primer script trabajaremos solamente con los paquetes **dplyr** y **ggplot2** descritos en la @sec-packs. En las primeras líneas escribiremos las siguientes líneas de código. 
+En este primer script trabajaremos solamente con los paquetes **dplyr** y **ggplot2** descritos en la @sec-packs. En las primeras líneas escribiremos las siguientes líneas de código.
 
 ```{r echo=TRUE}
 library(dplyr)
 library(ggplot2)
 ```
 
-Una vez cargados los paquetes procedemos a leer los datos. El archivo con el que vamos a trabajar es un archivo de valores separados por comas (**c**omma ¨**s**eparted **v**alues). Existen muchas funciones que podemos usar para leer este tipo de archivos, sin embargo, vamos a trabajar con la función `read.csv`. Para no cometer errores al momento de la lectura de los datos es importante identificar si nuestros valores efectivamente están separados por coma (,) y si el archivo utiliza el punto (.) como separador de decimales. El archivo de nuestros datos tiene como separador de los valores el punto y coma, y como separador de decimales la coma.
+Una vez cargados los paquetes procedemos a leer los datos. El archivo con el que vamos a trabajar es un archivo de valores separados por comas (**c**omma ¨**s**eparated **v**alues). Existen muchas funciones que podemos usar para leer este tipo de archivos, sin embargo, vamos a trabajar con la función `read.csv`. Para no cometer errores al momento de la lectura de los datos es importante identificar si nuestros valores efectivamente están separados por coma (,) y si el archivo utiliza el punto (.) como separador de decimales. El archivo de nuestros datos tiene como separador de los valores el punto y coma, y como separador de decimales la coma.
 
 ::: callout-important
-1. Un archivo `csv` no necesariamente, tiene sus valores separados por coma. Dependiendo del sistema operativo o la región geográfica, los valores se guardan separados por coma (,) o por punto y coma (;).
-2. Si los valores están separados por coma, generalmente el separador de decimales es el punto (.). 
-3. Cuando los valores están separados por punto y coma, el separador de decimales es la coma.
+1.  Un archivo `csv` no necesariamente, tiene sus valores separados por coma. Dependiendo del sistema operativo o la región geográfica, los valores se guardan separados por coma (,) o por punto y coma (;).
+2.  Si los valores están separados por coma, generalmente el separador de decimales es el punto (.).
+3.  Cuando los valores están separados por punto y coma, el separador de decimales es la coma.
 :::
 
-Para leer los datos escribimos la siguiente línea de código. 
+Para leer los datos escribimos la siguiente línea de código.
 
 ```{r}
 datos <- read.csv("datos/alt_almacigo.csv",sep = ";", dec = ",")
@@ -756,5 +796,628 @@ datos <- read.csv("datos/alt_almacigo.csv",sep = ";", dec = ",")
 
 ::: {.callout-important title="Entendiendo el código"}
 ![Leer datos con la función `read.csv()`](imagenes/codigo1.png){#fig-codigo1 width="90%"}
-
 :::
+
+Una vez cargados los datos podemos empezar por ver las variables y los tipos de datos en nuestro conjunto leído, para esto podemos usar la función `str()` o la función `glimpse()`.
+
+::: callout-tip
+1.  `str()` permite ver la estructura interna de un objeto. Pertenece al R base.
+2.  `glimpse()` se utiliza para ver las columnas del conjunto de datos y mostrar una parte de los datos con respecto a cada atributo que pueda caber en una sola línea.
+:::
+
+```{r}
+str(datos)
+glimpse(datos)
+```
+
+La salida de la función `str()` nos muestra que nuestro objeto datos es un *data frame* de 105 observaciones y 5 variables. Las variables **Planta** y **DDS** son reconocidas como entero (**int**, *integer*), las variables **Altura** y **NHV** son reconocidas como número (**num**, *numeric*) esta clase de objetos hace referencia a los números que admiten decimales. Finalmente, la variable **Variedad** es reconocida como carácter (**chr**, *character*). Por otro lado la salida de la función `glimpse()` se diferencia en que las observaciones las reconoce como filas (**Rows**) y las variables como columnas (**Columns**), además las variables **Altura** y **NHV** son reconocidas de tipo *doble precisión* (**dbl**, *double precision*)
+
+::: callout-tip
+R tiene dos nombres para los vectores de coma flotante: **dbl** y **num**. Por un lado **double** es el nombre del *tipo* de datos, mientras que **numeric** es el nombre del *modo* de datos y además de la *clase* implícita.
+
+Aunque no es el objeto de este texto una discusión más profunda de este tema puede ser encontrada en el [enlace](https://stat.ethz.ch/R-manual/R-devel/doc/manual/R-lang.html#Objects)
+:::
+
+El tipo de datos para la variable **Variedad** que ha sido reconocido quizás no es el adecuado para análisis posteriores, puesto que la variable es una variable categórica y se recomienda cambiar el tipo de datos a **factor**. Más adelante realizaremos esta modificación.
+
+### La gramática del paquete `ggplot2` para la construcción de gráficos {#sec-bars1}
+
+En R encontramos muchos sistemas para hacer gráficos, sin embargo el paquete `ggplot2` implementa la **gramática de gráficos** que es un sistema coherente para construir gráficos.
+
+De manera general la grámatica para construir un gráfico es:
+
+```{r eval=FALSE, include=TRUE}
+ggplot(data = ... , mapping = ... ) +
+  GEOM()
+```
+
+Para construir un gráfico se comienza usando la función `ggplot()`, esto nos permite definir un objeto gráfico al que le vamos a añadir **capas** hasta obtener el gráfico deseado. El primer argumento que se debe ingresar es el conjunto de datos, el comando `ggplot(data = datos)` crea un gráfico vacío en el que vamos a presentar algo de nuestros datos. Por el momento nuestro gráfico luce vacío porque no hemos indicado qué y cómo vamos a presentar.
+
+```{r}
+ggplot(data = datos)
+```
+
+Ahora debemos indicar qué variables van a ser representadas. En el argumento `mapping` se indica como las variables del conjunto de datos son mapeadas a las propiedades visuales (estéticas, **aesthetics**) del gráfico. Las variables a ser mapeadas se definen en la función `aes()` en la que se señalan las variables que van a ser presentadas en el eje $x$ y en el eje de las $y$. En nuestro caso solo vamos a representar el conteo de las variedades en un diagrama de barras por lo que en la función `aes()` vamos a incluir el argumento `x = Variedad`.
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Variedad)) 
+```
+
+Después de indicar los datos y las variables para nuestro gráfico, debemos indicar **cómo** se van a representar nuestros datos. En la gramática de **ggplot2** el objeto visual usado para representar datos de forma gráfica se lo conoce como **geom**. En nuestro caso deseamos realizar un diagrama de barras, para esto usaremos `geom_bar()`.
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Variedad)) +
+  geom_bar()
+```
+
+Si comparamos este último gráfico con el de la @fig-bars1, podemos notar que el eje de las $y$ aparece la palabra "Frecuencia". Para lograr esto, podemos usar la función `ylab()` y añadir una capa donde establecemos la etiqueta del eje $y$.
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Variedad)) +
+  geom_bar() +
+  ylab("Frecuencia")
+```
+
+Supongamos que se desea añadir color a las barras. Hay dos opciones, la primera es que todas las barras tengan un único color, la segunda opción es que cada barra tenga un color de acuerdo a la variedad
+
+Existen dos argumentos que nos pueden ayudar a lograr el objetivo: `fill` y `col`, es importante entender la diferencia de ellos cuando se trabajan con gráficos de barras.
+
+::: callout-tip
+-   El argumento `fill` indica el relleno que se desea dar a las barras.
+-   El argumento `col` indica el color que rodea a las barras
+:::
+
+Para dar color a las barras usamos el argumento `fill`, si es un color único dentro del objeto geométrico escribimos `fill = color_deseado`. Por otro lado, si queremos que cada barra tenga un color diferente, dentro de `aes` incluimos el argumento `fill = Variable`. El nombre del color puede ser escrito de algunas formas posibles.
+
+::: callout-important
+1.  R tiene 657 colores integrados, los nombres pueden ser obtenidos con la función `colors()`. Una guía detallada se puede encontrar en el [enlace](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf)
+2.  Se puede usar también códigos hexadecimales de colores.
+3.  En el [enlace](https://www.nceas.ucsb.edu/sites/default/files/2020-04/colorPaletteCheatsheet.pdf) se puede encontrar más información de manejo de colores y paletas de colores en R.
+:::
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Variedad )) +
+  geom_bar(fill = "lightblue") +
+  ylab("Frecuencia")
+```
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Variedad, fill = Variedad )) +
+  geom_bar() +
+  ylab("Frecuencia")
+```
+
+### Diagrama de cajas
+
+En la @sec-cajas, explicamos qué es un diagrama de cajas. A continuación vamos a elaborar un diagrama de cajas para la altura por variedad. El objeto geométrico para elaborar un diagrama de cajas es `geom_boxplot`.
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Variedad, y = Altura, fill = Variedad )) +
+  geom_boxplot() +
+  ylab("Altura (cm)") 
+```
+
+El gráfico presentado tiene dos aspectos que van a ser modificados, primero la leyenda es redundante porque es evidente qué caja representa a cada variedad. Segundo el fondo del gráfico debe ser blanco. Para lograr esto último usamos la opción `theme_classic()` y para eliminar la leyenda usamos la opción `theme( legend.position = "none" )`.
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Variedad, y = Altura, fill = Variedad )) +
+  geom_boxplot() +
+  ylab("Altura (cm)") +
+  theme_classic() +
+  theme(
+    legend.position = "none"
+  )
+```
+
+### Histogramas y facetas
+
+La variable **Altura** es una variable cuantitativa continua por lo que para representarla es conveniente utilizar un histograma. El objeto geométrico que nos permite obtener un histograma es `geom_histogram()`.
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Altura )) +
+  geom_histogram() +
+  ylab("Frecuencia")
+```
+
+Al ejecutar el código, además del gráfico, en la consola obtenemos un mensaje que nos sugiere que se están usando 30 barras y nos recomienda trabajar con un argumento para cambiar el resultado. La función `geom_histogram()` por defecto trabaja con este valor de barras, otra opción adicional a la sugerencia dada por el programa es dentro del objeto indicar cuántas barras se desea incluir con la opción `bins =`. Además para notar las barras vamos a usar las opciones `fill` y `col`.
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Altura )) +
+  geom_histogram(bins = 7, fill = "white", col = "black" ) +
+  ylab("Frecuencia")
+```
+
+Debemos recordar que nuestro conjunto de datos tiene la información de 5 variedades. El histograma presentado corresponde a la altura de todas las variedades, por lo que sería conveniente separar el histograma por variedad. Para obtener un subgráfico para cada variedad, podemos usar la función `facet_wrap()` o `facet_grid()`. La función más usada es `facet_wrap()`.
+
+::: callout-tip
+1.  `facet_wrap()` es recomendada para separar en subgráficos por una sola variable categórica, mientras que `facet_grid()` es recomendada cuando se desea separar en subgráficos por dos variables categóricas.
+2.  `facet_grid()` produce una cuadrícula de gráficos para cada combinación de variables que se especifican, aún cuando algunos gráficos aparezcan vacíos.
+3.  `facet_wrap()` solo produce gráficos para las combinaciones de variables que tengan datos, es decir que no produce gráficos vacíos.
+:::
+
+El primer argumento de la función es una fórmula que consiste basicamente del símbolo `~` seguido por el nombre de la variable categórica.
+
+```{r}
+ggplot(data = datos, mapping = aes(x = Altura )) +
+  geom_histogram(bins = 7, fill = "white", col = "black" ) +
+  ylab("Frecuencia") + 
+  facet_wrap(~Variedad)
+```
+
+::: {.callout-important title="Cómo guardar un gráfico desde R con `ggplot2`"}
+-   Para guardar un gráfico usamos la función `ggsave()`
+-   La forma básica de usar la funcion es `ggsave(nombre_del_archivo, gráfico, width = ancho, height = altura, units = unidades )`
+-   Para evitar confusiones al momento de guardar se recomienda asignar al gráfico que se desea almacenar a una variable.
+-   Por defecto las unidades para guardar el gráfico son pulgadas. Si deseamos mantener las unidades en pulgadas, no es necesario especificarlas.
+:::
+
+Supongamos que deseamos guardar el último gráfico creado con el nombre `hist_alt_fac.png` en la carpeta gráficos. Primero guardaremos el gráfico en una variable llamada `g1`.
+
+```{r}
+g1 <- ggplot(data = datos, mapping = aes(x = Altura )) +
+  geom_histogram(bins = 7, fill = "white", col = "black" ) +
+  ylab("Frecuencia") + 
+  facet_wrap(~Variedad)
+```
+
+Posteriormente, usamos la función `ggsave()` para guardar el gráfico.
+
+```{r}
+ggsave("graficos/hist_alt_fac.png", g1, width = 10, height = 6)
+```
+
+## Cálculo de medidas numéricas de resumen.
+
+### Ingresando los datos (pequeños conjuntos de datos). {#sec-res1}
+
+En esta sección vamos a presentar cómo calcular medidas númericas de resumen ingresando los datos directamente en la consola, es decir que crearemos una variable que contenga los datos.
+
+El ingeniero Yorky Gil, con la finalidad de elaborar la curva fenológica para el cultivo de girasol en condiciones del trópico húmedo, realizó una siembra de girasoles. Periódicamente realizó mediciones del número de hojas y la altura de las plantas. De los datos obtenidos por Yorky de la semana 8 se extrajo una muestra de las alturas de 20 observaciones las cuales se muestran en la @tbl-altgir. Con estos datos calcular la media, la mediana, la desviación estándar, el rango. Adicionalmente calcular los 3 cuartiles, y los 9 deciles.
+
+|     |     |     |     |     |
+|:---:|:---:|:---:|:---:|:---:|
+| 140 | 123 | 110 | 100 | 137 |
+| 117 | 120 | 112 | 168 | 109 |
+| 165 | 133 | 178 | 81  | 135 |
+| 145 | 109 | 78  | 169 | 132 |
+
+: Altura de girasoles en centímetros. Semana 8 {#tbl-altgir}
+
+Este ejercicio lo resolveremos en un script llamado `02_numrespeq.R`, no es necesario cargar paquetes por lo que el primer paso para resolver este ejercicio es ingresar los datos en R. En este caso es unicámente un vector con 20 datos, vamos a llamar **alt_gir** a la variable.
+
+```{r}
+alt_gir <- c(140, 123, 110, 100, 137, 117, 120, 112, 168, 109, 
+             165, 133, 178, 81, 135, 145, 109, 78, 169, 132)
+```
+
+Una vez ingresados los datos, podemos calcular la media con la función `mean()`, la mediana con la función `median()` y la desviación estándar con la función `sd()`. Estas tres funciones reciben el vector del que se quiere calcular el valor. Además en el caso de tener valores perdidos se puede indicar que se los remueva con la opción `na.rm = TRUE`.
+
+```{r}
+mean(alt_gir)
+median(alt_gir)
+sd(alt_gir)
+```
+
+En el paquete `base` de R no existe una función que nos permita calcular el rango directamente, sin embargo podemos usar la definición dada en la @sec-disp y utilizar las funciones `max()` y `min()` para calcular el rango como la diferencia entre el máximo y el mínimo del conjunto.
+
+```{r}
+max(alt_gir) - min(alt_gir)
+```
+
+Finalmente para calcular los percentiles utilizamos la función `quantile()`, los argumentos que recibe esta función son los datos y el percentil o percentiles que se desean calcular escritos en números decimales . Recordemos que los tres cuartiles acumulan el 25%, el 50% y el 75% respectivamente. Si solo quisieramos calcular el primer cuartil, lo podemos obtener escribiendo.
+
+```{r}
+quantile(alt_gir, 0.25)
+```
+
+Para calcular los tres cuartiles de una sola vez, se puede escribir una lista de los cuartiles.
+
+```{r}
+quantile(alt_gir, c(0.25, 0.50, 0.75))
+```
+
+En el caso de los deciles podemos escribir como antes o utilizar la función `seq()`
+
+```{r}
+quantile(alt_gir, c(0.10, 0.20, 0.30, 0.40, 0.50, 0.60, 0.70, 0.80, 0.90))
+```
+
+::: callout-tip
+Para ver la ayuda de una función podemos escribir `?función`, en este caso podemos investigar como usar la función `seq()`, escribiendo `?seq`. En el panel inferior derecho observamos una descripción detallada de como trabaja la función.
+:::
+
+```{r}
+quantile(alt_gir, seq(from = 0.10, to = 0.90,  by = 0.10))
+```
+
+### Leyendo los datos desde un archivo en Excel, usando el pipe (`|>`) (grandes conjuntos de datos). {#sec-res2}
+
+En la @sec-bars1, aprendimos a leer datos que se encuentran en un archivo `.csv`. Ahora trabajaremos con datos que se encuentran disponibles en un libro de Excel. El archivo se llama `alt_transp.xlsx` y la información está en la hoja de cálculo llamada `transplante`. Contiene la información de mediciones de altura hechas a plantas de tomate de cinco variedades. Las variables presentes son:
+
+1.  **Planta**: número de planta.
+2.  **Fecha_med**: fecha de la medición.
+3.  **Fecha_trans**: fecha del transplante de las plantas del almácigo a los potes, en todos los casos esta variable tiene el mismo valor (27 de mayo de 2023).
+4.  **Variedad**: variedad de las plantas.
+5.  **Altura**: altura de las plantas en centímetros.
+
+Existen algunos paquetes para leer información desde archivos Excel, sin embargo vamos a utilizar el paquete `readxl`. Adicionalmente usaremos el paquete `writexl` que nos permitirá guardar más adelante nuestros resultados en un archivo de Excel. Vamos a crear un script llamado `03_numresgra.R`. Recordemos que primero cargamos los paquetes.
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(writexl)
+```
+
+Ahora leamos los datos con la función `read_excel()` del paquete `readxl()`.
+
+```{r}
+transplante <- read_excel("datos/alt_transp.xlsx", sheet = "transplante")
+glimpse(transplante)
+```
+
+::: {.callout-important title="Entendiendo el código"}
+![Leer datos con la función `read_excel()`](imagenes/codigo2.png){#fig-codigo2 width="90%"}
+:::
+
+Al usar la función `glimpse()` notamos que las variables `Fecha_med` y `Fecha_trans` son reconocidas como del tipo `dttm` (**date-time**) que es un tipo de dato asociados a datos de fecha y tiempo.
+
+Deseamos conocer la media y la desviación estándar de la altura de las plantas por cada fecha de medición y variedad. En R base existe la familia de funciones `apply` que permite hacer esto de forma rápida, sin embargo el paquete `dplyr` tiene una serie de funciones que permiten realizar esto de forma mucho más eficiente, estas funciones son combinadas con el `pipe |>`.
+
+::: callout-important
+1.  El **pipe** `|>` permite concatenar funciones del paquete `dplyr()`
+2.  La forma recomendada para pronunciar el **pipe** es "entonces".
+:::
+
+Si calculáramos a mano la media y la desviación estándar de la altura por variedad y fecha de medición, primero agruparíamos los datos por variedad y fecha y luego calcularíamos para cada grupo estas medidas numéricas. Para resolver esto con las funciones de `dplyr()` usamos el siguiente código:
+
+```{r}
+transplante |>
+  group_by(Variedad, Fecha_med) |>
+  summarise(
+    Media = mean(Altura),
+    Desv = sd(Altura)
+  )
+```
+
+::: {.callout-important title="Entendiendo el código"}
+![Resumiendo datos con funciones `dplyr`](imagenes/codigo3.png){#fig-codigo3 width="90%"}
+:::
+
+De la tabla generada, unicámente se muestran 10 columnas en la consola. Para poder ver toda la tabla se debe guardar toda la tabla en una variable, en este caso la almacenaremos en una variable llamada `tbl_alt_var_fec`.
+
+```{r}
+tbl_alt_var_fec <- transplante |>
+  group_by(Variedad, Fecha_med) |>
+  summarise(
+    Media = mean(Altura),
+    Desv = sd(Altura)
+  )
+```
+
+Posteriormente, podemos visualizar la tabla completa con cualquiera de las siguientes opciones.
+
+1.  Dar clic sobre el nombre de la variable en el ambiente.
+2.  Ejecutar el código `View(tbl_alt_var_fec)`
+
+Cualquiera de las dos opciones nos permitirá ver nuestra tabla, en una pestaña que se abre junto al script que estamos trabajando.
+
+![Viendo una tabla](imagenes/tbl_alt_var_fec.png){#fig-tabla}
+
+Antes de aprender a guardar la tabla, vamos a crear una variable nueva en el conjunto de datos `transplante`. La variable que crearemos se llama `DDT` (días después de transplante). Esta variable resulta de la diferencia entre la fecha de medición y la fecha de transplante. Para crear nuevas variables en el conjunto de datos podemos usar la función `mutate()` de `dplyr`.
+
+```{r}
+transplante <- transplante |>
+  mutate(
+    DDT = as.numeric(Fecha_med - Fecha_trans)
+  )
+```
+
+::: callout-important
+1.  El código empieza con `transplante <-`, porque el resultado se va a almacenar en el mismo objeto.
+2.  El resultado de `Fecha_med - Fecha_trans` contiene las unidades de tiempo en este caso días (days), razón por la que se utiliza la función `as.numeric` con la finalidad de que solo se almacene el número sin unidades
+:::
+
+Volvemos a calcular la media y la desviación, pero esta vez agrupamos por variedad y por día después de transplante (DDT). Esta vez el resultado será almacenado en la variable `tbl_alt_var_ddt`. En la @tbl-altvarddt se muestra el resultado final.
+
+```{r}
+tbl_alt_var_ddt <- transplante |>
+  group_by(Variedad, DDT) |>
+  summarise(
+    Media = mean(Altura),
+    Desv = sd(Altura)
+  )
+```
+
+```{r}
+#| label: tbl-altvarddt
+#| tbl-cap: Medidas numéricas de resumen por Variedad y Día después de transplante
+#| echo: false
+#| message: false
+#| warning: false
+kable(tbl_alt_var_ddt,booktabs = TRUE,format = "pandoc", digits = 2)
+```
+
+Para guardar la tabla podemos usar la función `write_xlsx`. El uso básico de la función es `write_xlsx(x = objeto, ruta_nombre_archivo)`.
+
+```{r}
+write_xlsx(x = tbl_alt_var_ddt, "resultados/tabla1.xlsx")
+```
+
+## Bono: Haciendo un gráfico de líneas
+
+En la @sec-gralin se presentaron los gráficos de líneas. Para construir un gráfico de líneas debemos tener los datos resumidos como en la @tbl-altvarddt.
+
+```{r}
+g2 <- ggplot(tbl_alt_var_ddt, aes(x = DDT, y = Media)) +
+  geom_point(aes(col = Variedad)) +
+  geom_line(aes(col = Variedad)) +
+  labs(
+    x = "Días después de transplante",
+    y = "Altura (cm)"
+  )
+
+g2
+```
+
+En el eje de las $x$ del gráfico generado aparecen 3 valores ($20$, $40$ y $60$) que automáticamente han sido asignados tomando en cuenta los valores de la variable `DDT`. Si uno quisiera que aparezcan todos los valores en el eje de las $x$ puede usar la función `scale_x_continuous` y la opción `breaks`. De forma general el uso de la función es `scale_x_continuous(breaks = lista_valores)`. Para la lista de valores podemos usar dos enfoques.
+
+1.  **Escribiendo cada uno de los valores**: escribimos una lista con todos los valores que deseamos aparezcan, en este caso las mediciones fueron hechas los dias 6, 13, 20, 27, 34, 41 y 60.
+
+```{r}
+g2 <- ggplot(tbl_alt_var_ddt, aes(x = DDT, y = Media)) +
+  geom_point(aes(col = Variedad)) +
+  geom_line(aes(col = Variedad)) +
+  labs(
+    x = "Días después de transplante",
+    y = "Altura (cm)"
+  ) +
+  scale_x_continuous(breaks = c(6,13,20,27,34,41,60))
+
+g2
+```
+
+2.  **Almacenando los valores en una variable**: con la función `unique`, obtenemos los valores únicos de la variable `DDT` de la tabla usada. Posteriormente en la opción `breaks` indicamos que en esta variable se encuentran los valores.
+
+```{r}
+
+ddts <- unique(tbl_alt_var_ddt$DDT)
+
+g2 <- ggplot(tbl_alt_var_ddt, aes(x = DDT, y = Media)) +
+  geom_point(aes(col = Variedad)) +
+  geom_line(aes(col = Variedad)) +
+  labs(
+    x = "Días después de transplante",
+    y = "Altura (cm)"
+  ) +
+  scale_x_continuous(breaks = ddts)
+
+g2
+```
+
+## Ejercicios {.unnumbered}
+
+::: {#exr-primero}
+En la @tbl-ejer1_1 se muestran los datos de la altura de 40 girasoles. Se pide:
+:::
+
+|     |     |     |     |     |     |     |     |     |     |
+|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|
+| 134 | 140 | 120 | 103 | 140 | 140 | 109 | 111 | 130 | 135 |
+| 149 | 157 | 100 | 114 | 169 | 180 | 140 | 110 | 110 | 130 |
+| 110 | 160 | 140 | 140 | 143 | 110 | 110 | 110 | 122 |  84 |
+|  77 | 140 | 140 |  90 | 102 | 108 |  95 | 125 | 100 |  47 |
+
+: Altura de girasoles en centímetros. Semana 8 {#tbl-ejer1_1}
+
+a.  Determinar la media y la mediana.
+b.  Determinar el rango, la varianza muestral y la desviación muestral.
+c.  Determinar los 3 cuartiles.
+d.  Determinar el valor menor al 10% de los datos.
+e.  Determinar el valor mayor al 37% de los datos.
+
+::: {#exr-segundo}
+En la @tbl-ejer1_2 se muestran los datos del número de hojas de 40 girasoles. Se pide:
+:::
+
+|     |     |     |     |     |     |     |     |     |     |
+|----:|----:|----:|----:|----:|----:|----:|----:|----:|----:|
+|  28 |  26 |  28 |  23 |  30 |  30 |  16 |  22 |  20 |  24 |
+|  32 |  18 |  12 |  16 |  18 |  22 |  25 |  13 |  13 |  12 |
+|  12 |  22 |  26 |  20 |  20 |  17 |  17 |  17 |   9 |   5 |
+|  14 |  12 |  12 |   8 |   5 |   9 |  11 |   7 |  12 |  11 |
+
+: Número de Hojas de girasoles. Semana 8 {#tbl-ejer1_2}
+
+a.  Determinar las medidas de tendencia central.
+b.  Determinar el rango, la varianza muestral y la desviación muestral.
+c.  Determinar los 4 quintiles.
+d.  Determine el valor que es mayor que el 68% de los datos.
+e.  Determine el valor menor al 25% de los datos.
+
+::: {#exr-terc}
+Con los datos de la @tbl-ejer1_3, determine:
+:::
+
+|     |     |     |     |     |
+|----:|----:|----:|----:|----:|
+|  20 |  18 |   9 |  15 |  23 |
+|  18 |   9 |  21 |  24 |  13 |
+|  22 |  28 |  11 |  11 |  19 |
+|  20 |  25 |  24 |  32 |  11 |
+
+: Diámetro de plantas de banano en centímetros. {#tbl-ejer1_3}
+
+a.  Los tres cuartiles
+b.  Los deciles 2, 4, 5, 7 y 9
+c.  Los quintiles 1 y 4.
+d.  Los percentiles 33, 47, 65 y 89
+
+::: {#exr-cuarto}
+Para este ejercicio se trabajará con el conjunto de datos *girasoles.csv*. Se recomienda crear un proyecto llamado **Practica01**. Puede revisar la @sec-projectR para revisar los pasos para crear un proyecto. Recuerde que el archivo *girasoles.csv* debe ser guardado en la carpeta *datos* del proyecto.
+:::
+
+a.  Crear un script y guardarlo en la carpeta correspondiente con el nombre *01girasoles.R*
+b.  Cargar los paquetes *tidyverse*, *readxl* y *writexl*
+c.  ¿Cuántas variables tiene el conjunto de datos?
+d.  ¿Cuántas observaciones tiene el conjunto de datos?
+e.  ¿Cuál es el tipo de dato de cada variable?
+f.  ¿Es conveniente el tipo de dato asignado automaticámente para cada variable? En los próximos capítulos aprenderemos a transformar los tipos de datos de acuerdo a las necesidades del investigador.
+g.  Calcule por semana la media, la mediana, el rango, la varianza, la desviación y los 3 cuartiles de la altura de las plantas.
+h.  Calcule por semana la media, la mediana, el rango, la varianza, la desviación y los 3 cuartiles del número de hojas de las plantas.
+i.  Elabore un histograma para la altura de las plantas. Tome en cuenta que es ideal graficar los datos por semana.
+j.  Elabore un histograma para la altura de las plantas. Grafique ahora por semana y por fila.
+k.  Elabore un histograma para el número de hojas de las plantas. Tome en cuenta que es ideal separar los datos por semana.
+l.  Elabore un histograma para el número de hojas de las plantas. Grafique ahora por semana y por fila.
+m.  Utilizando diagramas de caja compare la altura por semana.
+n.  Utilizando diagramas de caja compare la altura por semana y por fila.
+o.  Utilizando diagramas de caja compare el número de hojas por semana.
+p.  Utilizando diagramas de caja compare el número de hojas por semana y por fila.
+
+::: {#exr-quin}
+En el conjunto de datos *fenologia_camote.xlsx* se presentan datos de un experimento realizado en una plantación de camote en la que se aplicaron 4 tratamientos, dentro de la plantación se escogieron puntos de evaluación y en cada punto se aplicó cada tratamiento a determinado número de tubérculos. Al final a cada tubérculo se le midió el peso en gramos, el grosor en milímetros y la longitud de la guía en centímetros. Utilizando Rstudio realice el análisis estadístico descriptivo de los datos, con medidas de resumen, gráficos y tablas adecuados. **Sugerencias:** puede resolver este ejercicio en el mismo proyecto creado en el @exr-cuarto, además es conveniente crear un nuevo script.
+:::
+
+::: {#exr-quin2}
+El cacao *(Theobroma cacao L.)* es una fruta de origen tropical utilizada como materia prima en la industria del chocolate. El proyecto desarrolado por Paula Reyes y Osvin Aldana tuvo como objetivo caracterizar fenotípica y genotípicamente 19 accesiones de cacao *(Theobroma cacao L.)*, ubicadas en el Banco de Germoplasma de la Universidad EARTH, además evaluar la susceptibilidad, tolerancia o resistencia a las enfermedades moniliasis *(Moniliophthora roreri Cif y Par)* y mazorca negra *(Phytophthora palmivora Bult)*, y comprobar la efectividad del protocolo de extracción de ADN genómico utilizando buffer CTAB en muestras foliares de cacao. Los resultados de la caracterización fenotípica dieron a conocer una alta variabilidad entre las accesiones formando agrupaciones en cada descriptor evaluado. En el archivo *baseEX2G1.xlsx* se almacenan los datos de 4 de las 19 accesiones. En la tabla @tbl-ejer6 se muestran los descriptores de la variable, junto con el nombre de la variable y su respectiva descripción.
+:::
+
+| Descriptores generales y botánicos              | Nombre Variable | Descripción                                                                                                                                                                                                                                                                                                              |
+|:-------------------------------------------------|:-----------------|:--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Longitud de lámina foliar (L)                   | Longitud        | Haciendo uso de una regla se midió desde la base de lámina foliar hasta el ápice de la hoja. La medida se expresó en centímetros.                                                                                                                                                                                        |
+| Ancho de lámina foliar                          | Ancho           | Haciendo uso de una regla se midió en el punto más ancho. La medida se expresó en centímetros.                                                                                                                                                                                                                           |
+| Longitud desde la base hasta el punto más ancho | LBA             | Se determinó usando una regla y se tomó desde la base hasta el punto más ancho de la hoja. La medida se expresó en centímetros.                                                                                                                                                                                          |
+| Relación largo-ancho                            | RLA             | Se determinó con la división de la longitud de la lámina foliar entre el ancho de la lámina foliar. La medida se expresó en centímetros.                                                                                                                                                                                 |
+| Forma de la hoja                                | FORMA           | Se determinó calculado la relación entre la longitud de la lámina foliar (L) y la longitud de la hoja desde la base hasta la parte más ancha de la misma (LBA). Según el resultado se clasifica en los siguientes criterios:                                    L/LBA <2: ovalada   L/LBA =2: elíptica L/LBA >2: oblonga |
+| Forma de la base                                | Base            | Se evaluó de forma visual, clasificándolas de la siguiente manera: 1. aguda, 2. redondeada, 3. cordiforme y 4. obtusa.                                                                                                                                                                                                   |
+| Forma del ápice                                 | Apice           | Se evaluó de forma visual, clasificándolas de la siguiente manera: 1. agudo, 2. acuminado corto y 3. acuminado largo.                                                                                                                                                                                                    |
+| Accesión                                        | Accesion        | Contiene el código asignado a las accesiones.                                                                                                                                                                                                                                                                            |
+| Nombre Accesión                                 | grupos          | Contiene el nombre de las accesiones                                                                                                                                                                                                                                                                                     |
+: Descriptores Cacao. {#tbl-ejer6}
+
+a. Crear un proyecto llamado **PG\_PO**.
+b. Crear un script llamado *hojas.R*.
+c. Cargar los paquetes  *tidyverse*, *writexl* y *readxl*.
+d. Cargar los datos almacenados en el archivo de Excel, los datos deben ser guardados en una variable llamada *fenohojas*
+e. Identificar cuántas variables y cuántas observaciones tiene el conjunto de datos. 
+f. Crear una variable llamada *desclong* que almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil de la longitud por accesión. Guarde la tabla *desclong* en una ubicación adecuada de su proyecto con el nombre *lhojas.xlsx*. Con ayuda de la tabla *desclong* conteste ¿qué accesión tiene tiene la mayor longitud promedio?
+g. Crear una variable llamada *descancho* que almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil del ancho por accesión. Guarde la tabla *descancho* en una ubicación adecuada de su proyecto con el nombre *ahojas.xlsx*. Con ayuda de la tabla creada, conteste ¿qué accesión tiene el valor más bajo para el segundo cuartil del ancho de la hoja?
+h. Crear una variable llamada *descLBA* que almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil de la LBA por accesión. Guarde la tabla *descLBA* en una ubicación adecuada de su proyecto con el nombre *lbahojas.xlsx*. Con ayuda de la tabla creada, conteste ¿qué accesión tiene la mayor dispersión en la  longitud desde la base hasta el punto más ancho?
+i. Crear una variable llamada *descRLA* que almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil de la RLA por accesión. Guarde la tabla *descRLA* en una ubicación adecuada de su proyecto con el nombre *rlahojas.xlsx*. Con ayuda de la tabla creada, interprete el tercer cuartil de la accesión que tiene el primer cuartil más alto de la relación largo-ancho.
+j. Graficar histogramas para la longitud, el ancho, la LBA y la RLA por accesión. Almacénelos en la carpeta adecuada con los nombres *histlong.png*, *histanch.png*, *histLBA.png* y *histRLA.png*.
+k. Graficar diagramas de caja para la longitud, el ancho, la LBA y la RLA por accesión. Almacénelos en la carpeta adecuada con los nombres *boxlong.png*, *boxanch.png*, *boxLBA.png* y *boxRLA.png*.
+l. Con los gráficos y tablas creados, ¿cree usted que existen diferencias significativas en la longitud de las hojas por accesión? Justifique su respuesta. En los próximos capítulos aprenderemos a responder esta pregunta de manera formal, por lo pronto su respuesta se debe basar en las tablas y gráficos.
+
+::: {#exr-quin3}
+Cuando se generan cambios en la calidad o en la intensidad de la radiación receptada por la planta ocurren cambios que afectan su anatomía y fisiología, así como su crecimiento y desarrollo. En el proyecto de graduación de Gabriela Granda, se evaluó la modificación de la radiación solar para observar los efectos sobre la reflectancia foliar y el desarrollo vegetativo del cultivo de plátano, de la variedad curraré enano en 16 plantas por cada tratamiento durante 11 semanas. El primer tratamiento corresponde al tratamiento de control o $T_1$ en el cual no se aplicó ningún producto con el propósito de comparar los resultados con los demás tratamientos. En el tratamiento dos o $T_2$ se analizó el efecto de la adición de luz mediante nueve lámparas de espectro completo con el fin de utilizar la espectrometría como herramienta que facilite la determinación de algunas características espectrales en las plantas. El tratamiento tres o $T_3$ se realizó la aplicación foliar semanal de un filtro solar (compuesto por $TiO_2$ y $ZnO$) para comparar su efecto en la diferencia de reflectancia, asimilación de pigmentos, y absorción de nutrientes y agua.
+:::
+
+En la hoja *datos* del archivo *Datos23035.xlsx* se almacenan los datos del proyecto de  graduación de Gabriela Granda. Las variables presentes en el conjunto de datos son:
+
+- **Semana**: semana en la que se realizó la medición.
+- **Tratamiento**: tratamiento observado.
+- **Planta**: número de planta dentro del tratamiento. 
+- **Altura**: altura de la planta en centímetros.
+- **DiametroH**: diámetro horizontal del pseudotallo en centímetros. 
+- **DiámetroV**: diámetro vertical del pseudotallo en centímetros. 
+- **NúmeroH**: número de hojas.
+
+a. Crear un proyecto llamado **PG\_GAGS**, dentro de la carpeta adecuada guardar un script llamado *analisis.R*. Guardar el archivo *Datos23035.xlsx* en la carpeta apropiada dentro del proyecto. 
+b. Cargar los paquetes *tidyverse*, *agricolae*, *readxl*, *writexl* y *jtools*.
+c. Cargar y almacenar los datos en una variable llamada *data23035.xlsx* 
+d. El diámetro del pseudotallo se calcula como el promedio del diámetro vertical y horizontal. Utilizando la función *mutate*, crear una variable llamada *Diámetro*.
+e. Gabriela recogió información de 11 semanas, sin embargo a partir de la semana 9 las plantas sufrieron caídas por acción del viento. Utilice la función **filter** para seleccionar los datos desde la semana 1 a la semana 8. Los datos filtrados se deben mantener en la variable  *data23035*.
+f. En el script, crear una sección llamada **Altura y diámetro**. Para crear secciones puede usar la ruta `Code + Insert Section`, o desde el teclado la combinación de teclas `Ctrl + Shift + R` en Windows o `Cmd + Shift + R` en Mac.
+g. En una variable llamada **stats\_alt** almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil de la altura de las plantas **por semana y tratamiento**. Estos valores se deben almacenar en las columnas *Media*, *Mediana*, *Desv*, *Q1* y *Q3*. Con ayuda de la tabla creada, conteste las siguientes preguntas:
+
+    - En la semana 1 ¿qué tratamiento tiene la menor altura promedio? 
+    - En la semana 2 ¿qué tratamiento tiene el valor más alto para el segundo cuartil de la altura?
+    - En la semana 3 ¿qué tratamiento tiene la menor dispersión en la altura?
+    - En la semana 4, interprete el primer cuartil del tratamiento que tiene el tercer cuartil más alto.
+    - En la semana 5 determine el rango intercuartílico para el tratamiento 1.
+    
+h. En una variable llamada *stats\_diam* almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil del diámetro del pseudotallo de las plantas **por semana y tratamiento**. Estos valores se deben almacenar en las variables *Media*, *Mediana*, *Desv*, *Q1* y *Q3*. 
+i. Graficar diagramas de caja para la altura de la planta y el diámetro del pseudotallo, recuerde que estos diagramas de caja deben ayudar a comparar por semana y por tratamiento. Almacénelos en la carpeta *graficos* con los nombres *box\_altura.png* y  *box\_diam.png* con un tamaño de 8 pulgadas de ancho por 4 de altura. 
+j. Realizar un gráfico de líneas para la altura mostrando la evolución a lo largo de las semanas por tratamiento. Almacénelo en la carpeta *graficos* con el nombre *evol\_altura.png* con un tamaño de 6 pulgadas de ancho por 3 de altura.
+k. Utilizando las tablas y gráficos creados, ¿cree usted que existen diferencias significativas en la altura de las plantas por tratamiento a lo largo de las semanas?. Justifique su respuesta. Esta pregunta aprenderemos a responderla de manera formal en las próximas semanas, por ahora la respuesta debe basarse en lo que observa en las tablas y gráficas obtenidas. 
+l. En una carpeta apropiada, guardar la tabla *stats\_alt* en una hoja llamada altura y la tabla *stats\_diam* en una hoja llamada diametro, en un archivo *estadisticas.xlsx*. 
+
+::: {#exr-quin4}
+El archivo  *datos\_ng\_mg.xlsx* pertenece al proyecto de graduación de Marianela Gamboa y Michael García en el que se evaluó la aplicación de la enmienda agrícola Biosmart Terratop con ácidos húmicos, en el desarrollo y producción del cultivo de maíz para silo, híbrido (HR-960) en el trópico húmedo de Costa Rica. Se estudió el efecto de la aplicación de ácidos húmicos sobre las características químicas del suelo, concentración de nutrientes en el tejido foliar, biometría y rendimiento del cultivo. Se buscó mejorar la capacidad de producción de forraje para ser utilizado en el proceso de ensilaje mediante el uso de ácidos húmicos. Se aplicaron tres dosis de la enmienda orgánica más un testigo:  T1 (Testigo 0 kg de enmienda por ha), T2 (20 kg de enmienda por ha), T3 (60 kg de enmienda por ha) y T4 (120 kg de enmienda por ha). El área en estudio contó con cuatro repeticiones por tratamiento, en una distribución aleatoria, bajo un manejo agronómico igual. El estudio se realizó en la Unidad Académica de Producción Animal (UAPA) del campus Guácimo de la Universidad EARTH, ubicada a una altitud de 36 msnm, con una precipitación acumulada durante el ciclo del cultivo de 653.15 mm. En el archivo se encuentran las hojas *Base* y *Diccionario*. En la primera se almacenan los datos que van a ser analizados y en la segunda hoja se almacena la información sobre las variables
+:::
+
+a. Crear un proyecto llamado *Pg\_NG\_MG*, el proyecto debe contener las carpetas necesarias. El conjunto de datos *datos\_ng\_mg.xlsx* debe ser guardado en la carpeta correspongiente
+b. Crear un script llamado *Pg\_NG\_MG.R*
+c. Cargar los paquetes *agricolae*, *tidyverse*, *jtools*, *readxl* y  *writexl*
+d. Leer los datos del archivo *datos\_ng\_mg.xlsx* y almacenarlos en una variable llamada *datos\_ngmg*.
+e. Crear la variable *DDS* (Días después de siembra), restando la columna  *Fecha\_med* de la columna *Fecha\_semb*.
+f. Para la variable Altura 
+    - Crear una sección llamada *Altura*.
+    - Calcule por día después de siembra y por tratamiento la media, la mediana, el rango, la varianza, la desviación y los 3 cuartiles de la altura de las plantas. Almacene los resultados en una variable llamada *stats\_dds\_alt*.
+    - Elabore un histograma para la altura de las plantas. Tome en cuenta que es ideal separar los histogramas por día después de siembra y por tratamiento. Guarde el histograma, en la carpeta correspondiente, con el nombre *hist\_dds\_alt.png*.
+    - Utilizando diagramas de caja compare la altura por variedad y día después de siembra. Guarde este gráfico, en la carpeta correspondiente con el nombre *box\_dds\_alt.png*
+    - Realice un gráfico de líneas para la evolución de la altura promedio. Para realizar este gráfico puede usar el conjunto de datos guardado en la variable *stats\_dds\_alt*. Guarde el gráfico en la carpeta correspondiente con el nombre *evol\_alt\_dds.png*
+g. Para la variable Diámetro
+    - Crear una sección llamada *Diámetro*.
+    - Calcule por día después de siembra y por tratamiento la media, la mediana, el rango, la varianza, la desviación y los 3 cuartiles del diámetro de las plantas. Almacene los resultados en una variable llamada *stats\_dds\_diam*.
+    - Elabore un histograma para el diámetro de las plantas. Tome en cuenta que es ideal separar los histogramas por día después de siembra y por tratamiento. Guarde el histograma, en la carpeta correspondiente, con el nombre *hist\_dds\_diam.png*.
+    - Utilizando diagramas de caja compare el diámetro por variedad y día después de siembra. Guarde este gráfico, en la carpeta correspondiente con el nombre *box\_dds\_diam.png*
+    - Realice un gráfico de líneas para la evolución del diámetro promedio. Para realizar este gráfico puede usar el conjunto de datos guardado en la variable *stats\_dds\_diam*. Guarde el gráfico en la carpeta correspondiente con el nombre *evol\_diam\_dds.png*
+h. Guardar en la carpeta resultados, un archivo llamado *estadisticas.xlsx*. Este archivo debe tener en una hoja llamada *altura* la información de la variable *stats\_dds\_alt* y en una hoja llamada *diam* la información de la variable *stats\_dds\_diam*
+
+::: {#exr-seis}
+En el proyecto de graduación desarrollado por los estudiantes Joshua Quirós y Melvin Ramírez titulado *Evaluación de Cuatro Híbridos Comerciales de Maíz (Zea mays L.) para Ensilaje en el Trópico Húmedo Costarricense.* Se evaluaron cuatro híbridos de maíz con el objetivo de producir materia fresca que se pueda destinar al proceso de ensilaje como alternativa en la alimentación bovina. Se sembraron cuatro parcelas por híbrido para un total de dieciséis parcelas. Las parcelas tenían una distribución aleatoria con la misma densidad de siembra y el mismo manejo agronómico.}
+
+En este ejercicio se trabajará con los archivos *biometricoscosecha.xlsx* y *BIOMETRICOSMAIZ.csv* que contienen datos relativos a este proyecto de graduación. A continuación se describen las variables presentes en los dos conjuntos de datos.
+
+1.  *biometricoscosecha.xlsx*
+
+-   **Planta** Variable que presenta el número de planta observada.
+-   **Parcela** Variable que presenta el número de parcela donde se encuentra la planta.
+-   **Variedad** Variable que muestra el nombre del híbrido.
+-   **Altura** Variable que contiene la altura de la planta de maíz, medida en centímetros.
+-   **Diámetro** Variable que contiene el diámetro de la planta de maíz, medido en milímetros.
+
+2.  *BIOMETRICOSMAIZ.csv*
+
+-   **Fecha** en esta variable se almacena la fecha en la que se toma la medición.
+-   **Medicion** en esta variable se almacena el número de medición. Se realizaron 3 mediciones. Estas mediciones se hicieron 15, 30 y 45 días después de la siembra.
+-   **Planta** en esta variable se almacena el número de planta dentro de la parcela que ha sido observada.
+-   **Parcela** en esta variable se almacena el número de parcela.
+-   **Variedad** Variable que muestra el nombre del híbrido.
+-   **Altura** Variable que contiene la altura de la planta de maíz, medida en centímetros.
+-   **Diametro** Variable que contiene el diámetro de la planta de maíz, medido en milímetros.
+
+Crear un proyecto llamado *PgJM*, guardar los datos en la carpeta correspondiente, crear un script llamado *03PgJM.R* y guardarlo en la carpeta adecuada.
+:::
+
+
+1.  Primera parte
+
+
+  a.  Calcular la media, mediana y desviación estándar de la altura por medición y por variedad de los datos previos a la cosecha. Almacenar el resultado en una variable llamada *deschibralt*.
+  b.  Calcular la media, mediana y desviación estándar de la altura por variedad de los datos de la cosecha. Almacenar el resultado en una variable llamada \*desccosealt}.
+  c.  Guardar las tablas *deschibralt* en una hoja llamada *cultivo* y *desccosealt* en una hoja llamada *cosecha* de un archivo llamado *statsalt.xlsx*.
+  d.  Graficar el histograma de la altura para la primera medición por variable. Guardar el gráfico en la carpeta *graficos* con el nombre *histalt_m1.png* con 8 pulgadas de ancho por 5 pulgadas de alto.
+  e.  Graficar el histograma de la altura para la segunda y tercera medición por variable. Guardar los gráficos en la carpeta *graficos* con los nombres *histalt_m2.png* y *histalt_m3.png* respectivamente con 8 pulgadas de ancho por 5 pulgadas de alto.
+  f.  En el conjunto de datos *deschibralt* crear la variable *DDS* (días después de la siembra) que es igual a 15 si la variable *Medicion* es 1, 30 si la variable *Medicion* es 2 y 45 si la variable *Medicion* es 3.
+  g.  En el conjunto de datos *desccosealt* crear las variables *DDS* y *Medicion*, estas variables deben tomar el valor de 91 y 4.
+  h.  Unir los conjuntos *deschibralt* y *desccosealt* y crear un conjunto llamado *descalt*.
+  i.  Con el conjunto *descalt*, crear un gráfico de líneas que muestre la evolución de la altura promedio. En el eje de las $x$ debe ir la variable *DDS* y en el eje de las $y$ la media de la altura. Guardar el gráfico con el nombre *evolalt.png* con 6 pulgadas de ancho por 5 pulgadas de alto.
+  j.  Con el conjunto de datos previos a la cosecha crear diagramas de caja para la altura por variedad y medición. Guardar el gráfico con el nombre *boxalt.png* con 6 pulgadas de ancho por 5 pulgadas de alto.
+
+<!-- -->
+
+2.  Para la variable diámetro
+
+<!-- -->
+
+a.  Calcular la media, mediana y desviación estándar del diámetro por medición y por variedad de los datos previos a la cosecha. Almacenar el resultado en una variable llamada *deschibrdiam*.
+b.  Calcular la media, mediana y desviación estándar del diámetro por variedad de los datos de la cosecha. Almacenar el resultado en una variable llamada *desccosediam*.
+c.  Graficar el histograma de la altura para la primera medición por variable. Guardar el gráfico en la carpeta *graficos* con el nombre *histdiam_m1.png* con 8 pulgadas de ancho por 5 pulgadas de alto.
+d.  Graficar el histograma del diámetro para la segunda y tercera medición por variable. Guardar los gráficos en la carpeta *graficos* con los nombres *histdiam_m2.png* y *histdiam_m3.png* respectivamente con 8 pulgadas de ancho por 5 pulgadas de alto.
+e.  En el conjunto de datos *deschibrdiam* crear la variable *DDS* (días después de la siembra) que es igual a 15 si la variable *Medicion* es 1, 30 si la variable *Medicion* es 2 y 45 si la variable *Medicion* es 3.
+f.  En el conjunto de datos *desccosediam* crear las variables *DDS* y *Medicion*, estas variables deben tomar el valor de 91 y 4.
+g.  Unir los conjuntos *deschibrdiam* y *desccosediam* y crear un conjunto llamado *descdiam*.
+h.  Con el conjunto *descdiam*, crear un gráfico de líneas que muestre la evolución del diámetro promedio. En el eje de las $x$ debe ir la variable *DDS* y en el eje de las $y$ la media de la altura. Guardar el gráfico con el nombre *evoldiam.png* con 6 pulgadas de ancho por 5 pulgadas de alto.
+i.  Con el conjunto de datos previos a la cosecha crear diagramas de caja para la altura por variedad y medición. Guardar el gráfico con el nombre *boxdiam.png* con 6 pulgadas de ancho por 5 pulgadas de alto.

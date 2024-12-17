@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de Datos en Agricultura con R y RStudio - 7&nbsp; Correlación y Regresión</title>
+<title>Análisis de Datos en Agricultura con R y RStudio - Correlación y Regresión</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -63,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="_extensions/fredguth/tufte/styles.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -74,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-regresion.html"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./06-regresion.html"><span class="chapter-title">Correlación y Regresión</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -84,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
@@ -107,50 +108,42 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R y RStudio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span></a>
+  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística. Conceptos Básicos.</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span></a>
+  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Descriptiva</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-distr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span></a>
+  <a href="./03-distr.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Distribuciones de probabilidad</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span></a>
+  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Muestreo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-icph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span></a>
+  <a href="./05-icph.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Inferencial</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span></a>
+  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Correlación y Regresión</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span></a>
+  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diseño de experimentos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -161,61 +154,49 @@ ul.task-list li input[type="checkbox"] {
 </li>
     </ul>
     </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Indice de contenidos</h2>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#gráficos-de-dispersión" id="toc-gráficos-de-dispersión" class="nav-link active" data-scroll-target="#gráficos-de-dispersión"><span class="header-section-number">7.1</span> Gráficos de dispersión</a></li>
-  <li><a href="#análisis-de-correlación" id="toc-análisis-de-correlación" class="nav-link" data-scroll-target="#análisis-de-correlación"><span class="header-section-number">7.2</span> Análisis de correlación</a></li>
-  <li><a href="#regresión" id="toc-regresión" class="nav-link" data-scroll-target="#regresión"><span class="header-section-number">7.3</span> Regresión</a>
-  <ul class="collapse">
-  <li><a href="#regresión-lineal-simple" id="toc-regresión-lineal-simple" class="nav-link" data-scroll-target="#regresión-lineal-simple"><span class="header-section-number">7.3.1</span> Regresión lineal simple</a></li>
-  <li><a href="#regresión-lineal-múltiple" id="toc-regresión-lineal-múltiple" class="nav-link" data-scroll-target="#regresión-lineal-múltiple"><span class="header-section-number">7.3.2</span> Regresión lineal múltiple</a></li>
-  <li><a href="#regresión-logística" id="toc-regresión-logística" class="nav-link" data-scroll-target="#regresión-logística"><span class="header-section-number">7.3.3</span> Regresión logística</a></li>
+  <li><a href="#gráficos-de-dispersión" id="toc-gráficos-de-dispersión" class="nav-link active" data-scroll-target="#gráficos-de-dispersión">Gráficos de dispersión</a></li>
+  <li><a href="#análisis-de-correlación" id="toc-análisis-de-correlación" class="nav-link" data-scroll-target="#análisis-de-correlación">Análisis de correlación</a></li>
+  <li><a href="#regresión" id="toc-regresión" class="nav-link" data-scroll-target="#regresión">Regresión</a>
+  <ul>
+  <li><a href="#regresión-lineal-simple" id="toc-regresión-lineal-simple" class="nav-link" data-scroll-target="#regresión-lineal-simple">Regresión lineal simple</a></li>
+  <li><a href="#regresión-lineal-múltiple" id="toc-regresión-lineal-múltiple" class="nav-link" data-scroll-target="#regresión-lineal-múltiple">Regresión lineal múltiple</a></li>
+  <li><a href="#regresión-logística" id="toc-regresión-logística" class="nav-link" data-scroll-target="#regresión-logística">Regresión logística</a></li>
   </ul></li>
   </ul>
 </nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="methods" class="quarto-section-identifier"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
+<header id="title-block-header">
+<h1 class="title display-7"><span class="chapter-title">Correlación y Regresión</span></h1>
 
 </header>
 
-<section id="gráficos-de-dispersión" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="gráficos-de-dispersión"><span class="header-section-number">7.1</span> Gráficos de dispersión</h2>
+<section id="gráficos-de-dispersión" class="level2">
+<h2 class="anchored" data-anchor-id="gráficos-de-dispersión">Gráficos de dispersión</h2>
 </section>
-<section id="análisis-de-correlación" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="análisis-de-correlación"><span class="header-section-number">7.2</span> Análisis de correlación</h2>
+<section id="análisis-de-correlación" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-correlación">Análisis de correlación</h2>
 </section>
-<section id="regresión" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="regresión"><span class="header-section-number">7.3</span> Regresión</h2>
-<section id="regresión-lineal-simple" class="level3" data-number="7.3.1">
-<h3 data-number="7.3.1" class="anchored" data-anchor-id="regresión-lineal-simple"><span class="header-section-number">7.3.1</span> Regresión lineal simple</h3>
+<section id="regresión" class="level2">
+<h2 class="anchored" data-anchor-id="regresión">Regresión</h2>
+<section id="regresión-lineal-simple" class="level3">
+<h3 class="anchored" data-anchor-id="regresión-lineal-simple">Regresión lineal simple</h3>
 </section>
-<section id="regresión-lineal-múltiple" class="level3" data-number="7.3.2">
-<h3 data-number="7.3.2" class="anchored" data-anchor-id="regresión-lineal-múltiple"><span class="header-section-number">7.3.2</span> Regresión lineal múltiple</h3>
+<section id="regresión-lineal-múltiple" class="level3">
+<h3 class="anchored" data-anchor-id="regresión-lineal-múltiple">Regresión lineal múltiple</h3>
 </section>
-<section id="regresión-logística" class="level3" data-number="7.3.3">
-<h3 data-number="7.3.3" class="anchored" data-anchor-id="regresión-logística"><span class="header-section-number">7.3.3</span> Regresión logística</h3>
+<section id="regresión-logística" class="level3">
+<h3 class="anchored" data-anchor-id="regresión-logística">Regresión logística</h3>
 
 
 </section>
@@ -455,15 +436,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
       <a href="./05-icph.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Estadística Inferencial</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./07-DOE.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Diseño de experimentos</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

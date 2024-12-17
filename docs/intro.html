@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de Datos en Agricultura con R y RStudio - 1&nbsp; R y RStudio</title>
+<title>Análisis de Datos en Agricultura con R y RStudio - R y RStudio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -116,6 +116,7 @@ div.csl-indent {
 }</script>
 
 
+<link rel="stylesheet" href="_extensions/fredguth/tufte/styles.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -127,7 +128,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./intro.html"><span class="chapter-title">R y RStudio</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -137,7 +138,7 @@ div.csl-indent {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
@@ -160,50 +161,42 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">R y RStudio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span></a>
+  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística. Conceptos Básicos.</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span></a>
+  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Descriptiva</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-distr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span></a>
+  <a href="./03-distr.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Distribuciones de probabilidad</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span></a>
+  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Muestreo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-icph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span></a>
+  <a href="./05-icph.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Inferencial</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span></a>
+  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Correlación y Regresión</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span></a>
+  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diseño de experimentos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -214,94 +207,82 @@ div.csl-indent {
 </li>
     </ul>
     </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Indice de contenidos</h2>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#qué-es-r-y-por-qué-lo-vamos-a-usar" id="toc-qué-es-r-y-por-qué-lo-vamos-a-usar" class="nav-link active" data-scroll-target="#qué-es-r-y-por-qué-lo-vamos-a-usar"><span class="header-section-number">1.1</span> ¿Qué es R y por qué lo vamos a usar?</a></li>
-  <li><a href="#rstudio." id="toc-rstudio." class="nav-link" data-scroll-target="#rstudio."><span class="header-section-number">1.2</span> RStudio.</a></li>
-  <li><a href="#poniendo-todo-a-punto-para-empezar" id="toc-poniendo-todo-a-punto-para-empezar" class="nav-link" data-scroll-target="#poniendo-todo-a-punto-para-empezar"><span class="header-section-number">1.3</span> Poniendo todo a punto para empezar</a>
-  <ul class="collapse">
-  <li><a href="#instalación-de-r-y-rstudio" id="toc-instalación-de-r-y-rstudio" class="nav-link" data-scroll-target="#instalación-de-r-y-rstudio"><span class="header-section-number">1.3.1</span> Instalación de R y RStudio</a></li>
-  <li><a href="#conociendo-la-interfaz-de-rstudio" id="toc-conociendo-la-interfaz-de-rstudio" class="nav-link" data-scroll-target="#conociendo-la-interfaz-de-rstudio"><span class="header-section-number">1.3.2</span> Conociendo la interfaz de RStudio</a></li>
+  <li><a href="#qué-es-r-y-por-qué-lo-vamos-a-usar" id="toc-qué-es-r-y-por-qué-lo-vamos-a-usar" class="nav-link active" data-scroll-target="#qué-es-r-y-por-qué-lo-vamos-a-usar">¿Qué es R y por qué lo vamos a usar?</a></li>
+  <li><a href="#rstudio." id="toc-rstudio." class="nav-link" data-scroll-target="#rstudio.">RStudio.</a></li>
+  <li><a href="#poniendo-todo-a-punto-para-empezar" id="toc-poniendo-todo-a-punto-para-empezar" class="nav-link" data-scroll-target="#poniendo-todo-a-punto-para-empezar">Poniendo todo a punto para empezar</a>
+  <ul>
+  <li><a href="#instalación-de-r-y-rstudio" id="toc-instalación-de-r-y-rstudio" class="nav-link" data-scroll-target="#instalación-de-r-y-rstudio">Instalación de R y RStudio</a></li>
+  <li><a href="#conociendo-la-interfaz-de-rstudio" id="toc-conociendo-la-interfaz-de-rstudio" class="nav-link" data-scroll-target="#conociendo-la-interfaz-de-rstudio">Conociendo la interfaz de RStudio</a></li>
   </ul></li>
-  <li><a href="#sec-packs" id="toc-sec-packs" class="nav-link" data-scroll-target="#sec-packs"><span class="header-section-number">1.4</span> Instalar paquetes</a>
-  <ul class="collapse">
-  <li><a href="#sec-inspac" id="toc-sec-inspac" class="nav-link" data-scroll-target="#sec-inspac"><span class="header-section-number">1.4.1</span> Desde la consola o un script</a></li>
-  <li><a href="#desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú" id="toc-desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú" class="nav-link" data-scroll-target="#desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú"><span class="header-section-number">1.4.2</span> Desde la pestaña de paquetes o desde la barra de menú</a></li>
+  <li><a href="#sec-packs" id="toc-sec-packs" class="nav-link" data-scroll-target="#sec-packs">Instalar paquetes</a>
+  <ul>
+  <li><a href="#sec-inspac" id="toc-sec-inspac" class="nav-link" data-scroll-target="#sec-inspac">Desde la consola o un script</a></li>
+  <li><a href="#desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú" id="toc-desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú" class="nav-link" data-scroll-target="#desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú">Desde la pestaña de paquetes o desde la barra de menú</a></li>
   </ul></li>
-  <li><a href="#sec-basicsR" id="toc-sec-basicsR" class="nav-link" data-scroll-target="#sec-basicsR"><span class="header-section-number">1.5</span> Los básicos del lenguaje R</a>
-  <ul class="collapse">
-  <li><a href="#sintaxis-de-r" id="toc-sintaxis-de-r" class="nav-link" data-scroll-target="#sintaxis-de-r"><span class="header-section-number">1.5.1</span> Sintaxis de R</a></li>
-  <li><a href="#objetos-de-r" id="toc-objetos-de-r" class="nav-link" data-scroll-target="#objetos-de-r"><span class="header-section-number">1.5.2</span> Objetos de R</a></li>
-  <li><a href="#vectores" id="toc-vectores" class="nav-link" data-scroll-target="#vectores"><span class="header-section-number">1.5.3</span> Vectores</a></li>
-  <li><a href="#coerción-implícita-y-explícita" id="toc-coerción-implícita-y-explícita" class="nav-link" data-scroll-target="#coerción-implícita-y-explícita"><span class="header-section-number">1.5.4</span> Coerción implícita y explícita</a></li>
-  <li><a href="#listas" id="toc-listas" class="nav-link" data-scroll-target="#listas"><span class="header-section-number">1.5.5</span> Listas</a></li>
-  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices"><span class="header-section-number">1.5.6</span> Matrices</a></li>
-  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames"><span class="header-section-number">1.5.7</span> Data frames</a></li>
+  <li><a href="#sec-basicsR" id="toc-sec-basicsR" class="nav-link" data-scroll-target="#sec-basicsR">Los básicos del lenguaje R</a>
+  <ul>
+  <li><a href="#sintaxis-de-r" id="toc-sintaxis-de-r" class="nav-link" data-scroll-target="#sintaxis-de-r">Sintaxis de R</a></li>
+  <li><a href="#objetos-de-r" id="toc-objetos-de-r" class="nav-link" data-scroll-target="#objetos-de-r">Objetos de R</a></li>
+  <li><a href="#vectores" id="toc-vectores" class="nav-link" data-scroll-target="#vectores">Vectores</a></li>
+  <li><a href="#coerción-implícita-y-explícita" id="toc-coerción-implícita-y-explícita" class="nav-link" data-scroll-target="#coerción-implícita-y-explícita">Coerción implícita y explícita</a></li>
+  <li><a href="#listas" id="toc-listas" class="nav-link" data-scroll-target="#listas">Listas</a></li>
+  <li><a href="#matrices" id="toc-matrices" class="nav-link" data-scroll-target="#matrices">Matrices</a></li>
+  <li><a href="#data-frames" id="toc-data-frames" class="nav-link" data-scroll-target="#data-frames">Data frames</a></li>
   </ul></li>
   </ul>
 </nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
+<header id="title-block-header">
+<h1 class="title display-7"><span class="chapter-title">R y RStudio</span></h1>
 
 </header>
 
-<section id="qué-es-r-y-por-qué-lo-vamos-a-usar" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="qué-es-r-y-por-qué-lo-vamos-a-usar"><span class="header-section-number">1.1</span> ¿Qué es R y por qué lo vamos a usar?</h2>
-<p>R es un lenguaje de programación que tiene más de 30 años de historia, mientras que RStudio es uno de los tantos entornos de desarrollo integrados que existen para trabajar con R. Es común escuchar las preguntas <em>¿por qué trabajar con R cuando existen programas mucho más “sencillos” para hacer análisis de datos?</em>, <em>¿para qué complicar a los estudiantes enseñándoles a programar si además deben aprender estadística?</em>. Existen muchas respuestas a esas preguntas, sin embargo, a continuación se presenta una lista de razones que fortalecen la idea de porqué usar R, algunas de estas ideas son expuestas en <span class="citation" data-cites="tucker_teaching_2022">Tucker et&nbsp;al. (<a href="references.html#ref-tucker_teaching_2022" role="doc-biblioref">2022</a>)</span> y <span class="citation" data-cites="agwu_using_2018">Agwu y Bialas (<a href="references.html#ref-agwu_using_2018" role="doc-biblioref">2018</a>)</span>.</p>
+<section id="qué-es-r-y-por-qué-lo-vamos-a-usar" class="level2">
+<h2 class="anchored" data-anchor-id="qué-es-r-y-por-qué-lo-vamos-a-usar">¿Qué es R y por qué lo vamos a usar?</h2>
+<p>R es un lenguaje de programación que tiene más de 30 años de historia, mientras que RStudio es uno de los tantos entornos de desarrollo integrados que existen para trabajar con R. Es común escuchar las preguntas <em>¿por qué trabajar con R cuando existen programas mucho más “sencillos” para hacer análisis de datos?</em>, <em>¿para qué complicar a los estudiantes enseñándoles a programar si además deben aprender estadística?</em>. Existen muchas respuestas a esas preguntas, sin embargo, a continuación se presenta una lista de razones que fortalecen la idea de porqué usar R, algunas de estas ideas son expuestas en <span class="citation" data-cites="tucker_teaching_2022">Tucker et&nbsp;al. (<a href="#ref-tucker_teaching_2022" role="doc-biblioref">2022</a>)</span> y <span class="citation" data-cites="agwu_using_2018">Agwu y Bialas (<a href="#ref-agwu_using_2018" role="doc-biblioref">2018</a>)</span>.</p>
 <ol type="1">
 <li>R es un programa libre, gratuito y de desarrollo independiente disponible para la mayoría de sistemas operativos lo que reduce las barreras de acceso.</li>
 <li>Es flexible y poderoso tanto para simulación como para el análisis de datos.</li>
 <li>El hecho de que involucre escribir código permite reproducir los análisis hechos por cualquier persona sin ninguna condición o limitante.</li>
 </ol>
-<p>Escribir código en R ayuda a que el pensamiento estadístico y los procesos de análisis estadístico sean más visibles y reproducibles; es decir que usar R, podría ofrecer una herramienta adicional de representación que permite construir el entendimiento de los conceptos (<span class="citation" data-cites="tucker_teaching_2022">Tucker et&nbsp;al. (<a href="references.html#ref-tucker_teaching_2022" role="doc-biblioref">2022</a>)</span>).</p>
-<p>Cuando se instala R por defecto vienen incorporados <em>paquetes</em> que permiten importar datos, ajustar y evaluar modelos, realizar gráficos. Mas, es posible añadir funcionalidades a R instalando y cargando nuevos <em>paquetes</em>, un <em>paquete</em> es una colección de funciones de R, datos y código compilado en un formato bien definido, creado para agregar alguna funcionalidad específica (<span class="citation" data-cites="contributors_packages_2020">Data Carpentry (<a href="references.html#ref-contributors_packages_2020" role="doc-biblioref">2020</a>)</span>). En la actualidad existen más de 19000 paquetes (y creciendo) para todo tipo de análisis estadístico, gran parte de los nuevos resultados o metodologías estadísticas publicadas en revistas de investigación generalmente son desarrolladas en paquetes de R lo que hace fácil acceder a las últimas técnicas estadísticas.</p>
+<p>Escribir código en R ayuda a que el pensamiento estadístico y los procesos de análisis estadístico sean más visibles y reproducibles; es decir que usar R, podría ofrecer una herramienta adicional de representación que permite construir el entendimiento de los conceptos (<span class="citation" data-cites="tucker_teaching_2022">Tucker et&nbsp;al. (<a href="#ref-tucker_teaching_2022" role="doc-biblioref">2022</a>)</span>).</p>
+<p>Cuando se instala R por defecto vienen incorporados <em>paquetes</em> que permiten importar datos, ajustar y evaluar modelos, realizar gráficos. Mas, es posible añadir funcionalidades a R instalando y cargando nuevos <em>paquetes</em>, un <em>paquete</em> es una colección de funciones de R, datos y código compilado en un formato bien definido, creado para agregar alguna funcionalidad específica (<span class="citation" data-cites="contributors_packages_2020">Data Carpentry (<a href="#ref-contributors_packages_2020" role="doc-biblioref">2020</a>)</span>). En la actualidad existen más de 19000 paquetes (y creciendo) para todo tipo de análisis estadístico, gran parte de los nuevos resultados o metodologías estadísticas publicadas en revistas de investigación generalmente son desarrolladas en paquetes de R lo que hace fácil acceder a las últimas técnicas estadísticas.</p>
 </section>
-<section id="rstudio." class="level2" data-number="1.2">
-<h2 data-number="1.2" class="anchored" data-anchor-id="rstudio."><span class="header-section-number">1.2</span> RStudio.</h2>
-<p>La interfaz de R es muy básica y para personas interesadas (u obligadas) a aprender este lenguaje de programación que no están familiarizados con algún otro lenguaje, usar esta interfaz puede resultar frustrante al punto de querer desistir de aprender R. Rstudio es un entorno de desarrollo integrado (IDE) gratuito y de código abierto para R. Incluye una consola, un editor de resaltado de sintaxis que admite la ejecución directa de código, así como herramientas para la graficación, revisar el historial, gestionar conexiones, la depuración del código y la gestión del espacio o directorio de trabajo (<span class="citation" data-cites="navar2019">Navarrete y Chávez (<a href="references.html#ref-navar2019" role="doc-biblioref">2019</a>)</span>).</p>
-<p>En <span class="citation" data-cites="mcconville_statistical">Ismay (<a href="references.html#ref-mcconville_statistical" role="doc-biblioref">2022</a>)</span> se hace una analogía interesante en la que se menciona que R se puede entender como el motor de un vehículo, mientras que Rstudio es el tablero del vehículo que permite tener a la mano todas las funcionalidades del mismo.</p>
+<section id="rstudio." class="level2">
+<h2 class="anchored" data-anchor-id="rstudio.">RStudio.</h2>
+<p>La interfaz de R es muy básica y para personas interesadas (u obligadas) a aprender este lenguaje de programación que no están familiarizados con algún otro lenguaje, usar esta interfaz puede resultar frustrante al punto de querer desistir de aprender R. Rstudio es un entorno de desarrollo integrado (IDE) gratuito y de código abierto para R. Incluye una consola, un editor de resaltado de sintaxis que admite la ejecución directa de código, así como herramientas para la graficación, revisar el historial, gestionar conexiones, la depuración del código y la gestión del espacio o directorio de trabajo (<span class="citation" data-cites="navar2019">Navarrete y Chávez (<a href="#ref-navar2019" role="doc-biblioref">2019</a>)</span>).</p>
+<p>En <span class="citation" data-cites="mcconville_statistical">Ismay (<a href="#ref-mcconville_statistical" role="doc-biblioref">2022</a>)</span> se hace una analogía interesante en la que se menciona que R se puede entender como el motor de un vehículo, mientras que Rstudio es el tablero del vehículo que permite tener a la mano todas las funcionalidades del mismo.</p>
 </section>
-<section id="poniendo-todo-a-punto-para-empezar" class="level2" data-number="1.3">
-<h2 data-number="1.3" class="anchored" data-anchor-id="poniendo-todo-a-punto-para-empezar"><span class="header-section-number">1.3</span> Poniendo todo a punto para empezar</h2>
-<section id="instalación-de-r-y-rstudio" class="level3" data-number="1.3.1">
-<h3 data-number="1.3.1" class="anchored" data-anchor-id="instalación-de-r-y-rstudio"><span class="header-section-number">1.3.1</span> Instalación de R y RStudio</h3>
-<p>Un flujo de trabajo recomendado es, primero descargar e instalar R. El programa puede ser descargado de la página <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a>. En la <a href="#fig-instR">Figura&nbsp;<span>1.1</span></a> se muestra la pantalla de la página. Una vez descargado el programa, se procede a instalarlo.</p>
+<section id="poniendo-todo-a-punto-para-empezar" class="level2">
+<h2 class="anchored" data-anchor-id="poniendo-todo-a-punto-para-empezar">Poniendo todo a punto para empezar</h2>
+<section id="instalación-de-r-y-rstudio" class="level3">
+<h3 class="anchored" data-anchor-id="instalación-de-r-y-rstudio">Instalación de R y RStudio</h3>
+<p>Un flujo de trabajo recomendado es, primero descargar e instalar R. El programa puede ser descargado de la página <a href="https://cloud.r-project.org/" class="uri">https://cloud.r-project.org/</a>. En la <a href="#fig-instR">Figura&nbsp;<span class="quarto-unresolved-ref">fig-instR</span></a> se muestra la pantalla de la página. Una vez descargado el programa, se procede a instalarlo.</p>
 <div id="fig-instR" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imagenes/pagR.png" class="img-fluid figure-img"></p>
+<p><img src="imagenes/pagR.png" class="img-fluid figure-img" style="width:90.0%"></p>
 <figcaption class="figure-caption">Figura&nbsp;1.1: Página para descargar R</figcaption>
 </figure>
 </div>
-<p>A continuación se procede a descargar RStudio de la página <a href="https://posit.co/downloads/" class="uri">https://posit.co/downloads/</a>. En la <a href="#fig-instRs">Figura&nbsp;<span>1.2</span></a> se muestra la pantalla de la página. Una vez descargado el programa se procede a instalarlo.</p>
+<p>A continuación se procede a descargar RStudio de la página <a href="https://posit.co/downloads/" class="uri">https://posit.co/downloads/</a>. En la <a href="#fig-instRs">Figura&nbsp;<span class="quarto-unresolved-ref">fig-instRs</span></a> se muestra la pantalla de la página. Una vez descargado el programa se procede a instalarlo.</p>
 <div id="fig-instRs" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
-<p><img src="imagenes/pagRstudio.png" class="img-fluid figure-img"></p>
+<p><img src="imagenes/pagRstudio.png" class="img-fluid figure-img" style="width:90.0%"></p>
 <figcaption class="figure-caption">Figura&nbsp;1.2: Página para descargar RStudio</figcaption>
 </figure>
 </div>
-<p>En la <a href="#fig-consolas">Figura&nbsp;<span>1.3</span></a> se muestran las interfaces de R y RStudio respectivamente, a lo largo de este libro aprenderemos el lenguaje de programación R utilizando RStudio por lo que en la siguiente sección exploraremos la interfaz del segundo programa.</p>
+<p>En la <a href="#fig-consolas">Figura&nbsp;<span class="quarto-unresolved-ref">fig-consolas</span></a> se muestran las interfaces de R y RStudio respectivamente, a lo largo de este libro aprenderemos el lenguaje de programación R utilizando RStudio por lo que en la siguiente sección exploraremos la interfaz del segundo programa.</p>
 <div id="fig-consolas" class="quarto-layout-panel">
 <figure class="figure">
 <div class="quarto-layout-row quarto-layout-valign-top">
@@ -326,9 +307,9 @@ div.csl-indent {
 </figure>
 </div>
 </section>
-<section id="conociendo-la-interfaz-de-rstudio" class="level3" data-number="1.3.2">
-<h3 data-number="1.3.2" class="anchored" data-anchor-id="conociendo-la-interfaz-de-rstudio"><span class="header-section-number">1.3.2</span> Conociendo la interfaz de RStudio</h3>
-<p>Cuando se abre RStudio por primera vez se observan 3 paneles. Sin embargo, cuando se comienza a usar el programa con frecuencia veremos 4 paneles. Por defecto en la parte superior izquierda aparece el <em>panel de fuente o scripts</em>, en la parte superior derecha el <em>panel de espacio de trabajo o ambiente</em>, en la parte inferior izquierda aparece la <em>consola</em> y en la parte inferior derecha aparece el <em>panel de archivos, gráficos, paquetes y ayuda</em>. En la <a href="#fig-panes">Figura&nbsp;<span>1.4</span></a> se presenta la ubicación de estos cuatro paneles. A continuación una descripción de cada uno de estos paneles.</p>
+<section id="conociendo-la-interfaz-de-rstudio" class="level3">
+<h3 class="anchored" data-anchor-id="conociendo-la-interfaz-de-rstudio">Conociendo la interfaz de RStudio</h3>
+<p>Cuando se abre RStudio por primera vez se observan 3 paneles. Sin embargo, cuando se comienza a usar el programa con frecuencia veremos 4 paneles. Por defecto en la parte superior izquierda aparece el <em>panel de fuente o scripts</em>, en la parte superior derecha el <em>panel de espacio de trabajo o ambiente</em>, en la parte inferior izquierda aparece la <em>consola</em> y en la parte inferior derecha aparece el <em>panel de archivos, gráficos, paquetes y ayuda</em>. En la <a href="#fig-panes">Figura&nbsp;<span class="quarto-unresolved-ref">fig-panes</span></a> se presenta la ubicación de estos cuatro paneles. A continuación una descripción de cada uno de estos paneles.</p>
 <div id="fig-panes" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imagenes/rspanes.png" class="img-fluid figure-img"></p>
@@ -343,8 +324,8 @@ div.csl-indent {
 </ol>
 </section>
 </section>
-<section id="sec-packs" class="level2" data-number="1.4">
-<h2 data-number="1.4" class="anchored" data-anchor-id="sec-packs"><span class="header-section-number">1.4</span> Instalar paquetes</h2>
+<section id="sec-packs" class="level2">
+<h2 class="anchored" data-anchor-id="sec-packs">Instalar paquetes</h2>
 <p>A lo largo de este libro usaremos algunos paquetes. En esta sección aprenderemos a instalar paquetes. Existen 2 formas para instalar un paquete.</p>
 <ol type="1">
 <li>Desde la consola o un script</li>
@@ -371,9 +352,9 @@ div.csl-indent {
 <li><strong><em>DescTools</em></strong>: herramientas para estadística descriptiva.</li>
 <li><strong><em>cowplot</em></strong>: provee varias características que ayudan a la creación de figuras de alta calidad con <strong><em>ggplot2</em></strong>.</li>
 </ol>
-<section id="sec-inspac" class="level3" data-number="1.4.1">
-<h3 data-number="1.4.1" class="anchored" data-anchor-id="sec-inspac"><span class="header-section-number">1.4.1</span> Desde la consola o un script</h3>
-<p>Para instalar paquetes desde la consola o desde un script se debe utilizar la función <code>ìnstall.packages("nombrepaquete")</code> así si se quiere instalar el paquete <strong>tidyverse</strong> se escribe en la consola o en un script <code>ìnstall.packages("tidyverse")</code>, cuando se escribe en un script se debe ejecutar el comando con la combinación de teclas <code>Ctrl + Enter</code> si está trabajando en Windows o <code>Cmd + Enter</code> si está trabajando en Mac. En la <a href="02-estdesc.html#sec-pprs"><span>Sección&nbsp;3.3</span></a> se darán más detalles de como crear un script y ejecutar códigos desde un script, por lo pronto puede instalar paquetes desde la consola.</p>
+<section id="sec-inspac" class="level3">
+<h3 class="anchored" data-anchor-id="sec-inspac">Desde la consola o un script</h3>
+<p>Para instalar paquetes desde la consola o desde un script se debe utilizar la función <code>ìnstall.packages("nombrepaquete")</code> así si se quiere instalar el paquete <strong>tidyverse</strong> se escribe en la consola o en un script <code>ìnstall.packages("tidyverse")</code>, cuando se escribe en un script se debe ejecutar el comando con la combinación de teclas <code>Ctrl + Enter</code> si está trabajando en Windows o <code>Cmd + Enter</code> si está trabajando en Mac. En la <a href="#sec-pprs"><span class="quarto-unresolved-ref">sec-pprs</span></a> se darán más detalles de como crear un script y ejecutar códigos desde un script, por lo pronto puede instalar paquetes desde la consola.</p>
 <div id="fig-ejewindows" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imagenes/ctrl_enter.png" class="img-fluid figure-img" style="width:50.0%"></p>
@@ -387,9 +368,9 @@ div.csl-indent {
 </figure>
 </div>
 </section>
-<section id="desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú" class="level3" data-number="1.4.2">
-<h3 data-number="1.4.2" class="anchored" data-anchor-id="desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú"><span class="header-section-number">1.4.2</span> Desde la pestaña de paquetes o desde la barra de menú</h3>
-<p>En el panel de archivos, gráficos, paquetes y ayuda se escoge la pestaña <code>Packages</code> y luego se da clic en la opción <code>Ìnstall</code>, aparece una ventana como la que se muestra en la <a href="#fig-packages">Figura&nbsp;<span>1.7</span></a>. En caja de texto titulada <code>Packages (separate multiple with space or comma)</code> se deben escribir el nombre del o de los paquetes que se van a instalar separados por coma o por un espacio como se muestra en la <a href="#fig-packagesinst">Figura&nbsp;<span>1.8</span></a>. A medida que se escribe el nombre del paquete aparecen posibles paquetes a ser instalados. Otra forma de acceder a esta venta es en la barra de menú <code>Tools -&gt; Install Packages...</code>.</p>
+<section id="desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú" class="level3">
+<h3 class="anchored" data-anchor-id="desde-la-pestaña-de-paquetes-o-desde-la-barra-de-menú">Desde la pestaña de paquetes o desde la barra de menú</h3>
+<p>En el panel de archivos, gráficos, paquetes y ayuda se escoge la pestaña <code>Packages</code> y luego se da clic en la opción <code>Ìnstall</code>, aparece una ventana como la que se muestra en la <a href="#fig-packages">Figura&nbsp;<span class="quarto-unresolved-ref">fig-packages</span></a>. En caja de texto titulada <code>Packages (separate multiple with space or comma)</code> se deben escribir el nombre del o de los paquetes que se van a instalar separados por coma o por un espacio como se muestra en la <a href="#fig-packagesinst">Figura&nbsp;<span class="quarto-unresolved-ref">fig-packagesinst</span></a>. A medida que se escribe el nombre del paquete aparecen posibles paquetes a ser instalados. Otra forma de acceder a esta venta es en la barra de menú <code>Tools -&gt; Install Packages...</code>.</p>
 <div id="fig-packages" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imagenes/ventanapackages.png" class="img-fluid figure-img"></p>
@@ -404,10 +385,10 @@ div.csl-indent {
 </div>
 </section>
 </section>
-<section id="sec-basicsR" class="level2" data-number="1.5">
-<h2 data-number="1.5" class="anchored" data-anchor-id="sec-basicsR"><span class="header-section-number">1.5</span> Los básicos del lenguaje R</h2>
-<section id="sintaxis-de-r" class="level3" data-number="1.5.1">
-<h3 data-number="1.5.1" class="anchored" data-anchor-id="sintaxis-de-r"><span class="header-section-number">1.5.1</span> Sintaxis de R</h3>
+<section id="sec-basicsR" class="level2">
+<h2 class="anchored" data-anchor-id="sec-basicsR">Los básicos del lenguaje R</h2>
+<section id="sintaxis-de-r" class="level3">
+<h3 class="anchored" data-anchor-id="sintaxis-de-r">Sintaxis de R</h3>
 <p>En la consola de R podemos escribir las siguientes expresiones</p>
 <p><code>&gt; x &lt;- 6 # Crear la variable x con un valor igual a 6</code></p>
 <p><code>&gt; print(x) # Impresión explicita</code></p>
@@ -427,8 +408,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="objetos-de-r" class="level3" data-number="1.5.2">
-<h3 data-number="1.5.2" class="anchored" data-anchor-id="objetos-de-r"><span class="header-section-number">1.5.2</span> Objetos de R</h3>
+<section id="objetos-de-r" class="level3">
+<h3 class="anchored" data-anchor-id="objetos-de-r">Objetos de R</h3>
 <p>R tiene cinco clases de objetos básicos, algunos autores también los llaman objetos atómicos.</p>
 <ol type="1">
 <li>Caracter. (character, chr)</li>
@@ -439,8 +420,8 @@ div.csl-indent {
 </ol>
 <p>El objeto más básico de R es el <strong>vector</strong>. Para crear vectores vacíos se utiliza la función <code>vector()</code>. La regla única para crear vectores es: <em>Un vector debe tener solamente objetos de la misma clase</em>, la excepción de la regla son las listas que son un tipo especial de vectores que pueden contener elementos de diferentes clases. Las listas son un importante tipo de datos en R. La creación de una lista se lo hace con la función <code>list()</code>.</p>
 </section>
-<section id="vectores" class="level3" data-number="1.5.3">
-<h3 data-number="1.5.3" class="anchored" data-anchor-id="vectores"><span class="header-section-number">1.5.3</span> Vectores</h3>
+<section id="vectores" class="level3">
+<h3 class="anchored" data-anchor-id="vectores">Vectores</h3>
 <p>Para crear vectores se utiliza la función <code>c()</code> que concatena o une los elementos.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>v1 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="dv">3</span>, <span class="dv">5</span>, <span class="fl">2.3</span>) <span class="co"># Numérico</span></span>
@@ -458,8 +439,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="coerción-implícita-y-explícita" class="level3" data-number="1.5.4">
-<h3 data-number="1.5.4" class="anchored" data-anchor-id="coerción-implícita-y-explícita"><span class="header-section-number">1.5.4</span> Coerción implícita y explícita</h3>
+<section id="coerción-implícita-y-explícita" class="level3">
+<h3 class="anchored" data-anchor-id="coerción-implícita-y-explícita">Coerción implícita y explícita</h3>
 <p>Cuando en un vector se mezclan objetos de distintas clases, ocurre la <em>coerción implícita</em> de tal forma que todos los elementos en el vector se convierten a elementos de la misma clase. Para verificar la clase de un vector usamos la función <code>class()</code>.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>v6 <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="fl">3.14</span>, <span class="st">"x"</span>)</span>
@@ -513,21 +494,21 @@ div.csl-indent {
 </div>
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.numeric</span>(q)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: NAs introducidos por coerción</code></pre>
+<pre><code>Warning: NAs introduced by coercion</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA NA NA</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb27"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb27-1"><a href="#cb27-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.complex</span>(q)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: NAs introducidos por coerción</code></pre>
+<pre><code>Warning: NAs introduced by coercion</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA NA NA</code></pre>
 </div>
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="fu">as.integer</span>(q)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stderr">
-<pre><code>Warning: NAs introducidos por coerción</code></pre>
+<pre><code>Warning: NAs introduced by coercion</code></pre>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] NA NA NA</code></pre>
@@ -538,8 +519,8 @@ div.csl-indent {
 </div>
 </div>
 </section>
-<section id="listas" class="level3" data-number="1.5.5">
-<h3 data-number="1.5.5" class="anchored" data-anchor-id="listas"><span class="header-section-number">1.5.5</span> Listas</h3>
+<section id="listas" class="level3">
+<h3 class="anchored" data-anchor-id="listas">Listas</h3>
 <p>Las listas son un tipo especial de vectores que pueden contener elementos de distintas clases. Las listas se pueden crear con la función <code>list( )</code>. Con la función <code>vector( )</code> se puede crear una lista vacia.</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb35"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1" aria-hidden="true" tabindex="-1"></a>r <span class="ot">&lt;-</span> <span class="fu">list</span>(<span class="fl">2.71</span>, <span class="dv">2</span>, <span class="st">"m"</span>, <span class="dv">3</span><span class="sc">+</span>2i, F)</span>
@@ -580,8 +561,8 @@ NULL</code></pre>
 </div>
 </div>
 </section>
-<section id="matrices" class="level3" data-number="1.5.6">
-<h3 data-number="1.5.6" class="anchored" data-anchor-id="matrices"><span class="header-section-number">1.5.6</span> Matrices</h3>
+<section id="matrices" class="level3">
+<h3 class="anchored" data-anchor-id="matrices">Matrices</h3>
 <p>Las matrices son vectores que tienen un atributo de dimensión, este atributo es en si mismo un vector entero de longitud 2 (número de filas y columnas).</p>
 <div class="cell">
 <div class="sourceCode cell-code" id="cb39"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a>m <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="dv">3</span>, <span class="at">ncol =</span> <span class="dv">4</span>)</span>
@@ -650,8 +631,8 @@ s2   16   17   18   19   20</code></pre>
 </div>
 </div>
 </section>
-<section id="data-frames" class="level3" data-number="1.5.7">
-<h3 data-number="1.5.7" class="anchored" data-anchor-id="data-frames"><span class="header-section-number">1.5.7</span> Data frames</h3>
+<section id="data-frames" class="level3">
+<h3 class="anchored" data-anchor-id="data-frames">Data frames</h3>
 <p>Los <em>data frames</em> (marcos de datos, cuadros de datos) son usados para guardar datos tabulares en R. Son un tipo importante de objetos en R y son usados en muchas situaciones de modelación y análisis de datos. Los <em>data frames</em> a diferencia de las matrices pueden guardar diferentes clases de objetos en cada columna. Las matrices tienen un atributo de nombres de columnas (<code>colnames</code>) los <em>data frames</em> tienen además un atributo de nombres de filas (<code>row.names</code>).</p>
 <p>Los <em>data frames</em> pueden ser leídos con funciones como <code>read.csv()</code> o <code>read.table()</code>. También pueden ser creados con la función <code>data.frame()</code>, el metapaquete <code>tidyverse</code> tiene funciones que permiten trabajar de forma más eficiente con conjuntos de datos. El equivalente de <code>data.frame()</code> en el paquete <code>dplyr</code> de <code>tidyverse</code> es <code>tibble()</code>. Con la función <code>str()</code> se puede conocer la estructura de un <em>data frame</em>, la función de <em>dplyr</em> equivalente a <em>str()</em> es <em>glimpse( )</em></p>
 <div class="cell">
@@ -726,7 +707,7 @@ $ Valor    &lt;dbl&gt; 12, 14, 13, 16</code></pre>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
 <div id="ref-agwu_using_2018" class="csl-entry" role="listitem">
 Agwu, N., y Bialas, P. (2018). <em>Using <span>R</span>/<span>R</span> <span>Studio</span> <span>In</span> <span>An</span> <span>Introductory</span> <span>Statistics</span> <span>Course</span></em>. <em>10</em>(3).
 </div>
@@ -980,7 +961,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
       <a href="./index.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">A modo de introducción</span>
@@ -988,7 +969,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./01-concepts.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Estadística. Conceptos Básicos.</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

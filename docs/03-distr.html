@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de Datos en Agricultura con R y RStudio - 4&nbsp; Distribuciones de probabilidad</title>
+<title>Análisis de Datos en Agricultura con R y RStudio - Distribuciones de probabilidad</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -65,6 +65,7 @@ ul.task-list li input[type="checkbox"] {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="_extensions/fredguth/tufte/styles.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -76,7 +77,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-distr.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-distr.html"><span class="chapter-title">Distribuciones de probabilidad</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -86,7 +87,7 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
@@ -109,50 +110,42 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R y RStudio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span></a>
+  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística. Conceptos Básicos.</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span></a>
+  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Descriptiva</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-distr.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span></a>
+  <a href="./03-distr.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Distribuciones de probabilidad</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span></a>
+  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Muestreo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-icph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span></a>
+  <a href="./05-icph.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Inferencial</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span></a>
+  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Correlación y Regresión</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span></a>
+  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diseño de experimentos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -163,48 +156,36 @@ ul.task-list li input[type="checkbox"] {
 </li>
     </ul>
     </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#definiciones" id="toc-definiciones" class="nav-link active" data-scroll-target="#definiciones">Definiciones</a></li>
+  <li><a href="#distribución-normal" id="toc-distribución-normal" class="nav-link" data-scroll-target="#distribución-normal">Distribución Normal</a></li>
+  <li><a href="#distribución-t-de-student" id="toc-distribución-t-de-student" class="nav-link" data-scroll-target="#distribución-t-de-student">Distribución <span class="math inline">\(t\)</span> de Student</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Indice de contenidos</h2>
-   
-  <ul>
-  <li><a href="#definiciones" id="toc-definiciones" class="nav-link active" data-scroll-target="#definiciones"><span class="header-section-number">4.1</span> Definiciones</a></li>
-  <li><a href="#distribución-normal" id="toc-distribución-normal" class="nav-link" data-scroll-target="#distribución-normal"><span class="header-section-number">4.2</span> Distribución Normal</a></li>
-  <li><a href="#distribución-t-de-student" id="toc-distribución-t-de-student" class="nav-link" data-scroll-target="#distribución-t-de-student"><span class="header-section-number">4.3</span> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="distr" class="quarto-section-identifier"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
+<header id="title-block-header">
+<h1 class="title display-7"><span class="chapter-title">Distribuciones de probabilidad</span></h1>
 
 </header>
 
-<section id="definiciones" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="definiciones"><span class="header-section-number">4.1</span> Definiciones</h2>
+<section id="definiciones" class="level2">
+<h2 class="anchored" data-anchor-id="definiciones">Definiciones</h2>
 </section>
-<section id="distribución-normal" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="distribución-normal"><span class="header-section-number">4.2</span> Distribución Normal</h2>
+<section id="distribución-normal" class="level2">
+<h2 class="anchored" data-anchor-id="distribución-normal">Distribución Normal</h2>
 </section>
-<section id="distribución-t-de-student" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="distribución-t-de-student"><span class="header-section-number">4.3</span> Distribución <span class="math inline">\(t\)</span> de Student</h2>
+<section id="distribución-t-de-student" class="level2">
+<h2 class="anchored" data-anchor-id="distribución-t-de-student">Distribución <span class="math inline">\(t\)</span> de Student</h2>
 
 
 </section>
@@ -443,15 +424,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
       <a href="./02-estdesc.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Estadística Descriptiva</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./04-sampling.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Muestreo</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

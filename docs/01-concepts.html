@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de Datos en Agricultura con R y RStudio - 2&nbsp; Estadística. Conceptos Básicos.</title>
+<title>Análisis de Datos en Agricultura con R y RStudio - Estadística. Conceptos Básicos.</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -84,6 +84,7 @@ div.csl-indent {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<link rel="stylesheet" href="_extensions/fredguth/tufte/styles.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -95,7 +96,7 @@ div.csl-indent {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-concepts.html"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./01-concepts.html"><span class="chapter-title">Estadística. Conceptos Básicos.</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -105,7 +106,7 @@ div.csl-indent {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
@@ -128,50 +129,42 @@ div.csl-indent {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R y RStudio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span></a>
+  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Estadística. Conceptos Básicos.</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span></a>
+  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Descriptiva</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-distr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span></a>
+  <a href="./03-distr.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Distribuciones de probabilidad</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span></a>
+  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Muestreo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-icph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span></a>
+  <a href="./05-icph.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Inferencial</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span></a>
+  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Correlación y Regresión</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span></a>
+  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Diseño de experimentos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -182,46 +175,34 @@ div.csl-indent {
 </li>
     </ul>
     </div>
-</nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
-<!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Indice de contenidos</h2>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
    
   <ul>
-  <li><a href="#etapas-del-proceso-estadístico." id="toc-etapas-del-proceso-estadístico." class="nav-link active" data-scroll-target="#etapas-del-proceso-estadístico."><span class="header-section-number">2.1</span> Etapas del proceso estadístico.</a></li>
-  <li><a href="#definiciones-importantes" id="toc-definiciones-importantes" class="nav-link" data-scroll-target="#definiciones-importantes"><span class="header-section-number">2.2</span> Definiciones importantes</a></li>
-  <li><a href="#clasificación-de-la-estadística." id="toc-clasificación-de-la-estadística." class="nav-link" data-scroll-target="#clasificación-de-la-estadística."><span class="header-section-number">2.3</span> Clasificación de la estadística.</a></li>
-  <li><a href="#tipos-de-estudio" id="toc-tipos-de-estudio" class="nav-link" data-scroll-target="#tipos-de-estudio"><span class="header-section-number">2.4</span> Tipos de estudio</a></li>
-  <li><a href="#variables-clasificación-y-niveles-de-medición." id="toc-variables-clasificación-y-niveles-de-medición." class="nav-link" data-scroll-target="#variables-clasificación-y-niveles-de-medición."><span class="header-section-number">2.5</span> Variables, clasificación y niveles de medición.</a></li>
+  <li><a href="#etapas-del-proceso-estadístico." id="toc-etapas-del-proceso-estadístico." class="nav-link active" data-scroll-target="#etapas-del-proceso-estadístico.">Etapas del proceso estadístico.</a></li>
+  <li><a href="#definiciones-importantes" id="toc-definiciones-importantes" class="nav-link" data-scroll-target="#definiciones-importantes">Definiciones importantes</a></li>
+  <li><a href="#clasificación-de-la-estadística." id="toc-clasificación-de-la-estadística." class="nav-link" data-scroll-target="#clasificación-de-la-estadística.">Clasificación de la estadística.</a></li>
+  <li><a href="#tipos-de-estudio" id="toc-tipos-de-estudio" class="nav-link" data-scroll-target="#tipos-de-estudio">Tipos de estudio</a></li>
+  <li><a href="#variables-clasificación-y-niveles-de-medición." id="toc-variables-clasificación-y-niveles-de-medición." class="nav-link" data-scroll-target="#variables-clasificación-y-niveles-de-medición.">Variables, clasificación y niveles de medición.</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
   </ul>
 </nav>
+</nav>
+<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="intro" class="quarto-section-identifier"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
+<header id="title-block-header">
+<h1 class="title display-7"><span class="chapter-title">Estadística. Conceptos Básicos.</span></h1>
 
 </header>
 
 <p>El término <em>estadística</em> tiene su origen en la palabra alemana <em>statistik</em> acuñada por el economista aleman Gottfried Achenwall, la palabra tuvo su génesis en el latín <em>statisticus</em> que se podría traducir como <em>relativo al estado</em>, pues lo que hoy conocemos como estadística estuvo incialmente relacionado con datos relativos a los gobiernos o estados, dichos datos podían provenir de censos, registros de salud, pago de impuestos, etc. En los siglos XVI y XVII hubo un fuerte interés por las probabilidades, más que nada por el deseo de obtener ventaja en juegos de cartas y otras formas de apuesta.</p>
 <p>La ciencia estadística como tal evolucionó al punto que hoy encontramos estadísticas y estadística en muchos aspectos de nuestra vida cotidiana. Cuando hablamos de estadística nos referimos a la ciencia (que definiremos formalmente un poco más adelante), mientras que al usar el termino estadísticas nos referimos a datos, o a la presentación de hechos, gráficas o información. Por ejemplo cuando en una hacienda cacaotera se presenta la información relativa a la producción en kilogramos de los híbridos usados en la plantación estamos hablando de estadísticas, mientras que el problema de analizar, y establecer las diferencias en el rendimiento medido en kilogramos por hectárea para diferentes híbridos con el fin de aumentar las ganancias de la finca puede ser resuelto usando estadística.</p>
-<p>Una definición clásica de estadística es <strong>ciencia que se encarga de la recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica</strong> (<span class="citation" data-cites="cleff2013">Cleff (<a href="references.html#ref-cleff2013" role="doc-biblioref">2013</a>)</span>). En <span class="citation" data-cites="agresti2023">Agresti et&nbsp;al. (<a href="references.html#ref-agresti2023" role="doc-biblioref">2023</a>)</span>, de manera corta definen a la estadística como <strong>el arte y la ciencia de aprender de los datos</strong>.</p>
+<p>Una definición clásica de estadística es <strong>ciencia que se encarga de la recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica</strong> (<span class="citation" data-cites="cleff2013">Cleff (<a href="#ref-cleff2013" role="doc-biblioref">2013</a>)</span>). En <span class="citation" data-cites="agresti2023">Agresti et&nbsp;al. (<a href="#ref-agresti2023" role="doc-biblioref">2023</a>)</span>, de manera corta definen a la estadística como <strong>el arte y la ciencia de aprender de los datos</strong>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -235,8 +216,8 @@ Importante
 <p><strong>Definición de Estadística</strong> ciencia que trata de la recolección, presentación y análisis de datos para resolver problemas, tomar decisiones y diseñar productos y procesos.</p>
 </div>
 </div>
-<section id="etapas-del-proceso-estadístico." class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="etapas-del-proceso-estadístico."><span class="header-section-number">2.1</span> Etapas del proceso estadístico.</h2>
+<section id="etapas-del-proceso-estadístico." class="level2">
+<h2 class="anchored" data-anchor-id="etapas-del-proceso-estadístico.">Etapas del proceso estadístico.</h2>
 <p>El proceso estadístico tiene como principal entrada a los datos. Sin embargo, el proceso estadístico no empieza en los datos. De manera general las etapas del proceso estadístico son:</p>
 <ol type="1">
 <li><strong>Identificación y delimitación del problema</strong>: Un problema en investigación debe ser entendido como una pregunta o cuestión sobre un tema o aspecto que no se conoce. Ejemplos de problema en agronomía pueden ser: comparación de producción lechera en vacas sometidas a diferentes dietas, la identificación de características fenotípicas de variedades de banano resistentes a determinada enfermedad, evaluación del rendimiento de un cultivar utilizando biocarbón en diferentes concentaciones, etc. La delimitación implica recortar el tema dentro de los límites de espacio, tiempo y área de estudio que caracteriza al problema. Por ejemplo, en el problema de la comparación de la producción lechera en vacas sometidas a diferentes dietas la delimitación puede incluir aspectos como, la época del año en que se va a recoger la información, las razas de animales a ser incluidas en el estudio, el lugar dónde se llevará a cabo el estudio. Dentro de esta fase se incluye la definición de los objetivos del estudio.</li>
@@ -248,8 +229,8 @@ Importante
 <li><strong>Inferencia</strong>: Basados en los resultados del análisis estadístico se hacen inferencias acerca de los objetivos del estudio. Aunque los datos provengan de una muestra, utilizando teorías estadísticas se puede llegar a conclusiones sobre la población de la que fueron tomadas las muestras.</li>
 </ol>
 </section>
-<section id="definiciones-importantes" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="definiciones-importantes"><span class="header-section-number">2.2</span> Definiciones importantes</h2>
+<section id="definiciones-importantes" class="level2">
+<h2 class="anchored" data-anchor-id="definiciones-importantes">Definiciones importantes</h2>
 <ul>
 <li><strong>Población</strong>: una población es el conjunto de todos los sujetos u objetos de interés en una investigación o análisis. Por ejemplo, en un estudio que tenga como objetivo determinar características fenotípicas de variedades de banano resistentes a cierta enfermedad en el trópico húmedo, la poblacion son todas las plantas de banano sembradas en el trópico húmedo.</li>
 <li><strong>Muestra</strong>: es la parte de la población que es analizada, dicho de otra forma una muestra es un subconjunto de la población. Sigamos con el ejemplo de las características fenotípicas de variedades de banano resistentes a cierta enfermedad en el trópico húmedo, el investigador no va a tomar todas las plantas sino que va a escoger un grupo de plantas de las variedades de interés. La muestra debe representar lo mejor posible a la población. La parte de la estadística que comprende los métodos estadísticos para obtener muestras representativas de una población se llama <em>muestreo</em></li>
@@ -257,8 +238,8 @@ Importante
 <li><strong>Estadístico</strong>: un estadístico es una cantidad numérica que caracteriza a una muestra.</li>
 </ul>
 </section>
-<section id="clasificación-de-la-estadística." class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="clasificación-de-la-estadística."><span class="header-section-number">2.3</span> Clasificación de la estadística.</h2>
+<section id="clasificación-de-la-estadística." class="level2">
+<h2 class="anchored" data-anchor-id="clasificación-de-la-estadística.">Clasificación de la estadística.</h2>
 <p>De manera general, la estadística se clasifica en dos grandes ramas : estadística descriptiva y estadística inferencial.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -286,7 +267,7 @@ Importante
 <p><strong>Estadística Inferencial</strong> se refiere a los métodos para sacar conclusiones, hacer predicciones o tomar decisiones sobre una población, basándose en datos de una muestra perteneciente a una población.</p>
 </div>
 </div>
-<p>En la <a href="#fig-popsample">Figura&nbsp;<span>2.1</span></a> se muestra la relación entre algunos conceptos revisados hasta ahora. Supongamos que en una finca lechera se desea hacer un estudio sobre el efecto de una dieta en la producción de leche en una determinada raza de vacas lecheras. El conjunto de todas las vacas representa a toda la <strong>población</strong>. El objetivo de estudio es determinar el rendimiento promedio de todas las vacas, esta medida de toda la población es un <strong>parámetro</strong>. Debido a ser un producto de prueba el estudio no es aplicado a toda la población, por lo que se utiliza técnicas de <strong>muestreo</strong> para escoger una <strong>muestra</strong> representativa, con <strong>estadística descriptiva</strong> se determina el rendimiento promedio de la muestra, este valor es un <strong>estadístico</strong>. Con técnicas de <strong>estadística inferencial</strong> se estima el valor del parámetro de interés.</p>
+<p>En la <a href="#fig-popsample">Figura&nbsp;<span class="quarto-unresolved-ref">fig-popsample</span></a> se muestra la relación entre algunos conceptos revisados hasta ahora. Supongamos que en una finca lechera se desea hacer un estudio sobre el efecto de una dieta en la producción de leche en una determinada raza de vacas lecheras. El conjunto de todas las vacas representa a toda la <strong>población</strong>. El objetivo de estudio es determinar el rendimiento promedio de todas las vacas, esta medida de toda la población es un <strong>parámetro</strong>. Debido a ser un producto de prueba el estudio no es aplicado a toda la población, por lo que se utiliza técnicas de <strong>muestreo</strong> para escoger una <strong>muestra</strong> representativa, con <strong>estadística descriptiva</strong> se determina el rendimiento promedio de la muestra, este valor es un <strong>estadístico</strong>. Con técnicas de <strong>estadística inferencial</strong> se estima el valor del parámetro de interés.</p>
 <div id="fig-popsample" class="quarto-figure quarto-figure-center anchored">
 <figure class="figure">
 <p><img src="imagenes/popsample3.png" class="img-fluid figure-img"></p>
@@ -294,8 +275,8 @@ Importante
 </figure>
 </div>
 </section>
-<section id="tipos-de-estudio" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="tipos-de-estudio"><span class="header-section-number">2.4</span> Tipos de estudio</h2>
+<section id="tipos-de-estudio" class="level2">
+<h2 class="anchored" data-anchor-id="tipos-de-estudio">Tipos de estudio</h2>
 <p>Supongamos que un investigador desea analizar las tendencias de las exportaciones de maíz durante la última década en Latinoamérica y el Caribe, puede obtener esta información de la página FAOSTAT <a href="https://www.fao.org/faostat/en/#home" class="uri">https://www.fao.org/faostat/en/#home</a>. En este caso los datos no son recogidos directamente por el investigador sino que usa una fuente de información secundaria. Ahora supongamos que el mismo investigador quiere conocer la impresión de las medidas tomadas por el gobierno para ayudar a los pequeños productores de maíz, para registrar esto puede realizar una encuesta a una muestra de pequeños productores de maíz. Tanto al tomar datos de una fuente secundaria o al realizar una encuesta el investigador está observando los datos como aparecen y no está interviniendo en el problema que se investiga. Este tipo de estudios recibe el nombre de <strong>observacional</strong></p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -325,11 +306,11 @@ Importante
 </div>
 </div>
 </section>
-<section id="variables-clasificación-y-niveles-de-medición." class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="variables-clasificación-y-niveles-de-medición."><span class="header-section-number">2.5</span> Variables, clasificación y niveles de medición.</h2>
+<section id="variables-clasificación-y-niveles-de-medición." class="level2">
+<h2 class="anchored" data-anchor-id="variables-clasificación-y-niveles-de-medición.">Variables, clasificación y niveles de medición.</h2>
 <p>En un estudio sobre características fenotípicas de girasoles cultivadas en el trópico húmedo se registra información sobre el número de planta, el número de parcela donde se encuentra la planta, la variedad de girasol observada, el número de fila, la altura de las plantas, la circunferencia del tallo, el color de las flores, el número de pétalos de las flores y número de hojas. Estas características, medidas o valores de interés para la persona que investiga reciben el nombre de <strong>variables</strong>.</p>
 <p>En la variable <strong>Variedad de Girasol</strong> se puede almacenar respuestas como Almonte, Ariadna, Candela, etc. Mientras que en la variable <strong>Color de las flores</strong> se puede registrar valores como Marfil, Amarillo pálido, Naranja, Púrpura, Rojo o Multicolor. Estas dos variables son <strong>variables cualitativas</strong>, pues describen una cualidad o categoría.</p>
-<p>En las variables <strong>altura de las plantas</strong>, <strong>circunferencia del tallo</strong>, <strong>número de pétalos de las flores</strong> y <strong>número de hojas</strong> se almacenan respuestas numéricas. Estas variables son ejemplo de <strong>variables cuantitativas</strong>. Para la altura de las plantas en centímetros ejemplos de respuestas son <span class="math inline">\(75.23\)</span>, <span class="math inline">\(92.15\)</span>, etc. Mientras que para el número de pétalos o para el número de hojas las respuestas pueden ser, por ejemplo, <span class="math inline">\(10\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(20\)</span>, etc. Para el caso de la altura, como se observa, aceptamos respuestas con decimales, en este caso la variable es <strong>cuantitativa continua</strong>. La variable número de hojas es un ejemplo de variable <strong>cuantitativa discreta</strong> pues es una variable que solo acepta números enteros. En la <a href="#fig-clasvars">Figura&nbsp;<span>2.2</span></a> se presenta un resumen de la clasificación de las variables.</p>
+<p>En las variables <strong>altura de las plantas</strong>, <strong>circunferencia del tallo</strong>, <strong>número de pétalos de las flores</strong> y <strong>número de hojas</strong> se almacenan respuestas numéricas. Estas variables son ejemplo de <strong>variables cuantitativas</strong>. Para la altura de las plantas en centímetros ejemplos de respuestas son <span class="math inline">\(75.23\)</span>, <span class="math inline">\(92.15\)</span>, etc. Mientras que para el número de pétalos o para el número de hojas las respuestas pueden ser, por ejemplo, <span class="math inline">\(10\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(20\)</span>, etc. Para el caso de la altura, como se observa, aceptamos respuestas con decimales, en este caso la variable es <strong>cuantitativa continua</strong>. La variable número de hojas es un ejemplo de variable <strong>cuantitativa discreta</strong> pues es una variable que solo acepta números enteros. En la <a href="#fig-clasvars">Figura&nbsp;<span class="quarto-unresolved-ref">fig-clasvars</span></a> se presenta un resumen de la clasificación de las variables.</p>
 <p>Las variables además presentan <strong>niveles de medición</strong>, estos pueden ser:</p>
 <ol type="1">
 <li>Ordinal: toman valores que se ordenan o clasifican de forma lógica, ejemplos de variables con este nivel de medición pueden ser <strong>fila en que se encuentra una planta</strong>, <strong>nivel de aceptación de un producto (muy alto, alto, medio, bajo, muy bajo)</strong></li>
@@ -369,14 +350,14 @@ Importante
 <li>Temperatura medida en grados Kelvin</li>
 </ol>
 <div id="exr-second" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.2 </strong></span><strong>Clasifique las variables cuantitativas del <a href="#exr-first">Ejercicio&nbsp;<span>2.1</span></a> como continuas o discretas.</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.2 </strong></span><strong>Clasifique las variables cuantitativas del <a href="#exr-first">Ejercicio&nbsp;<span class="quarto-unresolved-ref">exr-first</span></a> como continuas o discretas.</strong></p>
 </div>
 <div id="exr-third" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.3 </strong></span><strong>Determine el nivel de medición de las variables cuantitativas del <a href="#exr-first">Ejercicio&nbsp;<span>2.1</span></a>.</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.3 </strong></span><strong>Determine el nivel de medición de las variables cuantitativas del <a href="#exr-first">Ejercicio&nbsp;<span class="quarto-unresolved-ref">exr-first</span></a>.</strong></p>
 </div>
 
 
-<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list" style="display: none">
+<div id="refs" class="references csl-bib-body hanging-indent" data-line-spacing="2" role="list">
 <div id="ref-agresti2023" class="csl-entry" role="listitem">
 Agresti, A., Franklin, C., y Klingenberg, B. (2023). <em>Statistics. The Art and Science of Learning from Data</em> (5a. ed.). Pearson.
 </div>
@@ -620,15 +601,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
       <a href="./intro.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">R y RStudio</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
       <a href="./02-estdesc.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-title">Estadística Descriptiva</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

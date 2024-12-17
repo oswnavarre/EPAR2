@@ -11,6 +11,8 @@ library(docxtools)
 library(formatdown)
 ```
 
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
 # R y RStudio
 
 ## ¿Qué es R y por qué lo vamos a usar?
@@ -37,21 +39,29 @@ En @mcconville_statistical se hace una analogía interesante en la que se mencio
 
 Un flujo de trabajo recomendado es, primero descargar e instalar R. El programa puede ser descargado de la página <https://cloud.r-project.org/>. En la @fig-instR se muestra la pantalla de la página. Una vez descargado el programa, se procede a instalarlo.
 
-![Página para descargar R](imagenes/pagR.png){#fig-instR}
+![Página para descargar R](imagenes/pagR.png){#fig-instR width="90%"}
 
 A continuación se procede a descargar RStudio de la página <https://posit.co/downloads/>. En la @fig-instRs se muestra la pantalla de la página. Una vez descargado el programa se procede a instalarlo.
 
-![Página para descargar RStudio](imagenes/pagRstudio.png){#fig-instRs}
+![Página para descargar RStudio](imagenes/pagRstudio.png){#fig-instRs width="90%"}
 
 En la @fig-consolas se muestran las interfaces de R y RStudio respectivamente, a lo largo de este libro aprenderemos el lenguaje de programación R utilizando RStudio por lo que en la siguiente sección exploraremos la interfaz del segundo programa.
 
-::: {#fig-consolas layout-ncol="2"}
-![Interfaz de R](imagenes/rConsole.png){#fig-rcons}
+::: {#fig-consolas layout-ncol=2}
 
-![Interfaz de RStudio](imagenes/RStudioCons.png){#fig-rscons}
+![Interfaz de R](imagenes/rConsole.png){#fig-rcons width="60%"}
+
+![Interfaz de RStudio](imagenes/RStudioCons.png){#fig-rscons width="60%"}
 
 Interfaces de R y RStudio
+
 :::
+
+{{< video https://youtu.be/kORue47r4bA
+    title="Instalación de R y RStudio"
+>}}
+
+
 
 ### Conociendo la interfaz de RStudio
 
@@ -95,12 +105,21 @@ Antes de instalar los paquetes vamos a describir brevemente algunos de los paque
 
 ### Desde la consola o un script {#sec-inspac}
 
-Para instalar paquetes desde la consola o desde un script se debe utilizar la función `ìnstall.packages("nombrepaquete")` así si se quiere instalar el paquete **tidyverse** se escribe en la consola o en un script `ìnstall.packages("tidyverse")`, cuando se escribe en un script se debe ejecutar el comando con la combinación de teclas `Ctrl + Enter` si está trabajando en Windows o `Cmd + Enter` si está trabajando en Mac. En la @sec-pprs se darán más detalles de como crear un script y ejecutar códigos desde un script, por lo pronto puede instalar paquetes desde la consola.  
+Para instalar paquetes desde la consola o desde un script se debe utilizar la función `ìnstall.packages("nombrepaquete")` así si se quiere instalar el paquete **tidyverse** se escribe en la consola o en un script 
+`ìnstall.packages("tidyverse")`.
+
+Un script es un archivo de texto que contiene los mismos comandos que ingresaría en la línea de comandos de R. Una vez abierto RStudio, para crear un script hay dos opciones. La primera es en la barra de herramientas principal escoger `File | New File | R Script`, la segunda opción es escribir la combinación de teclas (en Windows) `Ctrl + Shift + N` o `Cmd + Shift + N` (en Mac).
+
+Cuando el script está creado se puede escribir código como se visualiza a la derecha de la @fig-script. Para ejecutar el código se puede ubicar en cualquier parte de la línea y presionar la combinación de teclas `Ctrl + Enter`o `Cmd + Enter`, otra opción es dar clic en el botón `Run` ubicado en la parte superior derecha del script (encerrada en rectángulo rojo de la @fig-script2). Si solo es una línea de código no es necesario seleccionarla para poder ejecutarla. Al momento de ejecutar el código, el código se ejecuta en la consola (rectángulo azul de la @fig-script2) y además se visualiza el objeto en el ambiente (rectángulo negro de la @fig-script2).
+
+![Creación de un script](imagenes/script.png){#fig-script width="75%"}
+
+![Ejecución de comandos desde un script](imagenes/script2.png){#fig-script2 width="50%"}
+
 
 ![Combinación de teclas para ejecutar código desde un script (Windows)](imagenes/ctrl_enter.png){#fig-ejewindows width="50%"}
 
 ![Combinación de teclas para ejecutar código desde un script (Mac)](imagenes/cmd_enter.png){#fig-ejemac width="50%"}
-
 
 ### Desde la pestaña de paquetes o desde la barra de menú
 
@@ -110,11 +129,17 @@ En el panel de archivos, gráficos, paquetes y ayuda se escoge la pestaña `Pack
 
 ![Ventana de Instalación de Paquetes](imagenes/ventanapackagesinstalar.png){#fig-packagesinst}
 
+{{< video https://youtu.be/MbHD1Ar1FgY
+    title="Instalación de paquetes"
+>}}
+
+
 ## Los básicos del lenguaje R {#sec-basicsR}
 
 ### Sintaxis de R
 
 En la consola de R podemos escribir las siguientes expresiones
+
 
 `> x <- 6 # Crear la variable x con un valor igual a 6`
 
@@ -125,6 +150,10 @@ En la consola de R podemos escribir las siguientes expresiones
 `> x # Auto-impresión`
 
 `[1] 6`
+
+```{webr}
+# Dar enter y comenzar a escribir
+```
 
 El símbolo `#` sirve para poner comentarios a nuestro código. Todo lo que se escriba a la derecha del numeral (incluido el símbolo) no se toma en cuenta. En R no se pueden poner comentarios multilíneas.
 
@@ -137,6 +166,10 @@ Cuando se presenta un vector en R podremos ver que un índice del vector se impr
 ```{r}
 x <- seq(20,200, by = 5)
 x
+```
+
+```{webr}
+# Dar enter y comenzar a escribir
 ```
 
 ### Objetos de R
@@ -163,11 +196,20 @@ v4 <- c(3+4i, 7-2i, 3i) # Complejo
 v5 <- c(3, 2, 7) # Entero
 ```
 
+```{webr}
+# Dar enter y comenzar a escribir
+```
+
+
 Las letras `T` y `F` son abreviaturas para especificar `TRUE` (verdadero) o `FALSE` (falso). Con la función `vector()` se pueden inicializar vectores.
 
 ```{r}
 y <- vector("complex", length = 5)
 y
+```
+
+```{webr}
+# Dar enter y comenzar a escribir
 ```
 
 ### Coerción implícita y explícita
@@ -183,6 +225,10 @@ v8 <- c(F,"x")
 class(v8)
 ```
 
+```{webr}
+# Dar enter y comenzar a escribir
+```
+
 Por su parte la *coerción explicita* ocurre cuando se utiliza la función `as.*`, el `*` puede ser reemplazado por `numeric`, `character`, `logical`, `integer` y `complex`.
 
 ```{r}
@@ -192,6 +238,10 @@ as.integer(p)
 as.logical(p)
 as.character(p)
 as.complex(p)
+```
+
+```{webr}
+# Dar enter y comenzar a escribir
 ```
 
 En ciertas ocasiones no es posible para R coercionar un objeto en la clase que se desea y esto resulta en que se produzcan `NAs`.
@@ -205,6 +255,10 @@ as.integer(q)
 as.logical(q)
 ```
 
+```{webr}
+# Dar enter y comenzar a escribir
+```
+
 ### Listas
 
 Las listas son un tipo especial de vectores que pueden contener elementos de distintas clases. Las listas se pueden crear con la función `list( )`. Con la función `vector( )` se puede crear una lista vacia.
@@ -214,6 +268,10 @@ r <- list(2.71, 2, "m", 3+2i, F)
 r
 s <- vector("list", length = 5)
 s
+```
+
+```{webr}
+# Dar enter y comenzar a escribir
 ```
 
 ### Matrices
@@ -227,11 +285,19 @@ dim(m)
 attributes(m)
 ```
 
+```{webr}
+# Dar enter y comenzar a escribir
+```
+
 Las matrices son construidas por columna, de tal forma que los elementos de la matriz pueden comenzar a ser llenados desde la esquina superior izquierda recorriendo las columnas.
 
 ```{r}
 m <- matrix(1:12, nrow = 3, ncol = 4)
 m
+```
+
+```{webr}
+# Dar enter y comenzar a escribir
 ```
 
 Otra forma de crear matrices es a partir de vectores añadiéndole los atributos de dimensión.
@@ -243,6 +309,10 @@ dim(m) <- c(3,4)
 m
 ```
 
+```{webr}
+# Dar enter y comenzar a escribir
+```
+
 Una forma común de crear matrices es uniendo filas o columnas con las funciones `rbind` o `cbind`.
 
 ```{r}
@@ -250,7 +320,10 @@ s1 <- 4:8
 s2 <- 16:20
 cbind(s1, s2) # unión por columnas
 rbind(s1, s2) # unión por filas
+```
 
+```{webr}
+# Dar enter y comenzar a escribir
 ```
 
 ### Data frames
@@ -260,6 +333,8 @@ Los *data frames* (marcos de datos, cuadros de datos) son usados para guardar da
 Los *data frames* pueden ser leídos con funciones como `read.csv()` o `read.table()`. También pueden ser creados con la función `data.frame()`, el metapaquete `tidyverse` tiene funciones que permiten trabajar de forma más eficiente con conjuntos de datos. El equivalente de `data.frame()` en el paquete `dplyr` de `tidyverse` es `tibble()`. Con la función `str()` se puede conocer la estructura de un *data frame*, la función de *dplyr* equivalente a *str()* es *glimpse( )*
 
 ```{r}
+library(dplyr)
+
 df1 <- data.frame(
   Variable = c("Var1","Var2","Var3","Var4"),
   Valor = c(12, 14, 13, 16)
@@ -278,4 +353,8 @@ str(df2)
 glimpse(df2)
 nrow(df2)
 ncol(df2)
+```
+
+```{webr}
+# Dar enter y comenzar a escribir
 ```

@@ -1,0 +1,42 @@
+{
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {},
+      "source": [
+        "# Correlación y Regresión {#methods}\n",
+        "\n",
+        "\n",
+        "```{webr}\n",
+        "fit = lm(mpg ~ am, data = mtcars)\n",
+        "summary(fit)\n",
+        "plot(fit)\n",
+        "```\n",
+        "\n",
+        "\n",
+        "## Gráficos de dispersión \n",
+        "\n",
+        "\n",
+        "## Análisis de correlación\n",
+        "\n",
+        "## Regresión\n",
+        "\n",
+        "### Regresión lineal simple\n",
+        "\n",
+        "### Regresión lineal múltiple\n",
+        "\n",
+        "### Regresión logística "
+      ],
+      "id": "cab58b72"
+    }
+  ],
+  "metadata": {
+    "kernelspec": {
+      "display_name": "Python 3",
+      "language": "python",
+      "name": "python3"
+    }
+  },
+  "nbformat": 4,
+  "nbformat_minor": 5
+}

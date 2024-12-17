@@ -5,3 +5,5 @@ En la actualidad es díficil pensar en una ciencia que evolucione sin el soporte
 La evolución de las técnicas y las metodologías estadísticas se debe en gran medida a la rapidez con la que han evolucionado las computadoras y su capacidad de procesar grandes volúmenes de datos. En la actualidad aprender estadística sin el soporte de algún programa o lenguaje de programación orientado a la estadística, puede limitar tanto la posibilidad de abstraer conceptos importantes como la oportunidad de saber como aplicar el análisis estadístico en contextos reales.
 
 Uno de los objetivos de este libro es que el futuro profesional de agronomía adquiera conocimientos importantes de estadística y construya una base sólida desde el punto de vista teórico y práctico que le permita desarrollar de forma autónoma análisis estadísticos a datos provenientes de fuentes diversas y relacionadas con sus áreas de desempeño.
+
+Los conjuntos de datos utilizados en el libro se pueden encontrar en el [enlace](https://earthac-my.sharepoint.com/:f:/g/personal/onavarrete_earth_ac_cr/EpZzv3WpVMpGuJ7LQ6vUbLsBZwrvxV9Hqd2erMl80hduRQ?e=25fZ7a)

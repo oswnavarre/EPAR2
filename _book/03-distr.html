@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.361">
+<meta name="generator" content="quarto-1.6.39">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de Datos en Agricultura con R y RStudio - 4&nbsp; Distribuciones de probabilidad</title>
+<title>4&nbsp; Distribuciones de probabilidad – Análisis de Datos en Agricultura con R y RStudio</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -20,7 +20,27 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
 <script src="site_libs/quarto-nav/quarto-nav.js"></script>
@@ -37,17 +57,25 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-7da2cd4d758cc02249fc92bd4cce19a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
+<link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "start",
   "type": "textbox",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "Sín resultados",
     "search-matching-documents-text": "documentos encontrados",
@@ -56,14 +84,44 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "hay más resultados en este documento",
     "search-more-matches-text": "más resultados en este documento",
     "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancelar",
-    "search-submit-button-title": "Eviar",
+    "search-submit-button-title": "Enviar",
     "search-label": "Buscar"
   }
 }</script>
+<script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
+<link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
 
 </head>
 
@@ -73,13 +131,13 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav">
     <div class="container-fluid d-flex">
-      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-distr.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></a></li></ol></nav>
-      <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
-      </a>
-      <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./03-distr.html"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+      <button type="button" class="btn quarto-search-button" aria-label="Buscar" onclick="window.quartoOpenSearch();">
         <i class="bi bi-search"></i>
       </button>
     </div>
@@ -88,7 +146,7 @@ ul.task-list li input[type="checkbox"] {
 <!-- content -->
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
 <!-- sidebar -->
-  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
       <a href="./">Análisis de Datos en Agricultura con R y RStudio</a> 
@@ -164,16 +222,28 @@ ul.task-list li input[type="checkbox"] {
     </ul>
     </div>
 </nav>
-<div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="-1">
     <h2 id="toc-title">Indice de contenidos</h2>
    
   <ul>
-  <li><a href="#definiciones" id="toc-definiciones" class="nav-link active" data-scroll-target="#definiciones"><span class="header-section-number">4.1</span> Definiciones</a></li>
-  <li><a href="#distribución-normal" id="toc-distribución-normal" class="nav-link" data-scroll-target="#distribución-normal"><span class="header-section-number">4.2</span> Distribución Normal</a></li>
-  <li><a href="#distribución-t-de-student" id="toc-distribución-t-de-student" class="nav-link" data-scroll-target="#distribución-t-de-student"><span class="header-section-number">4.3</span> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
+  <li><a href="#operaciones-de-conjuntos" id="toc-operaciones-de-conjuntos" class="nav-link active" data-scroll-target="#operaciones-de-conjuntos"><span class="header-section-number">4.1</span> Operaciones de conjuntos</a></li>
+  <li><a href="#definición-de-probabilidad" id="toc-definición-de-probabilidad" class="nav-link" data-scroll-target="#definición-de-probabilidad"><span class="header-section-number">4.2</span> Definición de probabilidad</a>
+  <ul>
+  <li><a href="#algunas-propiedades-de-la-probabilidad" id="toc-algunas-propiedades-de-la-probabilidad" class="nav-link" data-scroll-target="#algunas-propiedades-de-la-probabilidad"><span class="header-section-number">4.2.1</span> Algunas propiedades de la probabilidad</a></li>
+  </ul></li>
+  <li><a href="#distr" id="toc-distr" class="nav-link" data-scroll-target="#distr"><span class="header-section-number">4.3</span> Distribuciones de probabilidad</a>
+  <ul>
+  <li><a href="#variable-aleatoria-y-distribución-de-probabilidad" id="toc-variable-aleatoria-y-distribución-de-probabilidad" class="nav-link" data-scroll-target="#variable-aleatoria-y-distribución-de-probabilidad"><span class="header-section-number">4.3.1</span> Variable aleatoria y distribución de probabilidad</a></li>
+  <li><a href="#funciones-de-densidad-de-probabilidad" id="toc-funciones-de-densidad-de-probabilidad" class="nav-link" data-scroll-target="#funciones-de-densidad-de-probabilidad"><span class="header-section-number">4.3.2</span> Funciones de Densidad de Probabilidad</a></li>
+  </ul></li>
+  <li><a href="#distribución-de-probabilidad-normal" id="toc-distribución-de-probabilidad-normal" class="nav-link" data-scroll-target="#distribución-de-probabilidad-normal"><span class="header-section-number">4.4</span> Distribución de Probabilidad Normal</a>
+  <ul>
+  <li><a href="#dne" id="toc-dne" class="nav-link" data-scroll-target="#dne"><span class="header-section-number">4.4.1</span> Distribución Normal Estándar</a></li>
+  </ul></li>
+  <li><a href="#distribución-t-de-student" id="toc-distribución-t-de-student" class="nav-link" data-scroll-target="#distribución-t-de-student"><span class="header-section-number">4.5</span> Distribución <span class="math inline">\(t\)</span> de Student</a></li>
   </ul>
 </nav>
     </div>
@@ -195,21 +265,349 @@ ul.task-list li input[type="checkbox"] {
   </div>
   
 
+
 </header>
 
-<section id="definiciones" class="level2" data-number="4.1">
-<h2 data-number="4.1" class="anchored" data-anchor-id="definiciones"><span class="header-section-number">4.1</span> Definiciones</h2>
+
+<p>En muchas situaciones cotidianas se utiliza con frecuencia el término <em>probabilidad</em>, este término es utilizado para expresar la posibilidad de obtener un resultado. Para sucesos aleatorios, la probabilidad de ese resultado se define como la proporción (frecuencia relativa) de veces que se obtiene el resultado en una extensa secuencia de observaciones. Aunque la probabilidad de un resultado cualquiera es una frecuencia relativa es decir que es un número entre <span class="math inline">\(0\)</span> y <span class="math inline">\(1\)</span> inclusive, es común representar la probabilidad como un porcentaje. Por ejemplo cuando leemos que en un día determinado la probabilidad de que llueva es del <span class="math inline">\(70\%\)</span>, se interpreta que en muchos días observados en el pasado con condiciones climáticas similares en <span class="math inline">\(70\%\)</span> de esos días hubo precipitaciones.</p>
+<p>Para definir formalmente la probabilidad, debemos tomar en cuenta algunas otras definiciones.</p>
+<div id="def-exper" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.1</strong></span> Un experimento es un procedimiento o proceso cuyos resultados son conocidos pero no predecibles.</p>
+</div>
+<div id="def-espmue" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.2</strong></span> Se define al espacio muestral como el conjunto de todos los posibles resultados de un experimento. El espacio muestral se representa con la letra griega Omega <span class="math inline">\(\Omega\)</span>.</p>
+</div>
+<div id="def-event" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.3</strong></span> Cualquier subconjunto del espacio muestral es conocido como un evento.</p>
+</div>
+<section id="operaciones-de-conjuntos" class="level2" data-number="4.1">
+<h2 data-number="4.1" class="anchored" data-anchor-id="operaciones-de-conjuntos"><span class="header-section-number">4.1</span> Operaciones de conjuntos</h2>
+<p>Supongamos los eventos <span class="math inline">\(E_1\)</span>, <span class="math inline">\(E_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(E_n\)</span> que son subconjuntos del espacio muestral <span class="math inline">\(\Omega\)</span>.</p>
+<div id="def-union" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.4</strong></span> El evento <span class="math inline">\(E_1 \cup E_2\)</span>, consiste de todos los resultados presentes en <span class="math inline">\(E_1\)</span> <strong>o</strong> <span class="math inline">\(E_2\)</span></p>
+</div>
+<div id="def-inter" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.5</strong></span> El evento <span class="math inline">\(E_1 \cap E_2\)</span>, consiste de todos los resultados presentes en <span class="math inline">\(E_1\)</span> <strong>y</strong> <span class="math inline">\(E_2\)</span></p>
+</div>
+<div id="def-vacio" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.6</strong></span> El conjunto <span class="math inline">\(\emptyset\)</span> corresponde al conjunto vacío y es el conjunto que no contiene elementos dicho de otra forma. <span class="math inline">\(n\left(\emptyset\right) =0\)</span></p>
+</div>
+<div id="def-mutex" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.7</strong></span> Dos eventos <span class="math inline">\(E_1\)</span> y <span class="math inline">\(E_2\)</span> son mutuamente excluyentes, si y solo si <span class="math inline">\(E_1 \cap E_2 = \emptyset\)</span></p>
+</div>
+<div id="def-colex" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.8</strong></span> Los eventos <span class="math inline">\(E_1\)</span>, <span class="math inline">\(E_2\)</span>, <span class="math inline">\(\ldots\)</span>, <span class="math inline">\(E_k\)</span> son colectivamente exhaustivos si <span class="math inline">\(E_1 \cup E_2 \cup \ldots \cup E_k = \Omega\)</span></p>
+</div>
+<div id="def-compl" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.9</strong></span> El complemento del evento <span class="math inline">\(E_1\)</span> denotado por <span class="math inline">\(\overline{E_1}\)</span> o <span class="math inline">\(E_1^C\)</span>, consiste de todos los resultados de <span class="math inline">\(\Omega\)</span> que no pertenecen a <span class="math inline">\(E_1\)</span></p>
+</div>
 </section>
-<section id="distribución-normal" class="level2" data-number="4.2">
-<h2 data-number="4.2" class="anchored" data-anchor-id="distribución-normal"><span class="header-section-number">4.2</span> Distribución Normal</h2>
+<section id="definición-de-probabilidad" class="level2" data-number="4.2">
+<h2 data-number="4.2" class="anchored" data-anchor-id="definición-de-probabilidad"><span class="header-section-number">4.2</span> Definición de probabilidad</h2>
+<div id="def-prob" class="theorem definition">
+<p><span class="theorem-title"><strong>Definición 4.10</strong></span> Si un experimento tiene <span class="math inline">\(n(\Omega)\)</span> resultados posibles y un evento <span class="math inline">\(E\)</span> tiene <span class="math inline">\(n(E)\)</span> resultados. La probabilidad de <span class="math inline">\(E\)</span>, denotada por <span class="math inline">\(P(E)\)</span> se define por: <span class="math display">\[P(E) = \dfrac{n(E)}{n(\Omega)} = \dfrac{\text{número de resultados en } E}{\text{número de resultados en } \Omega}\]</span></p>
+</div>
+<div class="callout callout-style-default callout-important callout-titled" title="Axiomas de la Probabilidad">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Axiomas de la Probabilidad
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><span class="math inline">\(P\left(\Omega\right)=1\)</span></li>
+<li>Para cualquier evento <span class="math inline">\(E\)</span>, <span class="math inline">\(0 \leq P(E) \leq 1\)</span>.</li>
+<li>Para cualquier evento <span class="math inline">\(E\)</span>, <span class="math inline">\(P(E^C)=1-P(E)\)</span></li>
+</ol>
+</div>
+</div>
+<section id="algunas-propiedades-de-la-probabilidad" class="level3" data-number="4.2.1">
+<h3 data-number="4.2.1" class="anchored" data-anchor-id="algunas-propiedades-de-la-probabilidad"><span class="header-section-number">4.2.1</span> Algunas propiedades de la probabilidad</h3>
+<div class="callout callout-style-default callout-important callout-titled" title="Propiedades de la Probabilidad">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Propiedades de la Probabilidad
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li>Para dos eventos cualesquiera <span class="math inline">\(E_1\)</span> y <span class="math inline">\(E_2\)</span>, <span class="math inline">\(P\left(E_1 \cup E_2 \right) = P\left(E_1\right)+P\left(E_2\right)- P\left(E_1 \cap E_2\right)\)</span>.</li>
+<li>Para dos eventos <span class="math inline">\(E_1\)</span> y <span class="math inline">\(E_2\)</span> mutuamente excluyentes, <span class="math inline">\(P\left(E_1 \cup E_2 \right) = P\left(E_1\right)+P\left(E_2\right)\)</span>.</li>
+<li>Para los eventos colectivamente exhaustivos <span class="math inline">\(E_1\)</span>, <span class="math inline">\(E_2\)</span>, <span class="math inline">\(\ldots\)</span> y <span class="math inline">\(E_k\)</span>, <span class="math inline">\(P\left(E_1 \cup E_2 \cup \ldots \cup E_k \right)= 1\)</span>.</li>
+</ol>
+</div>
+</div>
 </section>
-<section id="distribución-t-de-student" class="level2" data-number="4.3">
-<h2 data-number="4.3" class="anchored" data-anchor-id="distribución-t-de-student"><span class="header-section-number">4.3</span> Distribución <span class="math inline">\(t\)</span> de Student</h2>
+</section>
+<section id="distr" class="level2" data-number="4.3">
+<h2 data-number="4.3" class="anchored" data-anchor-id="distr"><span class="header-section-number">4.3</span> Distribuciones de probabilidad</h2>
+<p>En esta sección abordaremos las distribuciones de probabilidad a las que nos referiremos en los siguientes capítulos. Es necesario para empezar, introducir el concepto de variable aleatoria.</p>
+<section id="variable-aleatoria-y-distribución-de-probabilidad" class="level3" data-number="4.3.1">
+<h3 data-number="4.3.1" class="anchored" data-anchor-id="variable-aleatoria-y-distribución-de-probabilidad"><span class="header-section-number">4.3.1</span> Variable aleatoria y distribución de probabilidad</h3>
+<p>Consideremos un experimento donde lanzamos tres monedas y observamos los resultados. Podemos representar todos los eventos posibles:</p>
+<ul>
+<li>Cara en la primera moneda, cara en la segunda y cara en la tercera.</li>
+<li>Cara en la primera moneda, cara en la segunda y sello en la tercera.</li>
+<li>Cara en la primera moneda, sello en la segunda y cara en la tercera.</li>
+<li>Cara en la primera moneda, sello en la segunda y sello en la tercera.</li>
+<li>Sello en la primera moneda, cara en la segunda y cara en la tercera.</li>
+<li>Sello en la primera moneda, cara en la segunda y sello en la tercera.</li>
+<li>Sello en la primera moneda, sello en la segunda y cara en la tercera.</li>
+<li>Sello en la primera moneda, sello en la segunda y sello en la tercera</li>
+</ul>
+<p>Pero podríamos también hacer una lista de estos eventos en una forma diferente, en lugar de definir cada evento indicando el resultado de cada moneda, podemos contar el número de caras o sellos. Por ejemplo si trabajamos con el número de sellos, los eventos son:</p>
+<ul>
+<li>0 sellos</li>
+<li>1 sello</li>
+<li>1 sello</li>
+<li>2 sellos</li>
+<li>1 sellos</li>
+<li>2 sellos</li>
+<li>2 sellos</li>
+<li>3 sellos</li>
+</ul>
+<p>El número de sellos recibe el nombre de <strong>variable aleatoria</strong>, las variables aleatorias pueden ser representadas con letras mayúsculas <span class="citation" data-cites="uboe2017">(<a href="references.html#ref-uboe2017" role="doc-biblioref">Uboe, 2017</a>)</span>. Definamos a <span class="math inline">\(X\)</span> como la variable aleatoria <strong>número de sellos</strong>. Además nos interesará la probabilidad <span class="math inline">\(P\)</span> de cada valor posible de <span class="math inline">\(X\)</span>. En este caso los valores posibles de <span class="math inline">\(X\)</span> son <span class="math inline">\(0\)</span>, <span class="math inline">\(1\)</span>, <span class="math inline">\(2\)</span> y <span class="math inline">\(3\)</span>.</p>
+<p>La probabilidad se la calcula de forma fácil como el número de resultados favorables sobre el número de resultados posibles. Por ejemplo si queremos obtener en este caso <span class="math inline">\(P\left(X =2 \right)\)</span>, el número de resultados favorables es <span class="math inline">\(3\)</span> porque en tres oportunidades se pueden obtener 2 sellos, mientras que el número de resultados posibles es 8, en términos matemáticos <span class="math inline">\(P\left(X=2\right)= \frac{3}{8}\)</span>.</p>
+<p>Formalmente podemos definir a una <strong>variable aleatoria</strong> como una regla o función que asigna un número a cada resultado de un experimento. Existen dos tipos de variables aleatorias las <strong>discretas</strong> y las <strong>continuas</strong>, las primeras se usan cuando los valores que puede tomar la variable son contables y las continuas se utilizan cuando los valores posibles de la variable son incontables.</p>
+<p>Un ejemplo de variable aleatoria continua puede ser el tiempo de llenado de un silo. Puede ocurrir que el silo sea de una dimensión mínima y le tome al menos 30 minutos mientras que otro silo de mayor dimensión tome máximo 5 horas en ser llenado. Sea <span class="math inline">\(X= \text{tiempo en minutos para llenar un silo}\)</span> con el valor mínimo 30 y el máximo de 300. Si intentamos contar el número posible de valores que puede tomar <span class="math inline">\(X\)</span>, empezamos por el valor mínimo que es <span class="math inline">\(30\)</span> y luego buscamos el valor que sigue de <span class="math inline">\(30\)</span> ¿cuál es el valor que sigue de 30 en este caso? ¿31? ¿30.5? ¿30.05? ¿30.005? no podemos determinar el siguiente valor porque entre <span class="math inline">\(30\)</span> y <span class="math inline">\(30.005\)</span> por ejemplo existe una cantidad infinita de valores. Por lo tanto no podemos contar el número de valores posibles de <span class="math inline">\(X\)</span>, y <span class="math inline">\(X\)</span> es continua.</p>
+<p>Una <em>distribución de probabilidad</em> es una tabla, fórmula o gráfico que describe los valores de una variable aleatoria y la probabilidad asociada a estos valores.</p>
+</section>
+<section id="funciones-de-densidad-de-probabilidad" class="level3" data-number="4.3.2">
+<h3 data-number="4.3.2" class="anchored" data-anchor-id="funciones-de-densidad-de-probabilidad"><span class="header-section-number">4.3.2</span> Funciones de Densidad de Probabilidad</h3>
+<p>Retomemos la variable aleatoria <span class="math inline">\(X= \text{tiempo en minutos para llenar un silo}\)</span>. Si graficamos un histograma de frecuencias relativas, la altura de cada barra representa la proporción o porcentaje de valores en cada clase y la suma de todas las áreas es <span class="math inline">\(1\)</span>. Si el tamaño de la muestra aumenta, se puede reducir la longitud de cada clase y la altura va formando una curva más suave. La curva a la que se aproxima recibe el nombre de <strong>curva de densidad</strong> como se ve en la <a href="#fig-densidad" class="quarto-xref">Figura&nbsp;<span>4.1</span></a>.</p>
+<p>La densidad de la probabilidad puede ser descrita por una expresión matemática <span class="math inline">\(f\left(x\right)\)</span>, que recibe el nombre de <strong>distribución de probabilidad</strong> o <strong>función de densidad de probabilidad</strong>. Las funciones de densidad de probabilidad de variables continuas cumplen con algunas propiedades:</p>
+<ul>
+<li>El área bajo la distribución de probabilidad es igual a <span class="math inline">\(1\)</span></li>
+<li>La probabilidad de que <span class="math inline">\(X\)</span> se encuentre en determinado intervalo <span class="math inline">\(\left(a,b\right)\)</span> es igual al área bajo la curva entre los dos puntos <span class="math inline">\(a\)</span> y <span class="math inline">\(b\)</span>.</li>
+<li><span class="math inline">\(P\left(X=c\right)=0\)</span> para cualquier valor <span class="math inline">\(c\)</span> para el que se encuentre definida la función de probabilidad.</li>
+</ul>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-densidad" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-densidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-densidad-1.png" class="img-fluid figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-densidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.1: Curva de densidad
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="distribución-de-probabilidad-normal" class="level2" data-number="4.4">
+<h2 data-number="4.4" class="anchored" data-anchor-id="distribución-de-probabilidad-normal"><span class="header-section-number">4.4</span> Distribución de Probabilidad Normal</h2>
+<p>La distribución de probabilidad más usada para describir variables aleatorias continuas es la <strong>distribución de probabilidad normal</strong>. Esta distribución se la puede encontrar en variables como la altura de personas, altura de plantas, los pesos de animles, calificaciones, mediciones científicas, cantidad de lluvia, etc.</p>
+<p>La distribución normal tiene la forma de una campana, como se observa en la figura <a href="#fig-normal" class="quarto-xref">Figura&nbsp;<span>4.2</span></a></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-normal" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-normal-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:60.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normal-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.2: Distribución Normal
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>La función de densidad de probabilidad de la distribución normal es:</p>
+<p><span id="eq-normalpdf"><span class="math display">\[
+f\left(x\right)=\dfrac{1}{\sigma\sqrt{2\pi}}e^{\dfrac{-\left(x-\mu\right)^2}{2\sigma^2}}
+\tag{4.1}\]</span></span></p>
+<p>como se puede observar en la ecuación <a href="#eq-normalpdf" class="quarto-xref">Ecuación&nbsp;<span>4.1</span></a>, la distribución normal tiene dos parámetros la media <span class="math inline">\(\mu\)</span> y la desviación <span class="math inline">\(\sigma\)</span> cuando una variable aleatoria <span class="math inline">\(X\)</span> tiene una distribución normal se escribe <span class="math inline">\(X \sim \mathcal{N}\left(\mu,\sigma \right)\)</span>, y se observan las siguientes propiedades de acuerdo a estos parámetros.</p>
+<ul>
+<li>La distribución normal alcanza su máximo en la media, que se ubica en el centro de la curva por esta razón se dice que la distribución normal es simétrica respecto a la media.</li>
+<li>La media es un parámetro de localización, en la <a href="#fig-normalmus" class="quarto-xref">Figura&nbsp;<span>4.3</span></a> se observan tres distribuciones normales con la misma desviación pero diferentes medias.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-normalmus" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normalmus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-normalmus-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normalmus-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.3: Diferentes distribuciones normales con diferentes medias
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>La desviación es un parámetro que afecta a la forma de la curva, a mayor desviación la curva se acerca hacia el eje de las <span class="math inline">\(X\)</span> o se “aplana”. Y a menor desviación la curva se “estrecha”. Este comportamiento se aprecia en la <a href="#fig-normalsds" class="quarto-xref">Figura&nbsp;<span>4.4</span></a></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-normalsds" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normalsds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-normalsds-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normalsds-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.4: Diferentes distribuciones normales con diferentes desviaciones
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<ul>
+<li>El porcentaje de valores en algunos intervalos que se usan comúnmente son:
+<ul>
+<li><span class="math inline">\(68.3\%\)</span> de los valores de una variable normal aleatoria se encuentran a más o menos una desviación de la media, como se muestra en la figura <a href="#fig-unasd" class="quarto-xref">Figura&nbsp;<span>4.5</span></a></li>
+<li><span class="math inline">\(95.4\%\)</span> de los valores de una variable normal aleatoria se encuentran a más o menos dos desviaciones de la media, como se muestra en la figura <a href="#fig-dossd" class="quarto-xref">Figura&nbsp;<span>4.6</span></a></li>
+<li><span class="math inline">\(99.7\%\)</span> de los valores de una variable normal aleatoria se encuentran a más o menos tres desviaciones de la media, como se muestra en la figura <a href="#fig-tressd" class="quarto-xref">Figura&nbsp;<span>4.7</span></a></li>
+</ul></li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-unasd" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-unasd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-unasd-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-unasd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.5: Porcentaje a 1 desviación de la media
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-dossd" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dossd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-dossd-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dossd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.6: Porcentaje a 2 desviaciones de la media
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-tressd" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tressd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-tressd-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tressd-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.7: Porcentaje a 3 desviaciones de la media
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<section id="dne" class="level3" data-number="4.4.1">
+<h3 data-number="4.4.1" class="anchored" data-anchor-id="dne"><span class="header-section-number">4.4.1</span> Distribución Normal Estándar</h3>
+<p>Supongamos que el tiempo para llenar un silo se distribuye normalmente con media <span class="math inline">\(80\)</span> y desviación <span class="math inline">\(20\)</span> y que nos interesa determinar la probabilidad de que un silo se llene entre 50 y 90 minutos. Formalmente si definimos a <span class="math inline">\(X=\text{Tiempo para llenar un silo}\)</span> podemos decir que <span class="math inline">\(X \sim \mathcal{N}\left(80,20\right)\)</span>, nuestro interés es calcular <span class="math inline">\(P\left(50&lt; X &lt;90\right)\)</span> si hacemos el cálculo a mano, debemos determinar el área bajo la función definida en la ecuación <a href="#eq-normalpdf" class="quarto-xref">Ecuación&nbsp;<span>4.1</span></a> entre <span class="math inline">\(50\)</span> y <span class="math inline">\(90\)</span> para <span class="math inline">\(\mu=80\)</span> y <span class="math inline">\(\sigma=20\)</span> esto requeriría de un trabajo fuerte desde el punto de vista matemático.</p>
+<p>Otra solución sería tener una tabla que contenga las probabilidades de la distribución normal, pero existe una cantidad infinita de distribuciones normales tomando en cuenta las combinaciones posibles de <span class="math inline">\(\mu\)</span> y <span class="math inline">\(\sigma\)</span>. La solución es tener una distribución normal que represente a todas las distribuciones normales, dicha distribución recibe el nombre de <strong>distribución normal estándar</strong>.</p>
+<p>La distribución normal estándar se caracteriza por tener media <span class="math inline">\(0\)</span> y desviacion <span class="math inline">\(1\)</span>, y se representa con la letra <span class="math inline">\(Z\)</span>. Dicho de otra forma <span class="math inline">\(Z \sim \mathcal{N}\left(0,1\right)\)</span>. En la figura <a href="#fig-normalz" class="quarto-xref">Figura&nbsp;<span>4.8</span></a> se presenta el gráfico de la normal estándar. Cualquier variable normal <span class="math inline">\(X\sim \mathcal{N}\left(\mu,\sigma\right)\)</span> se puede transformar a una normal estándar (estandarizar) realizando la operación:</p>
+<p><span id="eq-normalest"><span class="math display">\[
+z=\dfrac{x-\mu}{\sigma}
+\tag{4.2}\]</span></span></p>
+<p>Una vez estandarizado se puede determinar la probabilidad deseada usando cualquier tabla de la normal estándar. En este texto no hacemos uso de tablas puesto que los cálculos de probabilidades los haremos utilizando R, es importante que el lector aprenda o refresque la noción de la distribución normal estándar ya que aparecerá constantemente en los siguientes capítulos.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-normalz" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-normalz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-normalz-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-normalz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.8: Normal Estándar
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="distribución-t-de-student" class="level2" data-number="4.5">
+<h2 data-number="4.5" class="anchored" data-anchor-id="distribución-t-de-student"><span class="header-section-number">4.5</span> Distribución <span class="math inline">\(t\)</span> de Student</h2>
+<p>La distribución <span class="math inline">\(t\)</span> de Student fue obtenida por William S. Gosset en 1908, quien publicó sus hallazgos bajo el seudónimo “Student” y usó la letra <span class="math inline">\(t\)</span> para representar la variable aleatoria, de aquí la <strong>distribución <span class="math inline">\(t\)</span> de Student</strong> o <strong><span class="math inline">\(t\)</span> de Student</strong> simplemente. La función de densidad de la distribución <span class="math inline">\(t\)</span> se define</p>
+<p><span id="eq-studentpdf"><span class="math display">\[
+f\left(t\right)=\dfrac{\Gamma\left[\dfrac{\nu+1}{2}\right]}{\sqrt{\nu \pi} \; \Gamma\left(\dfrac{\nu}{2}\right)}\left[1 + \dfrac{t^2}{\nu} \right]^{\frac{\nu+1}{2}}
+\tag{4.3}\]</span></span></p>
+<p>donde <span class="math inline">\(\nu\)</span>, (la letra griega <em>nu</em>) representa el parámetro de la distribución <span class="math inline">\(t\)</span> llamado <strong>grados de libertad</strong> y <span class="math inline">\(\Gamma\)</span> es la función Gamma cuya definición no será abordada en este texto. En la figura <a href="#fig-tstudent" class="quarto-xref">Figura&nbsp;<span>4.9</span></a> se muestra el gráfico de dos distribuciones <span class="math inline">\(t\)</span> de Student para dos valores diferentes de grados de libertad, la curva de color rojo representa una <span class="math inline">\(t\)</span> con 3 grados de libertad y la de color verde con <span class="math inline">\(9\)</span> grados de libertad. Se puede observar que la distribución <span class="math inline">\(t\)</span> tiene una forma similar a la normal estándar porque es simétrica respecto a <span class="math inline">\(0\)</span> (lo que implica que la media es <span class="math inline">\(0\)</span>) y tiene forma de campana.</p>
+<p>En la figura <a href="#fig-tz" class="quarto-xref">Figura&nbsp;<span>4.10</span></a> se muestra de color azul la curva de la normal estándar junto con las distribuciones <span class="math inline">\(t\)</span> mostradas anteriormente se observa que las <span class="math inline">\(t\)</span> tienen más probabilidad en las colas y menos en el centro. Además se puede observar que <span class="math inline">\(t\)</span> se aproxima a <span class="math inline">\(z\)</span> a medida que aumentan los grados de libertad, los grados de libertad están relacionados al tamaño muestral por lo que <span class="math inline">\(t\)</span> converge a <span class="math inline">\(z\)</span> para tamaños muestrales grandes.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-tstudent" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tstudent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-tstudent-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tstudent-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.9: <span class="math inline">\(t\)</span> de Student
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-tz" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="h!" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-tz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="03-distr_files/figure-html/fig-tz-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:50.0%" data-fig-pos="h!">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tz-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4.10: <span class="math inline">\(t\)</span> de Student comparada con la Normal Estándar
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
 
 
+
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
+<div id="exercise-loading-status" class="d-flex gap-2">
+
+</div>
+<div class="spinner-grow spinner-grow-sm">
+
+</div>
+</div>
+<script type="vfs-file">
+W10=
+</script>
+<div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
+<div id="ref-uboe2017" class="csl-entry" role="listitem">
+Uboe, J. (2017). <em>Introductory Statistics for Business and Economics</em> (1a. ed.). Springer.
+</div>
+</div>
 </section>
 
 </main> <!-- /main -->
+<script type="ojs-module-contents">
+eyJjb250ZW50cyI6W119
+</script>
+<script type="module">
+if (window.location.protocol === "file:") { alert("The OJS runtime does not work with file:// URLs. Please use a web server to view this document."); }
+window._ojs.paths.runtimeToDoc = "../..";
+window._ojs.paths.runtimeToRoot = "../..";
+window._ojs.paths.docToRoot = "";
+window._ojs.selfContained = false;
+window._ojs.runtime.interpretFromScriptTags();
+</script>
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -245,18 +643,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -288,11 +675,48 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
-  function tippyHover(el, contentFn) {
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp('/' + window.location.host + '/');
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -302,8 +726,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -315,7 +748,129 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -359,6 +914,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -384,6 +940,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -445,17 +1027,18 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="./02-estdesc.html" class="pagination-link">
+      <a href="./02-estdesc.html" class="pagination-link" aria-label="Estadística Descriptiva">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./04-sampling.html" class="pagination-link">
+      <a href="./04-sampling.html" class="pagination-link" aria-label="Muestreo">
         <span class="nav-page-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+
 
 
 

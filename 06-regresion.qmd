@@ -1,4 +1,14 @@
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
 # Correlación y Regresión {#methods}
+
+
+```{webr}
+fit = lm(mpg ~ am, data = mtcars)
+summary(fit)
+plot(fit)
+```
 
 ## Gráficos de dispersión 
 

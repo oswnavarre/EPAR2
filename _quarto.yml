@@ -23,11 +23,19 @@ book:
 bibliography: references.bib
 csl: apanoa.csl
 
-format:
-  html:
-    theme: earth.scss
-  pdf:
-    documentclass: scrreprt
 
-editor: visual
+
+format:
+  live-html:
+    theme: earth.scss
+    toc-expand: false
+    toc-depth: 4
+    anchor-sections: true
+    math: mathjax
+  
+engine: knitr
+  
+
+editor: source
+
 

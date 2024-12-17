@@ -1,0 +1,394 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="210mm"
+   height="297mm"
+   viewBox="0 0 210 297"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.2.1 (9c6d41e410, 2022-07-14)"
+   sodipodi:docname="codigo3.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.92370266"
+     inkscape:cx="413.55299"
+     inkscape:cy="336.68843"
+     inkscape:window-width="1920"
+     inkscape:window-height="986"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <marker
+       style="overflow:visible"
+       id="TriangleStart"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135" />
+    </marker>
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient1527">
+      <stop
+         style="stop-color:#b41312;stop-opacity:1;"
+         offset="0"
+         id="stop1523" />
+      <stop
+         style="stop-color:#b41312;stop-opacity:0;"
+         offset="1"
+         id="stop1525" />
+    </linearGradient>
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient1527"
+       id="linearGradient1529"
+       x1="37.662353"
+       y1="105.90924"
+       x2="254.08172"
+       y2="105.90924"
+       gradientUnits="userSpaceOnUse"
+       gradientTransform="translate(-8.879571,-0.85931332)" />
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-6"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-6-0"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-6-0-8"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9-8-8" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-6-0-8-6"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9-8-8-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-6-0-8-6-1"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9-8-8-6-6" />
+    </marker>
+    <marker
+       style="overflow:visible"
+       id="TriangleStart-6-0-8-6-1-3"
+       refX="0"
+       refY="0"
+       orient="auto-start-reverse"
+       inkscape:stockid="TriangleStart"
+       markerWidth="5.3244081"
+       markerHeight="6.155385"
+       viewBox="0 0 5.3244081 6.1553851"
+       inkscape:isstock="true"
+       inkscape:collect="always"
+       preserveAspectRatio="xMidYMid">
+      <path
+         transform="scale(0.5)"
+         style="fill:context-stroke;fill-rule:evenodd;stroke:context-stroke;stroke-width:1pt"
+         d="M 5.77,0 -2.88,5 V -5 Z"
+         id="path135-9-8-8-6-6-4" />
+    </marker>
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <g
+       id="g6437"
+       inkscape:export-filename="codigo3.png"
+       inkscape:export-xdpi="96"
+       inkscape:export-ydpi="96">
+      <text
+         xml:space="preserve"
+         style="font-size:10.5833px;line-height:2.2;font-family:font;-inkscape-font-specification:font;opacity:0.732558;fill:#ffffff;fill-opacity:0;stroke:url(#linearGradient1529);stroke-width:0.056;stroke-miterlimit:1;stroke-dasharray:none"
+         x="28.810781"
+         y="73.767593"
+         id="text236"><tspan
+           sodipodi:role="line"
+           id="tspan234"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:0;fill:#000000;fill-opacity:1;stroke:url(#linearGradient1529);stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="28.810781"
+           y="73.767593"><tspan
+   style="fill:#ff0000;stroke:url(#linearGradient1529)"
+   id="tspan1633">transplante</tspan> <tspan
+   style="fill:#ff00ff;stroke:#0000ff;stroke-opacity:1"
+   id="tspan1947">|&gt;</tspan></tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:0;fill:#000000;fill-opacity:1;stroke:url(#linearGradient1529);stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="28.810781"
+           y="97.131508"
+           id="tspan238">  <tspan
+   style="fill:#008000;stroke:url(#linearGradient1529)"
+   id="tspan1737">group_by</tspan><tspan
+   style="fill:#008000"
+   id="tspan6394">(Variedad, Fecha_med)</tspan> <tspan
+   style="fill:#ff00ff;stroke:url(#linearGradient1529)"
+   id="tspan2051">|&gt;</tspan></tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:0;fill:#000000;fill-opacity:1;stroke:url(#linearGradient1529);stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="28.810781"
+           y="120.49542"
+           id="tspan240">  <tspan
+   style="fill:#0000ff;stroke:url(#linearGradient1529)"
+   id="tspan1841">summarise</tspan>(</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:0;fill:#000000;fill-opacity:1;stroke:url(#linearGradient1529);stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="28.810781"
+           y="143.85934"
+           id="tspan242">    Media = mean(Altura),</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:0;fill:#000000;fill-opacity:1;stroke:url(#linearGradient1529);stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="28.810781"
+           y="167.22325"
+           id="tspan244">    Desv = sd(Altura)</tspan><tspan
+           sodipodi:role="line"
+           style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:10.5833px;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:0;fill:#000000;fill-opacity:1;stroke:url(#linearGradient1529);stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="28.810781"
+           y="190.58717"
+           id="tspan246">  )</tspan></text>
+      <path
+         style="opacity:1;fill:#ff0000;fill-opacity:1;stroke:#ff0000;stroke-width:0.856;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart)"
+         d="m -23.904037,71.24534 c 48.0552,0 48.0552,0 48.0552,0"
+         id="path2176" />
+      <path
+         style="fill:#008000;fill-opacity:1;stroke:#008100;stroke-width:0.856;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-6)"
+         d="m -23.904037,94.743553 c 48.0552,0 48.0552,0 48.0552,0"
+         id="path2176-0" />
+      <path
+         style="fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.856;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-6-0)"
+         d="m -23.904037,118.24177 c 48.0552,0 48.0552,0 48.0552,0"
+         id="path2176-0-9" />
+      <path
+         style="fill:#ff00ff;fill-opacity:1;stroke:#ff00ff;stroke-width:0.856;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-6-0-8)"
+         d="m 173.74688,71.036567 c -48.0552,0 -48.0552,0 -48.0552,0"
+         id="path2176-0-9-4" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:1;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.056;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+         x="-73.119286"
+         y="64.783722"
+         id="text3164"><tspan
+           sodipodi:role="line"
+           id="tspan3162"
+           style="font-size:7.05556px;fill:#ff0000;stroke:#ff0000;stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="-73.119286"
+           y="64.783722">Tomamos el conjunto</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:7.05556px;fill:#ff0000;stroke:#ff0000;stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="-73.119286"
+           y="71.839279"
+           id="tspan3166">transplante</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.056;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+         x="-73.674362"
+         y="85.734787"
+         id="text3164-7"><tspan
+           sodipodi:role="line"
+           style="font-size:7.05556px;fill:#008000;fill-opacity:1;stroke:#008000;stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="-73.674362"
+           y="85.734787"
+           id="tspan3166-2">Agrupamos por Variedad</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:7.05556px;fill:#008000;fill-opacity:1;stroke:#008000;stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="-73.674362"
+           y="92.790344"
+           id="tspan4434">y feCha de medición</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.056;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+         x="-73.725578"
+         y="109.64957"
+         id="text3164-7-6"><tspan
+           sodipodi:role="line"
+           style="font-size:7.05556px;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="-73.725578"
+           y="109.64957"
+           id="tspan4434-3">Resumimos la(s)</tspan><tspan
+           sodipodi:role="line"
+           style="font-size:7.05556px;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.056;stroke-dasharray:none;stroke-opacity:1"
+           x="-73.725578"
+           y="116.70512"
+           id="tspan5702">variable(s)</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.3;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:1;fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.0560001;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+         x="176.83913"
+         y="73.328064"
+         id="text5708"><tspan
+           sodipodi:role="line"
+           id="tspan5706"
+           style="fill:#ff00ff;fill-opacity:1;stroke:#ff00ff;stroke-width:0.056;stroke-opacity:1"
+           x="176.83913"
+           y="73.328064">entonces</tspan></text>
+      <path
+         style="fill:#ff00ff;fill-opacity:1;stroke:#ff00ff;stroke-width:0.856;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-6-0-8-6)"
+         d="m 298.88432,94.524465 c -48.0552,0 -48.0552,0 -48.0552,0"
+         id="path2176-0-9-4-9" />
+      <path
+         style="fill:#1a1a1a;fill-opacity:1;stroke:#000000;stroke-width:0.856;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-6-0-8-6-1)"
+         d="m 239.27375,140.35451 c -48.0552,0 -48.0552,0 -48.0552,0"
+         id="path2176-0-9-4-9-8" />
+      <path
+         style="fill:#1a1a1a;fill-opacity:1;stroke:#000000;stroke-width:0.856;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1;marker-end:url(#TriangleStart-6-0-8-6-1-3)"
+         d="m 239.27375,164.12885 c -48.0552,0 -48.0552,0 -48.0552,0"
+         id="path2176-0-9-4-9-8-3" />
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1.3;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';fill:#0000ff;fill-opacity:1;stroke:#0000ff;stroke-width:0.0560001;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+         x="301.97656"
+         y="96.815964"
+         id="text5708-2"><tspan
+           sodipodi:role="line"
+           id="tspan5706-6"
+           style="fill:#ff00ff;fill-opacity:1;stroke:#ff00ff;stroke-width:0.056;stroke-opacity:1"
+           x="301.97656"
+           y="96.815964">entonces</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';opacity:1;fill:#1a1a1a;fill-opacity:1;stroke:#000000;stroke-width:0.0560001;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+         x="242.61279"
+         y="134.91219"
+         id="text6289"><tspan
+           sodipodi:role="line"
+           id="tspan6287"
+           style="stroke-width:0.056"
+           x="242.61279"
+           y="134.91219">Calculamos la media y la </tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.056"
+           x="242.61279"
+           y="141.96774"
+           id="tspan6341">guardamos en una columna</tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.056"
+           x="242.61279"
+           y="149.0233"
+           id="tspan6343">llamada Media</tspan></text>
+      <text
+         xml:space="preserve"
+         style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:7.05556px;line-height:1;font-family:'Lucida Console';-inkscape-font-specification:'Lucida Console';fill:#1a1a1a;fill-opacity:1;stroke:#000000;stroke-width:0.0560001;stroke-miterlimit:1;stroke-dasharray:none;stroke-opacity:1"
+         x="242.98088"
+         y="159.39583"
+         id="text6289-4"><tspan
+           sodipodi:role="line"
+           id="tspan6287-7"
+           style="stroke-width:0.056"
+           x="242.98088"
+           y="159.39583">Calculamos la desviación </tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.056"
+           x="242.98088"
+           y="166.45139"
+           id="tspan6384">y la guardamos en una </tspan><tspan
+           sodipodi:role="line"
+           style="stroke-width:0.056"
+           x="242.98088"
+           y="173.50694"
+           id="tspan6343-0">columna llamada Desv</tspan></text>
+    </g>
+  </g>
+</svg>

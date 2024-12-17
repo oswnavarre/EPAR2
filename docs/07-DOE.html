@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Análisis de Datos en Agricultura con R y RStudio - 8&nbsp; Diseño de experimentos</title>
+<title>Análisis de Datos en Agricultura con R y RStudio - Diseño de experimentos</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -63,6 +63,7 @@ ul.task-list li input[type="checkbox"] {
 }</script>
 
 
+<link rel="stylesheet" href="_extensions/fredguth/tufte/styles.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -74,7 +75,7 @@ ul.task-list li input[type="checkbox"] {
       <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
         <i class="bi bi-layout-text-sidebar-reverse"></i>
       </button>
-      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-DOE.html"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></a></li></ol></nav>
+      <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="./07-DOE.html"><span class="chapter-title">Diseño de experimentos</span></a></li></ol></nav>
       <a class="flex-grow-1" role="button" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
       </a>
       <button type="button" class="btn quarto-search-button" aria-label="" onclick="window.quartoOpenSearch();">
@@ -84,7 +85,7 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
@@ -107,50 +108,42 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./intro.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">R y RStudio</span></span></a>
+  <a href="./intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">R y RStudio</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Estadística. Conceptos Básicos.</span></span></a>
+  <a href="./01-concepts.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística. Conceptos Básicos.</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Estadística Descriptiva</span></span></a>
+  <a href="./02-estdesc.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Descriptiva</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./03-distr.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Distribuciones de probabilidad</span></span></a>
+  <a href="./03-distr.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Distribuciones de probabilidad</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Muestreo</span></span></a>
+  <a href="./04-sampling.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Muestreo</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./05-icph.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Estadística Inferencial</span></span></a>
+  <a href="./05-icph.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Estadística Inferencial</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link">
- <span class="menu-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span></a>
+  <a href="./06-regresion.html" class="sidebar-item-text sidebar-link"><span class="chapter-title">Correlación y Regresión</span></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link active">
- <span class="menu-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span></a>
+  <a href="./07-DOE.html" class="sidebar-item-text sidebar-link active"><span class="chapter-title">Diseño de experimentos</span></a>
   </div>
 </li>
         <li class="sidebar-item">
@@ -161,72 +154,60 @@ ul.task-list li input[type="checkbox"] {
 </li>
     </ul>
     </div>
+    <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">Contents</h2>
+   
+  <ul>
+  <li><a href="#principios-básicos" id="toc-principios-básicos" class="nav-link active" data-scroll-target="#principios-básicos">Principios básicos</a></li>
+  <li><a href="#prueba-anova" id="toc-prueba-anova" class="nav-link" data-scroll-target="#prueba-anova">Prueba ANOVA</a></li>
+  <li><a href="#diseño-completo-al-azar" id="toc-diseño-completo-al-azar" class="nav-link" data-scroll-target="#diseño-completo-al-azar">Diseño completo al azar</a></li>
+  <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar">Diseño de bloques completos al azar</a></li>
+  <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino">Diseño de cuadro latino</a></li>
+  <li><a href="#pruebas-de-comparaciones-múltiples-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-paramétricas">Pruebas de comparaciones múltiples paramétricas</a></li>
+  <li><a href="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" id="toc-pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="nav-link" data-scroll-target="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza">Pruebas no paramétricas equivalentes al análisis de varianza</a></li>
+  <li><a href="#pruebas-de-comparaciones-múltiples-no-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-no-paramétricas">Pruebas de comparaciones múltiples no paramétricas</a></li>
+  <li><a href="#diseño-factorial" id="toc-diseño-factorial" class="nav-link" data-scroll-target="#diseño-factorial">Diseño factorial</a></li>
+  </ul>
+</nav>
 </nav>
 <div id="quarto-sidebar-glass" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar,#quarto-sidebar-glass"></div>
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">Indice de contenidos</h2>
-   
-  <ul>
-  <li><a href="#principios-básicos" id="toc-principios-básicos" class="nav-link active" data-scroll-target="#principios-básicos"><span class="header-section-number">8.1</span> Principios básicos</a></li>
-  <li><a href="#prueba-anova" id="toc-prueba-anova" class="nav-link" data-scroll-target="#prueba-anova"><span class="header-section-number">8.2</span> Prueba ANOVA</a></li>
-  <li><a href="#diseño-completo-al-azar" id="toc-diseño-completo-al-azar" class="nav-link" data-scroll-target="#diseño-completo-al-azar"><span class="header-section-number">8.3</span> Diseño completo al azar</a></li>
-  <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.4</span> Diseño de bloques completos al azar</a></li>
-  <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino"><span class="header-section-number">8.5</span> Diseño de cuadro latino</a></li>
-  <li><a href="#pruebas-de-comparaciones-múltiples-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-paramétricas"><span class="header-section-number">8.6</span> Pruebas de comparaciones múltiples paramétricas</a></li>
-  <li><a href="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" id="toc-pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="nav-link" data-scroll-target="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.7</span> Pruebas no paramétricas equivalentes al análisis de varianza</a></li>
-  <li><a href="#pruebas-de-comparaciones-múltiples-no-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.8</span> Pruebas de comparaciones múltiples no paramétricas</a></li>
-  <li><a href="#diseño-factorial" id="toc-diseño-factorial" class="nav-link" data-scroll-target="#diseño-factorial"><span class="header-section-number">8.9</span> Diseño factorial</a></li>
-  </ul>
-</nav>
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
     </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-page-right" id="quarto-document-content">
 
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title"><span id="doe" class="quarto-section-identifier"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Diseño de experimentos</span></span></h1>
-</div>
-
-
-
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
+<header id="title-block-header">
+<h1 class="title display-7"><span class="chapter-title">Diseño de experimentos</span></h1>
 
 </header>
 
-<section id="principios-básicos" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="principios-básicos"><span class="header-section-number">8.1</span> Principios básicos</h2>
+<section id="principios-básicos" class="level2">
+<h2 class="anchored" data-anchor-id="principios-básicos">Principios básicos</h2>
 </section>
-<section id="prueba-anova" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="prueba-anova"><span class="header-section-number">8.2</span> Prueba ANOVA</h2>
+<section id="prueba-anova" class="level2">
+<h2 class="anchored" data-anchor-id="prueba-anova">Prueba ANOVA</h2>
 </section>
-<section id="diseño-completo-al-azar" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="diseño-completo-al-azar"><span class="header-section-number">8.3</span> Diseño completo al azar</h2>
+<section id="diseño-completo-al-azar" class="level2">
+<h2 class="anchored" data-anchor-id="diseño-completo-al-azar">Diseño completo al azar</h2>
 </section>
-<section id="diseño-de-bloques-completos-al-azar" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.4</span> Diseño de bloques completos al azar</h2>
+<section id="diseño-de-bloques-completos-al-azar" class="level2">
+<h2 class="anchored" data-anchor-id="diseño-de-bloques-completos-al-azar">Diseño de bloques completos al azar</h2>
 </section>
-<section id="diseño-de-cuadro-latino" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="diseño-de-cuadro-latino"><span class="header-section-number">8.5</span> Diseño de cuadro latino</h2>
+<section id="diseño-de-cuadro-latino" class="level2">
+<h2 class="anchored" data-anchor-id="diseño-de-cuadro-latino">Diseño de cuadro latino</h2>
 </section>
-<section id="pruebas-de-comparaciones-múltiples-paramétricas" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-paramétricas"><span class="header-section-number">8.6</span> Pruebas de comparaciones múltiples paramétricas</h2>
+<section id="pruebas-de-comparaciones-múltiples-paramétricas" class="level2">
+<h2 class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-paramétricas">Pruebas de comparaciones múltiples paramétricas</h2>
 </section>
-<section id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.7</span> Pruebas no paramétricas equivalentes al análisis de varianza</h2>
+<section id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="level2">
+<h2 class="anchored" data-anchor-id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza">Pruebas no paramétricas equivalentes al análisis de varianza</h2>
 </section>
-<section id="pruebas-de-comparaciones-múltiples-no-paramétricas" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.8</span> Pruebas de comparaciones múltiples no paramétricas</h2>
+<section id="pruebas-de-comparaciones-múltiples-no-paramétricas" class="level2">
+<h2 class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-no-paramétricas">Pruebas de comparaciones múltiples no paramétricas</h2>
 </section>
-<section id="diseño-factorial" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="diseño-factorial"><span class="header-section-number">8.9</span> Diseño factorial</h2>
+<section id="diseño-factorial" class="level2">
+<h2 class="anchored" data-anchor-id="diseño-factorial">Diseño factorial</h2>
 
 
 </section>
@@ -465,10 +446,10 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-page-right">
   <div class="nav-page nav-page-previous">
       <a href="./06-regresion.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Correlación y Regresión</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-title">Correlación y Regresión</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
