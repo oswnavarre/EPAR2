@@ -13,6 +13,7 @@ library(formatdown)
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
+
 # R y RStudio
 
 ## ¿Qué es R y por qué lo vamos a usar?

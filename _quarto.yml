@@ -31,7 +31,7 @@ format:
     toc-expand: false
     toc-depth: 4
     anchor-sections: true
-    math: mathjax
+    math: mathjax 
   
 engine: knitr
   

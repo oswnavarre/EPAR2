@@ -1,3 +1,5 @@
+![](imagenes/portada2.png){fig-align="center" width="120%"}
+
 # A modo de introducción {.unnumbered}
 
 En la actualidad es díficil pensar en una ciencia que evolucione sin el soporte de la estadística, las ciencias agrícolas no son la excepción. La investigación y el desarrollo en la agricultura usan métodos y procedimientos estadísticos necesarios para resolver diferentes aspectos y problemas que forman parte de algunas ramas de la actividad agrícola (@kibuuka).
