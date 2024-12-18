@@ -6,7 +6,7 @@ language: es.yml
 
 book:
   title: "Análisis de Datos en Agricultura con R y RStudio"
-  author: "Oswaldo Navarrete Carreño"
+  author: "Prof. Oswaldo Navarrete Carreño"
   chapters:
     - index.qmd
     - intro.qmd
@@ -31,7 +31,10 @@ format:
     toc-expand: false
     toc-depth: 4
     anchor-sections: true
-    math: mathjax 
+    math: mathjax
+    css: include/webex.css
+    include-after-body: include/webex.js
+    
   
 engine: knitr
   

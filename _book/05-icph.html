@@ -228,7 +228,11 @@ window.Quarto = {
   </ul></li>
   <li><a href="#sec-ph" id="toc-sec-ph" class="nav-link" data-scroll-target="#sec-ph"><span class="header-section-number">6.2</span> Pruebas de hipótesis</a>
   <ul>
-  <li><a href="#significancia-efecto-del-tamaño-y-potencia-de-la-prueba" id="toc-significancia-efecto-del-tamaño-y-potencia-de-la-prueba" class="nav-link" data-scroll-target="#significancia-efecto-del-tamaño-y-potencia-de-la-prueba"><span class="header-section-number">6.2.1</span> Significancia, efecto del tamaño y potencia de la prueba</a></li>
+  <li><a href="#significancia-efecto-del-tamaño-y-potencia-de-la-prueba" id="toc-significancia-efecto-del-tamaño-y-potencia-de-la-prueba" class="nav-link" data-scroll-target="#significancia-efecto-del-tamaño-y-potencia-de-la-prueba"><span class="header-section-number">6.2.1</span> Significancia, efecto del tamaño y potencia de la prueba</a>
+  <ul class="collapse">
+  <li><a href="#tamaño-del-efecto" id="toc-tamaño-del-efecto" class="nav-link" data-scroll-target="#tamaño-del-efecto"><span class="header-section-number">6.2.1.1</span> Tamaño del efecto</a></li>
+  <li><a href="#potencia-de-una-prueba" id="toc-potencia-de-una-prueba" class="nav-link" data-scroll-target="#potencia-de-una-prueba"><span class="header-section-number">6.2.1.2</span> Potencia de una prueba</a></li>
+  </ul></li>
   <li><a href="#sec-pvalor" id="toc-sec-pvalor" class="nav-link" data-scroll-target="#sec-pvalor"><span class="header-section-number">6.2.2</span> El valor <span class="math inline">\(p\)</span></a></li>
   <li><a href="#estadísticos-de-prueba" id="toc-estadísticos-de-prueba" class="nav-link" data-scroll-target="#estadísticos-de-prueba"><span class="header-section-number">6.2.3</span> Estadísticos de Prueba</a></li>
   </ul></li>
@@ -270,7 +274,7 @@ Figura&nbsp;6.1: Relación entre algunos conceptos estadísticos
 </div>
 <p>Imaginemos que se desea estimar el promedio de producción diaria de una raza lechera en el trópico húmedo, para esto hay que tomar en cuenta que no se tiene acceso a todas las vacas de la raza de interés en el trópico húmedo y resulta díficil estimar el valor exacto del promedio. Por esta razón, proporcionar un intervalo en el que posiblemente se encuentre el valor que deseamos estimar tendría menor riesgo.</p>
 <p>Supongamos que usted como investigador quiere probar que el promedio de la producción diaria de cierta raza es mayor en una región con temperaturas menores a las del trópico húmedo. Una primera aproximación para resolver este problema es realizar una gráfica que nos muestre la producción promedio de la raza para cada región. Sin embargo, un gráfico no es la forma adecuada para contestar una pregunta de este tipo.</p>
-<p>Los dos problemas citados serán abordados y resueltos en este capítulo. El primero en la sección <a href="#sec-ic" class="quarto-xref"><span>Sección 6.1</span></a> y el segundo en <a href="#sec-ph" class="quarto-xref"><span>Sección 6.2</span></a>.</p>
+<p>Los dos problemas citados serán abordados y resueltos en este capítulo. El primero en la <a href="#sec-ic" class="quarto-xref"><span>Sección 6.1</span></a> y el segundo en la <a href="#sec-ph" class="quarto-xref"><span>Sección 6.2</span></a>.</p>
 <section id="sec-ic" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="sec-ic"><span class="header-section-number">6.1</span> Intervalos de Confianza</h2>
 <p>Un <em>estimador puntual</em> de un parámetro <span class="math inline">\(\theta\)</span> es un número <span class="math inline">\(\bar{\theta}\)</span> de un estadístico <span class="math inline">\(\Theta\)</span> que puede ser considerado un valor que se aproxima a <span class="math inline">\(\theta\)</span>. Por ejemplo <span class="math inline">\(\bar{x}\)</span> del estadístico <span class="math inline">\(\bar{X}\)</span>, calculado de una muestra de tamaño <span class="math inline">\(n\)</span> es un estimador puntual del parámetro poblacional <span class="math inline">\(\mu\)</span>. Debido a que un estimador puntual es un simple número, no da información por si solo sobre la precisión y la confiabilidad de la estimación.</p>
@@ -307,7 +311,7 @@ Figura&nbsp;6.2: Intervalos de Confianza
   \left(\bar{x} - Z_{\frac{\alpha}{2}}\dfrac{\sigma}{\sqrt{n}}, \bar{x} + Z_{\frac{\alpha}{2}}\dfrac{\sigma}{\sqrt{n}}  \right)
 \tag{6.2}\]</span></span></p>
 <p>Donde <span class="math inline">\(Z_{\frac{\alpha}{2}}\)</span> es el valor correspondiente a una probabilidad de cola superior de <span class="math inline">\(\frac{\alpha}{2}\)</span> de la distribución normal estándar. El valor de <span class="math inline">\(Z_{\frac{\alpha}{2}}\)</span> que se usa para construir un intervalo de confianza recibe el nombre de <em>valor crítico</em>.</p>
-<p>Para utilizar la ecuación <a href="#eq-icmusc" class="quarto-xref">Ecuación&nbsp;<span>6.2</span></a> es necesario conocer el valor de <span class="math inline">\(\sigma\)</span>. Pero conocer <span class="math inline">\(\sigma\)</span> implica conocer todos los valores de la población. Y si se conocen todos los valores de la población se puede calcular el valor de la media poblacional que es lo que nos interesa estimar.</p>
+<p>Este caso es hipotético porque para utilizar la <a href="#eq-icmusc" class="quarto-xref">Ecuación&nbsp;<span>6.2</span></a> es necesario conocer el valor de <span class="math inline">\(\sigma\)</span>. Pero conocer <span class="math inline">\(\sigma\)</span> implica conocer todos los valores de la población. Y si se conocen todos los valores de la población se puede calcular el valor de la media poblacional que es lo que nos interesa estimar.</p>
 <p>En situaciones reales nunca se conoce la desviación estándar de la población y además las poblaciones son muy grandes lo que imposibilita poder examinar todos los valores. En la siguiente sección aprenderemos a abordar esta situación.</p>
 </section>
 <section id="sec-icsd" class="level4" data-number="6.1.2.2">
@@ -349,7 +353,7 @@ Figura&nbsp;6.2: Intervalos de Confianza
 <p><span id="eq-ic2msd"><span class="math display">\[
 \left( \left( \bar{x}_1 - \bar{x}_2 \right) - t_{\frac{\alpha}{2}}s_p\sqrt{\dfrac{1}{n_1} + \dfrac{1}{n_2}} , \left( \bar{x}_1 - \bar{x}_2 \right) + t_{\frac{\alpha}{2}}s_p\sqrt{\dfrac{1}{n_1} + \dfrac{1}{n_2}} \right)
 \tag{6.6}\]</span></span></p>
-<p>donde <span class="math inline">\(s_p\)</span> es el estimador de la desviación conjunta y se calcula a partir de la expresión <a href="#eq-sp" class="quarto-xref">Ecuación&nbsp;<span>6.7</span></a> y <span class="math inline">\(t_{\frac{\alpha}{2}}\)</span> es el valor <span class="math inline">\(t\)</span> con <span class="math inline">\(v=n_1+n_2-2\)</span> grados de libertad, con una probabilidad de <span class="math inline">\(\frac{\alpha}{2}\)</span>. dejando un área de <span class="math inline">\(\frac{\alpha}{2}\)</span> a la derecha.</p>
+<p>donde <span class="math inline">\(s_p\)</span> es el estimador de la desviación conjunta y se calcula a partir de la <a href="#eq-sp" class="quarto-xref">Ecuación&nbsp;<span>6.7</span></a> y <span class="math inline">\(t_{\frac{\alpha}{2}}\)</span> es el valor <span class="math inline">\(t\)</span> con <span class="math inline">\(v=n_1+n_2-2\)</span> grados de libertad, con una probabilidad de <span class="math inline">\(\frac{\alpha}{2}\)</span>. dejando un área de <span class="math inline">\(\frac{\alpha}{2}\)</span> a la derecha.</p>
 <p><span id="eq-sp"><span class="math display">\[
 s_p^2 = \dfrac{\left(n_1 - 1 \right)s_1^2+\left(n_2 - 1 \right)s_2^2}{n_1 +n_2 -2}
 \tag{6.7}\]</span></span></p>
@@ -361,9 +365,9 @@ s_p^2 = \dfrac{\left(n_1 - 1 \right)s_1^2+\left(n_2 - 1 \right)s_2^2}{n_1 +n_2 -
 \left( \left( \bar{x}_1 - \bar{x}_2 \right) - t_{\frac{\alpha}{2}}\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}} , \left( \bar{x}_1 - \bar{x}_2 \right) + t_{\frac{\alpha}{2}}\sqrt{\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2}} \right)
 \tag{6.8}\]</span></span></p>
 <p>donde <span class="math inline">\(t_{\frac{\alpha}{2}}\)</span> es el valor <span class="math inline">\(t\)</span> con</p>
-<p><span class="math display">\[
+<p><span id="eq-dfsdd"><span class="math display">\[
 v = \left\lfloor\dfrac{\left(\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2} \right)^2}{\dfrac{\left( \dfrac{s_1^2}{n_1} \right)^2}{n_1-1}+\dfrac{\left( \dfrac{s_2^2}{n_2} \right)^2}{n_2-1}}\right\rfloor
-\]</span> {eq-dfsdd}</p>
+\tag{6.9}\]</span></span></p>
 <p>grados de libertad, con un área de <span class="math inline">\(\frac{\alpha}{2}\)</span> a la derecha.</p>
 </section>
 </section>
@@ -372,15 +376,31 @@ v = \left\lfloor\dfrac{\left(\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2} \right)^2}{
 <p>Si <span class="math inline">\(p_1\)</span> y <span class="math inline">\(p_2\)</span> son las proporciones de éxitos en muestras aleatorias de tamaño <span class="math inline">\(n_1\)</span> y <span class="math inline">\(n_2\)</span>, respectivamente, <span class="math inline">\(q_1 = 1- p_1\)</span>, y <span class="math inline">\(q_2 = 1- p_2\)</span> un intervalo de confianza del <span class="math inline">\(100\left(1- \alpha \right)\%\)</span> para la diferencia de dos proporciones poblacionales <span class="math inline">\(\pi_1-\pi_2\)</span>, está dado por</p>
 <p><span id="eq-icprop2"><span class="math display">\[
 \left( \left( p_1 - p_2 \right) - z_{\frac{\alpha}{2}}\sqrt{\dfrac{p_1q_1}{n_1} + \dfrac{p_2q_2}{n_2}} , \left( p_1 - p_2 \right) + z_{\frac{\alpha}{2}}\sqrt{\dfrac{p_1q_1}{n_1} + \dfrac{p_2q_2}{n_2}}  \right)
-\tag{6.9}\]</span></span></p>
+\tag{6.10}\]</span></span></p>
 </section>
 </section>
 <section id="sec-ph" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="sec-ph"><span class="header-section-number">6.2</span> Pruebas de hipótesis</h2>
 <p>Los intervalos de confianza pueden ayudar a contestar preguntas tales como “¿es razonable concluir que la media de la producción en climas fríos es mayor que en climas tropicales?” y podríamos verificar si el valor en cuestión está dentro del intervalo de confianza, de ser así podríamos contestar afirmativamente a la pregunta.</p>
-<p>Este procedimiento que acabamos de enunciar tiene mucho sentido pero puede resultar “muy débil” para contestar la pregunta. Preguntas como la mencionada anteriormente se pueden contestar usando pruebas de hipótesis. Una hipótesis, en términos estadísticos, es una suposición o afirmación sobre un parámetro de la población y una prueba de hipótesis es un procedimiento basado en evidencia de la muestra y la teoría de la probabilidad para determinar si la hipótesis es una afirmación razonable.</p>
+<p>Este procedimiento que acabamos de enunciar tiene mucho sentido pero puede resultar “muy débil” para contestar la pregunta. Preguntas como la mencionada anteriormente se pueden contestar usando pruebas de hipótesis.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Una hipótesis, en términos estadísticos, es una suposición o afirmación sobre un parámetro de la población.</li>
+<li>Una prueba de hipótesis es un procedimiento basado en evidencia de la muestra y la teoría de la probabilidad para determinar si la hipótesis es una afirmación razonable.</li>
+</ul>
+</div>
+</div>
 <p>Toda prueba de hipótesis parte de un enunciado que se asume verdadero hasta probar lo contrario, esta hipótesis que se asume cierta es conocida como <strong>hipótesis nula</strong>. El nombre de <em>nula</em> proviene de la esperanza de que no exista diferencia significativa entre los grupos de prueba. La <strong>hipótesis alternativa</strong> es lo opuesto a la hipótesis nula. La hipótesis alternativa en la mayoría de los casos se condidera como una hipótesis de investigación.</p>
-<p>La hipótesis nula se denota con <span class="math inline">\(H_0\)</span> y la alternativa con <span class="math inline">\(H_1\)</span> aunque algunos autores utilizan la notación <span class="math inline">\(H_a\)</span>. Al final de una prueba de hipótesis no se rechaza o se rechaza la hipótesis nula, pero debemos tener claro que el procedimiento para probar hipótesis incluye la probabilidad de una conclusión incorrecta. El investigador debe comprender que el rechazo de una hipótesis implica que la evidencia proporcionada por la muestra es la que rechaza la hipótesis, dicho de otra forma rechazar una hipótesis significa que existe una pequeña probabilidad de obtener la información muestral observada cuando, en realidad la hipótesis es verdadera.</p>
+<p>La hipótesis nula se denota con <span class="math inline">\(H_0\)</span> y la alternativa con <span class="math inline">\(H_1\)</span> aunque algunos autores utilizan la notación <span class="math inline">\(H_a\)</span>. Al final de una prueba de hipótesis se decide si se rechaza o no se rechaza la hipótesis nula, pero debemos tener claro que el procedimiento para probar hipótesis incluye la probabilidad de una conclusión incorrecta. El investigador debe comprender que el rechazo de una hipótesis implica que la evidencia proporcionada por la muestra es la que nos lleva a rechazar la hipótesis, dicho de otra forma rechazar una hipótesis significa que existe una pequeña probabilidad de obtener la información muestral observada cuando, en realidad la hipótesis es verdadera.</p>
 <p>Existen dos tipos de errores posibles en un procedimiento de prueba de hipótesis: rechazar la hipótesis nula cuando esta es verdadera y no rechazarla cuando esta es falsa, en la <a href="#tbl-err" class="quarto-xref">Tabla&nbsp;<span>6.1</span></a> se resume la relación entre las decisiones y los errores.</p>
 <div class="cell" data-messages="false">
 <div id="tbl-err" class="cell quarto-float quarto-figure quarto-figure-center anchored" data-messages="false">
@@ -390,23 +410,23 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
 </figcaption>
 <div aria-describedby="tbl-err-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="lsohyzvhwu" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#lsohyzvhwu table {
+<div id="kiftiiigpg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#kiftiiigpg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#lsohyzvhwu thead, #lsohyzvhwu tbody, #lsohyzvhwu tfoot, #lsohyzvhwu tr, #lsohyzvhwu td, #lsohyzvhwu th {
+#kiftiiigpg thead, #kiftiiigpg tbody, #kiftiiigpg tfoot, #kiftiiigpg tr, #kiftiiigpg td, #kiftiiigpg th {
   border-style: none;
 }
 
-#lsohyzvhwu p {
+#kiftiiigpg p {
   margin: 0;
   padding: 0;
 }
 
-#lsohyzvhwu .gt_table {
+#kiftiiigpg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -432,12 +452,12 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-left-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_caption {
+#kiftiiigpg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#lsohyzvhwu .gt_title {
+#kiftiiigpg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -449,7 +469,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-bottom-width: 0;
 }
 
-#lsohyzvhwu .gt_subtitle {
+#kiftiiigpg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -461,7 +481,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-top-width: 0;
 }
 
-#lsohyzvhwu .gt_heading {
+#kiftiiigpg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -473,13 +493,13 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-right-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_bottom_border {
+#kiftiiigpg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_col_headings {
+#kiftiiigpg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -494,7 +514,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-right-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_col_heading {
+#kiftiiigpg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -514,7 +534,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   overflow-x: hidden;
 }
 
-#lsohyzvhwu .gt_column_spanner_outer {
+#kiftiiigpg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -526,15 +546,15 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 4px;
 }
 
-#lsohyzvhwu .gt_column_spanner_outer:first-child {
+#kiftiiigpg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#lsohyzvhwu .gt_column_spanner_outer:last-child {
+#kiftiiigpg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#lsohyzvhwu .gt_column_spanner {
+#kiftiiigpg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -546,11 +566,11 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   width: 100%;
 }
 
-#lsohyzvhwu .gt_spanner_row {
+#kiftiiigpg .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#lsohyzvhwu .gt_group_heading {
+#kiftiiigpg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -576,7 +596,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   text-align: left;
 }
 
-#lsohyzvhwu .gt_empty_group_heading {
+#kiftiiigpg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -591,15 +611,15 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   vertical-align: middle;
 }
 
-#lsohyzvhwu .gt_from_md > :first-child {
+#kiftiiigpg .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#lsohyzvhwu .gt_from_md > :last-child {
+#kiftiiigpg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#lsohyzvhwu .gt_row {
+#kiftiiigpg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -618,7 +638,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   overflow-x: hidden;
 }
 
-#lsohyzvhwu .gt_stub {
+#kiftiiigpg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -631,7 +651,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#lsohyzvhwu .gt_stub_row_group {
+#kiftiiigpg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -645,15 +665,15 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   vertical-align: top;
 }
 
-#lsohyzvhwu .gt_row_group_first td {
+#kiftiiigpg .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#lsohyzvhwu .gt_row_group_first th {
+#kiftiiigpg .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#lsohyzvhwu .gt_summary_row {
+#kiftiiigpg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -663,16 +683,16 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#lsohyzvhwu .gt_first_summary_row {
+#kiftiiigpg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_first_summary_row.thick {
+#kiftiiigpg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#lsohyzvhwu .gt_last_summary_row {
+#kiftiiigpg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -682,7 +702,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-bottom-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_grand_summary_row {
+#kiftiiigpg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -692,7 +712,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#lsohyzvhwu .gt_first_grand_summary_row {
+#kiftiiigpg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -702,7 +722,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-top-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_last_grand_summary_row_top {
+#kiftiiigpg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -712,11 +732,11 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-bottom-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_striped {
+#kiftiiigpg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#lsohyzvhwu .gt_table_body {
+#kiftiiigpg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -725,7 +745,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-bottom-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_footnotes {
+#kiftiiigpg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -739,7 +759,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-right-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_footnote {
+#kiftiiigpg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -748,7 +768,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#lsohyzvhwu .gt_sourcenotes {
+#kiftiiigpg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -762,7 +782,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-right-color: #D3D3D3;
 }
 
-#lsohyzvhwu .gt_sourcenote {
+#kiftiiigpg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -770,72 +790,72 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#lsohyzvhwu .gt_left {
+#kiftiiigpg .gt_left {
   text-align: left;
 }
 
-#lsohyzvhwu .gt_center {
+#kiftiiigpg .gt_center {
   text-align: center;
 }
 
-#lsohyzvhwu .gt_right {
+#kiftiiigpg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#lsohyzvhwu .gt_font_normal {
+#kiftiiigpg .gt_font_normal {
   font-weight: normal;
 }
 
-#lsohyzvhwu .gt_font_bold {
+#kiftiiigpg .gt_font_bold {
   font-weight: bold;
 }
 
-#lsohyzvhwu .gt_font_italic {
+#kiftiiigpg .gt_font_italic {
   font-style: italic;
 }
 
-#lsohyzvhwu .gt_super {
+#kiftiiigpg .gt_super {
   font-size: 65%;
 }
 
-#lsohyzvhwu .gt_footnote_marks {
+#kiftiiigpg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#lsohyzvhwu .gt_asterisk {
+#kiftiiigpg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#lsohyzvhwu .gt_indent_1 {
+#kiftiiigpg .gt_indent_1 {
   text-indent: 5px;
 }
 
-#lsohyzvhwu .gt_indent_2 {
+#kiftiiigpg .gt_indent_2 {
   text-indent: 10px;
 }
 
-#lsohyzvhwu .gt_indent_3 {
+#kiftiiigpg .gt_indent_3 {
   text-indent: 15px;
 }
 
-#lsohyzvhwu .gt_indent_4 {
+#kiftiiigpg .gt_indent_4 {
   text-indent: 20px;
 }
 
-#lsohyzvhwu .gt_indent_5 {
+#kiftiiigpg .gt_indent_5 {
   text-indent: 25px;
 }
 
-#lsohyzvhwu .katex-display {
+#kiftiiigpg .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#lsohyzvhwu div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#kiftiiigpg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -878,14 +898,43 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
 </figure>
 </div>
 </div>
-<p>El error de tipo I también se conoce como falso positivo y el error de tipo II como falso negativo. La probabilidad de cometer un error de tipo I se denota con <span class="math inline">\(\alpha\)</span> y la probabilidad de cometer un error de tipo II se denota con <span class="math inline">\(\beta\)</span>.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>El error de tipo I también se conoce como falso positivo.</li>
+<li>El error de tipo II como falso negativo.</li>
+<li>La probabilidad de cometer un error de tipo I se denota con <span class="math inline">\(\alpha\)</span>. <span class="math display">\[P\left(Error \; Tipo \; I\right)= \alpha\]</span></li>
+<li>La probabilidad de cometer un error de tipo II se denota con <span class="math inline">\(\beta\)</span>. <span class="math display">\[P\left(Error \; Tipo \; II\right)= \beta\]</span></li>
+</ul>
+</div>
+</div>
 <p>Existen algunas propiedades importantes que se deben conocer sobre los errores de tipo I y tipo II.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
 <ul>
 <li>Los errores de tipo I y de tipo II están relacionados. Si la probabilidad de uno aumenta la probabilidad del otro disminuye.</li>
 <li>La probabilidad de cometer un error de tipo I se puede reducir ajustando el o los valores críticos.</li>
 <li>Un incremento del tamaño muestral <span class="math inline">\(n\)</span>, reducirá <span class="math inline">\(\alpha\)</span> y <span class="math inline">\(\beta\)</span>.</li>
 <li>Si la hipótesis nula es falsa, <span class="math inline">\(\beta\)</span> tiene un máximo cuando el verdadero valor de un parámetro se aproxima al valor hipotético. A mayor distancia entre el verdadero valor y el hipotético, el valor de <span class="math inline">\(\beta\)</span> sera menor.</li>
 </ul>
+</div>
+</div>
 <p>Si se establece una buena regla de decisión, tendríamos una alta oportunidad de tomar una decisión correcta. Desafortunadamente no es posible eliminar completamente la posibilidad de errores, pues como se dijo anteriormente reducir la probabilidad de cometer el error de un tipo implica aumentar el error de otro tipo.</p>
 <p>Retomemos la pregunta planteada al inicio de esta sección, tomemos como hipótesis nula que la media es igual a <span class="math inline">\(20\)</span> litros y como alternativa que la media es diferente de <span class="math inline">\(20\)</span> litros, por el momento no entraremos en detalles de como escoger las hipótesis:</p>
 <p><span class="math display">\[
@@ -904,7 +953,7 @@ Figura&nbsp;6.3: Pruebas de hipótesis
 </figcaption>
 </figure>
 </div>
-<p>Una <em>regla de decisión</em> podría ser escoger un punto o puntos límites en el eje <span class="math inline">\(x\)</span>´como en la <a href="#fig-pht" class="quarto-xref">Figura&nbsp;<span>6.3</span></a>. La gráfica de color rojo representa <span class="math inline">\(H_0\)</span> y las de color celeste representan <span class="math inline">\(H_1\)</span>. En este caso escogemos dos puntos límites porque si la media muestral se encuentra a la izquierda o a la derecha de estos límites, se rechaza <span class="math inline">\(H_0\)</span>.</p>
+<p>Una <em>regla de decisión</em> podría ser escoger un punto o puntos límites en el eje <span class="math inline">\(x\)</span> como en la <a href="#fig-pht" class="quarto-xref">Figura&nbsp;<span>6.3</span></a>. La gráfica de color rojo representa <span class="math inline">\(H_0\)</span> y las de color celeste representan <span class="math inline">\(H_1\)</span>. En este caso escogemos dos puntos límites porque si la media muestral se encuentra a la izquierda o a la derecha de estos límites, se rechaza <span class="math inline">\(H_0\)</span>.</p>
 <p>En cualquiera de los dos casos la media muestral está demasiado lejos de <span class="math inline">\(H_0\)</span> para ser creíble. Si la media muestral <span class="math inline">\(\bar{x}\)</span> está entre los valores límite se acepta <span class="math inline">\(H_0\)</span>. La región entre los puntos límite es la <em>región de no rechazo</em> y hacía la izquierda o derecha de los puntos límite se encuentra la <em>región de rechazo</em>.</p>
 <p>Partiendo de lo anterior, en la <a href="#fig-pht" class="quarto-xref">Figura&nbsp;<span>6.3</span></a> se pueden ver los errores de tipo I y II. El área de color verde bajo la distribución de <span class="math inline">\(H_0\)</span> muestra la probabilidad de rechazar <span class="math inline">\(H_0\)</span> cuando en realidad es verdadera, es decir un error de tipo I. El área de color celeste bajo la distribución de <span class="math inline">\(H_1\)</span> muestra la probabilidad de no rechazar <span class="math inline">\(H_0\)</span> cuando en realidad es falsa. En una prueba de hipótesis el investigador decide la probabilidad <span class="math inline">\(\alpha\)</span> de un error de tipo I, este valor de <span class="math inline">\(\alpha\)</span> es conocido como la <strong>significancia</strong>.</p>
 <p>Los puntos lìmites son conocidos como <strong>valores críticos</strong>. Un procedimiento muy usado en pruebas de hipótesis es calcular el valor <span class="math inline">\(z\)</span> de la media muestral, conocido como <strong>estadìstico de prueba</strong> y luego comparar el valor crìtico con este estadístico de prueba. Podrìamos resumir el procedimiento de prueba de hipótesis en 5 pasos:</p>
@@ -971,11 +1020,90 @@ Figura&nbsp;6.6: <span class="math inline">\(H_1:\neq\)</span>
 <section id="significancia-efecto-del-tamaño-y-potencia-de-la-prueba" class="level3" data-number="6.2.1">
 <h3 data-number="6.2.1" class="anchored" data-anchor-id="significancia-efecto-del-tamaño-y-potencia-de-la-prueba"><span class="header-section-number">6.2.1</span> Significancia, efecto del tamaño y potencia de la prueba</h3>
 <p>Los investigadores generalmente buscan resultados “significativos”, es común encontrar en los artículos académicos, investigaciones y reportes expresiones como “los resultados son significativos”, “el coeficiente es significativamente diferente de cero”. Es importante entender que la palabra “significativo” se usa en términos estadisticos y no en el sentido de <em>importante</em> o <em>relevante</em>. Por lo que en el análisis de datos, algo puede ser estadísticamente significativo pero no relevante.</p>
-<p>Supongamos que en el ejemplo desarrollado en la sección anterior tenemos una media muestral de 19.6 y que ese valor nos lleva a rechazar la hipótesis nula. Para nosotros esa diferencia puede no ser relevante, mas esa diferencia es significativa en el sentido estadístico. No solo deberíamos interpretar los resultados estadísticos solamente en términos de la significancia sino también considerar el tamaño de la diferencia esto es conocido como el <strong>efecto del tamaño</strong> y preguntarse si es importante o no.</p>
+<p>Supongamos que en el ejemplo desarrollado en la sección anterior tenemos una media muestral de 19.6 y que ese valor nos lleva a rechazar la hipótesis nula. Para nosotros esa diferencia puede no ser relevante, mas esa diferencia es significativa en el sentido estadístico. No solo deberíamos interpretar los resultados estadísticos solamente en términos de la significancia sino también considerar el tamaño de la diferencia esto es conocido como el <strong>tamaño del efecto</strong> y preguntarse si es importante o no.</p>
+<section id="tamaño-del-efecto" class="level4" data-number="6.2.1.1">
+<h4 data-number="6.2.1.1" class="anchored" data-anchor-id="tamaño-del-efecto"><span class="header-section-number">6.2.1.1</span> Tamaño del efecto</h4>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>El tamaño del efecto es una medida estadística que indica el grado de diferencia entre dos grupos o la fuerza de una relación entre variables.</li>
+<li>Se utiliza para mostrar la importancia práctica de los resultados de una investigación y la eficacia de una intervención.</li>
+<li>A mayor tamaño del efecto, mayor grado de efecto entre las variables.</li>
+<li>Existen muchos tamaños de efecto diferentes, incluidos los índices de diferencia entre grupos, los coeficientes de correlación y las estimaciones de riesgo.</li>
+<li>Los tamaños del efecto pueden ser útiles para comparar los efectos del tratamiento en diferentes estudios, poblaciones y medidas de resultado.</li>
+<li>El tamaño del efecto es independiente del tamaño de la muestra, por lo que un tamaño de muestra pequeño no implica necesariamente un tamaño del efecto pequeño.</li>
+</ul>
+</div>
+</div>
+<p>Dependiendo del tipo de comparaciones que se estudien, el tamaño del efecto se estima con diferentes índices. Los índices se dividen en dos categorías principales de estudio: los que analizan el tamaño del efecto entre grupos y los que analizan las medidas de asociación entre variables. Para la primera categoría el más usado es el índice <strong><em>d</em> de Cohen</strong>, mientras que para la segunda se utiliza el <strong>coeficiente de correlación <em>r</em> de Pearson</strong>. En la <a href="06-regresion.html#sec-correl" class="quarto-xref"><span>Sección 7.2</span></a> se discutirá sobre el coeficiente de correlación, por el momento se discutirá sobre el índice <em>d</em> de Cohen, que se calcula como la diferencia de las medias de los dos grupos dividida por la desviación de los datos:</p>
+<p><span id="eq-cohen"><span class="math display">\[
+d = \dfrac{\bar{x}_1-\bar{x}_2}{s}
+\tag{6.11}\]</span></span></p>
+<p>donde</p>
+<p><span class="math display">\[
+s = \sqrt{\dfrac{\left(n_1-1\right)s^2_1 +\left(n_2-1\right)s^2_2}{n_1+n_2}}
+\]</span> Si <span class="math inline">\(d=1\)</span>, los dos grupos difieren por una desviación estándar. Si es 2, los dos grupos difieren por 2 desviaciones estándar y así sucesivamente.</p>
+<p>Entre las medias de los grupos, el tamaño del efecto también puede entenderse como la distribución percentil media del grupo 1 frente a la del grupo 2. Para un tamaño del efecto de <span class="math inline">\(0\)</span>, la media del grupo 2 está en el percentil 50 del grupo 1. Para un tamaño del efecto de <span class="math inline">\(0.8\)</span>, la media del grupo 2 está en el percentil 79 del grupo 1; por lo tanto, alguien del grupo 2 con una puntuación media (es decir, media) tendría una puntuación más alta que el 79% de las personas del grupo 1. Esta información puede verse en la <a href="#tbl-effectsize" class="quarto-xref">Tabla&nbsp;<span>6.2</span></a></p>
+<div id="tbl-effectsize" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-effectsize-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;6.2: Diferencias entre grupos. Tamaño del efecto medido por la <em>d</em> de Cohen
+</figcaption>
+<div aria-describedby="tbl-effectsize-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th>Tamaño Relativo</th>
+<th>Tamaño del efecto</th>
+<th>Percentil</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td></td>
+<td>0</td>
+<td>50</td>
+</tr>
+<tr class="even">
+<td>Pequeño</td>
+<td>0.2</td>
+<td>58</td>
+</tr>
+<tr class="odd">
+<td>Mediano</td>
+<td>0.5</td>
+<td>69</td>
+</tr>
+<tr class="even">
+<td>Grande</td>
+<td>0.8</td>
+<td>79</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>1.4</td>
+<td>92</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="potencia-de-una-prueba" class="level4" data-number="6.2.1.2">
+<h4 data-number="6.2.1.2" class="anchored" data-anchor-id="potencia-de-una-prueba"><span class="header-section-number">6.2.1.2</span> Potencia de una prueba</h4>
 <p>Otro concepto relacionado a las probabilidades de error es la <strong>potencia de una prueba</strong> que es la probabilidad de rechazar <span class="math inline">\(H_0\)</span> cuando esta es falsa. Si la prueba fuera de una cola con hipótesis alternativa <span class="math inline">\(&gt;\)</span>, la potencia de la prueba viene dada entonces por el área bajo <span class="math inline">\(H_1\)</span> a la derecha de la línea de decisión.</p>
 <p><span id="eq-power"><span class="math display">\[
 \text{Potencia de una Prueba}=1-P\left(\text{Error Tipo II}\right)=1-\beta
-\tag{6.10}\]</span></span></p>
+\tag{6.12}\]</span></span></p>
 <div id="fig-power" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-power-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -986,6 +1114,7 @@ Figura&nbsp;6.7: Potencia de una prueba
 </figcaption>
 </figure>
 </div>
+</section>
 </section>
 <section id="sec-pvalor" class="level3" data-number="6.2.2">
 <h3 data-number="6.2.2" class="anchored" data-anchor-id="sec-pvalor"><span class="header-section-number">6.2.2</span> El valor <span class="math inline">\(p\)</span></h3>

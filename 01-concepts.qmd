@@ -5,6 +5,7 @@ library(agricolae)
 library(jtools)
 library(writexl)
 library(readxl)
+library(webexercises)
 ```
 
 # Estadística. Conceptos Básicos. {#intro}
@@ -130,4 +131,106 @@ m.  Temperatura medida en grados Kelvin
 
 ::: {#exr-third}
 **Determine el nivel de medición de las variables cuantitativas del @exr-first.**
+:::
+
+::: {#exr-fourth}
+
+::: {.webex-check .webex-box}
+
+
+
+```{r}
+#| echo: false
+#| results: asis
+
+# Pregunta 1
+q1 <- "¿Cuál es el origen etimológico de la palabra 'estadística'?"
+q1_choices <- c("Del griego 'statikos'", 
+                "Del latín 'statisticus'", 
+                answer = "Del alemán 'statistik'")
+
+# Pregunta 2
+q2 <- "¿Quién acuñó el término 'statistik'?"
+q2_choices <- c("Karl Pearson", 
+                "Ronald Fisher", 
+                answer = "Gottfried Achenwall")
+
+# Pregunta 3
+q3 <- "¿Qué estudia la estadística?"
+q3_choices <- c("La recolección de datos únicamente", 
+                "La organización y presentación de datos únicamente", 
+                answer = "La recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica", 
+                "La interpretación de datos únicamente")
+
+# Pregunta 4
+q4 <- "¿Cuál de las siguientes NO es una etapa del proceso estadístico?"
+q4_choices <- c("Identificación y delimitación del problema", 
+                "Planificación", 
+                "Recolección de datos", 
+                answer = "Publicación de resultados")
+
+# Pregunta 5
+q5 <- "¿Qué implica la delimitación del problema en estadística?"
+q5_choices <- c("Definir los objetivos del estudio", 
+                answer = "Recortar el tema dentro de los límites de espacio, tiempo y área de estudio", 
+                "Identificar las fuentes de datos", 
+                "Analizar los datos recolectados")
+
+# Pregunta 6
+q6 <- "¿Qué se debe hacer después de recolectar los datos en el proceso estadístico?"
+q6_choices <- c("Publicar los datos inmediatamente", 
+                answer = "Revisar los datos para verificar inconsistencias o problemas potenciales", 
+                "Analizar los datos sin revisión previa", 
+                "Almacenar los datos sin analizarlos")
+
+# Pregunta 7
+q7 <- "¿Qué es una variable en estadística?"
+q7_choices <- c("Un conjunto de datos sin relación", 
+                answer = "Una característica de los elementos u objetos que se estudian", 
+                "Un valor constante en un estudio", 
+                "Un método de recolección de datos")
+
+# Pregunta 8
+q8 <- "¿Qué tipo de datos representan etiquetas o nominaciones que identifican atributos?"
+q8_choices <- c("Datos cuantitativos", 
+                answer = "Datos cualitativos", 
+                "Datos continuos", 
+                "Datos discretos")
+
+# Pregunta 9
+q9 <- "¿Qué tipo de datos son aquellos que pueden ser contados y no admiten valores intermedios?"
+q9_choices <- c("Datos cualitativos", 
+                "Datos continuos", 
+                answer = "Datos discretos", 
+                "Datos nominales")
+
+# Pregunta 10
+q10 <- "¿Qué tipo de variable es el 'número de hijos en una familia'?"
+q10_choices <- c("Variable cualitativa", 
+                 "Variable cuantitativa continua", 
+                 answer = "Variable cuantitativa discreta", 
+                 "Variable ordinal")
+
+# Mostrar todas las preguntas
+preguntas <- list(
+  list(pregunta = q1, opciones = q1_choices),
+  list(pregunta = q2, opciones = q2_choices),
+  list(pregunta = q3, opciones = q3_choices),
+  list(pregunta = q4, opciones = q4_choices),
+  list(pregunta = q5, opciones = q5_choices),
+  list(pregunta = q6, opciones = q6_choices),
+  list(pregunta = q7, opciones = q7_choices),
+  list(pregunta = q8, opciones = q8_choices),
+  list(pregunta = q9, opciones = q9_choices),
+  list(pregunta = q10, opciones = q10_choices)
+)
+
+for (p in preguntas) {
+  cat(p$pregunta, longmcq(p$opciones), "\n\n")
+}
+
+```
+
+:::
+
 :::

@@ -1,7 +1,7 @@
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
-# Correlación y Regresión {#methods}
+# Correlación y Regresión {#sec-correg}
 
 
 ```{webr}
@@ -13,7 +13,7 @@ plot(fit)
 ## Gráficos de dispersión 
 
 
-## Análisis de correlación
+## Análisis de correlación  {#sec-correl}
 
 ## Regresión
 

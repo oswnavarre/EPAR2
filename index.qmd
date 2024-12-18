@@ -1,3 +1,7 @@
+"La perfección no se alcanza cuando no hay nada más que añadir, sino cuando no hay nada más que quitar." *Antoine de Saint-Exupéry*
+
+"Ningún libro está terminado. Mientras trabajamos en él aprendemos lo justo para encontrarlo inmaduro en el momento en que nos alejamos de él." *Karl Popper, La sociedad abierta y sus enemigos*.
+
 ![](imagenes/portada2.png){fig-align="center" width="120%"}
 
 # A modo de introducción {.unnumbered}

@@ -9,7 +9,7 @@ Imaginemos que se desea estimar el promedio de producción diaria de una raza le
 
 Supongamos que usted como investigador quiere probar que el promedio de la producción diaria de cierta raza es mayor en una  región con temperaturas menores a las del trópico húmedo. Una primera aproximación para resolver este problema es realizar una gráfica que nos muestre la producción promedio de la raza para cada región. Sin embargo, un gráfico no es la forma adecuada para contestar una pregunta de este tipo.  
 
-Los dos problemas citados serán abordados y resueltos en este capítulo. El primero en la sección @sec-ic y el segundo en @sec-ph. 
+Los dos problemas citados serán abordados y resueltos en este capítulo. El primero en la @sec-ic y el segundo en la @sec-ph. 
 
 ## Intervalos de Confianza {#sec-ic}
 
@@ -51,7 +51,7 @@ $$ {#eq-icmusc}
 
 Donde $Z_{\frac{\alpha}{2}}$ es el valor correspondiente a una probabilidad de cola superior de $\frac{\alpha}{2}$ de la distribución normal estándar. El valor de $Z_{\frac{\alpha}{2}}$ que se usa para construir un intervalo de confianza recibe el nombre de *valor crítico*.
 
-Para utilizar la ecuación @eq-icmusc es necesario conocer el valor de $\sigma$. Pero conocer $\sigma$ implica conocer todos los valores de la población. Y si se conocen todos los valores de la población se puede calcular el valor de la media poblacional que es lo que nos interesa estimar. 
+Este caso es hipotético porque para utilizar la @eq-icmusc es necesario conocer el valor de $\sigma$. Pero conocer $\sigma$ implica conocer todos los valores de la población. Y si se conocen todos los valores de la población se puede calcular el valor de la media poblacional que es lo que nos interesa estimar. 
 
 En situaciones reales nunca se conoce la desviación estándar de la población y además las poblaciones son muy grandes lo que imposibilita poder examinar todos los valores. En la siguiente sección aprenderemos a abordar esta situación.
 
@@ -108,7 +108,7 @@ $$
 \left( \left( \bar{x}_1 - \bar{x}_2 \right) - t_{\frac{\alpha}{2}}s_p\sqrt{\dfrac{1}{n_1} + \dfrac{1}{n_2}} , \left( \bar{x}_1 - \bar{x}_2 \right) + t_{\frac{\alpha}{2}}s_p\sqrt{\dfrac{1}{n_1} + \dfrac{1}{n_2}} \right) 
 $$ {#eq-ic2msd}
 
-donde $s_p$ es el estimador de la desviación conjunta y se calcula a partir de la expresión @eq-sp y $t_{\frac{\alpha}{2}}$ es el valor $t$ con $v=n_1+n_2-2$ grados de libertad, con una probabilidad de $\frac{\alpha}{2}$. dejando un área de $\frac{\alpha}{2}$ a la derecha.
+donde $s_p$ es el estimador de la desviación conjunta y se calcula a partir de la @eq-sp y $t_{\frac{\alpha}{2}}$ es el valor $t$ con $v=n_1+n_2-2$ grados de libertad, con una probabilidad de $\frac{\alpha}{2}$. dejando un área de $\frac{\alpha}{2}$ a la derecha.
 
 $$
 s_p^2 = \dfrac{\left(n_1 - 1 \right)s_1^2+\left(n_2 - 1 \right)s_2^2}{n_1 +n_2 -2} 
@@ -126,7 +126,7 @@ donde $t_{\frac{\alpha}{2}}$ es el valor $t$ con
 
 $$ 
 v = \left\lfloor\dfrac{\left(\dfrac{s_1^2}{n_1} + \dfrac{s_2^2}{n_2} \right)^2}{\dfrac{\left( \dfrac{s_1^2}{n_1} \right)^2}{n_1-1}+\dfrac{\left( \dfrac{s_2^2}{n_2} \right)^2}{n_2-1}}\right\rfloor
-$$ {eq-dfsdd}
+$$ {#eq-dfsdd}
 
 grados de libertad, con un área de $\frac{\alpha}{2}$ a la derecha.
 
@@ -145,11 +145,16 @@ $$ {#eq-icprop2}
 
 Los intervalos de confianza pueden ayudar a contestar preguntas tales como "¿es razonable concluir que la media de la producción en climas fríos es mayor que en climas tropicales?" y podríamos verificar si el valor en cuestión está dentro del intervalo de confianza, de ser así podríamos contestar afirmativamente a la pregunta. 
 
-Este procedimiento que acabamos de enunciar tiene mucho sentido pero puede resultar "muy débil" para contestar la pregunta. Preguntas como la mencionada anteriormente se pueden contestar usando pruebas de hipótesis. Una hipótesis, en términos estadísticos, es una suposición o afirmación sobre un parámetro de la población y una prueba de hipótesis es un procedimiento basado en evidencia de la muestra y la teoría de la probabilidad para determinar si la hipótesis es una afirmación razonable. 
+Este procedimiento que acabamos de enunciar tiene mucho sentido pero puede resultar "muy débil" para contestar la pregunta. Preguntas como la mencionada anteriormente se pueden contestar usando pruebas de hipótesis. 
+
+::: callout-important
+- Una hipótesis, en términos estadísticos, es una suposición o afirmación sobre un parámetro de la población.
+- Una prueba de hipótesis es un procedimiento basado en evidencia de la muestra y la teoría de la probabilidad para determinar si la hipótesis es una afirmación razonable.
+:::
 
 Toda prueba de hipótesis parte de un enunciado que se asume verdadero hasta probar lo contrario, esta hipótesis que se asume cierta es conocida como __hipótesis nula__. El nombre de _nula_ proviene de la esperanza de que no exista diferencia significativa entre los grupos de prueba. La __hipótesis alternativa__ es lo opuesto a la hipótesis nula. La hipótesis alternativa en la mayoría de los casos se condidera como una hipótesis de investigación.
 
-La hipótesis nula se denota con $H_0$ y la alternativa con $H_1$ aunque algunos autores utilizan la notación $H_a$. Al final de una prueba de hipótesis no se rechaza o se rechaza la hipótesis nula, pero debemos tener claro que el procedimiento para probar hipótesis incluye la probabilidad de una conclusión incorrecta. El investigador debe comprender que el rechazo de una hipótesis implica que la evidencia proporcionada por la muestra es la que rechaza la hipótesis, dicho de otra forma rechazar una hipótesis significa que existe una pequeña probabilidad de obtener la información muestral observada cuando, en realidad la hipótesis es verdadera. 
+La hipótesis nula se denota con $H_0$ y la alternativa con $H_1$ aunque algunos autores utilizan la notación $H_a$. Al final de una prueba de hipótesis se decide si se rechaza o no se rechaza la hipótesis nula, pero debemos tener claro que el procedimiento para probar hipótesis incluye la probabilidad de una conclusión incorrecta. El investigador debe comprender que el rechazo de una hipótesis implica que la evidencia proporcionada por la muestra es la que nos lleva a rechazar la hipótesis, dicho de otra forma rechazar una hipótesis significa que existe una pequeña probabilidad de obtener la información muestral observada cuando, en realidad la hipótesis es verdadera. 
 
 Existen dos tipos de errores posibles en un procedimiento de prueba de hipótesis: rechazar la hipótesis nula cuando esta es verdadera y no rechazarla cuando esta es falsa, en la  @tbl-err se resume la relación entre las decisiones y los errores. 
 
@@ -186,16 +191,24 @@ gt_tbl
 
 ```
 
+::: callout-tip
+- El error de tipo I también se conoce como falso positivo.
+- El error de tipo II como falso negativo. 
+- La probabilidad de cometer un error de tipo I se denota con $\alpha$.
+$$P\left(Error \; Tipo \; I\right)= \alpha$$
+- La probabilidad de cometer un error de tipo II se denota con $\beta$.
+$$P\left(Error \; Tipo \; II\right)= \beta$$
+:::
 
-El error de tipo I también se conoce como falso positivo y el error de tipo II como falso negativo. La probabilidad de cometer un error de tipo I se denota con $\alpha$ y la probabilidad de cometer un error de tipo II se denota con $\beta$.
 
 Existen algunas propiedades importantes que se deben conocer sobre los errores de tipo I y tipo II. 
 
+::: callout-tip
 * Los errores de tipo I y de tipo II están relacionados. Si la probabilidad de uno aumenta la probabilidad del otro disminuye. 
 * La probabilidad de cometer un error de tipo I se puede reducir ajustando el o los valores críticos.
 * Un incremento del tamaño muestral $n$, reducirá $\alpha$ y $\beta$.
-* Si la hipótesis nula es falsa, $\beta$ tiene un máximo cuando el verdadero valor de un parámetro se aproxima al valor hipotético. A mayor distancia
-entre el verdadero valor y el hipotético, el valor de $\beta$ sera menor.
+* Si la hipótesis nula es falsa, $\beta$ tiene un máximo cuando el verdadero valor de un parámetro se aproxima al valor hipotético. A mayor distancia entre el verdadero valor y el hipotético, el valor de $\beta$ sera menor.
+:::
 
 Si se establece una buena regla de decisión, tendríamos una alta oportunidad de tomar una decisión correcta. Desafortunadamente no es posible eliminar completamente la posibilidad de errores, pues como se dijo anteriormente reducir la probabilidad de cometer el error de un tipo implica aumentar el error de otro tipo.
 
@@ -211,7 +224,7 @@ $$
 
 ![Pruebas de hipótesis](imagenes/phtest.png){#fig-pht}
 
-Una *regla de decisión* podría ser escoger un punto o puntos límites en el eje $x$´como en la @fig-pht. La gráfica de color rojo representa $H_0$ y las de color celeste representan $H_1$. En este caso escogemos dos puntos límites porque si la media muestral se encuentra a la izquierda o a la derecha de estos límites, se rechaza $H_0$. 
+Una *regla de decisión* podría ser escoger un punto o puntos límites en el eje $x$ como en la @fig-pht. La gráfica de color rojo representa $H_0$ y las de color celeste representan $H_1$. En este caso escogemos dos puntos límites porque si la media muestral se encuentra a la izquierda o a la derecha de estos límites, se rechaza $H_0$. 
 
 En cualquiera de los dos casos la media muestral está demasiado lejos de $H_0$ para ser creíble. Si la media muestral $\bar{x}$ está entre los valores límite se acepta $H_0$. La región entre los puntos límite es la *región de no rechazo* y hacía la izquierda o derecha de los puntos límite se encuentra la *región de rechazo*.
 
@@ -269,7 +282,46 @@ $$
 
 Los investigadores generalmente buscan resultados "significativos", es común encontrar en los artículos académicos, investigaciones y reportes expresiones como "los resultados son significativos", "el coeficiente es significativamente diferente de cero". Es importante entender que la palabra "significativo" se usa en términos estadisticos y no en el sentido de *importante* o *relevante*. Por lo que en el análisis de datos, algo puede ser estadísticamente significativo pero no relevante. 
 
-Supongamos que en el ejemplo desarrollado en la sección anterior tenemos una media muestral de 19.6 y que ese valor nos lleva a rechazar la hipótesis nula. Para nosotros esa diferencia puede no ser relevante, mas esa diferencia es significativa en el sentido estadístico. No solo deberíamos interpretar los resultados estadísticos solamente en términos de la significancia sino también considerar el tamaño de la diferencia esto es conocido como el __efecto del tamaño__ y preguntarse si es importante o no. 
+Supongamos que en el ejemplo desarrollado en la sección anterior tenemos una media muestral de 19.6 y que ese valor nos lleva a rechazar la hipótesis nula. Para nosotros esa diferencia puede no ser relevante, mas esa diferencia es significativa en el sentido estadístico. No solo deberíamos interpretar los resultados estadísticos solamente en términos de la significancia sino también considerar el tamaño de la diferencia esto es conocido como el __tamaño del efecto__ y preguntarse si es importante o no.
+
+#### Tamaño del efecto
+
+::: callout-tip
+- El tamaño del efecto es una medida estadística que indica el grado de diferencia entre dos grupos o la fuerza de una relación entre variables. 
+- Se utiliza para mostrar la importancia práctica de los resultados de una investigación y la eficacia de una intervención.
+- A mayor tamaño del efecto, mayor grado de efecto entre las variables.
+- Existen muchos tamaños de efecto diferentes, incluidos los índices de diferencia entre grupos, los coeficientes de correlación y las estimaciones de riesgo. 
+- Los tamaños del efecto pueden ser útiles para comparar los efectos del tratamiento en diferentes estudios, poblaciones y medidas de resultado.
+- El tamaño del efecto es independiente del tamaño de la muestra, por lo que un tamaño de muestra pequeño no implica necesariamente un tamaño del efecto pequeño.
+:::
+
+Dependiendo del tipo de comparaciones que se estudien, el tamaño del efecto se estima con diferentes índices. Los índices se dividen en dos categorías principales de estudio: los que analizan el tamaño del efecto entre grupos y los que analizan las medidas de asociación entre variables. Para la primera categoría el más usado es el índice __*d* de Cohen__, mientras que para la segunda se utiliza el __coeficiente de correlación *r* de Pearson__. En la @sec-correl se discutirá sobre el coeficiente de correlación, por el momento se discutirá sobre el índice *d* de Cohen, que se calcula como la diferencia de las medias de los dos grupos dividida por la desviación de los datos:
+
+$$
+d = \dfrac{\bar{x}_1-\bar{x}_2}{s}
+$$ {#eq-cohen}
+
+donde
+
+$$
+s = \sqrt{\dfrac{\left(n_1-1\right)s^2_1 +\left(n_2-1\right)s^2_2}{n_1+n_2}}
+$$
+Si $d=1$, los dos grupos difieren por una desviación estándar. Si es 2, los dos grupos difieren por 2 desviaciones estándar y así sucesivamente. 
+
+Entre las medias de los grupos, el tamaño del efecto también puede entenderse como la distribución percentil media del grupo 1 frente a la del grupo 2. Para un tamaño del efecto de $0$, la media del grupo 2 está en el percentil 50 del grupo 1. Para un tamaño del efecto de $0.8$, la media del grupo 2 está en el percentil 79 del grupo 1; por lo tanto, alguien del grupo 2 con una puntuación media (es decir, media) tendría una puntuación más alta que el 79% de las personas del grupo 1. Esta información puede verse en la @tbl-effectsize
+
+| Tamaño Relativo | Tamaño del efecto | Percentil |
+|-----------------|-------------------|-----------|
+|                 |                 0 |        50 |
+| Pequeño         |               0.2 |        58 |
+| Mediano         |               0.5 |        69 |
+| Grande          |               0.8 |        79 |
+|                 |               1.4 |        92 |
+
+: Diferencias entre grupos. Tamaño del efecto medido por la *d* de Cohen {#tbl-effectsize}
+
+
+#### Potencia de una prueba
 
 Otro concepto relacionado a las probabilidades de error es la **potencia de una prueba** que es la probabilidad de rechazar $H_0$ cuando esta es falsa. Si la prueba fuera de una cola con hipótesis alternativa $>$, la potencia de la prueba viene dada entonces por el área bajo $H_1$ a la derecha de la línea de decisión. 
 
