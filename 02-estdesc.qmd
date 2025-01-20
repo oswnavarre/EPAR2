@@ -1253,6 +1253,28 @@ b.  Los deciles 2, 4, 5, 7 y 9
 c.  Los quintiles 1 y 4.
 d.  Los percentiles 33, 47, 65 y 89
 
+::: {#exr-terc2}
+El Pepino Africano (*Cucumis metuliferus*) pertenece a la familia Cucurbitácea y tiene potencial comercial y nutricional. A pesar de sus prometedoras cualidades como larga vida útil y beneficios para la salud como propiedades antioxidantes y antidiabéticas, sigue siendo poco cultivado debido a la limitada investigación. En Costa Rica no existía documentación previa de la especie, ni de su uso y por eso, la investigación de Ann Alubiri Khaira y Charles Munga Muiruri tuvo como objetivo establecer la primera accesión de *C. metuliferus* en el país mediante la caracterización fenotípica bajo un sistema de manejo agronómico que proporcione información sobre la diversidad genética del fruto, contribuyendo a futuros trabajos de investigación sobre este cultivo. En la @tbl-ejer1_3_2 se presentan los datos de las alturas de las plantas estudiadas 32 días posteriores al transplante, con estos datos determine:
+:::
+
+|      |      |      |      |      |      |
+|-----:|-----:|-----:|-----:|-----:|-----:|
+|  245 |  214 |  239 |  192 |  215 |  261 |
+|  247 |  212 |  177 |  239 |  255 |  249 |
+|  221 |  194 |  279 |  196 |  204 |  251 |
+|  225 |  245 |  193 |  182 |  239 |  210 |
+|  189 |  241 |  257 |  224 |  217 |  231 |
+: Altura de plantas de pepino africano. {#tbl-ejer1_3_2}
+
+a. La media, mediana y moda
+b. Las medidas de dispersión 
+c. Los 3 cuartiles. 
+d. Los 9 deciles.
+e. Los percentiles 23, 47, 58, 63 y 99.
+f. El valor menor al 67% de los datos.
+g. El valor mayor al 48% de los datos.
+
+
 ::: {#exr-cuarto}
 Para este ejercicio se trabajará con el conjunto de datos *girasoles.csv*. Se recomienda crear un proyecto llamado **Practica01**. Puede revisar la @sec-projectR para revisar los pasos para crear un proyecto. Recuerde que el archivo *girasoles.csv* debe ser guardado en la carpeta *datos* del proyecto.
 :::
