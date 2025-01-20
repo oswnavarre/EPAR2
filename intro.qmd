@@ -26,7 +26,7 @@ R es un lenguaje de programación que tiene más de 30 años de historia, mientr
 
 Escribir código en R ayuda a que el pensamiento estadístico y los procesos de análisis estadístico sean más visibles y reproducibles; es decir que usar R, podría ofrecer una herramienta adicional de representación que permite construir el entendimiento de los conceptos (@tucker_teaching_2022).
 
-Cuando se instala R por defecto vienen incorporados *paquetes* que permiten importar datos, ajustar y evaluar modelos, realizar gráficos. Mas, es posible añadir funcionalidades a R instalando y cargando nuevos *paquetes*, un *paquete* es una colección de funciones de R, datos y código compilado en un formato bien definido, creado para agregar alguna funcionalidad específica (@contributors_packages_2020). En la actualidad existen más de 19000 paquetes (y creciendo) para todo tipo de análisis estadístico, gran parte de los nuevos resultados o metodologías estadísticas publicadas en revistas de investigación generalmente son desarrolladas en paquetes de R lo que hace fácil acceder a las últimas técnicas estadísticas.
+Cuando se instala R por defecto vienen incorporados *paquetes* que permiten importar datos, ajustar y evaluar modelos, realizar gráficos. Mas, es posible añadir funcionalidades a R instalando y cargando nuevos *paquetes*, un *paquete* es una colección de funciones de R, datos y código compilado en un formato bien definido, creado para agregar alguna funcionalidad específica (@contributors_packages_2020). En la actualidad existen más de 20000 paquetes (y creciendo) para todo tipo de análisis estadístico, gran parte de los nuevos resultados o metodologías estadísticas publicadas en revistas de investigación generalmente son desarrolladas en paquetes de R lo que hace fácil acceder a las últimas técnicas estadísticas.
 
 ## RStudio.
 
@@ -109,6 +109,11 @@ Antes de instalar los paquetes vamos a describir brevemente algunos de los paque
 Para instalar paquetes desde la consola o desde un script se debe utilizar la función `ìnstall.packages("nombrepaquete")` así si se quiere instalar el paquete **tidyverse** se escribe en la consola o en un script 
 `ìnstall.packages("tidyverse")`.
 
+Para escribir código en la consola de R, debemos identificar el **prompt** (`>`), este nos indica que R está esperando instrucciones para ser ejecutadas.
+
+![Consola de R y **prompt**](imagenes/consola.png){#fig-consola width="75%"}
+
+
 Un script es un archivo de texto que contiene los mismos comandos que ingresaría en la línea de comandos de R. Una vez abierto RStudio, para crear un script hay dos opciones. La primera es en la barra de herramientas principal escoger `File | New File | R Script`, la segunda opción es escribir la combinación de teclas (en Windows) `Ctrl + Shift + N` o `Cmd + Shift + N` (en Mac).
 
 Cuando el script está creado se puede escribir código como se visualiza a la derecha de la @fig-script. Para ejecutar el código se puede ubicar en cualquier parte de la línea y presionar la combinación de teclas `Ctrl + Enter`o `Cmd + Enter`, otra opción es dar clic en el botón `Run` ubicado en la parte superior derecha del script (encerrada en rectángulo rojo de la @fig-script2). Si solo es una línea de código no es necesario seleccionarla para poder ejecutarla. Al momento de ejecutar el código, el código se ejecuta en la consola (rectángulo azul de la @fig-script2) y además se visualiza el objeto en el ambiente (rectángulo negro de la @fig-script2).
@@ -142,6 +147,7 @@ En el panel de archivos, gráficos, paquetes y ayuda se escoge la pestaña `Pack
 En la consola de R podemos escribir las siguientes expresiones
 
 
+
 `> x <- 6 # Crear la variable x con un valor igual a 6`
 
 `> print(x) # Impresión explicita`
@@ -151,6 +157,10 @@ En la consola de R podemos escribir las siguientes expresiones
 `> x # Auto-impresión`
 
 `[1] 6`
+
+::: callout-important
+El símbolo `<-` recibe el nombre de *operador asignación*.
+:::
 
 ```{webr}
 # Dar enter y comenzar a escribir

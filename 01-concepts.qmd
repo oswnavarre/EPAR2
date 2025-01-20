@@ -12,7 +12,7 @@ library(webexercises)
 
 El término *estadística* tiene su origen en la palabra alemana *statistik* acuñada por el economista aleman Gottfried Achenwall, la palabra tuvo su génesis en el latín *statisticus* que se podría traducir como *relativo al estado*, pues lo que hoy conocemos como estadística estuvo incialmente relacionado con datos relativos a los gobiernos o estados, dichos datos podían provenir de censos, registros de salud, pago de impuestos, etc. En los siglos XVI y XVII hubo un fuerte interés por las probabilidades, más que nada por el deseo de obtener ventaja en juegos de cartas y otras formas de apuesta.
 
-La ciencia estadística como tal evolucionó al punto que hoy encontramos estadísticas y estadística en muchos aspectos de nuestra vida cotidiana. Cuando hablamos de estadística nos referimos a la ciencia (que definiremos formalmente un poco más adelante), mientras que al usar el termino estadísticas nos referimos a datos, o a la presentación de hechos, gráficas o información. Por ejemplo cuando en una hacienda cacaotera se presenta la información relativa a la producción en kilogramos de los híbridos usados en la plantación estamos hablando de estadísticas, mientras que el problema de analizar, y establecer las diferencias en el rendimiento medido en kilogramos por hectárea para diferentes híbridos con el fin de aumentar las ganancias de la finca puede ser resuelto usando estadística.
+La ciencia estadística como tal, evolucionó al punto que hoy encontramos **estadísticas** y **estadística** en muchos aspectos de nuestra vida cotidiana. Cuando hablamos de estadística nos referimos a la ciencia (que definiremos formalmente un poco más adelante), mientras que al usar el termino estadísticas nos referimos a datos, o a la presentación de hechos, gráficas o información. Por ejemplo cuando en una hacienda cacaotera se presenta la información relativa a la producción en kilogramos de los híbridos usados en la plantación estamos hablando de estadísticas, mientras que el trabajo de analizar, y establecer las diferencias en el rendimiento medido en kilogramos por hectárea para diferentes híbridos con el fin de aumentar las ganancias de la finca puede ser resuelto usando estadística.
 
 Una definición clásica de estadística es **ciencia que se encarga de la recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica** (@cleff2013). En @agresti2023, de manera corta definen a la estadística como **el arte y la ciencia de aprender de los datos**.
 
@@ -27,10 +27,11 @@ El proceso estadístico tiene como principal entrada a los datos. Sin embargo, e
 1.  **Identificación y delimitación del problema**: Un problema en investigación debe ser entendido como una pregunta o cuestión sobre un tema o aspecto que no se conoce. Ejemplos de problema en agronomía pueden ser: comparación de producción lechera en vacas sometidas a diferentes dietas, la identificación de características fenotípicas de variedades de banano resistentes a determinada enfermedad, evaluación del rendimiento de un cultivar utilizando biocarbón en diferentes concentaciones, etc. La delimitación implica recortar el tema dentro de los límites de espacio, tiempo y área de estudio que caracteriza al problema. Por ejemplo, en el problema de la comparación de la producción lechera en vacas sometidas a diferentes dietas la delimitación puede incluir aspectos como, la época del año en que se va a recoger la información, las razas de animales a ser incluidas en el estudio, el lugar dónde se llevará a cabo el estudio. Dentro de esta fase se incluye la definición de los objetivos del estudio.
 2.  **Planificación**: Definir bien los objetivos ayuda a realizar una planificación adecuada. A partir de los objetivos se puede identificar los datos que se necesitan, el tipo de datos, la fuente de los datos, la frecuencia de recolección de los datos, la forma de recolección y almacenamiento de los datos y los programas o paquetes estadísticos que serán usados en el análisis.
 3.  **Recolección de datos**: la recolección puede ser realizada de fuentes existentes como bases de datos de organismos como la FAO, ministerios de agricultura, cámaras de productores, etc. O los datos pueden provenir de experimentos diseñados para el propósito específico de cumplir con los objetivos planteados.
-4.  **Revisión de los datos**: una vez que los datos son recogidos, es necesario revisarlos para verificar inconsistencias o problemas potenciales. Por ejemplo, al registrar las longitudes de hojas de cacao de ciertas accesiones es posible que ocurran cosas como valores mal ingresados. En estudios donde los datos son obtenidos de organismos como la FAO es probable que los datos hayan sido ingresados con un formato no apropiado.
-5.  **Tabulación** la tabulación permite dar una primera mirada a los datos y ayuda a obtener información sobre los datos. Esta tabulación puede ser presentada ya sea como tablas o como gráficos, lo que será discutido más adelante.
-6.  **Análisis estadístico**: en este paso se obtienen medidas de tendencia central, dispersión, posición, o asociación. Se hacen pruebas de hipótesis, o se realizan modelos con el fin de contestar las preguntas o cumplir los objetivos del estudio.
-7.  **Inferencia**: Basados en los resultados del análisis estadístico se hacen inferencias acerca de los objetivos del estudio. Aunque los datos provengan de una muestra, utilizando teorías estadísticas se puede llegar a conclusiones sobre la población de la que fueron tomadas las muestras.
+4.  **Revisión de los datos**: una vez que los datos son recogidos, es necesario revisarlos para verificar inconsistencias o problemas potenciales. Por ejemplo, al registrar las longitudes de hojas de cacao de ciertas accesiones es posible que ocurran cosas como valores mal ingresados. En estudios donde los datos son obtenidos de organismos como la FAO es probable que los datos hayan sido ingresados con un formato no apropiado para el paquete estadístico que se va a usar en el análisis.
+5.  **Tabulación** la tabulación permite dar una primera mirada a los datos y ayuda a obtener información sobre los datos. Esta tabulación puede ser presentada ya sea como tablas o como gráficos.
+6.  **Análisis estadístico**: en este paso se obtienen medidas de tendencia central, dispersión, posición, o asociación. 
+7.  **Inferencia**: Basados en los resultados del análisis estadístico se hacen inferencias acerca de los objetivos del estudio. Se hacen pruebas de hipótesis, o se realizan modelos con el fin de contestar las preguntas o cumplir los objetivos del estudio. Aunque los datos provengan de una muestra, utilizando teorías estadísticas, se puede llegar a conclusiones sobre la población de la que fueron tomadas las muestras.
+8. **Comunicación**: Para que los resultados sean conocidos, estos deben ser comunicados. La forma de comunicarlos depende del usuario final. Se pueden comunicar los resultados en artículos científicos, memorias técnicas, cuadros de mando (*dahsboards*), páginas web, folletos. Sin importar la forma que se utilice para comunicar es primordial saber qué se debe comunicar y cómo hacerlo de manera efectiva.
 
 ## Definiciones importantes
 
@@ -57,7 +58,11 @@ En la @fig-popsample se muestra la relación entre algunos conceptos revisados h
 
 ## Tipos de estudio
 
-Supongamos que un investigador desea analizar las tendencias de las exportaciones de maíz durante la última década en Latinoamérica y el Caribe, puede obtener esta información de la página FAOSTAT <https://www.fao.org/faostat/en/#home>. En este caso los datos no son recogidos directamente por el investigador sino que usa una fuente de información secundaria. Ahora supongamos que el mismo investigador quiere conocer la impresión de las medidas tomadas por el gobierno para ayudar a los pequeños productores de maíz, para registrar esto puede realizar una encuesta a una muestra de pequeños productores de maíz. Tanto al tomar datos de una fuente secundaria o al realizar una encuesta el investigador está observando los datos como aparecen y no está interviniendo en el problema que se investiga. Este tipo de estudios recibe el nombre de **observacional**
+Supongamos que un investigador desea analizar las tendencias de las exportaciones de maíz durante la última década en Latinoamérica y el Caribe, puede obtener esta información de la página FAOSTAT <https://www.fao.org/faostat/en/#home>. En este caso los datos no son recogidos directamente por el investigador sino que usa una fuente de información secundaria que le proporciona estos datos históricos, en este caso estamos ante un estudio **retrospectivo**. Ahora supongamos que el mismo investigador quiere conocer la impresión de las medidas tomadas por el gobierno para ayudar a los pequeños productores de maíz, para registrar esto puede realizar una encuesta a una muestra de pequeños productores de maíz. Tanto al tomar datos de una fuente secundaria o al realizar una encuesta el investigador está observando los datos como aparecen y no está interviniendo en el problema que se investiga. Este tipo de estudios recibe el nombre de **observacional**
+
+::: callout-important
+**Estudio retrospectivo** se basa en datos ya existentes.
+:::
 
 ::: callout-important
 **Estudio observacional** se observan los datos como aparecen y no se interviene en el problema o fenómeno investigado. Un estudio observacional puede ser *analítico* o *descriptivo*
@@ -79,10 +84,39 @@ En las variables **altura de las plantas**, **circunferencia del tallo**, **núm
 
 Las variables además presentan **niveles de medición**, estos pueden ser:
 
-1.  Ordinal: toman valores que se ordenan o clasifican de forma lógica, ejemplos de variables con este nivel de medición pueden ser **fila en que se encuentra una planta**, **nivel de aceptación de un producto (muy alto, alto, medio, bajo, muy bajo)**
-2.  Nominal: toman valores que no se ordenan o clasifican de forma lógica, ejemplos de variables con este nivel de medición pueden ser **variedad de semilla de maíz sembrada**, **raza de ganado sometida a una dieta**.
-3.  Intervalo: existe diferencia significativa entre valores pero el cero no representa la ausencia de la característica, es decir que el cero no es significativo, ejemplos de este nivel de medición son **número de cajas de papaya exportadas en una semana**, **calificación obtenida en un examen**.
+1.  Nominal: toman valores que no se ordenan o clasifican de forma lógica, ejemplos de variables con este nivel de medición pueden ser **variedad de semilla de maíz sembrada**, **raza de ganado sometida a una dieta**.
+
+:::{.callout-important title="Características"} 
+- Una variable de escala nominal se clasifica en dos o más categorías. En este mecanismo de medida, la respuesta debe pertenecer a cualquiera de las clases. 
+- Es cualitativa. Los números se utilizan aquí para identificar los objetos. 
+- Los números no definen las características del objeto. El único aspecto admisible de los números en la escala nominal es "contar".
+:::
+
+2.  Ordinal: toman valores que se ordenan o clasifican de forma lógica, ejemplos de variables con este nivel de medición pueden ser **fila en que se encuentra una planta**, **nivel de aceptación de un producto (muy alto, alto, medio, bajo, muy bajo)**
+
+:::{.callout-important title="Características"} 
+- La escala ordinal muestra la clasificación relativa de las variables.
+- Identifica y describe la magnitud de una variable 
+- Junto con la información proporcionada por la escala nominal, las escalas ordinales dan la clasificación de esas variables. 
+:::
+
+3.  Intervalo: existe diferencia significativa entre valores pero el cero no representa la ausencia de la característica, es decir que el cero no es significativo, ejemplos de este nivel de medición son **calificación obtenida en un examen**, **temperatura media en grados Farenheit**.
+
+:::{.callout-important title="Características"} 
+- La escala de intervalo es cuantitativa ya que puede cuantificar la diferencia entre los valores.
+- Permite calcular la media y la mediana de las variables. 
+- Para comprender la diferencia entre las variables, se pueden restar los valores entre las variables.
+- La escala de intervalo ayuda a asignar cualquier valor numérico a una evaluación arbitraria como sentimientos, agrado, percepción sensorial, etc. 
+:::
+
 4.  Razón: el 0 es significativo y la razón entre dos números es significativa, ejemplos de este nivel de medición son **edad**, **altura de una planta**, **circunferencia del tallo de una planta**.
+
+:::{.callout-important title="Características"} 
+- La escala de razón tiene una característica de cero absoluto.
+- No tiene números negativos, debido a su característica de punto cero. 
+- La media, la mediana y la moda pueden calcularse utilizando la escala de razón. 
+- La escala de razón permite conversiones de unidades.
+:::
 
 ```{r fig-clasvars, engine = 'tikz', echo=FALSE, out.width="80%", fig.cap="Clasificación de las variables"}
 #| fig-pos: 'H'
@@ -104,36 +138,39 @@ node[concept] {Cualitativas}
 \end{tikzpicture}
 ```
 
+
+
 ## Ejercicios {.unnumbered}
 
 
 ::: {#exr-first}
-**Clasifique las siguientes variables en cuantitativas o cualitativas**
+**Complete el siguiente cuadro**
+
+::: {.webex-check .webex-box}
+
+| **Variable**                                                  	| **Tipo de Variable**                               	| **Clasificación**                                         	| **Nivel de medición**                                             	|
+|---------------------------------------------------------------	|----------------------------------------------------	|-----------------------------------------------------------	|-------------------------------------------------------------------	|
+| Diámetro del tallo de una planta de banano.                   	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+| Número de pétalos de una flor de girasol.                     	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c( "Continua", answer = "Discreta","No Aplica"))`  	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+| Altura de una planta de tomate.                               	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+| Perímetro toráxico de un bovino                               	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+| Razas de ganado existentes en una finca lechera.              	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c(answer = "Nominal", "Ordinal", "Intervalo", "Razón")) `  	|
+| Variedad de semillas usadas en un cultivo de banano.          	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c(answer = "Nominal", "Ordinal", "Intervalo", "Razón")) `  	|
+| Cantidad de fertilizante utilizado en una plantación.         	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+| Cajas de banano vendidas por semana.                          	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c( "Continua", answer = "Discreta","No Aplica"))`  	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+| Precipitación en milímetros de una región por año.            	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+| Región en la que se siembra cierta variedad de piña.          	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c(answer = "Nominal", "Ordinal", "Intervalo", "Razón")) `  	|
+| Fila en la que se encuentra una planta dentro de una parcela. 	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c( "Nominal", answer = "Ordinal", "Intervalo", "Razón")) ` 	|
+| Temperatura medida en grados Celsius                          	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", answer = "Intervalo", "Razón"))`  	|
+| Temperatura medida en grados Kelvin                           	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+
+:::
 :::
 
-a.  Diámetro del tallo de una planta de banano.
-b.  Número de pétalos de una flor de girasol.
-c.  Altura de una planta de tomate.
-d.  Perímetro toráxico de un bovino
-e.  Razas de ganado existentes en una finca lechera.
-f.  Variedad de semillas usadas en un cultivo de banano.
-g.  Cantidad de fertilizante utilizado en una plantación.
-h.  Cajas de banano vendidas por semana.
-i.  Precipitación en milímetros de una región por año.
-j.  Región en la que se siembra cierta variedad de piña.
-k.  Fila en la que se encuetra una planta dentro de una parcela.
-l.  Temperatura medida en grados Celsius
-m.  Temperatura medida en grados Kelvin
-
-::: {#exr-second}
-**Clasifique las variables cuantitativas del @exr-first como continuas o discretas.**
-:::
-
-::: {#exr-third}
-**Determine el nivel de medición de las variables cuantitativas del @exr-first.**
-:::
 
 ::: {#exr-fourth}
+
+**Seleccione la respuesta correcta**
 
 ::: {.webex-check .webex-box}
 
