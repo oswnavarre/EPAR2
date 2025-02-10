@@ -278,7 +278,7 @@ $$
 
 ![$H_1:\neq$](imagenes/ph2c.png){#fig-ph2c}
 
-### Significancia, efecto del tamaño y potencia de la prueba
+### Significancia, tamaño del efecto y potencia de la prueba
 
 Los investigadores generalmente buscan resultados "significativos", es común encontrar en los artículos académicos, investigaciones y reportes expresiones como "los resultados son significativos", "el coeficiente es significativamente diferente de cero". Es importante entender que la palabra "significativo" se usa en términos estadisticos y no en el sentido de *importante* o *relevante*. Por lo que en el análisis de datos, algo puede ser estadísticamente significativo pero no relevante. 
 
@@ -308,7 +308,7 @@ s = \sqrt{\dfrac{\left(n_1-1\right)s^2_1 +\left(n_2-1\right)s^2_2}{n_1+n_2}}
 $$
 Si $d=1$, los dos grupos difieren por una desviación estándar. Si es 2, los dos grupos difieren por 2 desviaciones estándar y así sucesivamente. 
 
-Entre las medias de los grupos, el tamaño del efecto también puede entenderse como la distribución percentil media del grupo 1 frente a la del grupo 2. Para un tamaño del efecto de $0$, la media del grupo 2 está en el percentil 50 del grupo 1. Para un tamaño del efecto de $0.8$, la media del grupo 2 está en el percentil 79 del grupo 1; por lo tanto, alguien del grupo 2 con una puntuación media (es decir, media) tendría una puntuación más alta que el 79% de las personas del grupo 1. Esta información puede verse en la @tbl-effectsize
+Entre las medias de los grupos, el tamaño del efecto también puede entenderse como la distribución percentil media del grupo 1 frente a la del grupo 2. Para un tamaño del efecto de $0$, la media del grupo 2 está en el percentil 50 del grupo 1. Para un tamaño del efecto de $0.8$, la media del grupo 2 está en el percentil 79 del grupo 1; por lo tanto, alguien del grupo 2 con una puntuación media tendría una puntuación más alta que el 79% de las personas del grupo 1. Esta información puede verse en la @tbl-effectsize
 
 | Tamaño Relativo | Tamaño del efecto | Percentil |
 |-----------------|-------------------|-----------|
@@ -355,3 +355,72 @@ kableExtra::kable(dt, booktabs = T, caption = "Estadísticos de Prueba",format =
 ```
 
 
+## Ejercicios {.unnumbered}
+
+::: {#exr-inf1}
+El proyecto de graduación de Carlos Bardales tuvo como objetivo evaluar la sustitución de harina de pescado en la alimentación de juveniles del langostino _(Macrobrachium rosenbergii)_ mediante el uso de harina de mosca soldado en una dieta a base de ingredientes como maíz molido, harina de soya, harina de trigo, vitaminas, minerales y aglutinantes. El experimento se llevó a cabo en la Universidad EARTH, ubicada en Las Mercedes, Limón, Costa Rica. La investigación constó de dos tratamientos con tres repeticiones. El tratamiento uno consistió en una dieta con harina de pescado en un 25% en comparación con la misma dieta conteniendo 25% de harina de mosca soldado para la alimentación de langostinos. La ganancia de peso fue el principal criterio evaluado durante 8 semanas, realizando muestreos semanales para determinar cuál de las dietas tenía un mejor potencial de ganancia de peso. El objetivo era evaluar si la harina de pescado puede ser sustituida por la harina de mosca soldado como fuente de proteína.
+En la hoja _Langostinos_ del archivo _baseCB.xlsx_ se almacenan los datos de longitud en centímetros y el peso en gramos de los langostinos observados por Carlos Bardales. Las variables presentes en el conjunto de datos son:
+
+- __Tratamiento__: Tratamiento del langostino 
+- __Pecera__: Pecera en la que se encuentra el langostino
+- __Langostino__: Número de langostino dentro de la pecera
+- __Fecha__: Fecha de la medición
+- __Longitud__: Longitud del langostino en centímetros
+- __Peso__: Peso del langostino en gramos
+:::
+
+1. Análisis del peso
+
+  a. Cree un proyecto llamado __PG_CB__. En la carpeta _datos_ guarde el archivo _baseCB.xlsx_. 
+  b. Cree un script y guárdelo con el nombre _analisisCB.R_ en la carpeta que corresponde. 
+  c. Cree un archivo __Quarto__ y guardelo con el nombre _reporte_peso.rmd_. En este archivo escriba las conclusiones de su análisis. Una buena práctica es ir probando los códigos en el script y posteriormente pasar el código y escribir las conclusiones e interpretaciones en el archivo _.qmd_.
+  d. Cargue los paquetes _agricolae_, _tidyverse_, _readxl_, _writexl_ y _jtools_.
+  e. Cargue los datos en una variable llamada _baseCB_.
+  f. Cree una variable llamada _Medición_, para esto debe numerar las diferentes fechas presentes en la columna FECHA. La variable debe tener números enteros del 1 al 9. 
+  g. Carlos Bardales realizó una medición inicial que en el documento de su proyecto fue presentada como medición 0. Modifique la variable _Medición_ para que tenga números enteros del 0 al 8.
+  h. Elimine los datos no disponibles ( _NA_ ).
+  i. Determine la media y desviación del peso de los langostinos por medición y por tratamiento. Almacene la información en una variable llamada _descpeso_. 
+  j. Grafique la evolución de los pesos promedio de los langostinos por tratamiento. Guarde la gráfica en la carpeta _graficos_ con el nombre _evolpeso.png_
+  k. Grafique la evolución de los pesos promedio de los langostinos por tratamiento, incluya ahora una barra que muestre la desviación de los pesos. Guarde la gráfica en la carpeta _graficos_ con el nombre _evolpesoerr.png_
+  l. Realice diagramas de caja de los pesos por tratamiento para las mediciones.Guarde la gráfica en la carpeta _graficos_ con el nombre _boxpesos.png_
+  m. En la medición 1 para los langostinos sometidos al tratamiento 1 ¿el peso promedio es menor a 2.45 g?
+  n. En la medición 2 para los langostinos sometidos al tratamiento 2 ¿el peso promedio es mayor a 2.60 g?
+  o. En la medición 3 para los langostinos sometidos al tratamiento 1 ¿el peso promedio es diferente de 3.00 g?
+  p. En la medición 8 ¿son diferentes los pesos promedios de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2?
+  q. Desde la medición 0 a la medición 9 ¿son diferentes los pesos promedios de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2? Guarde los resultados en una tabla llamada _valoresp_.
+  r. Guarde las tablas _descpeso_ y _valoresp_ en la carpeta resultados con el nombre _estadisticaspesos.xlsx_, las estadísticas descriptivas deben ir en una hoja llamada _descriptivas_ y los valores _p_ en una hoja llamada _pruebat_.
+
+2. Análisis de la longitud
+
+  a. Determine la media y desviación de la longitud de los langostinos por medición y por tratamiento. Almacene la información en una variable llamada _desclong_. 
+  b. Grafique la evolución de la longitud promedio de los langostinos por tratamiento. Guarde la gráfica en la carpeta _graficos_ con el nombre _evollong.png_
+  c. Grafique la evolución de la longitud promedio de los langostinos por tratamiento, incluya ahora una barra que muestre la desviación de la longitud. Guarde la gráfica en la carpeta _graficos_ con el nombre _evollongerr.png_
+  d. Realice diagramas de caja de la longitud por tratamiento para las mediciones.Guarde la gráfica en la carpeta _graficos_ con el nombre _boxlong.png_
+  e. En la medición 1 para los langostinos sometidos al tratamiento 1 ¿la longitud promedio es mayor a 5.00 cm?
+  f. En la medición 2 para los langostinos sometidos al tratamiento 2 ¿la longitud promedio es menor a 5.90 cm?
+  g. En la medición 3 para los langostinos sometidos al tratamiento 1 ¿la longitud promedio es diferente de 6.20 cm?
+  h. En la medición 8 ¿son diferentes las longitudes promedio de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2?
+  i. Desde la medición 0 a la medición 9 ¿son diferentes las longitudes promedio de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2? Guarde los resultados en una tabla llamada _valoresp_long_.
+  j. Guarde las tablas _desclong_ y _valoresp_long_ en la carpeta resultados con el nombre _estadisticaslong.xlsx_, las estadísticas descriptivas deben ir en una hoja llamada _descriptivas_ y los valores _p_ en una hoja llamada _pruebat_.
+
+::: {#exr-inf2}
+El proyecto de Katherine Jiménez se centró en la evaluación del efecto de la hormona GnRH (Hormona Liberadora de Gonadotropina) la cual se adicionó como parte de los protocolos a la hora de la inseminación artificial a tiempo fijo (IATF), además se evaluó su efectividad sobre la fertilidad, la inducción del celo y el porcentaje de preñez. La investigación se divide en tres grupos de estudio: hembras bovinas con ternero al pie, hembras que no tengan ternero y en novillas, las cuales se encuentran en un sistema de pastoreo. Este trabajo se realizó en el trópico húmedo dentro de la Universidad EARTH, Las Mercedes, Limón, Costa Rica. Los animales se separaron en dos grupos, $T_0$ fue el grupo control sin hormona ($n=33$) $T_1$ fue el grupo con hormona ($n=32$). Esta evaluación tuvo una duración de tres meses, tomando como día 0 el momento de comenzar el protocolo IATF, del cual se realizaron dos ultrasonidos uno al inicio antes de protocolar las vacas para evaluar la ciclicidad y conformación ovárica y otro a los 35 días de realizada la inseminación para la evaluación de la preñez de estas. Los resultados de este estudio revelan diferencias significativas en la fertilidad entre los grupos analizados del total de las hembras en estudio, las vacas con ternero al pie mostraron una respuesta reproductiva diferente en comparación con las vacas sin ternero y las novillas, esto sugiere que la presencia de un ternero al pie puede afectar el ciclo reproductivo de las vacas en el trópico húmedo. Con el uso del análogo de la hormona GnRH se demostró como una herramienta útil para mejorar la eficiencia reproductiva de todas las categorías de ganado estudiadas, cabe recalcar la importancia de adaptar las prácticas de manejo al entorno tropical, teniendo en cuenta factores como la nutrición y el estrés calórico, que pueden influir en la fertilidad.
+
+En la hoja _reglog_ del archivo _DATOS_PG_KJ.xlsx_ se almacenan los datos del proyecto de graduación de Katherine:
+
+- Animal: Número del animal
+- Grupo: Grupo al que pertenece el animal
+- Tratamiento: Tratamiento que recibió el animal
+- CC0: Condición corporal inicial
+- CELO: Variable que indica si el animal entró en celo
+- CCF : Condición corporal final.
+- Diagnóstico : Variable codificada como 1 si hubo preñez y 0 si no.
+:::
+
+a. Crear un proyecto llamado _PG_KJ_, en la carpeta _datos_ guarde el archivo _DATOS_PG_KJ.xlsx_.
+b. Crear un archivo de _Quarto_ llamado _informeKJ.qmd_.
+c. La variable _Diagnóstico_ se encuentra codificada con 0 y 1, recodifique la variable con No y Sí respectivamente. 
+d. Realice tablas y gráficos adecuados para mostrar el diagnóstico de acuerdo al tratamiento.
+e. Respecto a las vacas que no recibieron la hormona ¿la proporción con preñez es mayor al 50%?
+f. Respecto a las vacas que recibieron la hormona ¿la proporción con preñez es menor al 50%?
+g. ¿La proporción de vacas con preñez es diferente en las vacas que recibieron la hormona respecto de las que no la recibieron? 

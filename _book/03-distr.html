@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.39">
+<meta name="generator" content="quarto-1.6.33">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -57,10 +57,10 @@ div.csl-indent {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-e26003cea8cd680ca0c55a263523d882.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7da2cd4d758cc02249fc92bd4cce19a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d73653994dd526710df0dfad0324c61c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -376,7 +376,7 @@ Propiedades de la Probabilidad
 <p>El número de sellos recibe el nombre de <strong>variable aleatoria</strong>, las variables aleatorias pueden ser representadas con letras mayúsculas <span class="citation" data-cites="uboe2017">(<a href="references.html#ref-uboe2017" role="doc-biblioref">Uboe, 2017</a>)</span>. Definamos a <span class="math inline">\(X\)</span> como la variable aleatoria <strong>número de sellos</strong>. Además nos interesará la probabilidad <span class="math inline">\(P\)</span> de cada valor posible de <span class="math inline">\(X\)</span>. En este caso los valores posibles de <span class="math inline">\(X\)</span> son <span class="math inline">\(0\)</span>, <span class="math inline">\(1\)</span>, <span class="math inline">\(2\)</span> y <span class="math inline">\(3\)</span>.</p>
 <p>La probabilidad se la calcula de forma fácil como el número de resultados favorables sobre el número de resultados posibles. Por ejemplo si queremos obtener en este caso <span class="math inline">\(P\left(X =2 \right)\)</span>, el número de resultados favorables es <span class="math inline">\(3\)</span> porque en tres oportunidades se pueden obtener 2 sellos, mientras que el número de resultados posibles es 8, en términos matemáticos <span class="math inline">\(P\left(X=2\right)= \frac{3}{8}\)</span>.</p>
 <p>Formalmente podemos definir a una <strong>variable aleatoria</strong> como una regla o función que asigna un número a cada resultado de un experimento. Existen dos tipos de variables aleatorias las <strong>discretas</strong> y las <strong>continuas</strong>, las primeras se usan cuando los valores que puede tomar la variable son contables y las continuas se utilizan cuando los valores posibles de la variable son incontables.</p>
-<p>Un ejemplo de variable aleatoria continua puede ser el tiempo de llenado de un silo. Puede ocurrir que el silo sea de una dimensión mínima y le tome al menos 30 minutos mientras que otro silo de mayor dimensión tome máximo 5 horas en ser llenado. Sea <span class="math inline">\(X= \text{tiempo en minutos para llenar un silo}\)</span> con el valor mínimo 30 y el máximo de 300. Si intentamos contar el número posible de valores que puede tomar <span class="math inline">\(X\)</span>, empezamos por el valor mínimo que es <span class="math inline">\(30\)</span> y luego buscamos el valor que sigue de <span class="math inline">\(30\)</span> ¿cuál es el valor que sigue de 30 en este caso? ¿31? ¿30.5? ¿30.05? ¿30.005? no podemos determinar el siguiente valor porque entre <span class="math inline">\(30\)</span> y <span class="math inline">\(30.005\)</span> por ejemplo existe una cantidad infinita de valores. Por lo tanto no podemos contar el número de valores posibles de <span class="math inline">\(X\)</span>, y <span class="math inline">\(X\)</span> es continua.</p>
+<p>Un ejemplo de variable aleatoria continua puede ser el tiempo de llenado de un silo. Puede ocurrir que el silo sea de una dimensión mínima y le tome al menos 30 minutos mientras que otro silo de mayor dimensión tome máximo 5 horas en ser llenado. Sea <span class="math inline">\(X= \text{tiempo en minutos para llenar un silo}\)</span> con el valor mínimo 30 y el máximo de 300. Si intentamos contar el número posible de valores que puede tomar <span class="math inline">\(X\)</span>, empezamos por el valor mínimo que es <span class="math inline">\(30\)</span> y luego buscamos el valor que sigue de <span class="math inline">\(30\)</span> ¿cuál es el valor que sigue de 30 en este caso? ¿31? ¿30.5? ¿30.05? ¿30.005? no podemos determinar el siguiente valor porque entre <span class="math inline">\(30\)</span> y <span class="math inline">\(30.005\)</span> por ejemplo, existe una cantidad infinita de valores. Por lo tanto no podemos contar el número de valores posibles de <span class="math inline">\(X\)</span>, y <span class="math inline">\(X\)</span> es continua.</p>
 <p>Una <em>distribución de probabilidad</em> es una tabla, fórmula o gráfico que describe los valores de una variable aleatoria y la probabilidad asociada a estos valores.</p>
 </section>
 <section id="funciones-de-densidad-de-probabilidad" class="level3" data-number="4.3.2">
@@ -1103,6 +1103,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   });
   clipboard.on('success', onCopySuccess);
   if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
     const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
       text: getTextToCopy,
       container: window.document.getElementById('quarto-embedded-source-code-modal')
@@ -1213,6 +1215,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       if (window.Quarto?.typesetMath) {
         window.Quarto.typesetMath(note);
       }
+      // TODO in 1.5, we should make sure this works without a callout special case
       if (note.classList.contains("callout")) {
         return note.outerHTML;
       } else {

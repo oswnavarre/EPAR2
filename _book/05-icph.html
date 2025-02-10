@@ -40,7 +40,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-html/quarto-syntax-highlighting-07ba0ad10f5680c660e360ac31d2f3b6.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-dc4b886a835b0855f28e1bcd33685bbf.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-d73653994dd526710df0dfad0324c61c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -103,6 +103,7 @@ window.Quarto = {
 };
 </script>
 
+<link rel="stylesheet" href="include/webex.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -205,24 +206,38 @@ window.Quarto = {
 <div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
+        <nav id="TOC" role="doc-toc" class="toc-active" data-toc-expanded="-1">
     <h2 id="toc-title">Indice de contenidos</h2>
    
   <ul>
   <li><a href="#sec-ic" id="toc-sec-ic" class="nav-link active" data-scroll-target="#sec-ic"><span class="header-section-number">6.1</span> Intervalos de Confianza</a>
-  <ul class="collapse">
+  <ul>
   <li><a href="#interpretación-de-un-intervalo-de-confianza" id="toc-interpretación-de-un-intervalo-de-confianza" class="nav-link" data-scroll-target="#interpretación-de-un-intervalo-de-confianza"><span class="header-section-number">6.1.1</span> Interpretación de un intervalo de confianza</a></li>
-  <li><a href="#sec-icmu" id="toc-sec-icmu" class="nav-link" data-scroll-target="#sec-icmu"><span class="header-section-number">6.1.2</span> Intervalo de Confianza para la media <span class="math inline">\(\mu\)</span></a></li>
+  <li><a href="#sec-icmu" id="toc-sec-icmu" class="nav-link" data-scroll-target="#sec-icmu"><span class="header-section-number">6.1.2</span> Intervalo de Confianza para la media <span class="math inline">\(\mu\)</span></a>
+  <ul class="collapse">
+  <li><a href="#sec-jt" id="toc-sec-jt" class="nav-link" data-scroll-target="#sec-jt"><span class="header-section-number">6.1.2.1</span> Intervalo de confianza para <span class="math inline">\(\mu\)</span> cuando se conoce <span class="math inline">\(\sigma\)</span></a></li>
+  <li><a href="#sec-icsd" id="toc-sec-icsd" class="nav-link" data-scroll-target="#sec-icsd"><span class="header-section-number">6.1.2.2</span> Intervalo de confianza para <span class="math inline">\(\mu\)</span> cuando no se conoce <span class="math inline">\(\sigma\)</span></a></li>
+  </ul></li>
   <li><a href="#intervalo-de-confianza-para-la-proporción" id="toc-intervalo-de-confianza-para-la-proporción" class="nav-link" data-scroll-target="#intervalo-de-confianza-para-la-proporción"><span class="header-section-number">6.1.3</span> Intervalo de Confianza para la proporción</a></li>
-  <li><a href="#intervalo-de-confianza-para-la-diferencia-de-medias" id="toc-intervalo-de-confianza-para-la-diferencia-de-medias" class="nav-link" data-scroll-target="#intervalo-de-confianza-para-la-diferencia-de-medias"><span class="header-section-number">6.1.4</span> Intervalo de Confianza para la diferencia de medias</a></li>
+  <li><a href="#intervalo-de-confianza-para-la-diferencia-de-medias" id="toc-intervalo-de-confianza-para-la-diferencia-de-medias" class="nav-link" data-scroll-target="#intervalo-de-confianza-para-la-diferencia-de-medias"><span class="header-section-number">6.1.4</span> Intervalo de Confianza para la diferencia de medias</a>
+  <ul class="collapse">
+  <li><a href="#desviaciones-conocidas" id="toc-desviaciones-conocidas" class="nav-link" data-scroll-target="#desviaciones-conocidas"><span class="header-section-number">6.1.4.1</span> Desviaciones conocidas</a></li>
+  <li><a href="#desviaciones-desconocidas-e-iguales" id="toc-desviaciones-desconocidas-e-iguales" class="nav-link" data-scroll-target="#desviaciones-desconocidas-e-iguales"><span class="header-section-number">6.1.4.2</span> Desviaciones desconocidas e iguales</a></li>
+  <li><a href="#desviaciones-desconocidas-y-diferentes" id="toc-desviaciones-desconocidas-y-diferentes" class="nav-link" data-scroll-target="#desviaciones-desconocidas-y-diferentes"><span class="header-section-number">6.1.4.3</span> Desviaciones desconocidas y diferentes</a></li>
+  </ul></li>
   <li><a href="#intervalo-de-confianza-para-la-diferencia-de-proporciones" id="toc-intervalo-de-confianza-para-la-diferencia-de-proporciones" class="nav-link" data-scroll-target="#intervalo-de-confianza-para-la-diferencia-de-proporciones"><span class="header-section-number">6.1.5</span> Intervalo de Confianza para la diferencia de proporciones</a></li>
   </ul></li>
   <li><a href="#sec-ph" id="toc-sec-ph" class="nav-link" data-scroll-target="#sec-ph"><span class="header-section-number">6.2</span> Pruebas de hipótesis</a>
+  <ul>
+  <li><a href="#significancia-tamaño-del-efecto-y-potencia-de-la-prueba" id="toc-significancia-tamaño-del-efecto-y-potencia-de-la-prueba" class="nav-link" data-scroll-target="#significancia-tamaño-del-efecto-y-potencia-de-la-prueba"><span class="header-section-number">6.2.1</span> Significancia, tamaño del efecto y potencia de la prueba</a>
   <ul class="collapse">
-  <li><a href="#significancia-efecto-del-tamaño-y-potencia-de-la-prueba" id="toc-significancia-efecto-del-tamaño-y-potencia-de-la-prueba" class="nav-link" data-scroll-target="#significancia-efecto-del-tamaño-y-potencia-de-la-prueba"><span class="header-section-number">6.2.1</span> Significancia, efecto del tamaño y potencia de la prueba</a></li>
+  <li><a href="#tamaño-del-efecto" id="toc-tamaño-del-efecto" class="nav-link" data-scroll-target="#tamaño-del-efecto"><span class="header-section-number">6.2.1.1</span> Tamaño del efecto</a></li>
+  <li><a href="#potencia-de-una-prueba" id="toc-potencia-de-una-prueba" class="nav-link" data-scroll-target="#potencia-de-una-prueba"><span class="header-section-number">6.2.1.2</span> Potencia de una prueba</a></li>
+  </ul></li>
   <li><a href="#sec-pvalor" id="toc-sec-pvalor" class="nav-link" data-scroll-target="#sec-pvalor"><span class="header-section-number">6.2.2</span> El valor <span class="math inline">\(p\)</span></a></li>
   <li><a href="#estadísticos-de-prueba" id="toc-estadísticos-de-prueba" class="nav-link" data-scroll-target="#estadísticos-de-prueba"><span class="header-section-number">6.2.3</span> Estadísticos de Prueba</a></li>
   </ul></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
   </ul>
 </nav>
     </div>
@@ -397,23 +412,23 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
 </figcaption>
 <div aria-describedby="tbl-err-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="cell-output-display">
-<div id="kiftiiigpg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#kiftiiigpg table {
+<div id="qycnlpygdq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#qycnlpygdq table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#kiftiiigpg thead, #kiftiiigpg tbody, #kiftiiigpg tfoot, #kiftiiigpg tr, #kiftiiigpg td, #kiftiiigpg th {
+#qycnlpygdq thead, #qycnlpygdq tbody, #qycnlpygdq tfoot, #qycnlpygdq tr, #qycnlpygdq td, #qycnlpygdq th {
   border-style: none;
 }
 
-#kiftiiigpg p {
+#qycnlpygdq p {
   margin: 0;
   padding: 0;
 }
 
-#kiftiiigpg .gt_table {
+#qycnlpygdq .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -439,12 +454,12 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-left-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_caption {
+#qycnlpygdq .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#kiftiiigpg .gt_title {
+#qycnlpygdq .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -456,7 +471,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-bottom-width: 0;
 }
 
-#kiftiiigpg .gt_subtitle {
+#qycnlpygdq .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -468,7 +483,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-top-width: 0;
 }
 
-#kiftiiigpg .gt_heading {
+#qycnlpygdq .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -480,13 +495,13 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-right-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_bottom_border {
+#qycnlpygdq .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_col_headings {
+#qycnlpygdq .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -501,7 +516,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-right-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_col_heading {
+#qycnlpygdq .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -521,7 +536,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   overflow-x: hidden;
 }
 
-#kiftiiigpg .gt_column_spanner_outer {
+#qycnlpygdq .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -533,15 +548,15 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 4px;
 }
 
-#kiftiiigpg .gt_column_spanner_outer:first-child {
+#qycnlpygdq .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#kiftiiigpg .gt_column_spanner_outer:last-child {
+#qycnlpygdq .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#kiftiiigpg .gt_column_spanner {
+#qycnlpygdq .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -553,11 +568,11 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   width: 100%;
 }
 
-#kiftiiigpg .gt_spanner_row {
+#qycnlpygdq .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#kiftiiigpg .gt_group_heading {
+#qycnlpygdq .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -583,7 +598,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   text-align: left;
 }
 
-#kiftiiigpg .gt_empty_group_heading {
+#qycnlpygdq .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -598,15 +613,15 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   vertical-align: middle;
 }
 
-#kiftiiigpg .gt_from_md > :first-child {
+#qycnlpygdq .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#kiftiiigpg .gt_from_md > :last-child {
+#qycnlpygdq .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#kiftiiigpg .gt_row {
+#qycnlpygdq .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -625,7 +640,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   overflow-x: hidden;
 }
 
-#kiftiiigpg .gt_stub {
+#qycnlpygdq .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -638,7 +653,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#kiftiiigpg .gt_stub_row_group {
+#qycnlpygdq .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -652,15 +667,15 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   vertical-align: top;
 }
 
-#kiftiiigpg .gt_row_group_first td {
+#qycnlpygdq .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#kiftiiigpg .gt_row_group_first th {
+#qycnlpygdq .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#kiftiiigpg .gt_summary_row {
+#qycnlpygdq .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -670,16 +685,16 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#kiftiiigpg .gt_first_summary_row {
+#qycnlpygdq .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_first_summary_row.thick {
+#qycnlpygdq .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#kiftiiigpg .gt_last_summary_row {
+#qycnlpygdq .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -689,7 +704,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-bottom-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_grand_summary_row {
+#qycnlpygdq .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -699,7 +714,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#kiftiiigpg .gt_first_grand_summary_row {
+#qycnlpygdq .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -709,7 +724,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-top-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_last_grand_summary_row_top {
+#qycnlpygdq .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -719,11 +734,11 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-bottom-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_striped {
+#qycnlpygdq .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#kiftiiigpg .gt_table_body {
+#qycnlpygdq .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -732,7 +747,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-bottom-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_footnotes {
+#qycnlpygdq .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -746,7 +761,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-right-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_footnote {
+#qycnlpygdq .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -755,7 +770,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#kiftiiigpg .gt_sourcenotes {
+#qycnlpygdq .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -769,7 +784,7 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   border-right-color: #D3D3D3;
 }
 
-#kiftiiigpg .gt_sourcenote {
+#qycnlpygdq .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -777,72 +792,72 @@ Tabla&nbsp;6.1: Errores en las pruebas de hipótesis
   padding-right: 5px;
 }
 
-#kiftiiigpg .gt_left {
+#qycnlpygdq .gt_left {
   text-align: left;
 }
 
-#kiftiiigpg .gt_center {
+#qycnlpygdq .gt_center {
   text-align: center;
 }
 
-#kiftiiigpg .gt_right {
+#qycnlpygdq .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#kiftiiigpg .gt_font_normal {
+#qycnlpygdq .gt_font_normal {
   font-weight: normal;
 }
 
-#kiftiiigpg .gt_font_bold {
+#qycnlpygdq .gt_font_bold {
   font-weight: bold;
 }
 
-#kiftiiigpg .gt_font_italic {
+#qycnlpygdq .gt_font_italic {
   font-style: italic;
 }
 
-#kiftiiigpg .gt_super {
+#qycnlpygdq .gt_super {
   font-size: 65%;
 }
 
-#kiftiiigpg .gt_footnote_marks {
+#qycnlpygdq .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#kiftiiigpg .gt_asterisk {
+#qycnlpygdq .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#kiftiiigpg .gt_indent_1 {
+#qycnlpygdq .gt_indent_1 {
   text-indent: 5px;
 }
 
-#kiftiiigpg .gt_indent_2 {
+#qycnlpygdq .gt_indent_2 {
   text-indent: 10px;
 }
 
-#kiftiiigpg .gt_indent_3 {
+#qycnlpygdq .gt_indent_3 {
   text-indent: 15px;
 }
 
-#kiftiiigpg .gt_indent_4 {
+#qycnlpygdq .gt_indent_4 {
   text-indent: 20px;
 }
 
-#kiftiiigpg .gt_indent_5 {
+#qycnlpygdq .gt_indent_5 {
   text-indent: 25px;
 }
 
-#kiftiiigpg .katex-display {
+#qycnlpygdq .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#kiftiiigpg div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#qycnlpygdq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1004,8 +1019,8 @@ Figura&nbsp;6.6: <span class="math inline">\(H_1:\neq\)</span>
 </figcaption>
 </figure>
 </div>
-<section id="significancia-efecto-del-tamaño-y-potencia-de-la-prueba" class="level3" data-number="6.2.1">
-<h3 data-number="6.2.1" class="anchored" data-anchor-id="significancia-efecto-del-tamaño-y-potencia-de-la-prueba"><span class="header-section-number">6.2.1</span> Significancia, efecto del tamaño y potencia de la prueba</h3>
+<section id="significancia-tamaño-del-efecto-y-potencia-de-la-prueba" class="level3" data-number="6.2.1">
+<h3 data-number="6.2.1" class="anchored" data-anchor-id="significancia-tamaño-del-efecto-y-potencia-de-la-prueba"><span class="header-section-number">6.2.1</span> Significancia, tamaño del efecto y potencia de la prueba</h3>
 <p>Los investigadores generalmente buscan resultados “significativos”, es común encontrar en los artículos académicos, investigaciones y reportes expresiones como “los resultados son significativos”, “el coeficiente es significativamente diferente de cero”. Es importante entender que la palabra “significativo” se usa en términos estadisticos y no en el sentido de <em>importante</em> o <em>relevante</em>. Por lo que en el análisis de datos, algo puede ser estadísticamente significativo pero no relevante.</p>
 <p>Supongamos que en el ejemplo desarrollado en la sección anterior tenemos una media muestral de 19.6 y que ese valor nos lleva a rechazar la hipótesis nula. Para nosotros esa diferencia puede no ser relevante, mas esa diferencia es significativa en el sentido estadístico. No solo deberíamos interpretar los resultados estadísticos solamente en términos de la significancia sino también considerar el tamaño de la diferencia esto es conocido como el <strong>tamaño del efecto</strong> y preguntarse si es importante o no.</p>
 <section id="tamaño-del-efecto" class="level4" data-number="6.2.1.1">
@@ -1038,7 +1053,7 @@ d = \dfrac{\bar{x}_1-\bar{x}_2}{s}
 <p><span class="math display">\[
 s = \sqrt{\dfrac{\left(n_1-1\right)s^2_1 +\left(n_2-1\right)s^2_2}{n_1+n_2}}
 \]</span> Si <span class="math inline">\(d=1\)</span>, los dos grupos difieren por una desviación estándar. Si es 2, los dos grupos difieren por 2 desviaciones estándar y así sucesivamente.</p>
-<p>Entre las medias de los grupos, el tamaño del efecto también puede entenderse como la distribución percentil media del grupo 1 frente a la del grupo 2. Para un tamaño del efecto de <span class="math inline">\(0\)</span>, la media del grupo 2 está en el percentil 50 del grupo 1. Para un tamaño del efecto de <span class="math inline">\(0.8\)</span>, la media del grupo 2 está en el percentil 79 del grupo 1; por lo tanto, alguien del grupo 2 con una puntuación media (es decir, media) tendría una puntuación más alta que el 79% de las personas del grupo 1. Esta información puede verse en la <a href="#tbl-effectsize" class="quarto-xref">Tabla&nbsp;<span>6.2</span></a></p>
+<p>Entre las medias de los grupos, el tamaño del efecto también puede entenderse como la distribución percentil media del grupo 1 frente a la del grupo 2. Para un tamaño del efecto de <span class="math inline">\(0\)</span>, la media del grupo 2 está en el percentil 50 del grupo 1. Para un tamaño del efecto de <span class="math inline">\(0.8\)</span>, la media del grupo 2 está en el percentil 79 del grupo 1; por lo tanto, alguien del grupo 2 con una puntuación media tendría una puntuación más alta que el 79% de las personas del grupo 1. Esta información puede verse en la <a href="#tbl-effectsize" class="quarto-xref">Tabla&nbsp;<span>6.2</span></a></p>
 <div id="tbl-effectsize" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-effectsize-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1178,6 +1193,73 @@ Figura&nbsp;6.7: Potencia de una prueba
 </table>
 </div>
 </div>
+</section>
+</section>
+<section id="ejercicios" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ejercicios">Ejercicios</h2>
+<div id="exr-inf1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 6.1</strong></span> El proyecto de graduación de Carlos Bardales tuvo como objetivo evaluar la sustitución de harina de pescado en la alimentación de juveniles del langostino <em>(Macrobrachium rosenbergii)</em> mediante el uso de harina de mosca soldado en una dieta a base de ingredientes como maíz molido, harina de soya, harina de trigo, vitaminas, minerales y aglutinantes. El experimento se llevó a cabo en la Universidad EARTH, ubicada en Las Mercedes, Limón, Costa Rica. La investigación constó de dos tratamientos con tres repeticiones. El tratamiento uno consistió en una dieta con harina de pescado en un 25% en comparación con la misma dieta conteniendo 25% de harina de mosca soldado para la alimentación de langostinos. La ganancia de peso fue el principal criterio evaluado durante 8 semanas, realizando muestreos semanales para determinar cuál de las dietas tenía un mejor potencial de ganancia de peso. El objetivo era evaluar si la harina de pescado puede ser sustituida por la harina de mosca soldado como fuente de proteína. En la hoja <em>Langostinos</em> del archivo <em>baseCB.xlsx</em> se almacenan los datos de longitud en centímetros y el peso en gramos de los langostinos observados por Carlos Bardales. Las variables presentes en el conjunto de datos son:</p>
+<ul>
+<li><strong>Tratamiento</strong>: Tratamiento del langostino</li>
+<li><strong>Pecera</strong>: Pecera en la que se encuentra el langostino</li>
+<li><strong>Langostino</strong>: Número de langostino dentro de la pecera</li>
+<li><strong>Fecha</strong>: Fecha de la medición</li>
+<li><strong>Longitud</strong>: Longitud del langostino en centímetros</li>
+<li><strong>Peso</strong>: Peso del langostino en gramos</li>
+</ul>
+</div>
+<ol type="1">
+<li>Análisis del peso</li>
+</ol>
+<ol type="a">
+<li>Cree un proyecto llamado <strong>PG_CB</strong>. En la carpeta <em>datos</em> guarde el archivo <em>baseCB.xlsx</em>.</li>
+<li>Cree un script y guárdelo con el nombre <em>analisisCB.R</em> en la carpeta que corresponde.</li>
+<li>Cree un archivo <strong>Quarto</strong> y guardelo con el nombre <em>reporte_peso.rmd</em>. En este archivo escriba las conclusiones de su análisis. Una buena práctica es ir probando los códigos en el script y posteriormente pasar el código y escribir las conclusiones e interpretaciones en el archivo <em>.qmd</em>.</li>
+<li>Cargue los paquetes <em>agricolae</em>, <em>tidyverse</em>, <em>readxl</em>, <em>writexl</em> y <em>jtools</em>.</li>
+<li>Cargue los datos en una variable llamada <em>baseCB</em>.</li>
+<li>Cree una variable llamada <em>Medición</em>, para esto debe numerar las diferentes fechas presentes en la columna FECHA. La variable debe tener números enteros del 1 al 9.</li>
+<li>Carlos Bardales realizó una medición inicial que en el documento de su proyecto fue presentada como medición 0. Modifique la variable <em>Medición</em> para que tenga números enteros del 0 al 8.</li>
+<li>Elimine los datos no disponibles ( <em>NA</em> ).</li>
+<li>Determine la media y desviación del peso de los langostinos por medición y por tratamiento. Almacene la información en una variable llamada <em>descpeso</em>.</li>
+<li>Grafique la evolución de los pesos promedio de los langostinos por tratamiento. Guarde la gráfica en la carpeta <em>graficos</em> con el nombre <em>evolpeso.png</em></li>
+<li>Grafique la evolución de los pesos promedio de los langostinos por tratamiento, incluya ahora una barra que muestre la desviación de los pesos. Guarde la gráfica en la carpeta <em>graficos</em> con el nombre <em>evolpesoerr.png</em></li>
+<li>Realice diagramas de caja de los pesos por tratamiento para las mediciones.Guarde la gráfica en la carpeta <em>graficos</em> con el nombre <em>boxpesos.png</em></li>
+<li>En la medición 1 para los langostinos sometidos al tratamiento 1 ¿el peso promedio es menor a 2.45 g?</li>
+<li>En la medición 2 para los langostinos sometidos al tratamiento 2 ¿el peso promedio es mayor a 2.60 g?</li>
+<li>En la medición 3 para los langostinos sometidos al tratamiento 1 ¿el peso promedio es diferente de 3.00 g?</li>
+<li>En la medición 8 ¿son diferentes los pesos promedios de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2?</li>
+<li>Desde la medición 0 a la medición 9 ¿son diferentes los pesos promedios de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2? Guarde los resultados en una tabla llamada <em>valoresp</em>.</li>
+<li>Guarde las tablas <em>descpeso</em> y <em>valoresp</em> en la carpeta resultados con el nombre <em>estadisticaspesos.xlsx</em>, las estadísticas descriptivas deben ir en una hoja llamada <em>descriptivas</em> y los valores <em>p</em> en una hoja llamada <em>pruebat</em>.</li>
+</ol>
+<ol start="2" type="1">
+<li>Análisis de la longitud</li>
+</ol>
+<ol type="a">
+<li>Determine la media y desviación de la longitud de los langostinos por medición y por tratamiento. Almacene la información en una variable llamada <em>desclong</em>.</li>
+<li>Grafique la evolución de la longitud promedio de los langostinos por tratamiento. Guarde la gráfica en la carpeta <em>graficos</em> con el nombre <em>evollong.png</em></li>
+<li>Grafique la evolución de la longitud promedio de los langostinos por tratamiento, incluya ahora una barra que muestre la desviación de la longitud. Guarde la gráfica en la carpeta <em>graficos</em> con el nombre <em>evollongerr.png</em></li>
+<li>Realice diagramas de caja de la longitud por tratamiento para las mediciones.Guarde la gráfica en la carpeta <em>graficos</em> con el nombre <em>boxlong.png</em></li>
+<li>En la medición 1 para los langostinos sometidos al tratamiento 1 ¿la longitud promedio es mayor a 5.00 cm?</li>
+<li>En la medición 2 para los langostinos sometidos al tratamiento 2 ¿la longitud promedio es menor a 5.90 cm?</li>
+<li>En la medición 3 para los langostinos sometidos al tratamiento 1 ¿la longitud promedio es diferente de 6.20 cm?</li>
+<li>En la medición 8 ¿son diferentes las longitudes promedio de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2?</li>
+<li>Desde la medición 0 a la medición 9 ¿son diferentes las longitudes promedio de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2? Guarde los resultados en una tabla llamada <em>valoresp_long</em>.</li>
+<li>Guarde las tablas <em>desclong</em> y <em>valoresp_long</em> en la carpeta resultados con el nombre <em>estadisticaslong.xlsx</em>, las estadísticas descriptivas deben ir en una hoja llamada <em>descriptivas</em> y los valores <em>p</em> en una hoja llamada <em>pruebat</em>.</li>
+</ol>
+<div id="exr-inf2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 6.2</strong></span> El proyecto de Katherine Jiménez se centró en la evaluación del efecto de la hormona GnRH (Hormona Liberadora de Gonadotropina) la cual se adicionó como parte de los protocolos a la hora de la inseminación artificial a tiempo fijo (IATF), además se evaluó su efectividad sobre la fertilidad, la inducción del celo y el porcentaje de preñez. La investigación se divide en tres grupos de estudio: hembras bovinas con ternero al pie, hembras que no tengan ternero y en novillas, las cuales se encuentran en un sistema de pastoreo. Este trabajo se realizó en el trópico húmedo dentro de la Universidad EARTH, Las Mercedes, Limón, Costa Rica. Los animales se separaron en dos grupos, <span class="math inline">\(T_0\)</span> fue el grupo control sin hormona (<span class="math inline">\(n=33\)</span>) <span class="math inline">\(T_1\)</span> fue el grupo con hormona (<span class="math inline">\(n=32\)</span>). Esta evaluación tuvo una duración de tres meses, tomando como día 0 el momento de comenzar el protocolo IATF, del cual se realizaron dos ultrasonidos uno al inicio antes de protocolar las vacas para evaluar la ciclicidad y conformación ovárica y otro a los 35 días de realizada la inseminación para la evaluación de la preñez de estas. Los resultados de este estudio revelan diferencias significativas en la fertilidad entre los grupos analizados del total de las hembras en estudio, las vacas con ternero al pie mostraron una respuesta reproductiva diferente en comparación con las vacas sin ternero y las novillas, esto sugiere que la presencia de un ternero al pie puede afectar el ciclo reproductivo de las vacas en el trópico húmedo. Con el uso del análogo de la hormona GnRH se demostró como una herramienta útil para mejorar la eficiencia reproductiva de todas las categorías de ganado estudiadas, cabe recalcar la importancia de adaptar las prácticas de manejo al entorno tropical, teniendo en cuenta factores como la nutrición y el estrés calórico, que pueden influir en la fertilidad.</p>
+<p>En la hoja <em>reglog</em> del archivo <em>DATOS_PG_KJ.xlsx</em> se almacenan los datos del proyecto de graduación de Katherine:</p>
+<ul>
+<li>Animal: Número del animal</li>
+<li>Grupo: Grupo al que pertenece el animal</li>
+<li>Tratamiento: Tratamiento que recibió el animal</li>
+<li>CC0: Condición corporal inicial</li>
+<li>CELO: Variable que indica si el animal entró en celo</li>
+<li>CCF : Condición corporal final.</li>
+<li>Diagnóstico : Variable codificada como 1 si hubo preñez y 0 si no.</li>
+</ul>
+</div>
+
 
 
 <script type="ojs-module-contents">
@@ -1195,9 +1277,420 @@ eyJjb250ZW50cyI6W119
 W10=
 </script>
 </section>
-</section>
 
 </main> <!-- /main -->
+<script>
+
+
+
+/* update total correct if #webex-total_correct exists */
+
+update_total_correct = function() {
+
+  console.log("webex: update total_correct");
+
+
+
+  var t = document.getElementsByClassName("webex-total_correct");
+
+  for (var i = 0; i < t.length; i++) {
+
+    p = t[i].parentElement;
+
+    var correct = p.getElementsByClassName("webex-correct").length;
+
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+
+    var selects = p.getElementsByClassName("webex-select").length;
+
+
+
+    t[i].innerHTML = correct + " de " + (solvemes + radiogroups + selects) + " correctas";
+
+  }
+
+}
+
+
+
+/* webex-solution button toggling function */
+
+b_func = function() {
+
+  console.log("webex: toggle hide");
+
+
+
+  var cl = this.parentElement.classList;
+
+  if (cl.contains('open')) {
+
+    cl.remove("open");
+
+  } else {
+
+    cl.add("open");
+
+  }
+
+}
+
+
+
+/* check answers */
+
+check_func = function() {
+
+  console.log("webex: check answers");
+
+
+
+  var cl = this.parentElement.classList;
+
+  if (cl.contains('unchecked')) {
+
+    cl.remove("unchecked");
+
+    this.innerHTML = "Esconder Respuestas";
+
+  } else {
+
+    cl.add("unchecked");
+
+    this.innerHTML = "Mostrar Respuestas";
+
+  }
+
+}
+
+
+
+/* function for checking solveme answers */
+
+solveme_func = function(e) {
+
+  console.log("webex: check solveme");
+
+
+
+  var real_answers = JSON.parse(this.dataset.answer);
+
+  var my_answer = this.value;
+
+  var cl = this.classList;
+
+  if (cl.contains("ignorecase")) {
+
+    my_answer = my_answer.toLowerCase();
+
+  }
+
+  if (cl.contains("nospaces")) {
+
+    my_answer = my_answer.replace(/ /g, "")
+
+  }
+
+
+
+  if (my_answer == "") {
+
+    cl.remove("webex-correct");
+
+    cl.remove("webex-incorrect");
+
+  } else if (real_answers.includes(my_answer)) {
+
+    cl.add("webex-correct");
+
+    cl.remove("webex-incorrect");
+
+  } else {
+
+    cl.add("webex-incorrect");
+
+    cl.remove("webex-correct");
+
+  }
+
+
+
+  // match numeric answers within a specified tolerance
+
+  if(this.dataset.tol > 0){
+
+    var tol = JSON.parse(this.dataset.tol);
+
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+
+      cl.add("webex-correct");
+
+    } else {
+
+      cl.remove("webex-correct");
+
+    }
+
+  }
+
+
+
+  // added regex bit
+
+  if (cl.contains("regex")){
+
+    answer_regex = RegExp(real_answers.join("|"))
+
+    if (answer_regex.test(my_answer)) {
+
+      cl.add("webex-correct");
+
+    }
+
+  }
+
+
+
+  update_total_correct();
+
+}
+
+
+
+/* function for checking select answers */
+
+select_func = function(e) {
+
+  console.log("webex: check select");
+
+
+
+  var cl = this.classList
+
+
+
+  /* add style */
+
+  cl.remove("webex-incorrect");
+
+  cl.remove("webex-correct");
+
+  if (this.value == "answer") {
+
+    cl.add("webex-correct");
+
+  } else if (this.value != "blank") {
+
+    cl.add("webex-incorrect");
+
+  }
+
+
+
+  update_total_correct();
+
+}
+
+
+
+/* function for checking radiogroups answers */
+
+radiogroups_func = function(e) {
+
+  console.log("webex: check radiogroups");
+
+
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+
+  var cl = checked_button.parentElement.classList;
+
+  var labels = checked_button.parentElement.parentElement.children;
+
+
+
+  /* get rid of styles */
+
+  for (i = 0; i < labels.length; i++) {
+
+    labels[i].classList.remove("webex-incorrect");
+
+    labels[i].classList.remove("webex-correct");
+
+  }
+
+
+
+  /* add style */
+
+  if (checked_button.value == "answer") {
+
+    cl.add("webex-correct");
+
+  } else {
+
+    cl.add("webex-incorrect");
+
+  }
+
+
+
+  update_total_correct();
+
+}
+
+
+
+window.onload = function() {
+
+  console.log("webex onload");
+
+  /* set up solution buttons */
+
+  var buttons = document.getElementsByTagName("button");
+
+
+
+  for (var i = 0; i < buttons.length; i++) {
+
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+
+      buttons[i].onclick = b_func;
+
+    }
+
+  }
+
+
+
+  var check_sections = document.getElementsByClassName("webex-check");
+
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+
+    check_sections[i].classList.add("unchecked");
+
+
+
+    let btn = document.createElement("button");
+
+    btn.innerHTML = "Mostrar Respuestas";
+
+    btn.classList.add("webex-check-button");
+
+    btn.onclick = check_func;
+
+    check_sections[i].appendChild(btn);
+
+
+
+    let spn = document.createElement("span");
+
+    spn.classList.add("webex-total_correct");
+
+    check_sections[i].appendChild(spn);
+
+  }
+
+
+
+  /* set up webex-solveme inputs */
+
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+
+
+  for (var i = 0; i < solveme.length; i++) {
+
+    /* make sure input boxes don't auto-anything */
+
+    solveme[i].setAttribute("autocomplete","off");
+
+    solveme[i].setAttribute("autocorrect", "off");
+
+    solveme[i].setAttribute("autocapitalize", "off");
+
+    solveme[i].setAttribute("spellcheck", "false");
+
+    solveme[i].value = "";
+
+
+
+    /* adjust answer for ignorecase or nospaces */
+
+    var cl = solveme[i].classList;
+
+    var real_answer = solveme[i].dataset.answer;
+
+    if (cl.contains("ignorecase")) {
+
+      real_answer = real_answer.toLowerCase();
+
+    }
+
+    if (cl.contains("nospaces")) {
+
+      real_answer = real_answer.replace(/ /g, "");
+
+    }
+
+    solveme[i].dataset.answer = real_answer;
+
+
+
+    /* attach checking function */
+
+    solveme[i].onkeyup = solveme_func;
+
+    solveme[i].onchange = solveme_func;
+
+
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+
+  }
+
+
+
+  /* set up radiogroups */
+
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+
+  for (var i = 0; i < radiogroups.length; i++) {
+
+    radiogroups[i].onchange = radiogroups_func;
+
+  }
+
+
+
+  /* set up selects */
+
+  var selects = document.getElementsByClassName("webex-select");
+
+  for (var i = 0; i < selects.length; i++) {
+
+    selects[i].onchange = select_func;
+
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+
+  }
+
+
+
+  update_total_correct();
+
+}
+
+
+
+</script>
+
 <script type="ojs-module-contents">
 eyJjb250ZW50cyI6W119
 </script>
