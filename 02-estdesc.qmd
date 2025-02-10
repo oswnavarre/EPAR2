@@ -772,7 +772,7 @@ ggplot(data = datos, mapping = aes(x = Variedad)) +
   ylab("Frecuencia")
 ```
 
-### Cargar paquetes y leer datos
+### Cargar paquetes y leer datos {#sec-datos}
 
 El primer paso es guardar nuestros datos en la carpeta `datos` de nuestro proyecto, creado anteriormente, `r4agro`. Posteriormente creamos un script, en esta oportunidad guardaremos nuestro script en la carpeta `scripts` con el nombre `01_visualizacion.R`.
 
@@ -1043,7 +1043,7 @@ quantile(alt_gir, seq(from = 0.10, to = 0.90,  by = 0.10))
 
 ### Leyendo los datos desde un archivo en Excel, usando el pipe (`|>`) (grandes conjuntos de datos). {#sec-res2}
 
-En la @sec-bars1, aprendimos a leer datos que se encuentran en un archivo `.csv`. Ahora trabajaremos con datos que se encuentran disponibles en un libro de Excel. El archivo se llama `alt_transp.xlsx` y la información está en la hoja de cálculo llamada `transplante`. Contiene la información de mediciones de altura hechas a plantas de tomate de cinco variedades. Las variables presentes son:
+En la @sec-datos, aprendimos a leer datos que se encuentran en un archivo `.csv`. Ahora trabajaremos con datos que se encuentran disponibles en un libro de Excel. El archivo se llama `alt_transp.xlsx` y la información está en la hoja de cálculo llamada `transplante`. Contiene la información de mediciones de altura hechas a plantas de tomate de cinco variedades. Las variables presentes son:
 
 1.  **Planta**: número de planta.
 2.  **Fecha_med**: fecha de la medición.
@@ -1429,7 +1429,7 @@ Crear un proyecto llamado *PgJM*, guardar los datos en la carpeta correspondient
 
 
   a.  Calcular la media, mediana y desviación estándar de la altura por medición y por variedad de los datos previos a la cosecha. Almacenar el resultado en una variable llamada *deschibralt*.
-  b.  Calcular la media, mediana y desviación estándar de la altura por variedad de los datos de la cosecha. Almacenar el resultado en una variable llamada \*desccosealt}.
+  b.  Calcular la media, mediana y desviación estándar de la altura por variedad de los datos de la cosecha. Almacenar el resultado en una variable llamada *desccosealt*.
   c.  Guardar las tablas *deschibralt* en una hoja llamada *cultivo* y *desccosealt* en una hoja llamada *cosecha* de un archivo llamado *statsalt.xlsx*.
   d.  Graficar el histograma de la altura para la primera medición por variable. Guardar el gráfico en la carpeta *graficos* con el nombre *histalt_m1.png* con 8 pulgadas de ancho por 5 pulgadas de alto.
   e.  Graficar el histograma de la altura para la segunda y tercera medición por variable. Guardar los gráficos en la carpeta *graficos* con los nombres *histalt_m2.png* y *histalt_m3.png* respectivamente con 8 pulgadas de ancho por 5 pulgadas de alto.
@@ -1454,3 +1454,32 @@ f.  En el conjunto de datos *desccosediam* crear las variables *DDS* y *Medicion
 g.  Unir los conjuntos *deschibrdiam* y *desccosediam* y crear un conjunto llamado *descdiam*.
 h.  Con el conjunto *descdiam*, crear un gráfico de líneas que muestre la evolución del diámetro promedio. En el eje de las $x$ debe ir la variable *DDS* y en el eje de las $y$ la media de la altura. Guardar el gráfico con el nombre *evoldiam.png* con 6 pulgadas de ancho por 5 pulgadas de alto.
 i.  Con el conjunto de datos previos a la cosecha crear diagramas de caja para la altura por variedad y medición. Guardar el gráfico con el nombre *boxdiam.png* con 6 pulgadas de ancho por 5 pulgadas de alto.
+
+::: {#exr-siete}
+En el proyecto de graduación de Alfredo Aguilar y José C. Flores, se propone un protocolo de investigación para evaluar la eficacia de tratamientos biológicos y químicos para el control del hongo *Fusarium verticillioides* en el cultivo de maíz. El estudio se llevó a cabo utilizando un diseño experimental de bloques completos al azar con dos tratamientos de semilla cada uno en tres diferentes dosis de cada uno (control, biológico y químico). Los tratamientos biológicos consistieron en tres diferentes dosis del hongo *Trichoderma harzianum/viride*. (CEPA TR-02) con una formulación de *T. harzianum/viride* $2 \times 10^2$ esporas por gramo, de la empresa TRICHO-ECO. Mientras que los tratamientos químicos fueron del fungicida AMISTAR 50 WG, compuesto por Azoxystrobin.Las dosis del tratamiento biológico fueron en las concentraciones de $1 \times 10^6$ esporas por mL para el primero, para el segundo de $1 \times 10^8$ esporas por mL y para el tercero con $1 \times 10^{10}$ esporas por mL. En cuanto al químico para el primer tratamiento 150 g, para el segundo 225 g y el tercero de 300 g. Durante el desarrollo del maíz, se evaluaron variables como altura de planta, número de hojas, germinación, vigor, presencia de fumonisinas, longitud y peso de raíces y afectación en tallos, peso de mazorca y rendimiento. En la hoja *datos* del archivo *datos24004.xlsx* se encuentran las siguientes variables del proyecto:
+
+- **Tratamiento**: tratamiento al que se sometió la planta.
+- **Planta**: número de planta dentro del tratamiento. 
+- **Siembra**: fecha de siembra de todas las plantas (en todos los casos esta variable es igual 6/21/2024).
+- **Fecha**: fecha en que se tomaron los datos.
+- **Altura**: altura en centímetros
+- **Vigor**: vigor de la planta en una escala del 1 al 5:
+  - **1**: planta con deformación o anormal.
+  - **2**: planta con desarrollo deficiente.
+  - **3**: planta con desarrollo medio.
+  - **4**: planta con desarrollo aceptable.
+  - **5**: planta bien desarrollada.
+- **Hojas**: número de hojas de la planta.
+:::
+
+Crear un proyecto llamado **PG_AA_JCF**, guardar los datos en la carpeta correspondiente, crear un script llamado PGAAJCF.R y guardarlo en la carpeta adecuada.
+
+a. Crear una variable llamada *DDS* que sea el resultado de restar las variables *Siembra* y *Fecha*.
+b. Calcular la media, mediana y desviación estándar de la altura por tratamiento y DDS. Almacenar el resultado en una variable llamada *descalt*.
+c. Calcular la media, mediana y desviación estándar del número de hojas por tratamiento y DDS. Almacenar el resultado en una variable llamada *deschojas*.
+d. Graficar el histograma de la altura a los 56 días después de siembra. Guardar el gráfico con el nombre *histalt56.png*.
+e. Graficar el histograma de la altura por tratamiento a los 56 días después de siembra. Guardar el gráfico con el nombre *histalttra56.png*.
+f. Graficar el diagrama de caja de la altura por tratamiento y día de siembra. Guardar el gráfico con el nombre *boxalttradds.png*.
+g. Elaborar un gráfico de líneas que muestre la evolución de la altura por tratamiento. Guardar el gráfico con el nombre *evolalt.png*
+h. Guardar las tablas de las variables *descalt* y *deschojas* en un archivo llamado *biometria.xlsx* en las hojas *altura* y *hojas* respectivamente.
+
