@@ -373,7 +373,7 @@ En la hoja _Langostinos_ del archivo _baseCB.xlsx_ se almacenan los datos de lon
 
   a. Cree un proyecto llamado __PG_CB__. En la carpeta _datos_ guarde el archivo _baseCB.xlsx_. 
   b. Cree un script y guárdelo con el nombre _analisisCB.R_ en la carpeta que corresponde. 
-  c. Cree un archivo __Quarto__ y guardelo con el nombre _reporte_peso.rmd_. En este archivo escriba las conclusiones de su análisis. Una buena práctica es ir probando los códigos en el script y posteriormente pasar el código y escribir las conclusiones e interpretaciones en el archivo _.qmd_.
+  c. Cree un archivo __Quarto__ y guardelo con el nombre _reporte_peso.qmd_. En este archivo escriba las conclusiones de su análisis. Una buena práctica es ir probando los códigos en el script y posteriormente pasar el código y escribir las conclusiones e interpretaciones en el archivo _.qmd_.
   d. Cargue los paquetes _agricolae_, _tidyverse_, _readxl_, _writexl_ y _jtools_.
   e. Cargue los datos en una variable llamada _baseCB_.
   f. Cree una variable llamada _Medición_, para esto debe numerar las diferentes fechas presentes en la columna FECHA. La variable debe tener números enteros del 1 al 9. 
