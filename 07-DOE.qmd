@@ -1,5 +1,59 @@
 # Diseño de experimentos {#doe}
 
+El diseño de experimentos fue inventado por Ronald A. Fisher en las décadas de 1920 y 1930 en la Estación Experimental de Rothamsted, conocida ahora como Rothamsted Research. En el primer libro de Fisher sobre diseño de experimentos mostró cómo se podían extraer conclusiones válidas a partir de experimentos con fluctuaciones naturales como la temperatura, las condiciones del suelo y la lluvia, es decir, en presencia de variables molestas o perturbadoras. 
+
+Las variables perturbadoras conocidas suelen causar sesgos sistemáticos en grupos de resultados (por ejemplo, variación entre lotes). Las variables perturbadoras desconocidas suelen causar variabilidad aleatoria en los resultados y se denominan variabilidad inherente o ruido. Aunque el método de diseño experimental se utilizó por primera vez en un contexto agrícola, el método se ha aplicado con éxito en otras industrias y ámbitos. 
+
+En la @sec-tipest se presentaron los tipos de estudio, en esta sección se presentan los principios básicos y los principales diseños experimentales usados en agricultura. ¿Por qué es importante el diseño experimental? Supongamos que deseamos comparar dos variedades de maíz, una variedad estándar ya conocida a la que llamaremos V1 y una variadad nueva de la que recién hemos escuchado a la que llamaremos V2. Podríamos plantar la mitad de un campo con V1 y la otra mitad con V2. Se plantan las dos variedades exactamente el mismo día y se gestionan las dos mitades del campo exactamente igual durante todo el período vegetativo. A lo largo de la cosecha, se llevan registros separados del rendimiento de cada mitad del campo, de modo que al final de la temporada se obtiene el rendimiento total de cada variedad. Supongamos que, en este caso, la nueva variedad (V2) tiene un rendimiento un 20% mayor que la variedad estándar (V1). ¿Puede asegurar que la nueva variedad es mejor que la  variedad estándar? La respuesta es no, porque puede haber otros factores que hayan provocado la diferencia de rendimiento, como por ejemplo:
+
+- V2 se plantó en una parte del campo que tenía mejor suelo.
+- Un extremo del campo era más húmedo que el otro y algunos de las plantes se infectaron con oídio.
+- Las diferencias de textura del suelo provocaron un aumento de la humedad del suelo de un extremo del campo al otro.
+- Una parte del campo con la variedad estándar recibe sombra por la tarde de una línea de árboles adyacente.
+- La presencia de malezas es mayor en una parte del campo con V1. 
+- Los bosques o zonas silvestres adyacentes son una fuente de plagas que afectan más a un extremo del campo que al otro.
+
+Como el experimento no se preparó para tener en cuenta la variabilidad del campo, no se puede concluir si el rendimiento superior de una variedad se debió a la propia variedad o a diferencias en las condiciones de cultivo. No se repitieron los tratamientos. Por lo tanto, no tiene forma de aplicar una prueba estadística a sus datos. Si piensa en su propia explotación, ¿qué otras fuentes de variación podrían influir en su pregunta de investigación?
+
+Con el diseño experimental y el análisis estadístico adecuados, puede identificar y aislar los efectos de la variación natural y determinar si las diferencias entre tratamientos son «reales», dentro de ciertos niveles de probabilidad. La elección del diseño experimental, dependerá en gran medida de la pregunta de investigación que se plantee y del número de tratamientos del experimento.
+
+## Conceptos básicos
+
+
+1. **Unidad experimental**: el objeto o espacio al cual se aplica el tratamiento y donde se analiza la variable o variables investigadas. Dependiendo del tipo de experimento la unidad experimental puede ser un animal, un árbol o una parcela. Cuando la unidad experimental es una parcela, en algunas ocsiones se presenta el efecto borde.
+
+::: {.callout-note}
+## Efecto borde
+Las diferencias que se observan en el crecimiento y producción de plantas que se ubican en los perímetros de una parcela comparadas con las que se ubican en la zona central de la parcela se conocen como efecto borde, este efecto puede ser causado por: 
+
+- Vecindad de las parcelas o áreas no cultivadas lo que puede producir que las plantas del perímetro tengan menor competencia de luz y nutrientes.
+- Competencia entre los tratamientos.
+:::
+
+2. **Tratamiento**: el tratamiento es el procedimiento cuyo efecto se mide y que se desea comparar con otros tratamientos. Ejemplos de tratamiento pueden ser la ración alimenticia, una variedad de semillas, un programa de riego, la concentración de un herbicida o fungicida, una combinación de temperatura y humedad. 
+
+3. **Unidad de muestreo**: el efecto del tratamiento se puede medir en una fracción de la unidad experimental o en toda la unidad experimental. Es decir que la unidad de muestreo puede ser toda la unidad experimental o una fracción de la misma. Ejemplos de unidad de muestreo son: un animal sometido a una ración de alimento, muestra aleatoria de las hojas de una planta, la cosecha de 10 plantas de la unidad experimental en una parcela.
+
+4. **Error experimental**: Medida de la variación existente entre las observaciones realizadas en las unidades experimentales tratadas en forma similar. La variación puede provenir de dos fuentes:
+
+::: {.callout-tip}
+## Fuentes de la variación
+- Variabilidad propia del material experimental al que se aplican los tratamientos. 
+- Variación resultado de cualquier falta de uniformidad en la realización física del experimento.
+:::
+
+5. **Repeticiones**: número de veces que un tratamiento aparece en un experimento.
+
+::: {.callout-tip}
+## Funciones de las repeticiones
+- Permitir una estimación del error experimental.
+- Mejorar la precisión de un experimento mediante la reducción del error estándar de una media de tratamiento.
+- Aumentar el alcance de la inferencia del experimento mediante la selección y el uso adecuado de unidades experimentales más variables.
+- Controlar la varianza del error. 
+:::
+
+Aumentar el número de repeticiones, la mayoría de las veces, mejora la precisión. La elección del número de repeticiones de un experimento depende de varios factores, como el nivel de confianza deseado, la variabilidad esperada de los datos, el tamaño del efecto que se desea detectar, la disponibilidad de recursos y la complejidad del experimento; por lo general, un buen punto de partida es intentar realizar al menos tres repeticiones por condición, pero es posible que se necesiten más dependiendo de la pregunta de investigación específica y del diseño experimental.
+
 ## Principios básicos
 
 ## Prueba ANOVA

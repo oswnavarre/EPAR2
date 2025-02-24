@@ -56,7 +56,7 @@ En la @fig-popsample se muestra la relación entre algunos conceptos revisados h
 
 ![Relación entre algunos conceptos estadísticos](imagenes/popsample3.png){#fig-popsample}
 
-## Tipos de estudio
+## Tipos de estudio {#sec-tipest}
 
 Supongamos que un investigador desea analizar las tendencias de las exportaciones de maíz durante la última década en Latinoamérica y el Caribe, puede obtener esta información de la página FAOSTAT <https://www.fao.org/faostat/en/#home>. En este caso los datos no son recogidos directamente por el investigador sino que usa una fuente de información secundaria que le proporciona estos datos históricos, en este caso estamos ante un estudio **retrospectivo**. Ahora supongamos que el mismo investigador quiere conocer la impresión de las medidas tomadas por el gobierno para ayudar a los pequeños productores de maíz, para registrar esto puede realizar una encuesta a una muestra de pequeños productores de maíz. Tanto al tomar datos de una fuente secundaria o al realizar una encuesta el investigador está observando los datos como aparecen y no está interviniendo en el problema que se investiga. Este tipo de estudios recibe el nombre de **observacional**
 

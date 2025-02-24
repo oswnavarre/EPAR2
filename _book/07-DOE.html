@@ -73,7 +73,37 @@ ul.task-list li input[type="checkbox"] {
 <script type="module" src="site_libs/quarto-ojs/quarto-ojs-runtime.js"></script>
 <link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
+<link rel="stylesheet" href="include/webex.css">
 </head>
 
 <body class="nav-sidebar floating">
@@ -180,15 +210,16 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Indice de contenidos</h2>
    
   <ul>
-  <li><a href="#principios-básicos" id="toc-principios-básicos" class="nav-link active" data-scroll-target="#principios-básicos"><span class="header-section-number">8.1</span> Principios básicos</a></li>
-  <li><a href="#prueba-anova" id="toc-prueba-anova" class="nav-link" data-scroll-target="#prueba-anova"><span class="header-section-number">8.2</span> Prueba ANOVA</a></li>
-  <li><a href="#diseño-completo-al-azar" id="toc-diseño-completo-al-azar" class="nav-link" data-scroll-target="#diseño-completo-al-azar"><span class="header-section-number">8.3</span> Diseño completo al azar</a></li>
-  <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.4</span> Diseño de bloques completos al azar</a></li>
-  <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino"><span class="header-section-number">8.5</span> Diseño de cuadro latino</a></li>
-  <li><a href="#pruebas-de-comparaciones-múltiples-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-paramétricas"><span class="header-section-number">8.6</span> Pruebas de comparaciones múltiples paramétricas</a></li>
-  <li><a href="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" id="toc-pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="nav-link" data-scroll-target="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.7</span> Pruebas no paramétricas equivalentes al análisis de varianza</a></li>
-  <li><a href="#pruebas-de-comparaciones-múltiples-no-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.8</span> Pruebas de comparaciones múltiples no paramétricas</a></li>
-  <li><a href="#diseño-factorial" id="toc-diseño-factorial" class="nav-link" data-scroll-target="#diseño-factorial"><span class="header-section-number">8.9</span> Diseño factorial</a></li>
+  <li><a href="#conceptos-básicos" id="toc-conceptos-básicos" class="nav-link active" data-scroll-target="#conceptos-básicos"><span class="header-section-number">8.1</span> Conceptos básicos</a></li>
+  <li><a href="#principios-básicos" id="toc-principios-básicos" class="nav-link" data-scroll-target="#principios-básicos"><span class="header-section-number">8.2</span> Principios básicos</a></li>
+  <li><a href="#prueba-anova" id="toc-prueba-anova" class="nav-link" data-scroll-target="#prueba-anova"><span class="header-section-number">8.3</span> Prueba ANOVA</a></li>
+  <li><a href="#diseño-completo-al-azar" id="toc-diseño-completo-al-azar" class="nav-link" data-scroll-target="#diseño-completo-al-azar"><span class="header-section-number">8.4</span> Diseño completo al azar</a></li>
+  <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.5</span> Diseño de bloques completos al azar</a></li>
+  <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino"><span class="header-section-number">8.6</span> Diseño de cuadro latino</a></li>
+  <li><a href="#pruebas-de-comparaciones-múltiples-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-paramétricas"><span class="header-section-number">8.7</span> Pruebas de comparaciones múltiples paramétricas</a></li>
+  <li><a href="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" id="toc-pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="nav-link" data-scroll-target="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.8</span> Pruebas no paramétricas equivalentes al análisis de varianza</a></li>
+  <li><a href="#pruebas-de-comparaciones-múltiples-no-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.9</span> Pruebas de comparaciones múltiples no paramétricas</a></li>
+  <li><a href="#diseño-factorial" id="toc-diseño-factorial" class="nav-link" data-scroll-target="#diseño-factorial"><span class="header-section-number">8.10</span> Diseño factorial</a></li>
   </ul>
 </nav>
     </div>
@@ -214,32 +245,112 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
-<section id="principios-básicos" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="principios-básicos"><span class="header-section-number">8.1</span> Principios básicos</h2>
+<p>El diseño de experimentos fue inventado por Ronald A. Fisher en las décadas de 1920 y 1930 en la Estación Experimental de Rothamsted, conocida ahora como Rothamsted Research. En el primer libro de Fisher sobre diseño de experimentos mostró cómo se podían extraer conclusiones válidas a partir de experimentos con fluctuaciones naturales como la temperatura, las condiciones del suelo y la lluvia, es decir, en presencia de variables molestas o perturbadoras.</p>
+<p>Las variables perturbadoras conocidas suelen causar sesgos sistemáticos en grupos de resultados (por ejemplo, variación entre lotes). Las variables perturbadoras desconocidas suelen causar variabilidad aleatoria en los resultados y se denominan variabilidad inherente o ruido. Aunque el método de diseño experimental se utilizó por primera vez en un contexto agrícola, el método se ha aplicado con éxito en otras industrias y ámbitos.</p>
+<p>En la <a href="01-concepts.html#sec-tipest" class="quarto-xref"><span>Sección 2.4</span></a> se presentaron los tipos de estudio, en esta sección se presentan los principios básicos y los principales diseños experimentales usados en agricultura. ¿Por qué es importante el diseño experimental? Supongamos que deseamos comparar dos variedades de maíz, una variedad estándar ya conocida a la que llamaremos V1 y una variadad nueva de la que recién hemos escuchado a la que llamaremos V2. Podríamos plantar la mitad de un campo con V1 y la otra mitad con V2. Se plantan las dos variedades exactamente el mismo día y se gestionan las dos mitades del campo exactamente igual durante todo el período vegetativo. A lo largo de la cosecha, se llevan registros separados del rendimiento de cada mitad del campo, de modo que al final de la temporada se obtiene el rendimiento total de cada variedad. Supongamos que, en este caso, la nueva variedad (V2) tiene un rendimiento un 20% mayor que la variedad estándar (V1). ¿Puede asegurar que la nueva variedad es mejor que la variedad estándar? La respuesta es no, porque puede haber otros factores que hayan provocado la diferencia de rendimiento, como por ejemplo:</p>
+<ul>
+<li>V2 se plantó en una parte del campo que tenía mejor suelo.</li>
+<li>Un extremo del campo era más húmedo que el otro y algunos de las plantes se infectaron con oídio.</li>
+<li>Las diferencias de textura del suelo provocaron un aumento de la humedad del suelo de un extremo del campo al otro.</li>
+<li>Una parte del campo con la variedad estándar recibe sombra por la tarde de una línea de árboles adyacente.</li>
+<li>La presencia de malezas es mayor en una parte del campo con V1.</li>
+<li>Los bosques o zonas silvestres adyacentes son una fuente de plagas que afectan más a un extremo del campo que al otro.</li>
+</ul>
+<p>Como el experimento no se preparó para tener en cuenta la variabilidad del campo, no se puede concluir si el rendimiento superior de una variedad se debió a la propia variedad o a diferencias en las condiciones de cultivo. No se repitieron los tratamientos. Por lo tanto, no tiene forma de aplicar una prueba estadística a sus datos. Si piensa en su propia explotación, ¿qué otras fuentes de variación podrían influir en su pregunta de investigación?</p>
+<p>Con el diseño experimental y el análisis estadístico adecuados, puede identificar y aislar los efectos de la variación natural y determinar si las diferencias entre tratamientos son «reales», dentro de ciertos niveles de probabilidad. La elección del diseño experimental, dependerá en gran medida de la pregunta de investigación que se plantee y del número de tratamientos del experimento.</p>
+<section id="conceptos-básicos" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="conceptos-básicos"><span class="header-section-number">8.1</span> Conceptos básicos</h2>
+<ol type="1">
+<li><strong>Unidad experimental</strong>: el objeto o espacio al cual se aplica el tratamiento y donde se analiza la variable o variables investigadas. Dependiendo del tipo de experimento la unidad experimental puede ser un animal, un árbol o una parcela. Cuando la unidad experimental es una parcela, en algunas ocsiones se presenta el efecto borde.</li>
+</ol>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Efecto borde
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Las diferencias que se observan en el crecimiento y producción de plantas que se ubican en los perímetros de una parcela comparadas con las que se ubican en la zona central de la parcela se conocen como efecto borde, este efecto puede ser causado por:</p>
+<ul>
+<li>Vecindad de las parcelas o áreas no cultivadas lo que puede producir que las plantas del perímetro tengan menor competencia de luz y nutrientes.</li>
+<li>Competencia entre los tratamientos.</li>
+</ul>
+</div>
+</div>
+<ol start="2" type="1">
+<li><p><strong>Tratamiento</strong>: el tratamiento es el procedimiento cuyo efecto se mide y que se desea comparar con otros tratamientos. Ejemplos de tratamiento pueden ser la ración alimenticia, una variedad de semillas, un programa de riego, la concentración de un herbicida o fungicida, una combinación de temperatura y humedad.</p></li>
+<li><p><strong>Unidad de muestreo</strong>: el efecto del tratamiento se puede medir en una fracción de la unidad experimental o en toda la unidad experimental. Es decir que la unidad de muestreo puede ser toda la unidad experimental o una fracción de la misma. Ejemplos de unidad de muestreo son: un animal sometido a una ración de alimento, muestra aleatoria de las hojas de una planta, la cosecha de 10 plantas de la unidad experimental en una parcela.</p></li>
+<li><p><strong>Error experimental</strong>: Medida de la variación existente entre las observaciones realizadas en las unidades experimentales tratadas en forma similar. La variación puede provenir de dos fuentes:</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Fuentes de la variación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Variabilidad propia del material experimental al que se aplican los tratamientos.</li>
+<li>Variación resultado de cualquier falta de uniformidad en la realización física del experimento.</li>
+</ul>
+</div>
+</div>
+<ol start="5" type="1">
+<li><strong>Repeticiones</strong>: número de veces que un tratamiento aparece en un experimento.</li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Funciones de las repeticiones
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Permitir una estimación del error experimental.</li>
+<li>Mejorar la precisión de un experimento mediante la reducción del error estándar de una media de tratamiento.</li>
+<li>Aumentar el alcance de la inferencia del experimento mediante la selección y el uso adecuado de unidades experimentales más variables.</li>
+<li>Controlar la varianza del error.</li>
+</ul>
+</div>
+</div>
+<p>Aumentar el número de repeticiones, la mayoría de las veces, mejora la precisión. La elección del número de repeticiones de un experimento depende de varios factores, como el nivel de confianza deseado, la variabilidad esperada de los datos, el tamaño del efecto que se desea detectar, la disponibilidad de recursos y la complejidad del experimento; por lo general, un buen punto de partida es intentar realizar al menos tres repeticiones por condición, pero es posible que se necesiten más dependiendo de la pregunta de investigación específica y del diseño experimental.</p>
 </section>
-<section id="prueba-anova" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="prueba-anova"><span class="header-section-number">8.2</span> Prueba ANOVA</h2>
+<section id="principios-básicos" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="principios-básicos"><span class="header-section-number">8.2</span> Principios básicos</h2>
 </section>
-<section id="diseño-completo-al-azar" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="diseño-completo-al-azar"><span class="header-section-number">8.3</span> Diseño completo al azar</h2>
+<section id="prueba-anova" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="prueba-anova"><span class="header-section-number">8.3</span> Prueba ANOVA</h2>
 </section>
-<section id="diseño-de-bloques-completos-al-azar" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.4</span> Diseño de bloques completos al azar</h2>
+<section id="diseño-completo-al-azar" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="diseño-completo-al-azar"><span class="header-section-number">8.4</span> Diseño completo al azar</h2>
 </section>
-<section id="diseño-de-cuadro-latino" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="diseño-de-cuadro-latino"><span class="header-section-number">8.5</span> Diseño de cuadro latino</h2>
+<section id="diseño-de-bloques-completos-al-azar" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.5</span> Diseño de bloques completos al azar</h2>
 </section>
-<section id="pruebas-de-comparaciones-múltiples-paramétricas" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-paramétricas"><span class="header-section-number">8.6</span> Pruebas de comparaciones múltiples paramétricas</h2>
+<section id="diseño-de-cuadro-latino" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="diseño-de-cuadro-latino"><span class="header-section-number">8.6</span> Diseño de cuadro latino</h2>
 </section>
-<section id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.7</span> Pruebas no paramétricas equivalentes al análisis de varianza</h2>
+<section id="pruebas-de-comparaciones-múltiples-paramétricas" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-paramétricas"><span class="header-section-number">8.7</span> Pruebas de comparaciones múltiples paramétricas</h2>
 </section>
-<section id="pruebas-de-comparaciones-múltiples-no-paramétricas" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.8</span> Pruebas de comparaciones múltiples no paramétricas</h2>
+<section id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.8</span> Pruebas no paramétricas equivalentes al análisis de varianza</h2>
 </section>
-<section id="diseño-factorial" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="diseño-factorial"><span class="header-section-number">8.9</span> Diseño factorial</h2>
+<section id="pruebas-de-comparaciones-múltiples-no-paramétricas" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.9</span> Pruebas de comparaciones múltiples no paramétricas</h2>
+</section>
+<section id="diseño-factorial" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="diseño-factorial"><span class="header-section-number">8.10</span> Diseño factorial</h2>
+
 
 
 <script type="ojs-module-contents">
@@ -259,6 +370,418 @@ W10=
 </section>
 
 </main> <!-- /main -->
+<script>
+
+
+
+/* update total correct if #webex-total_correct exists */
+
+update_total_correct = function() {
+
+  console.log("webex: update total_correct");
+
+
+
+  var t = document.getElementsByClassName("webex-total_correct");
+
+  for (var i = 0; i < t.length; i++) {
+
+    p = t[i].parentElement;
+
+    var correct = p.getElementsByClassName("webex-correct").length;
+
+    var solvemes = p.getElementsByClassName("webex-solveme").length;
+
+    var radiogroups = p.getElementsByClassName("webex-radiogroup").length;
+
+    var selects = p.getElementsByClassName("webex-select").length;
+
+
+
+    t[i].innerHTML = correct + " de " + (solvemes + radiogroups + selects) + " correctas";
+
+  }
+
+}
+
+
+
+/* webex-solution button toggling function */
+
+b_func = function() {
+
+  console.log("webex: toggle hide");
+
+
+
+  var cl = this.parentElement.classList;
+
+  if (cl.contains('open')) {
+
+    cl.remove("open");
+
+  } else {
+
+    cl.add("open");
+
+  }
+
+}
+
+
+
+/* check answers */
+
+check_func = function() {
+
+  console.log("webex: check answers");
+
+
+
+  var cl = this.parentElement.classList;
+
+  if (cl.contains('unchecked')) {
+
+    cl.remove("unchecked");
+
+    this.innerHTML = "Esconder Respuestas";
+
+  } else {
+
+    cl.add("unchecked");
+
+    this.innerHTML = "Mostrar Respuestas";
+
+  }
+
+}
+
+
+
+/* function for checking solveme answers */
+
+solveme_func = function(e) {
+
+  console.log("webex: check solveme");
+
+
+
+  var real_answers = JSON.parse(this.dataset.answer);
+
+  var my_answer = this.value;
+
+  var cl = this.classList;
+
+  if (cl.contains("ignorecase")) {
+
+    my_answer = my_answer.toLowerCase();
+
+  }
+
+  if (cl.contains("nospaces")) {
+
+    my_answer = my_answer.replace(/ /g, "")
+
+  }
+
+
+
+  if (my_answer == "") {
+
+    cl.remove("webex-correct");
+
+    cl.remove("webex-incorrect");
+
+  } else if (real_answers.includes(my_answer)) {
+
+    cl.add("webex-correct");
+
+    cl.remove("webex-incorrect");
+
+  } else {
+
+    cl.add("webex-incorrect");
+
+    cl.remove("webex-correct");
+
+  }
+
+
+
+  // match numeric answers within a specified tolerance
+
+  if(this.dataset.tol > 0){
+
+    var tol = JSON.parse(this.dataset.tol);
+
+    var matches = real_answers.map(x => Math.abs(x - my_answer) < tol)
+
+    if (matches.reduce((a, b) => a + b, 0) > 0) {
+
+      cl.add("webex-correct");
+
+    } else {
+
+      cl.remove("webex-correct");
+
+    }
+
+  }
+
+
+
+  // added regex bit
+
+  if (cl.contains("regex")){
+
+    answer_regex = RegExp(real_answers.join("|"))
+
+    if (answer_regex.test(my_answer)) {
+
+      cl.add("webex-correct");
+
+    }
+
+  }
+
+
+
+  update_total_correct();
+
+}
+
+
+
+/* function for checking select answers */
+
+select_func = function(e) {
+
+  console.log("webex: check select");
+
+
+
+  var cl = this.classList
+
+
+
+  /* add style */
+
+  cl.remove("webex-incorrect");
+
+  cl.remove("webex-correct");
+
+  if (this.value == "answer") {
+
+    cl.add("webex-correct");
+
+  } else if (this.value != "blank") {
+
+    cl.add("webex-incorrect");
+
+  }
+
+
+
+  update_total_correct();
+
+}
+
+
+
+/* function for checking radiogroups answers */
+
+radiogroups_func = function(e) {
+
+  console.log("webex: check radiogroups");
+
+
+
+  var checked_button = document.querySelector('input[name=' + this.id + ']:checked');
+
+  var cl = checked_button.parentElement.classList;
+
+  var labels = checked_button.parentElement.parentElement.children;
+
+
+
+  /* get rid of styles */
+
+  for (i = 0; i < labels.length; i++) {
+
+    labels[i].classList.remove("webex-incorrect");
+
+    labels[i].classList.remove("webex-correct");
+
+  }
+
+
+
+  /* add style */
+
+  if (checked_button.value == "answer") {
+
+    cl.add("webex-correct");
+
+  } else {
+
+    cl.add("webex-incorrect");
+
+  }
+
+
+
+  update_total_correct();
+
+}
+
+
+
+window.onload = function() {
+
+  console.log("webex onload");
+
+  /* set up solution buttons */
+
+  var buttons = document.getElementsByTagName("button");
+
+
+
+  for (var i = 0; i < buttons.length; i++) {
+
+    if (buttons[i].parentElement.classList.contains('webex-solution')) {
+
+      buttons[i].onclick = b_func;
+
+    }
+
+  }
+
+
+
+  var check_sections = document.getElementsByClassName("webex-check");
+
+  console.log("check:", check_sections.length);
+
+  for (var i = 0; i < check_sections.length; i++) {
+
+    check_sections[i].classList.add("unchecked");
+
+
+
+    let btn = document.createElement("button");
+
+    btn.innerHTML = "Mostrar Respuestas";
+
+    btn.classList.add("webex-check-button");
+
+    btn.onclick = check_func;
+
+    check_sections[i].appendChild(btn);
+
+
+
+    let spn = document.createElement("span");
+
+    spn.classList.add("webex-total_correct");
+
+    check_sections[i].appendChild(spn);
+
+  }
+
+
+
+  /* set up webex-solveme inputs */
+
+  var solveme = document.getElementsByClassName("webex-solveme");
+
+
+
+  for (var i = 0; i < solveme.length; i++) {
+
+    /* make sure input boxes don't auto-anything */
+
+    solveme[i].setAttribute("autocomplete","off");
+
+    solveme[i].setAttribute("autocorrect", "off");
+
+    solveme[i].setAttribute("autocapitalize", "off");
+
+    solveme[i].setAttribute("spellcheck", "false");
+
+    solveme[i].value = "";
+
+
+
+    /* adjust answer for ignorecase or nospaces */
+
+    var cl = solveme[i].classList;
+
+    var real_answer = solveme[i].dataset.answer;
+
+    if (cl.contains("ignorecase")) {
+
+      real_answer = real_answer.toLowerCase();
+
+    }
+
+    if (cl.contains("nospaces")) {
+
+      real_answer = real_answer.replace(/ /g, "");
+
+    }
+
+    solveme[i].dataset.answer = real_answer;
+
+
+
+    /* attach checking function */
+
+    solveme[i].onkeyup = solveme_func;
+
+    solveme[i].onchange = solveme_func;
+
+
+
+    solveme[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+
+  }
+
+
+
+  /* set up radiogroups */
+
+  var radiogroups = document.getElementsByClassName("webex-radiogroup");
+
+  for (var i = 0; i < radiogroups.length; i++) {
+
+    radiogroups[i].onchange = radiogroups_func;
+
+  }
+
+
+
+  /* set up selects */
+
+  var selects = document.getElementsByClassName("webex-select");
+
+  for (var i = 0; i < selects.length; i++) {
+
+    selects[i].onchange = select_func;
+
+    selects[i].insertAdjacentHTML("afterend", " <span class='webex-icon'></span>")
+
+  }
+
+
+
+  update_total_correct();
+
+}
+
+
+
+</script>
+
 <script type="ojs-module-contents">
 eyJjb250ZW50cyI6W119
 </script>
