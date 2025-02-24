@@ -56,6 +56,12 @@ Aumentar el número de repeticiones, la mayoría de las veces, mejora la precisi
 
 ## Principios básicos
 
+En el diseño de experimentos, el __control del error experimental__ se refiere a la minimización de la variabilidad de los resultados que no está directamente relacionada con los factores estudiados, lo que se consigue mediante los principios como la aleatorización, la replicación y el bloqueo (control local), cuyo objetivo es aislar el verdadero efecto de las variables manipuladas y reducir la influencia de factores ajenos al resultado. 
+
+1. **Aleatorización**: La asignación aleatoria de los tratamientos a las unidades experimentales ayuda a distribuir por igual cualquier fuente desconocida de variación entre los grupos de tratamiento, reduciendo el sesgo. 
+2. **Repetición**: La repetición de cada condición de tratamiento varias veces en diferentes unidades experimentales permite estimar el error experimental y aumenta la precisión de los resultados. 
+3. **Bloqueo (control local)**: Agrupar unidades experimentales similares en bloques y asignar tratamientos dentro de cada bloque ayuda a controlar las fuentes conocidas de variación que podrían afectar a los resultados, como las diferencias en las condiciones ambientales. 
+
 ## Prueba ANOVA
 
 ## Diseño completo al azar
@@ -71,3 +77,24 @@ Aumentar el número de repeticiones, la mayoría de las veces, mejora la precisi
 ## Pruebas de comparaciones múltiples no paramétricas
 
 ## Diseño factorial
+
+## Ejercicios {.unnumbered} 
+
+::: {#exr-doe1}
+Con los datos y el proyecto del @exr-seis. Resuelva las siguientes cuestiones. 
+::: 
+a. ¿Existen diferencias significativas para la altura por variedad en la primera medición?
+b. ¿Existen diferencias significativas para la altura por variedad en la segunda medición?
+c. ¿Existen diferencias significativas para el diámetro por variedad en la tercera medición?
+d. ¿Existen diferencias significativas para el diámetro por variedad en la cosecha?
+e. Crear un conjunto llamado _basetotal_ que contenga los datos previos a la cosecha y de la cosecha. Para lograr esto siga los siguientes pasos.
+
+
+- Cree el conjunto _datosmaiz2_ a partir de _datosmaiz_, en este conjunto debe renombrar las variables _Medicion_ y _Diametro_ como _Medición_ y _Diámetro_ respectivamente. Además debe crear la variable _DDS_ que sea 15 cuando _Medición_ sea igual a 1, 30 cuando _Medición_ sea igual a 2 y 45 cuando _Medición_ sea igual a 2. Por último remueva la variable _Fecha_. 
+- Cree el conjunto _cosecha2_ a partir de _cosecha_. En este conjunto cree la variable _Medición_ que tomará el valor de 4 y la variable _DDS_ que tomará el valor de 91.
+- Finalmente una _datosmaiz2_ y _cosecha2_ para crear el conjunto _basetotal_.
+
+f. Verifique la existencia de diferencias significativas en las alturas por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla _valorespalt_.
+g. Verifique la existencia de diferencias significativas en los diámetros por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla _valorespdiam_.
+h. Guarde las tablas _valorespalt_ y _valorespdiam_ en un libro llamado *anova_alt_diam.xlsx*. Las hojas de este libro se deben llamar _altura_ y _diametro_ respectivamente.
+

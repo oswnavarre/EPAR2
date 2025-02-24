@@ -220,6 +220,7 @@ window.Quarto = {
   <li><a href="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" id="toc-pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="nav-link" data-scroll-target="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.8</span> Pruebas no paramétricas equivalentes al análisis de varianza</a></li>
   <li><a href="#pruebas-de-comparaciones-múltiples-no-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.9</span> Pruebas de comparaciones múltiples no paramétricas</a></li>
   <li><a href="#diseño-factorial" id="toc-diseño-factorial" class="nav-link" data-scroll-target="#diseño-factorial"><span class="header-section-number">8.10</span> Diseño factorial</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
   </ul>
 </nav>
     </div>
@@ -326,6 +327,12 @@ Funciones de las repeticiones
 </section>
 <section id="principios-básicos" class="level2" data-number="8.2">
 <h2 data-number="8.2" class="anchored" data-anchor-id="principios-básicos"><span class="header-section-number">8.2</span> Principios básicos</h2>
+<p>En el diseño de experimentos, el <strong>control del error experimental</strong> se refiere a la minimización de la variabilidad de los resultados que no está directamente relacionada con los factores estudiados, lo que se consigue mediante los principios como la aleatorización, la replicación y el bloqueo (control local), cuyo objetivo es aislar el verdadero efecto de las variables manipuladas y reducir la influencia de factores ajenos al resultado.</p>
+<ol type="1">
+<li><strong>Aleatorización</strong>: La asignación aleatoria de los tratamientos a las unidades experimentales ayuda a distribuir por igual cualquier fuente desconocida de variación entre los grupos de tratamiento, reduciendo el sesgo.</li>
+<li><strong>Replicación</strong>: La repetición de cada condición de tratamiento varias veces en diferentes unidades experimentales permite estimar el error experimental y aumenta la precisión de los resultados.</li>
+<li><strong>Bloqueo (control local)</strong>: Agrupar unidades experimentales similares en bloques y asignar tratamientos dentro de cada bloque ayuda a controlar las fuentes conocidas de variación que podrían afectar a los resultados, como las diferencias en las condiciones ambientales.</li>
+</ol>
 </section>
 <section id="prueba-anova" class="level2" data-number="8.3">
 <h2 data-number="8.3" class="anchored" data-anchor-id="prueba-anova"><span class="header-section-number">8.3</span> Prueba ANOVA</h2>
@@ -350,6 +357,29 @@ Funciones de las repeticiones
 </section>
 <section id="diseño-factorial" class="level2" data-number="8.10">
 <h2 data-number="8.10" class="anchored" data-anchor-id="diseño-factorial"><span class="header-section-number">8.10</span> Diseño factorial</h2>
+</section>
+<section id="ejercicios" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ejercicios">Ejercicios</h2>
+<div id="exr-doe1" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 8.1</strong></span> Con los datos y el proyecto del <a href="02-estdesc.html#exr-seis" class="quarto-xref">Ejercicio&nbsp;<span>3.10</span></a>. Resuelva las siguientes cuestiones.</p>
+</div>
+<ol type="a">
+<li>¿Existen diferencias significativas para la altura por variedad en la primera medición?</li>
+<li>¿Existen diferencias significativas para la altura por variedad en la segunda medición?</li>
+<li>¿Existen diferencias significativas para el diámetro por variedad en la tercera medición?</li>
+<li>¿Existen diferencias significativas para el diámetro por variedad en la cosecha?</li>
+<li>Crear un conjunto llamado <em>basetotal</em> que contenga los datos previos a la cosecha y de la cosecha. Para lograr esto siga los siguientes pasos.</li>
+</ol>
+<ul>
+<li>Cree el conjunto <em>datosmaiz2</em> a partir de <em>datosmaiz</em>, en este conjunto debe renombrar las variables <em>Medicion</em> y <em>Diametro</em> como <em>Medición</em> y <em>Diámetro</em> respectivamente. Además debe crear la variable <em>DDS</em> que sea 15 cuando <em>Medición</em> sea igual a 1, 30 cuando <em>Medición</em> sea igual a 2 y 45 cuando <em>Medición</em> sea igual a 2. Por último remueva la variable <em>Fecha</em>.</li>
+<li>Cree el conjunto <em>cosecha2</em> a partir de <em>cosecha</em>. En este conjunto cree la variable <em>Medición</em> que tomará el valor de 4 y la variable <em>DDS</em> que tomará el valor de 91.</li>
+<li>Finalmente una <em>datosmaiz2</em> y <em>cosecha2</em> para crear el conjunto <em>basetotal</em>.</li>
+</ul>
+<ol start="4" type="1">
+<li>Verifique la existencia de diferencias significativas en las alturas por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla <em>valorespalt</em>.</li>
+<li>Verifique la existencia de diferencias significativas en los diámetros por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla <em>valorespdiam</em>.</li>
+<li>Guarde las tablas <em>valorespalt</em> y <em>valorespdiam</em> en un libro llamado <em>anova_alt_diam.xlsx</em>. Las hojas de este libro se deben llamar <em>altura</em> y <em>diametro</em> respectivamente.</li>
+</ol>
 
 
 

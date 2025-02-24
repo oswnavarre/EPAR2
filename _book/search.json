@@ -544,7 +544,7 @@
     "href": "07-DOE.html#principios-básicos",
     "title": "8  Diseño de experimentos",
     "section": "8.2 Principios básicos",
-    "text": "8.2 Principios básicos",
+    "text": "8.2 Principios básicos\nEn el diseño de experimentos, el control del error experimental se refiere a la minimización de la variabilidad de los resultados que no está directamente relacionada con los factores estudiados, lo que se consigue mediante los principios como la aleatorización, la replicación y el bloqueo (control local), cuyo objetivo es aislar el verdadero efecto de las variables manipuladas y reducir la influencia de factores ajenos al resultado.\n\nAleatorización: La asignación aleatoria de los tratamientos a las unidades experimentales ayuda a distribuir por igual cualquier fuente desconocida de variación entre los grupos de tratamiento, reduciendo el sesgo.\nReplicación: La repetición de cada condición de tratamiento varias veces en diferentes unidades experimentales permite estimar el error experimental y aumenta la precisión de los resultados.\nBloqueo (control local): Agrupar unidades experimentales similares en bloques y asignar tratamientos dentro de cada bloque ayuda a controlar las fuentes conocidas de variación que podrían afectar a los resultados, como las diferencias en las condiciones ambientales.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Diseño de experimentos</span>"
     ]
@@ -565,6 +565,16 @@
     "title": "8  Diseño de experimentos",
     "section": "8.2 Fuentes de la variación",
     "text": "8.2 Fuentes de la variación\n\nVariabilidad propia del material experimental al que se aplican los tratamientos.\nVariación resultado de cualquier falta de uniformidad en la realización física del experimento.",
+    "crumbs": [
+      "<span class='chapter-number'>8</span>  <span class='chapter-title'>Diseño de experimentos</span>"
+    ]
+  },
+  {
+    "objectID": "07-DOE.html#ejercicios",
+    "href": "07-DOE.html#ejercicios",
+    "title": "8  Diseño de experimentos",
+    "section": "Ejercicios",
+    "text": "Ejercicios\n\nEjercicio 8.1 Con los datos y el proyecto del Ejercicio 3.10. Resuelva las siguientes cuestiones.\n\n\n¿Existen diferencias significativas para la altura por variedad en la primera medición?\n¿Existen diferencias significativas para la altura por variedad en la segunda medición?\n¿Existen diferencias significativas para el diámetro por variedad en la tercera medición?\n¿Existen diferencias significativas para el diámetro por variedad en la cosecha?\nCrear un conjunto llamado basetotal que contenga los datos previos a la cosecha y de la cosecha. Para lograr esto siga los siguientes pasos.\n\n\nCree el conjunto datosmaiz2 a partir de datosmaiz, en este conjunto debe renombrar las variables Medicion y Diametro como Medición y Diámetro respectivamente. Además debe crear la variable DDS que sea 15 cuando Medición sea igual a 1, 30 cuando Medición sea igual a 2 y 45 cuando Medición sea igual a 2. Por último remueva la variable Fecha.\nCree el conjunto cosecha2 a partir de cosecha. En este conjunto cree la variable Medición que tomará el valor de 4 y la variable DDS que tomará el valor de 91.\nFinalmente una datosmaiz2 y cosecha2 para crear el conjunto basetotal.\n\n\nVerifique la existencia de diferencias significativas en las alturas por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla valorespalt.\nVerifique la existencia de diferencias significativas en los diámetros por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla valorespdiam.\nGuarde las tablas valorespalt y valorespdiam en un libro llamado anova_alt_diam.xlsx. Las hojas de este libro se deben llamar altura y diametro respectivamente.",
     "crumbs": [
       "<span class='chapter-number'>8</span>  <span class='chapter-title'>Diseño de experimentos</span>"
     ]
