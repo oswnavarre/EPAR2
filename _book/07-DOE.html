@@ -330,7 +330,7 @@ Funciones de las repeticiones
 <p>En el diseño de experimentos, el <strong>control del error experimental</strong> se refiere a la minimización de la variabilidad de los resultados que no está directamente relacionada con los factores estudiados, lo que se consigue mediante los principios como la aleatorización, la replicación y el bloqueo (control local), cuyo objetivo es aislar el verdadero efecto de las variables manipuladas y reducir la influencia de factores ajenos al resultado.</p>
 <ol type="1">
 <li><strong>Aleatorización</strong>: La asignación aleatoria de los tratamientos a las unidades experimentales ayuda a distribuir por igual cualquier fuente desconocida de variación entre los grupos de tratamiento, reduciendo el sesgo.</li>
-<li><strong>Replicación</strong>: La repetición de cada condición de tratamiento varias veces en diferentes unidades experimentales permite estimar el error experimental y aumenta la precisión de los resultados.</li>
+<li><strong>Repetición</strong>: La repetición de cada condición de tratamiento varias veces en diferentes unidades experimentales permite estimar el error experimental y aumenta la precisión de los resultados.</li>
 <li><strong>Bloqueo (control local)</strong>: Agrupar unidades experimentales similares en bloques y asignar tratamientos dentro de cada bloque ayuda a controlar las fuentes conocidas de variación que podrían afectar a los resultados, como las diferencias en las condiciones ambientales.</li>
 </ol>
 </section>
@@ -375,11 +375,205 @@ Funciones de las repeticiones
 <li>Cree el conjunto <em>cosecha2</em> a partir de <em>cosecha</em>. En este conjunto cree la variable <em>Medición</em> que tomará el valor de 4 y la variable <em>DDS</em> que tomará el valor de 91.</li>
 <li>Finalmente una <em>datosmaiz2</em> y <em>cosecha2</em> para crear el conjunto <em>basetotal</em>.</li>
 </ul>
-<ol start="4" type="1">
+<ol start="6" type="a">
 <li>Verifique la existencia de diferencias significativas en las alturas por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla <em>valorespalt</em>.</li>
 <li>Verifique la existencia de diferencias significativas en los diámetros por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla <em>valorespdiam</em>.</li>
 <li>Guarde las tablas <em>valorespalt</em> y <em>valorespdiam</em> en un libro llamado <em>anova_alt_diam.xlsx</em>. Las hojas de este libro se deben llamar <em>altura</em> y <em>diametro</em> respectivamente.</li>
 </ol>
+<div id="exr-doe2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 8.2</strong></span> Con los datos y el proyecto del <a href="02-estdesc.html#exr-quin3" class="quarto-xref">Ejercicio&nbsp;<span>3.8</span></a>, resolver las siguientes cuestiones.</p>
+</div>
+<ol type="a">
+<li>Crear un archivo llamado <em>reporte_GAGS.qmd</em></li>
+<li>Cargar los paquetes <em>agricolae</em>, <em>tidyverse</em>, <em>writexl</em>, <em>readxl</em> y <em>jtools</em>.</li>
+<li>Cargar los datos almacenados en el archivo de Excel, los datos deben ser almacenados en una variable llamada <em>data23035</em>.</li>
+<li>Crear una variable llamada <strong>Diámetro</strong>. Esta variable es el promedio del diámetro horizontal y el diámetro vertical.</li>
+<li>Seleccione los datos hasta la semana 8.</li>
+<li>Para evitar el efecto borde, Gabriela solamentes incluyó en su análisis las plantas 6, 7, 10 y 11. Seleccione estas plantas para realizar el análisis. <strong>Nota: Para realizar las dos últimas tareas debe usar la función <em>filter</em> y combinarlas con un operador lógico adecuado.</strong></li>
+<li>Con un título de nivel 2, crear una sección dentro del reporte llamada <strong><em>Análisis de la variable Altura</em></strong></li>
+<li>Con un título de nivel 3, crear una sección dentro del reporte llamada <strong><em>Análisis descriptivo</em></strong></li>
+<li>Crear una tabla llamada <em>stats_alt</em> que resuma la altura por semana y por tratamiento:</li>
+</ol>
+<ul>
+<li>La media y la desviación de la altura.</li>
+<li>El valor crítico de la distribución <span class="math inline">\(t\)</span> para el número de observaciones calculado con un <span class="math inline">\(95\%\)</span> de confianza.</li>
+<li>El error estándar de la media de la altura.</li>
+<li>Los extremos del intervalo del <span class="math inline">\(95\%\)</span> de confianza para la media de la altura.</li>
+<li>Esta tabla no debe ser mostrada en el reporte.</li>
+</ul>
+<ol start="10" type="a">
+<li>Con ayuda de la tabla <em>stats_alt</em> crear un gráfico de evolución de la altura a lo largo de las semanas, incluya barras de error con los extremos del intervalo de confianza. Separe las líneas por tratamiento. En la carpeta gráficos guardar el gráfico generado con el nombre <em>evol_alt.png</em>. Interpretar el gráfico generado.</li>
+<li>Con un título de nivel 3, crear una sección dentro del reporte llamada <strong><em>Análisis inferencial</em></strong>.</li>
+<li>En la primera semana ¿existen diferencias significativas en la altura promedio por tratamiento? Para contestar esta pregunta muestre el resultado de la prueba ANOVA.</li>
+<li>En las 8 semanas ¿existen diferencias significativas en la altura promedio por tratamiento? Para contestar esta pregunta muestre los valores <span class="math inline">\(p\)</span> de las pruebas ANOVA. Se recomienda trabajar con el siguiente flujo de trabajo:</li>
+</ol>
+<ul>
+<li>Realizar la prueba ANOVA por semana para la comparación de la altura promedio por tratamiento, en una tabla llamada <em>valsp_aov_alt</em> guardar los valores <span class="math inline">\(p\)</span> de cada prueba ANOVA.</li>
+<li>Modificar la tabla <em>stats_alt</em> para que quede como se muestra en la <a href="#tbl-doe2" class="quarto-xref">Tabla&nbsp;<span>8.1</span></a>, el resultado guardarlo en una variable llamada <em>stats_alt2</em>:</li>
+</ul>
+<div id="tbl-doe2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-doe2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;8.1: Tabla modelo 1.
+</figcaption>
+<div aria-describedby="tbl-doe2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 23%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Semana</th>
+<th>T1</th>
+<th>T2</th>
+<th>T3</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(\bar{x}_{T1-1} \pm s_{T1-1}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T2-1} \pm s_{T2-1}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T3-1} \pm s_{T3-1}\)</span></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\(\bar{x}_{T1-2} \pm s_{T1-2}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T2-2} \pm s_{T2-2}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T3-2} \pm s_{T3-2}\)</span></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><span class="math inline">\(\bar{x}_{T1-8} \pm s_{T1-8}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T2-8} \pm s_{T2-8}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T3-8} \pm s_{T3-8}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<ul>
+<li>Utilizar la función <em>left_join()</em> para unir las tablas <em>stats_alt2</em> y <em>valsp_aov_alt</em>, el resultado guardarlo en una tabla llamada <em>stats_alt3</em>, un ejemplo de la tabla se muestra en la <a href="#tbl-doe2_1" class="quarto-xref">Tabla&nbsp;<span>8.2</span></a> .En el reporte se debe incluir esta última tabla.</li>
+</ul>
+<div id="tbl-doe2_1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-doe2_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;8.2: Tabla modelo 2.
+</figcaption>
+<div aria-describedby="tbl-doe2_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 21%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 22%">
+<col style="width: 8%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Semana</th>
+<th>T1</th>
+<th>T2</th>
+<th>T3</th>
+<th>Valor <span class="math inline">\(p\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1</td>
+<td><span class="math inline">\(\bar{x}_{T1-1} \pm s_{T1-1}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T2-1} \pm s_{T2-1}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T3-1}\pm s_{T3-1}\)</span></td>
+<td><span class="math inline">\(pval_1\)</span></td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td><span class="math inline">\(\bar{x}_{T1-2} \pm s_{T1-2}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T2-2}\pm s_{T2-2}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T3-2}\pm s_{T3-2}\)</span></td>
+<td><span class="math inline">\(pval_2\)</span></td>
+</tr>
+<tr class="odd">
+<td>3</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="even">
+<td>4</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="odd">
+<td>5</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="even">
+<td>6</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="odd">
+<td>7</td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+<td><span class="math inline">\(\dots\)</span></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td><span class="math inline">\(\bar{x}_{T1-8}\pm s_{T1-8}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T2-8}\pm s_{T2-8}\)</span></td>
+<td><span class="math inline">\(\bar{x}_{T3-8}\pm s_{T3-8}\)</span></td>
+<td><span class="math inline">\(pval_8\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
 
 
 

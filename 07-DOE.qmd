@@ -98,3 +98,60 @@ f. Verifique la existencia de diferencias significativas en las alturas por vari
 g. Verifique la existencia de diferencias significativas en los diámetros por variedad. Realice esta verificación para todas las mediciones y guarde los resultados en la tabla _valorespdiam_.
 h. Guarde las tablas _valorespalt_ y _valorespdiam_ en un libro llamado *anova_alt_diam.xlsx*. Las hojas de este libro se deben llamar _altura_ y _diametro_ respectivamente.
 
+::: {#exr-doe2}
+Con los datos y el proyecto del @exr-quin3, resolver las siguientes cuestiones. 
+:::
+a. Crear un archivo llamado _reporte_GAGS.qmd_
+b. Cargar los paquetes _agricolae_, _tidyverse_, _writexl_, _readxl_ y _jtools_. 
+c. Cargar los datos almacenados en el archivo de Excel, los datos deben ser almacenados en una variable llamada _data23035_. 
+d. Crear una variable llamada __Diámetro__. Esta variable es el promedio del diámetro horizontal y el diámetro vertical.
+e. Seleccione los datos hasta la semana 8.
+f. Para evitar el efecto borde, Gabriela solamentes incluyó en su análisis las plantas 6, 7, 10 y 11. Seleccione estas plantas para realizar el análisis.  **Nota: Para realizar las dos últimas tareas debe usar la función *filter* y combinarlas con un operador lógico adecuado.**
+g. Con un título de nivel 2, crear una sección dentro del reporte llamada **_Análisis de la variable Altura_**
+h. Con un título de nivel 3, crear una sección dentro del reporte llamada **_Análisis descriptivo_**
+i. Crear una tabla llamada _stats_alt_ que resuma la altura por semana y por tratamiento:
+
+  - La media y la desviación de la altura.
+  - El valor crítico de la distribución $t$  para el número de observaciones calculado con un $95\%$ de confianza.
+  - El error estándar de la media de la  altura.
+  - Los extremos del intervalo del $95\%$ de confianza  para la media de la altura.
+  - Esta tabla no debe ser mostrada en el reporte.
+
+j. Con ayuda de la tabla _stats_alt_ crear un gráfico de evolución de la altura a lo largo de las semanas, incluya barras de error con los extremos del intervalo de confianza. Separe las líneas por tratamiento. En la carpeta gráficos guardar el gráfico generado con el nombre _evol_alt.png_. Interpretar el gráfico generado.
+k. Con un título de nivel 3, crear una sección dentro del reporte llamada **_Análisis inferencial_**.
+l. En la primera semana ¿existen diferencias significativas en la altura promedio por tratamiento? Para contestar esta pregunta muestre el resultado de la prueba ANOVA.
+m. En las 8 semanas ¿existen diferencias significativas en la altura promedio por tratamiento? Para contestar esta pregunta muestre los valores $p$ de las pruebas ANOVA. Se recomienda trabajar con el siguiente flujo de trabajo:
+
+  - Realizar la prueba ANOVA por semana para la comparación de la altura promedio por tratamiento, en una tabla llamada _valsp_aov_alt_ guardar los valores $p$ de cada prueba ANOVA.
+  - Modificar la tabla _stats_alt_ para que quede como se muestra en la @tbl-doe2, el resultado guardarlo en una variable llamada _stats_alt2_:
+
+| Semana | T1                            | T2                            | T3                            |
+|----------------------------|-------------------------------|-------------------------------|-------------------------------|
+| 1                          | $\bar{x}_{T1-1} \pm s_{T1-1}$ | $\bar{x}_{T2-1} \pm s_{T2-1}$ | $\bar{x}_{T3-1} \pm s_{T3-1}$ |
+| 2                          | $\bar{x}_{T1-2} \pm s_{T1-2}$ | $\bar{x}_{T2-2} \pm s_{T2-2}$ | $\bar{x}_{T3-2} \pm s_{T3-2}$ |
+| 3                          | $\dots$                       | $\dots$                       | $\dots$                       |
+| 4                          | $\dots$                       | $\dots$                       | $\dots$                       |
+| 5                          | $\dots$                       | $\dots$                       | $\dots$                       |
+| 6                          | $\dots$                       | $\dots$                       | $\dots$                       |
+| 7                          | $\dots$                       | $\dots$                       | $\dots$                       |
+| 8                          | $\bar{x}_{T1-8} \pm s_{T1-8}$ | $\bar{x}_{T2-8} \pm s_{T2-8}$ | $\bar{x}_{T3-8} \pm s_{T3-8}$ |
+
+: Tabla modelo 1. {#tbl-doe2}
+
+  - Utilizar la función _left_join()_ para unir las tablas _stats_alt2_ y _valsp_aov_alt_, el resultado guardarlo en una tabla llamada _stats_alt3_, un ejemplo de la tabla se muestra en la @tbl-doe2_1 .En el reporte se debe incluir esta última tabla.
+  
+| Semana | T1                            | T2                            | T3                           | Valor $p$ |
+|----------------------------|-------------------------------|-------------------------------|------------------------------|-----------|
+| 1                          | $\bar{x}_{T1-1} \pm s_{T1-1}$ | $\bar{x}_{T2-1} \pm s_{T2-1}$ | $\bar{x}_{T3-1}\pm s_{T3-1}$ | $pval_1$  |
+| 2                          | $\bar{x}_{T1-2} \pm s_{T1-2}$ | $\bar{x}_{T2-2}\pm s_{T2-2}$  | $\bar{x}_{T3-2}\pm s_{T3-2}$ | $pval_2$  |
+| 3                          | $\dots$                       | $\dots$                       | $\dots$                      | $\dots$   |
+| 4                          | $\dots$                       | $\dots$                       | $\dots$                      | $\dots$   |
+| 5                          | $\dots$                       | $\dots$                       | $\dots$                      | $\dots$   |
+| 6                          | $\dots$                       | $\dots$                       | $\dots$                      | $\dots$   |
+| 7                          | $\dots$                       | $\dots$                       | $\dots$                      | $\dots$   |
+| 8                          | $\bar{x}_{T1-8}\pm s_{T1-8}$  | $\bar{x}_{T2-8}\pm s_{T2-8}$  | $\bar{x}_{T3-8}\pm s_{T3-8}$ | $pval_8$  |
+
+: Tabla modelo 2. {#tbl-doe2_1}
+
+n. Guardar esta la tabla en la carpeta _resultados_ en un archivo llamado _altura.xlsx_.
+o. Escribir las conclusiones de esta última tabla. 

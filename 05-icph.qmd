@@ -506,4 +506,4 @@ b. Crear una variable llamada _resultados_ y cargar los datos del archivo  _Peso
 c. ¿La proporción de vacas que no recibieron el implante y no quedaron preñadas es mayor a $0.40$?
 d. ¿La proporción de vacas que recibieron implante y quedaron preñadas es menor a $0.50$?
 e. ¿Existe una diferencia significativa entre la proporción de vacas que recibieron implante y quedaron preñadas con la proporción de vacas que no recibieron implante y quedaron preñadas?
-f.¿Existe una diferencia significativa entre la proporción de vacas que recibieron implante y no quedaron preñadas con la proporción de vacas que no recibieron implante y no quedaron preñadas?
+f. ¿Existe una diferencia significativa entre la proporción de vacas que recibieron implante y no quedaron preñadas con la proporción de vacas que no recibieron implante y no quedaron preñadas?
