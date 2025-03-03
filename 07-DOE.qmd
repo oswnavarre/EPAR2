@@ -155,3 +155,33 @@ m. En las 8 semanas ¿existen diferencias significativas en la altura promedio p
 
 n. Guardar esta la tabla en la carpeta _resultados_ en un archivo llamado _altura.xlsx_.
 o. Escribir las conclusiones de esta última tabla. 
+
+::: {#exr-doe3}
+Con los datos y el proyecto del @exr-doe1, resuelva las siguientes cuestiones.
+:::
+
+a. Usando las pruebas de Fisher, Tukey, Bonferroni y Scheffé determine dónde se encuentran las diferencias de las alturas en la primera medición.
+b. Usando las pruebas de Fisher, Tukey, Bonferroni y Scheffé determine dónde se encuentran las diferencias de las alturas en la segunda medición.
+c. Cree un objeto llamado _grpsaltm2_ que contenga las columnas _Variedad_, _Medición_ y _Grupos_. Para esto siga los siguientes pasos:
+
+  - Guarde el resultado de la prueba de Fisher para la segunda medición de la altura en un objeto llamado _compaltm2_.
+  - Extraiga los grupos de la comparación hecha en el paso anterior y almacenelos en la variable _grpsaltm2_.
+  - Modifique el objeto _grpsaltm2_, para esto cambie los nombres de fila a una variable con el nombre _Variedad_, luego cree una columna llamada _Medición_ que tenga el número 2, remueva la columna de la Altura y finalmente renombre la columna _groups_ con el nombre _Grupos_.
+d. Usando la prueba de Fisher realice las comparaciones múltiples de las medias de las alturas por variedad para cada medición.
+e. Para la medición 2, grafique un diagrama de caja de la altura por medición. En este gráfico muestre además los grupos de la prueba de Fisher en la parte superior de las cajas.
+f. Para todas las mediciones, grafique un diagrama de caja de la altura por medición. En cada gráfico muestre además los grupos de la prueba de Fisher en la parte superior de las cajas. Guarde cada uno de los gráficos con los nombres _boxaltM1.png_, _boxaltM2.png_, _boxaltM3.png_ y _boxaltM4.png_ respectivamente para cada medición.
+
+::: {#exr-doe4}
+Con los datos y el proyecto del ejercicio @exr-doe2 resolver las siguientes cuestiones.
+:::
+
+a. Para la semana 1, utilizando la prueba de Fisher ¿dónde se encuentran las diferencias significativas?
+b. Para la semana 1, utilizando la prueba de Tukey ¿dónde se encuentran las diferencias significativas?
+c. Para la semana 1, utilizando la prueba de Bonferroni ¿dónde se encuentran las diferencias significativas?
+d. Para la semana 6, utilizando la prueba de Fisher ¿es posible encontrar dónde están las diferencias significativas?
+e. Para la semana 7, utilizando la prueba de Fisher ¿es posible encontrar dónde están las  diferencias significativas?
+f. Para la semana 6, utilizando la prueba de Tukey ¿es posible encontrar dónde están las diferencias significativas?
+g. Para la semana 7, utilizando la prueba de Tukey ¿es posible encontrar dónde están las diferencias significativas?
+h. Para la semana 6, utilizando la prueba de Bonferroni ¿es posible encontrar dónde están las diferencias significativas?
+i. Para la semana 7, utilizando la prueba de Bonferroni ¿es posible encontrar dónde están las diferencias significativas?
+j. Utilizando la prueba de Tukey, determine dónde se encuentran las diferencias significativas desde la semana 1 hasta la semana 8. Presente estos resultados en una tabla adecuada.
