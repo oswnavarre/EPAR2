@@ -611,6 +611,191 @@ Tabla&nbsp;8.2: Tabla modelo 2.
 <li>Para la semana 7, utilizando la prueba de Bonferroni ¿es posible encontrar dónde están las diferencias significativas?</li>
 <li>Utilizando la prueba de Tukey, determine dónde se encuentran las diferencias significativas desde la semana 1 hasta la semana 8. Presente estos resultados en una tabla adecuada.</li>
 </ol>
+<div id="exr-doe5" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 8.5</strong></span> El proyecto de Mark Norman y Daniel Kasawa tenía como objetivo desarrollar un producto herbicida preemergente con la doble funcionalidad del biochar y la pendimetalina. El producto se administró en forma de pellets y en polvo para evaluar su eficacia relativa, la eficacia en el control de las malezas y su impacto en el crecimiento del maíz. El experimento abarcó seis tratamientos distintos distribuidos aleatoriamente en varias parcelas, cada uno de ellos sometido a cuatro repeticiones. El estudio incorporó dos bloques: uno con aplicación previa de biochar (A) y otro desprovisto de cualquier tratamiento con biochar (B). Los tratamientos usados fueron:</p>
+<ul>
+<li><strong>T1</strong>: NPK (10-30-10)</li>
+<li><strong>T2</strong>: NPK (10-30-10) + Pendimetalina</li>
+<li><strong>T3</strong>: Biochar (pellet) + NPK (10-30-10) + Pendimetalina (incorporada en el biochar)</li>
+<li><strong>T4</strong>: Biochar (polvo) + NPK (10-30-10) + Pendimetalina (incorporada en el biochar)</li>
+<li><strong>T5</strong>: Biochar (pellet) + NPK (10-30-10) + Pendimetalina (rociada en el suelo)</li>
+<li><strong>T6</strong>: Biochar (polvo) + NPK (10-30-10) + Pendimetalina (rociada en el suelo)</li>
+</ul>
+<p>En la hoja <em>biomass</em> del archivo <em>data_MN_DK.xlsx</em> se encuentran los datos a ser analizados en este ejercicio, adicionalmente en la hoja <em>dict_biomass</em> se incluyen las etiquetas para las variables <em>Leaves</em>, <em>Height</em> y <em>Diameter</em>. Las variables presentes en la hoja <em>biomass</em> son:</p>
+<ul>
+<li><strong>Date</strong>: fecha de la medición.</li>
+<li><strong>Measurement</strong>: número de medición.</li>
+<li><strong>Treatment</strong>: tratamiento.</li>
+<li><strong>Block</strong>: bloque en el que se realizó la medición.</li>
+<li><strong>Repetition</strong>: repetición. Para cada repetición se tomaron 3 mediciones.</li>
+<li><strong>Leaves</strong>: número de hojas.</li>
+<li><strong>Height</strong>: altura de la planta en centímetros.</li>
+<li><strong>Diameter</strong>: diámetro de la planta en milímetros.</li>
+</ul>
+</div>
+<ol type="a">
+<li>Cree un proyecto llamado <em>Pg_MN_DK</em>.</li>
+<li>Cargue los datos de las hojas <em>biomass</em> y <em>dict_biomass</em>.</li>
+<li>Para cada repetición se tomaron 3 mediciones, es decir que se debe calcular el promedio de las 3 mediciones para tener el valor de cada repetición. Utilizando la función <code>summarise_at</code>, calcule la media de las 3 mediciones para cada repetición.</li>
+<li>Daniel y Mark tuvieron problemas con los datos del tratamiento 3, repetición 2, bloque B por lo que decidieron eliminar estos datos del análisis. Filtre los datos para poder realizar esta tarea.</li>
+<li>La variable <strong>Measurement</strong> no está relacionada con las fechas en que se tomaron los datos. Crear una variable llamada <strong>Measurement</strong> a partir de la variable <strong>Date</strong>.</li>
+<li>Utilizando la función <code>pivot_longer</code>, transforme los datos de formato ancho a formato largo. Las columnas que deben ser transformadas son <strong>Leaves</strong>, <strong>Height</strong> y <strong>Diameter</strong>. Los nombres de las variables deben ser guardados en una variable llamada <strong>Variable</strong> y los valores en una variable llamada <strong>Value</strong>. Adicionalmente crear una variable llamada <strong>Week</strong> que sea igual al doble del número de medición.</li>
+<li>Crear las siguientes tablas:</li>
+</ol>
+<ul>
+<li><code>stats_all_long_trt_bl</code>: estadísticas agrupando por medición, semana, tratamiento, bloque y variable.</li>
+<li><code>stats_all_long_bl</code>: estadísticas agrupando por medición, semana, bloque y variable.</li>
+<li><code>stats_all_long_trt</code>: estadísticas agrupando por medición, semana, tratamiento y variable.</li>
+</ul>
+<p>Todas las tablas deben contener:</p>
+<ul>
+<li>La media y la desviación de la altura.</li>
+<li>El valor crítico de la distribución <span class="math inline">\(t\)</span> para el número de observaciones calculado con un <span class="math inline">\(95\%\)</span> de confianza.</li>
+<li>El error estándar de la media de la altura.</li>
+<li>Los extremos del intervalo del <span class="math inline">\(95\%\)</span> de confianza para la media de la altura.</li>
+</ul>
+<ol start="8" type="a">
+<li>Realice la prueba ANOVA para cada medición para verificar si existen diferencias significativas por tratamiento, tomando en cuenta el bloque. Posteriormente realice la prueba de Bonferroni para verificar donde se encuentran las diferencias significativas. En un objeto llamado <code>groups_trt</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por tratamiento y en un objeto llamado <code>groups_block</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por bloque. Con ayuda de la función <code>left_join</code> una estos dos objetos con las tablas <code>stats_all_long_trt</code> y <code>stats_all_long_bl</code> respectivamente.</li>
+<li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>biomass</strong> dentro de la carpeta <strong>graficos</strong>. Dentro de esta carpeta, guarde para cada variable dentro de cada bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>biomass</strong> deben existir 12 gráficos.</li>
+<li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>blocks</strong> dentro de la carpeta <strong>biomass</strong> creada en el literal anterior. Dentro de esta carpeta, guarde para cada variable separados bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>blocks</strong> deben existir 6 gráficos.</li>
+<li>A partir de la tabla <code>stats_all_long_bl</code>, generar una tabla como la <a href="#tbl-mod1dkmn" class="quarto-xref">Tabla&nbsp;<span>8.3</span></a> y guardarla en <code>stats_all_long_bl2</code>, esta última tabla debe tener 12 filas y 4 columnas. A partir de la tabla <code>stats_all_long_trt</code> generar una tabla como la <a href="#tbl-mod2dkmn" class="quarto-xref">Tabla&nbsp;<span>8.4</span></a> y guardarla en <code>stats_all_long_trt2</code>, esta última tabla debe tener 12 filas y 8 columnas.</li>
+<li>Guardar las dos tablas del literal anterior en un archivo llamado <strong>stats_biomass.xlsx</strong>, en hojas llamadas <strong>Blocks</strong> y <strong>Treatments</strong> respectivamente.</li>
+</ol>
+<div id="tbl-mod1dkmn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mod1dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;8.3: Tabla modelo 1
+</figcaption>
+<div aria-describedby="tbl-mod1dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 7%">
+<col style="width: 7%">
+<col style="width: 42%">
+<col style="width: 42%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Week</th>
+<th>Variable</th>
+<th>A</th>
+<th>B</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>Diameter</td>
+<td><span class="math inline">\(\mu_{W2-DA} \pm \sigma_{W2-DA}\)</span> grupo</td>
+<td><span class="math inline">\(\mu_{W2-DB} \pm \sigma_{w2-DB}\)</span> grupo</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Height</td>
+<td><span class="math inline">\(\mu_{W2-HA} \pm \sigma_{W2-HA}\)</span> grupo</td>
+<td><span class="math inline">\(\mu_{W2-HB} \pm \sigma_{W2-HB}\)</span> grupo</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Diameter</td>
+<td><span class="math inline">\(\mu_{W8-DA} \pm \sigma_{W8-DA}\)</span> grupo</td>
+<td><span class="math inline">\(\mu_{W8-DB} \pm \sigma_{W8-DB}\)</span> grupo</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Height</td>
+<td><span class="math inline">\(\mu_{W8-HA} \pm \sigma_{W8-HA}\)</span> grupo</td>
+<td><span class="math inline">\(\mu_{W8-HB} \pm \sigma_{W8-HB}\)</span> grupo</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div id="tbl-mod2dkmn" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mod2dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;8.4: Tabla modelo 2
+</figcaption>
+<div aria-describedby="tbl-mod2dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
+<col style="width: 40%">
+<col style="width: 6%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Week</th>
+<th>Variable</th>
+<th>T1</th>
+<th><span class="math inline">\(\ldots\)</span></th>
+<th>T6</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>2</td>
+<td>Diameter</td>
+<td><span class="math inline">\(\mu_{W2-DT1} \pm \sigma_{W2-DT1}\)</span> grupo</td>
+<td><span class="math inline">\(\ldots\)</span></td>
+<td><span class="math inline">\(\mu_{W2-DT6} \pm \sigma_{W2-DT6}\)</span> grupo</td>
+</tr>
+<tr class="even">
+<td>2</td>
+<td>Height</td>
+<td><span class="math inline">\(\mu_{W2-HT1} \pm \sigma_{W2-HT1}\)</span> grupo</td>
+<td><span class="math inline">\(\ldots\)</span></td>
+<td><span class="math inline">\(\mu_{W2-HT6} \pm \sigma_{W2-HT6}\)</span> grupo</td>
+</tr>
+<tr class="odd">
+<td>2</td>
+<td>Leaves</td>
+<td><span class="math inline">\(\mu_{W2-LT1} \pm \sigma_{W2-LT1}\)</span> grupo</td>
+<td><span class="math inline">\(\ldots\)</span></td>
+<td><span class="math inline">\(\mu_{W2-LT6} \pm \sigma_{W2-LT6}\)</span> grupo</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+<td><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Diameter</td>
+<td><span class="math inline">\(\mu_{W8-DT1} \pm \sigma_{W8-DT1}\)</span> grupo</td>
+<td><span class="math inline">\(\ldots\)</span></td>
+<td><span class="math inline">\(\mu_{W8-DT6} \pm \sigma_{W8-DT6}\)</span> grupo</td>
+</tr>
+<tr class="even">
+<td>8</td>
+<td>Height</td>
+<td><span class="math inline">\(\mu_{W8-HT1} \pm \sigma_{W8-HT1}\)</span> grupo</td>
+<td><span class="math inline">\(\ldots\)</span></td>
+<td><span class="math inline">\(\mu_{W8-HT6} \pm \sigma_{W8-HT6}\)</span> grupo</td>
+</tr>
+<tr class="odd">
+<td>8</td>
+<td>Leaves</td>
+<td><span class="math inline">\(\mu_{W8-LT1} \pm \sigma_{W8-LT1}\)</span> grupo</td>
+<td><span class="math inline">\(\ldots\)</span></td>
+<td><span class="math inline">\(\mu_{W8-LT6} \pm \sigma_{W8-LT6}\)</span> grupo</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
 
 
 

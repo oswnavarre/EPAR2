@@ -64,6 +64,8 @@ En el diseño de experimentos, el __control del error experimental__ se refiere 
 
 ## Prueba ANOVA
 
+
+
 ## Diseño completo al azar
 
 ## Diseño de bloques completos al azar
@@ -185,3 +187,70 @@ g. Para la semana 7, utilizando la prueba de Tukey ¿es posible encontrar dónde
 h. Para la semana 6, utilizando la prueba de Bonferroni ¿es posible encontrar dónde están las diferencias significativas?
 i. Para la semana 7, utilizando la prueba de Bonferroni ¿es posible encontrar dónde están las diferencias significativas?
 j. Utilizando la prueba de Tukey, determine dónde se encuentran las diferencias significativas desde la semana 1 hasta la semana 8. Presente estos resultados en una tabla adecuada.
+
+::: {#exr-doe5}
+El proyecto de Mark Norman y Daniel Kasawa tenía como objetivo desarrollar un producto herbicida preemergente con la doble funcionalidad del biochar y la pendimetalina. El producto se administró en forma de pellets y en polvo para evaluar su eficacia relativa, la eficacia en el control de las malezas y su impacto en el crecimiento del maíz. El experimento abarcó seis tratamientos distintos distribuidos aleatoriamente en varias parcelas, cada uno de ellos sometido a cuatro repeticiones. El estudio incorporó dos bloques: uno con aplicación previa de biochar (A) y otro desprovisto de cualquier tratamiento con biochar (B). Los tratamientos usados fueron:
+
+- **T1**: NPK (10-30-10)
+- **T2**: NPK (10-30-10) + Pendimetalina
+- **T3**: Biochar (pellet) + NPK (10-30-10) + Pendimetalina (incorporada en el biochar)
+- **T4**: Biochar (polvo) + NPK (10-30-10) + Pendimetalina (incorporada en el biochar)
+- **T5**: Biochar (pellet) + NPK (10-30-10) + Pendimetalina (rociada en el suelo)
+- **T6**: Biochar (polvo) + NPK (10-30-10) + Pendimetalina (rociada en el suelo)
+
+En la hoja _biomass_ del archivo _data_MN_DK.xlsx_ se encuentran los datos a ser analizados en este ejercicio, adicionalmente en la hoja _dict_biomass_ se incluyen las etiquetas para las variables _Leaves_, _Height_ y _Diameter_. Las variables presentes en la hoja _biomass_ son:
+
+- **Date**: fecha de la medición.
+- **Measurement**: número de medición.
+- **Treatment**: tratamiento.
+- **Block**: bloque en el que se realizó la medición.
+- **Repetition**: repetición. Para cada repetición se tomaron 3 mediciones.
+- **Leaves**: número de hojas. 
+- **Height**: altura de la planta en centímetros.
+- **Diameter**: diámetro de la planta en milímetros.
+:::
+
+a. Cree un proyecto llamado *Pg_MN_DK*.
+b. Cargue los datos de las hojas _biomass_ y _dict_biomass_.
+c. Para cada repetición se tomaron 3 mediciones, es decir que se debe calcular el promedio de las 3 mediciones para tener el valor de cada repetición. Utilizando la función `summarise_at`, calcule la media de las 3 mediciones para cada repetición. 
+d. Daniel y Mark tuvieron problemas con los datos del tratamiento 3, repetición 2, bloque B por lo que decidieron eliminar estos datos del análisis. Filtre los datos para poder realizar esta tarea. 
+e. La variable **Measurement** no está relacionada con las fechas en que se tomaron los datos. Crear una variable llamada **Measurement** a partir de la variable **Date**.
+f. Utilizando la función `pivot_longer`, transforme los datos de formato ancho a formato largo. Las columnas que deben ser transformadas son **Leaves**, **Height** y **Diameter**. Los nombres de las variables deben ser guardados en una variable llamada **Variable** y los valores en una variable llamada **Value**. Adicionalmente crear una variable llamada **Week** que sea igual al doble del número de medición.
+g. Crear las siguientes tablas:
+  - `stats_all_long_trt_bl`: estadísticas agrupando por medición, semana, tratamiento, bloque y variable.
+  - `stats_all_long_bl`: estadísticas agrupando por medición, semana, bloque y variable.
+  - `stats_all_long_trt`: estadísticas agrupando por medición, semana, tratamiento y variable.
+
+Todas las tablas deben contener: 
+
+  - La media y la desviación de la altura.
+  - El valor crítico de la distribución $t$  para el número de observaciones calculado con un $95\%$ de confianza.
+  - El error estándar de la media de la  altura.
+  - Los extremos del intervalo del $95\%$ de confianza  para la media de la altura.
+h. Realice la prueba ANOVA para cada medición para verificar si existen diferencias significativas por tratamiento, tomando en cuenta el bloque. Posteriormente realice la prueba de Bonferroni para verificar donde se encuentran las diferencias significativas. En un objeto llamado `groups_trt` almacene los grupos resultantes de realizar la prueba de Bonferroni por tratamiento y en un objeto llamado `groups_block` almacene los grupos resultantes de realizar la prueba de Bonferroni por bloque. Con ayuda de la función `left_join` una estos dos objetos con las tablas `stats_all_long_trt` y `stats_all_long_bl` respectivamente.
+i. Con la función `dir.create` crear una subcarpeta llamada **biomass** dentro de la carpeta **graficos**. Dentro de esta carpeta, guarde para cada variable dentro de cada bloque un gráfico de líneas y un diagrama de cajas. En la carpeta **biomass** deben existir 12 gráficos. 
+j. Con la función `dir.create` crear una subcarpeta llamada **blocks** dentro de la carpeta **biomass** creada en el literal anterior. Dentro de esta carpeta, guarde para cada variable separados bloque un gráfico de líneas y un diagrama de cajas. En la carpeta **blocks** deben existir 6 gráficos. 
+k. A partir de la tabla `stats_all_long_bl`, generar una tabla como la @tbl-mod1dkmn y guardarla en `stats_all_long_bl2`, esta última tabla debe tener 12 filas y 4 columnas. A partir de la tabla  `stats_all_long_trt` generar una tabla como la @tbl-mod2dkmn y guardarla en `stats_all_long_trt2`, esta última tabla debe tener 12 filas y 8 columnas.
+j. Guardar las dos tablas del literal anterior en un archivo llamado **stats_biomass.xlsx**, en hojas llamadas **Blocks** y **Treatments** respectivamente.
+
+| Week     | Variable | A                                                          | B                                                          |
+|----------|----------|------------------------------------------------------------|------------------------------------------------------------|
+| 2        | Diameter | $\mu_{W2-DA} \pm \sigma_{W2-DA}$ grupo | $\mu_{W2-DB} \pm \sigma_{w2-DB}$ grupo |
+| 2        | Height   | $\mu_{W2-HA} \pm \sigma_{W2-HA}$ grupo     | $\mu_{W2-HB} \pm \sigma_{W2-HB}$ grupo     |
+| $\vdots$ | $\vdots$ | $\vdots$                                                   | $\vdots$                                                   |
+| 8        | Diameter | $\mu_{W8-DA} \pm \sigma_{W8-DA}$ grupo | $\mu_{W8-DB} \pm \sigma_{W8-DB}$ grupo |
+| 8        | Height   | $\mu_{W8-HA} \pm \sigma_{W8-HA}$ grupo     | $\mu_{W8-HB} \pm \sigma_{W8-HB}$ grupo     |
+
+: Tabla modelo 1 {#tbl-mod1dkmn}
+
+| Week     | Variable | T1                                                           | $\ldots$ | T6                                                           |
+|----------|----------|--------------------------------------------------------------|----------|--------------------------------------------------------------|
+| 2        | Diameter | $\mu_{W2-DT1} \pm \sigma_{W2-DT1}$ grupo | $\ldots$ | $\mu_{W2-DT6} \pm \sigma_{W2-DT6}$ grupo |
+| 2        | Height   | $\mu_{W2-HT1} \pm \sigma_{W2-HT1}$ grupo     | $\ldots$ | $\mu_{W2-HT6} \pm \sigma_{W2-HT6}$ grupo     |
+| 2        | Leaves   | $\mu_{W2-LT1} \pm \sigma_{W2-LT1}$ grupo     | $\ldots$ | $\mu_{W2-LT6} \pm \sigma_{W2-LT6}$ grupo     |
+| $\vdots$ | $\vdots$ | $\vdots$                                                     | $\vdots$ | $\vdots$                                                     |
+| 8        | Diameter | $\mu_{W8-DT1} \pm \sigma_{W8-DT1}$ grupo | $\ldots$ | $\mu_{W8-DT6} \pm \sigma_{W8-DT6}$ grupo |
+| 8        | Height   | $\mu_{W8-HT1} \pm \sigma_{W8-HT1}$ grupo     | $\ldots$ | $\mu_{W8-HT6} \pm \sigma_{W8-HT6}$ grupo     |
+| 8        | Leaves   | $\mu_{W8-LT1} \pm \sigma_{W8-LT1}$ grupo     | $\ldots$ | $\mu_{W8-LT6} \pm \sigma_{W8-LT6}$ grupo     |
+
+: Tabla modelo 2 {#tbl-mod2dkmn}
