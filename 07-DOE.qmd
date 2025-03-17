@@ -254,3 +254,22 @@ j. Guardar las dos tablas del literal anterior en un archivo llamado **stats_bio
 | 8        | Leaves   | $\mu_{W8-LT1} \pm \sigma_{W8-LT1}$ grupo     | $\ldots$ | $\mu_{W8-LT6} \pm \sigma_{W8-LT6}$ grupo     |
 
 : Tabla modelo 2 {#tbl-mod2dkmn}
+
+
+::: {#exr-doe6}
+La investigación de Adnise Samanta Christophe y Meriche Nayeder Toussaint, evaluó el valor nutricional de la fruta pan (Artocarpus altilis) y sus componentes (exocarpio, mesocarpio y endocarpio) en dos etapas de maduración para su uso en la alimentación de rumiantes. Se analizaron 45 frutas, destacando que el exocarpio. 
+Los parámetros nutricionales fueron analizados mediante un diseño factorial $4 \times 2$, El primer factor fue la parte o componente de la planta, cuyos niveles fueron exocarpio, mesocarpio, endocarpio y fruta entera. El segundo factor fue el grado de madurez de la planta, cuyos niveles fueron inmadura y madura.
+En la hoja _nutriconal_ del archivo _nutricional_24017.xlsx_ se encuentran los datos analizados por Meriche y Adnise. Las variables presentes en el conjunto de datos son:
+
+- Madurez: grado de madurez de la planta.
+- Componente: parte de la planta.
+- Repetición: número de repetición.
+- MS: porcentaje de materia seca.
+- PC: porcentaje de proteína cruda.
+- FDN: fibra detergente neutra (%)
+- FDA: fibra detergente ácida (%)
+- MM: materia mineral (%)
+- MO: materia orgánica (%)
+- CHOs: carbohidratos totales (%)
+:::
+Se pide, analizar el efecto del grado de madurez y del componente junto con la interacción entre la madurez y el componente sobre las variables respuesta. 
