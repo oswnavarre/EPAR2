@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.40">
+<meta name="generator" content="quarto-1.6.42">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -37,7 +37,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-549806ee2085284f45b00abea8c6df48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="site_libs/bootstrap/bootstrap-7da2cd4d758cc02249fc92bd4cce19a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -212,7 +212,11 @@ window.Quarto = {
   <ul>
   <li><a href="#conceptos-básicos" id="toc-conceptos-básicos" class="nav-link active" data-scroll-target="#conceptos-básicos"><span class="header-section-number">8.1</span> Conceptos básicos</a></li>
   <li><a href="#principios-básicos" id="toc-principios-básicos" class="nav-link" data-scroll-target="#principios-básicos"><span class="header-section-number">8.2</span> Principios básicos</a></li>
-  <li><a href="#prueba-anova" id="toc-prueba-anova" class="nav-link" data-scroll-target="#prueba-anova"><span class="header-section-number">8.3</span> Prueba ANOVA</a></li>
+  <li><a href="#análisis-de-varianza-anova-andeva" id="toc-análisis-de-varianza-anova-andeva" class="nav-link" data-scroll-target="#análisis-de-varianza-anova-andeva"><span class="header-section-number">8.3</span> Análisis de Varianza (ANOVA, ANDEVA)</a>
+  <ul>
+  <li><a href="#modelos-para-el-análisis-de-varianza" id="toc-modelos-para-el-análisis-de-varianza" class="nav-link" data-scroll-target="#modelos-para-el-análisis-de-varianza"><span class="header-section-number">8.3.1</span> Modelos para el análisis de varianza</a></li>
+  <li><a href="#tabla-anova" id="toc-tabla-anova" class="nav-link" data-scroll-target="#tabla-anova"><span class="header-section-number">8.3.2</span> Tabla ANOVA</a></li>
+  </ul></li>
   <li><a href="#diseño-completo-al-azar" id="toc-diseño-completo-al-azar" class="nav-link" data-scroll-target="#diseño-completo-al-azar"><span class="header-section-number">8.4</span> Diseño completo al azar</a></li>
   <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.5</span> Diseño de bloques completos al azar</a></li>
   <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino"><span class="header-section-number">8.6</span> Diseño de cuadro latino</a></li>
@@ -334,8 +338,180 @@ Funciones de las repeticiones
 <li><strong>Bloqueo (control local)</strong>: Agrupar unidades experimentales similares en bloques y asignar tratamientos dentro de cada bloque ayuda a controlar las fuentes conocidas de variación que podrían afectar a los resultados, como las diferencias en las condiciones ambientales.</li>
 </ol>
 </section>
-<section id="prueba-anova" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="prueba-anova"><span class="header-section-number">8.3</span> Prueba ANOVA</h2>
+<section id="análisis-de-varianza-anova-andeva" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="análisis-de-varianza-anova-andeva"><span class="header-section-number">8.3</span> Análisis de Varianza (ANOVA, ANDEVA)</h2>
+<p>El <strong>An</strong>álisis <strong>De</strong> <strong>Va</strong>rianza o prueba ANOVA (abreviatura de <strong>An</strong>alysis <strong>o</strong>f <strong>Va</strong>riance) es una técnica que se utiliza para comparar las medias de más de dos grupos. Las comparaciones se hacen analizando la <strong>variabilidad</strong> dentro y entre los grupos. Como toda prueba de hipótesis tiene una hipótesis nula (<span class="math inline">\(H_0\)</span>), en este caso, para los <span class="math inline">\(k\)</span> grupos o poblaciones la hipótesis nula es que las medias de todos los grupos o poblaciones son iguales; mientras que la hipótesis alternativa es que al menos una de las medias es diferente:</p>
+<p><span class="math display">\[
+\begin{cases}
+H_0: \mu_1 = \mu_2 = \ldots = \mu_k \\
+H_1: \exists \; i, \; j \; \text{tal que} \; \mu_i \neq \mu_j
+\end{cases}
+\]</span></p>
+<section id="modelos-para-el-análisis-de-varianza" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="modelos-para-el-análisis-de-varianza"><span class="header-section-number">8.3.1</span> Modelos para el análisis de varianza</h3>
+<p>Vamos a suponer que deseamos comparar <span class="math inline">\(k\)</span> tratamientos o niveles para un <span class="math inline">\(único factor\)</span>, cada tratamiento o nivel tiene <span class="math inline">\(r\)</span> repeticiones. La respuesta observada es una variable aleatoria. Los datos del modelo se pueden presentar de la siguiente forma:</p>
+<div id="tbl-datosanova" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-datosanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;8.1: Datos de un experimento de un factor único
+</figcaption>
+<div aria-describedby="tbl-datosanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 19%">
+<col style="width: 22%">
+<col style="width: 19%">
+<col style="width: 16%">
+<col style="width: 23%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Trat.-Nivel</th>
+<th style="text-align: right;">Repetición 1</th>
+<th style="text-align: right;">Repetición 2</th>
+<th style="text-align: right;"><span class="math inline">\(\ldots\)</span></th>
+<th style="text-align: right;">Repetición <span class="math inline">\(r\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">1</td>
+<td style="text-align: right;"><span class="math inline">\(y_{11}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(y_{12}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\ldots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(y_{1r}\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">2</td>
+<td style="text-align: right;"><span class="math inline">\(y_{21}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(y_{22}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\ldots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(y_{2r}\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\vdots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\ldots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\vdots\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: right;"><span class="math inline">\(k\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(y_{k1}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(y_{k2}\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(\ldots\)</span></td>
+<td style="text-align: right;"><span class="math inline">\(y_{kr}\)</span></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>El modelo matemático correspondiente puede ser escrito como:</p>
+<p><span id="eq-modmed"><span class="math display">\[
+y_{ij} = \mu_i + \epsilon_{ij} \quad \forall \; i,j
+\tag{8.1}\]</span></span></p>
+<p>donde <span class="math inline">\(y_{ij}\)</span> corresponde a la <span class="math inline">\(j-ésima\)</span> repetición para el <span class="math inline">\(i-ésimo\)</span> nivel o tratamiento, <span class="math inline">\(\mu_i\)</span> es la media del <span class="math inline">\(i-ésimo\)</span> nivel o tratamiento y <span class="math inline">\(\epsilon_{ij}\)</span> es un componente de error aleatorio que incorpora las otras fuentes de variabilidad en el experimento. Se supone además que los errores tienen media 0. La <a href="#eq-modmed" class="quarto-xref">Ecuación&nbsp;<span>8.1</span></a> recibe el nombre de <strong>modelo de medias</strong>.</p>
+<p>Si definimos <span class="math inline">\(\mu_i=\mu+\alpha_i\)</span>, la <a href="#eq-modmed" class="quarto-xref">Ecuación&nbsp;<span>8.1</span></a> queda escrita de la forma:</p>
+<p><span id="eq-modeff"><span class="math display">\[
+y_{ij} = \mu + \alpha_i +  \epsilon_{ij} \quad \forall \; i,j
+\tag{8.2}\]</span></span></p>
+<p>En la <a href="#eq-modeff" class="quarto-xref">Ecuación&nbsp;<span>8.2</span></a> llamada comúnmente el <strong>modelo de efectos</strong>, el término <span class="math inline">\(\mu\)</span> es un parámetro para todos los tratamientos y se conoce como la <strong>media general</strong> y <span class="math inline">\(\alpha_i\)</span> es el efecto del tratamiento (nivel) <span class="math inline">\(i\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+¿Efectos fijos o aleatorios?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La <a href="#eq-modeff" class="quarto-xref">Ecuación&nbsp;<span>8.2</span></a> tiene dos posibilidades.</p>
+<ul>
+<li>Los <span class="math inline">\(k\)</span> tratamientos fueron escogidos por el experimentador.</li>
+<li>Los <span class="math inline">\(k\)</span> tratamientos fueron tomados de una muestra aleatoria de muchos tratamientos.</li>
+</ul>
+<p>En el primer caso, se puede probar la hipótesis sobre las medias de los tratamientos, y las conclusiones solo aplicarán a los niveles o tratamientos escogidos en el análisis. No se puede extender las conclusiones a tratamientos parecidos. Además es posible calcular los parámetros <span class="math inline">\(\mu\)</span>, <span class="math inline">\(\alpha_i\)</span> y <span class="math inline">\(\sigma^2\)</span>. Este modelo se llama <strong>modelo de efectos fijos</strong>.</p>
+<p>En el segundo caso las conclusiones que se basan en la muestra de tratamientos, se pueden extender a todos los tratamientos. En este caso los <span class="math inline">\(\alpha_i\)</span> son variables aleatorias. Por lo que conocer sus valores exactos no es necesariamente importante. Por otro lado, se pueden verificar hipótesis sobre la variabilidad de <span class="math inline">\(\alpha_i\)</span> y estimar el valor de esta variabilidad. Este modelo se llama <strong>modelo de efectos aleatorios</strong> o <strong>modelo de componentes de la varianza</strong>.</p>
+</div>
+</div>
+</section>
+<section id="tabla-anova" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="tabla-anova"><span class="header-section-number">8.3.2</span> Tabla ANOVA</h3>
+<p>Sea <span class="math inline">\(\bar{y}\)</span> la media general, o media de todos los datos, y <span class="math inline">\(\bar{y_i}\)</span> la media por el grupo <span class="math inline">\(i-ésimo\)</span>. La suma cuadrática total está dada por</p>
+<p><span id="eq-SCT"><span class="math display">\[
+SCT = \sum_i{\sum_j{(y_{ij}-\bar{y})}^2}
+\tag{8.3}\]</span></span></p>
+<p>Esto mide la variación con respecto al centro de todos los datos. Un análisis de varianza divide <span class="math inline">\(SCT\)</span> en dos términos:</p>
+<p><span id="eq-SCT2"><span class="math display">\[
+SCT = \sum_i{\sum_j{(y_{ij}-\bar{y}_i)}^2} + \sum_i{n_i\left(\bar{y}_i-\bar{y}\right)^2}
+\tag{8.4}\]</span></span></p>
+<p>El primer término es la suma de los cuadrados del error (SCE). La suma <span class="math inline">\(\sum_j{(y_{ij}-\bar{y}_I)}^2\)</span>, mide la variación dentro del i-ésimo grupo. La suma de los cuadrados del error es entonces una medida de la variabilidad dentro de los grupos. El segundo término en la <a href="#eq-SCT2" class="quarto-xref">Ecuación&nbsp;<span>8.4</span></a> es llamada la suma cuadrática de los tratamientos (SCTr). La SCTr compara la media para cada grupo, <span class="math inline">\(\bar{y}_i\)</span>, con la media general. Esta mide la variabilidad entre las medias de las muestras. La <a href="#eq-SCT2" class="quarto-xref">Ecuación&nbsp;<span>8.4</span></a> se puede reescribir como</p>
+<p><span id="eq-sct3"><span class="math display">\[
+SCT = SCE + SCTr
+\tag{8.5}\]</span></span></p>
+<p>Si los datos provienen de una media común, esperaríamos que SCE y SCT sean aproximadamente iguales. Por otro lado si SCE y SCT son muy distintas, tendríamos evidencia contra la hipótesis nula. ¿Cómo podríamos decir si las diferencias se deben a que la hipótesis nula es falsa o unicámente a la variación muestral? El estadístico usado en este caso es:</p>
+<p><span id="eq-fstat"><span class="math display">\[
+F = \dfrac{\frac{SCTr}{k-1}}{\frac{SCE}{n-k}}
+\tag{8.6}\]</span></span></p>
+<p>Para obtener una escala adecuada, cada término se divide por sus respectivos grados de libertad, obteniendo la suma media de los cuadrado de los tratamientos o los errores (MCTr o MCE). <span class="math display">\[
+MCTr=\frac{SCTr}{k-1}
+\]</span></p>
+<p><span class="math display">\[
+MCE = \frac{SCE}{n-k}
+\]</span> Los grados de libertad para SCT son <span class="math inline">\(n-1\)</span>, para <span class="math inline">\(SCE\)</span> los grados de libertad son <span class="math inline">\(n-k\)</span>. Usando <a href="#eq-sct3" class="quarto-xref">Ecuación&nbsp;<span>8.5</span></a> para los grados de libertad: <span class="math inline">\(gl(Total)=gl(Error)+gl(Tratamiento)\)</span> y reemplazando los grados de libertad totales y del error se obtiene que los grados de libertad de los tratamientos son <span class="math inline">\(k-1\)</span>. El procedimiento de la prueba se resume en la <strong>Tabla ANOVA</strong> que se muestra en la <a href="#tbl-anova" class="quarto-xref">Tabla&nbsp;<span>8.2</span></a></p>
+<div id="tbl-anova" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;8.2: Tabla del Análisis de Varianza para el modelo de un único factor
+</figcaption>
+<div aria-describedby="tbl-anova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 37%">
+<col style="width: 20%">
+<col style="width: 19%">
+<col style="width: 18%">
+<col style="width: 3%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Fuente de Variación</th>
+<th>Grados de Libertad</th>
+<th>Suma de Cuadrados</th>
+<th>Media Cuadrática</th>
+<th><span class="math inline">\(F\)</span></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Entre tratamientos</td>
+<td><span class="math inline">\(k-1\)</span></td>
+<td><span class="math inline">\(SCTr = \sum_i{n_i\left(\bar{y}_i-\bar{y}\right)^2}\)</span></td>
+<td><span class="math inline">\(MCTr=\frac{SCTr}{k-1}\)</span></td>
+<td><span class="math inline">\(F=\frac{MCTr}{MCE}\)</span></td>
+</tr>
+<tr class="even">
+<td>Error (dentro de los tratamientos)</td>
+<td><span class="math inline">\(n-k\)</span></td>
+<td><span class="math inline">\(SCE = \sum_i{\sum_j{(y_{ij}-\bar{y}_i)}^2}\)</span></td>
+<td><span class="math inline">\(MCE = \frac{SCE}{n-k}\)</span></td>
+<td></td>
+</tr>
+<tr class="odd">
+<td>Total</td>
+<td><span class="math inline">\(n-1\)</span></td>
+<td><span class="math inline">\(SCT = \sum_i{\sum_j{(y_{ij}-\bar{y})}^2}\)</span></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
 </section>
 <section id="diseño-completo-al-azar" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="diseño-completo-al-azar"><span class="header-section-number">8.4</span> Diseño completo al azar</h2>
@@ -409,12 +585,12 @@ Funciones de las repeticiones
 </ol>
 <ul>
 <li>Realizar la prueba ANOVA por semana para la comparación de la altura promedio por tratamiento, en una tabla llamada <em>valsp_aov_alt</em> guardar los valores <span class="math inline">\(p\)</span> de cada prueba ANOVA.</li>
-<li>Modificar la tabla <em>stats_alt</em> para que quede como se muestra en la <a href="#tbl-doe2" class="quarto-xref">Tabla&nbsp;<span>8.1</span></a>, el resultado guardarlo en una variable llamada <em>stats_alt2</em>:</li>
+<li>Modificar la tabla <em>stats_alt</em> para que quede como se muestra en la <a href="#tbl-doe2" class="quarto-xref">Tabla&nbsp;<span>8.3</span></a>, el resultado guardarlo en una variable llamada <em>stats_alt2</em>:</li>
 </ul>
 <div id="tbl-doe2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-doe2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.1: Tabla modelo 1.
+Tabla&nbsp;8.3: Tabla modelo 1.
 </figcaption>
 <div aria-describedby="tbl-doe2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -487,12 +663,12 @@ Tabla&nbsp;8.1: Tabla modelo 1.
 </figure>
 </div>
 <ul>
-<li>Utilizar la función <em>left_join()</em> para unir las tablas <em>stats_alt2</em> y <em>valsp_aov_alt</em>, el resultado guardarlo en una tabla llamada <em>stats_alt3</em>, un ejemplo de la tabla se muestra en la <a href="#tbl-doe2_1" class="quarto-xref">Tabla&nbsp;<span>8.2</span></a> .En el reporte se debe incluir esta última tabla.</li>
+<li>Utilizar la función <em>left_join()</em> para unir las tablas <em>stats_alt2</em> y <em>valsp_aov_alt</em>, el resultado guardarlo en una tabla llamada <em>stats_alt3</em>, un ejemplo de la tabla se muestra en la <a href="#tbl-doe2_1" class="quarto-xref">Tabla&nbsp;<span>8.4</span></a> .En el reporte se debe incluir esta última tabla.</li>
 </ul>
 <div id="tbl-doe2_1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-doe2_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.2: Tabla modelo 2.
+Tabla&nbsp;8.4: Tabla modelo 2.
 </figcaption>
 <div aria-describedby="tbl-doe2_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -658,13 +834,13 @@ Tabla&nbsp;8.2: Tabla modelo 2.
 <li>Realice la prueba ANOVA para cada medición para verificar si existen diferencias significativas por tratamiento, tomando en cuenta el bloque. Posteriormente realice la prueba de Bonferroni para verificar donde se encuentran las diferencias significativas. En un objeto llamado <code>groups_trt</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por tratamiento y en un objeto llamado <code>groups_block</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por bloque. Con ayuda de la función <code>left_join</code> una estos dos objetos con las tablas <code>stats_all_long_trt</code> y <code>stats_all_long_bl</code> respectivamente.</li>
 <li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>biomass</strong> dentro de la carpeta <strong>graficos</strong>. Dentro de esta carpeta, guarde para cada variable dentro de cada bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>biomass</strong> deben existir 12 gráficos.</li>
 <li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>blocks</strong> dentro de la carpeta <strong>biomass</strong> creada en el literal anterior. Dentro de esta carpeta, guarde para cada variable separados bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>blocks</strong> deben existir 6 gráficos.</li>
-<li>A partir de la tabla <code>stats_all_long_bl</code>, generar una tabla como la <a href="#tbl-mod1dkmn" class="quarto-xref">Tabla&nbsp;<span>8.3</span></a> y guardarla en <code>stats_all_long_bl2</code>, esta última tabla debe tener 12 filas y 4 columnas. A partir de la tabla <code>stats_all_long_trt</code> generar una tabla como la <a href="#tbl-mod2dkmn" class="quarto-xref">Tabla&nbsp;<span>8.4</span></a> y guardarla en <code>stats_all_long_trt2</code>, esta última tabla debe tener 12 filas y 8 columnas.</li>
+<li>A partir de la tabla <code>stats_all_long_bl</code>, generar una tabla como la <a href="#tbl-mod1dkmn" class="quarto-xref">Tabla&nbsp;<span>8.5</span></a> y guardarla en <code>stats_all_long_bl2</code>, esta última tabla debe tener 12 filas y 4 columnas. A partir de la tabla <code>stats_all_long_trt</code> generar una tabla como la <a href="#tbl-mod2dkmn" class="quarto-xref">Tabla&nbsp;<span>8.6</span></a> y guardarla en <code>stats_all_long_trt2</code>, esta última tabla debe tener 12 filas y 8 columnas.</li>
 <li>Guardar las dos tablas del literal anterior en un archivo llamado <strong>stats_biomass.xlsx</strong>, en hojas llamadas <strong>Blocks</strong> y <strong>Treatments</strong> respectivamente.</li>
 </ol>
 <div id="tbl-mod1dkmn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mod1dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.3: Tabla modelo 1
+Tabla&nbsp;8.5: Tabla modelo 1
 </figcaption>
 <div aria-describedby="tbl-mod1dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -721,7 +897,7 @@ Tabla&nbsp;8.3: Tabla modelo 1
 <div id="tbl-mod2dkmn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mod2dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.4: Tabla modelo 2
+Tabla&nbsp;8.6: Tabla modelo 2
 </figcaption>
 <div aria-describedby="tbl-mod2dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">

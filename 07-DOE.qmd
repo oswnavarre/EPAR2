@@ -62,13 +62,118 @@ En el diseño de experimentos, el __control del error experimental__ se refiere 
 2. **Repetición**: La repetición de cada condición de tratamiento varias veces en diferentes unidades experimentales permite estimar el error experimental y aumenta la precisión de los resultados. 
 3. **Bloqueo (control local)**: Agrupar unidades experimentales similares en bloques y asignar tratamientos dentro de cada bloque ayuda a controlar las fuentes conocidas de variación que podrían afectar a los resultados, como las diferencias en las condiciones ambientales. 
 
-## Prueba ANOVA
+## Análisis de Varianza (ANOVA, ANDEVA)
 
+El **An**álisis **De** **Va**rianza o prueba ANOVA (abreviatura de **An**alysis **o**f **Va**riance) es una técnica que se utiliza para comparar las medias de más de dos grupos. Las comparaciones se hacen analizando la  **variabilidad** dentro y entre los grupos. Como toda prueba de hipótesis tiene una hipótesis nula ($H_0$), en este caso, para los $k$ grupos o poblaciones la hipótesis nula es que las medias de todos los grupos o poblaciones son iguales; mientras que la hipótesis alternativa es que al menos una de las medias es diferente:
+
+$$
+\begin{cases}
+H_0: \mu_1 = \mu_2 = \ldots = \mu_k \\
+H_1: \exists \; i, \; j \; \text{tal que} \; \mu_i \neq \mu_j
+\end{cases}
+$$
+
+### Modelos para el análisis de varianza
+
+Vamos a suponer que deseamos comparar $k$ tratamientos o niveles para un $único factor$, cada tratamiento o nivel tiene $r$ repeticiones. La respuesta observada es una variable aleatoria. Los datos del modelo se pueden presentar de la siguiente forma:
+
+
+
+| Trat.-Nivel | Repetición 1	| Repetición 2| $\ldots$ 	| Repetición $r$ |
+|------------:|--------------:|------------:|----------:|---------------:|
+| 1           | $y_{11}$     	| $y_{12}$ 	  | $\ldots$ 	| $y_{1r}$ 	     |
+| 2           | $y_{21}$     	| $y_{22}$ 	  | $\ldots$ 	| $y_{2r}$ 	     |
+| $\vdots$    | $\vdots$     	| $\vdots$ 	  | $\ldots$ 	| $\vdots$ 	     |
+| $k$         | $y_{k1}$     	| $y_{k2}$ 	  | $\ldots$ 	| $y_{kr}$ 	     |
+
+: Datos de un experimento de un factor único {#tbl-datosanova}
+
+El modelo matemático correspondiente puede ser escrito como:
+
+$$
+y_{ij} = \mu_i + \epsilon_{ij} \quad \forall \; i,j
+$$ {#eq-modmed}
+
+donde $y_{ij}$ corresponde a la $j-ésima$ repetición para el $i-ésimo$ nivel o tratamiento, $\mu_i$ es la media del $i-ésimo$ nivel o tratamiento y $\epsilon_{ij}$ es un componente de error aleatorio que incorpora las otras fuentes de variabilidad en el experimento. Se supone además que los errores tienen media 0. La @eq-modmed recibe el nombre de **modelo de medias**.
+
+Si definimos $\mu_i=\mu+\alpha_i$, la @eq-modmed queda escrita de la forma:
+
+$$
+y_{ij} = \mu + \alpha_i +  \epsilon_{ij} \quad \forall \; i,j
+$$ {#eq-modeff}
+
+En la @eq-modeff llamada comúnmente el **modelo de efectos**, el término $\mu$ es un parámetro para todos los tratamientos y se conoce como la **media general** y $\alpha_i$ es el efecto del tratamiento (nivel) $i$. 
+
+::: {.callout-important}
+## ¿Efectos fijos o aleatorios?
+La @eq-modeff tiene dos posibilidades.
+ 
+- Los $k$ tratamientos fueron escogidos por el experimentador.
+- Los $k$ tratamientos fueron tomados de una muestra aleatoria de muchos tratamientos.
+
+En el primer caso, se puede probar la hipótesis sobre las medias de los tratamientos, y las conclusiones solo aplicarán a los niveles o tratamientos escogidos en el análisis.  No se puede extender las conclusiones a tratamientos parecidos. Además es posible calcular los parámetros $\mu$, $\alpha_i$ y $\sigma^2$. Este modelo se llama **modelo de efectos fijos**.
+
+En el segundo caso las conclusiones que se basan en la muestra de tratamientos, se pueden extender a todos los tratamientos. En este caso los $\alpha_i$ son variables aleatorias. Por lo que conocer sus valores exactos no es necesariamente importante. Por otro lado, se pueden verificar hipótesis sobre la variabilidad de $\alpha_i$ y estimar el valor de esta variabilidad. Este modelo se llama **modelo de efectos aleatorios** o **modelo de componentes de la varianza**.
+:::
+
+### Tabla ANOVA
+
+Sea $\bar{y}$ la media general, o media de todos los  datos, y $\bar{y_i}$ la media por el grupo $i-ésimo$. La suma cuadrática total está dada por
+
+$$
+SCT = \sum_i{\sum_j{(y_{ij}-\bar{y})}^2}
+$$ {#eq-SCT}
+
+Esto mide la variación con respecto al centro de todos los datos. Un análisis de varianza divide $SCT$ en dos términos:
+
+$$
+SCT = \sum_i{\sum_j{(y_{ij}-\bar{y}_i)}^2} + \sum_i{n_i\left(\bar{y}_i-\bar{y}\right)^2}
+$$ {#eq-SCT2}
+
+El primer término es la suma de los cuadrados del error (SCE). La suma  $\sum_j{(y_{ij}-\bar{y}_I)}^2$, mide la variación dentro del i-ésimo grupo. La suma de los cuadrados del error es entonces una medida de la variabilidad dentro de los grupos. El segundo término en la @eq-SCT2 es llamada la suma cuadrática de los tratamientos (SCTr). La SCTr compara la media para cada grupo, $\bar{y}_i$, con la media general. Esta mide la variabilidad entre las medias de las muestras. La @eq-SCT2 se puede reescribir como
+
+$$
+SCT = SCE + SCTr
+$$ {#eq-sct3}
+
+Si los datos provienen de una media común, esperaríamos que SCE y SCT sean aproximadamente iguales. Por otro lado si SCE y SCT son muy distintas, tendríamos evidencia contra la hipótesis nula. ¿Cómo podríamos decir si las diferencias se deben a que la hipótesis nula es falsa o unicámente a la variación muestral? El estadístico usado en este caso es:
+
+$$ 
+F = \dfrac{\frac{SCTr}{k-1}}{\frac{SCE}{n-k}}
+$$ {#eq-fstat} 
+
+Para obtener una escala adecuada, cada término se divide por sus respectivos grados de libertad, obteniendo la suma media de los cuadrado de los tratamientos o los errores (MCTr o MCE).
+$$
+MCTr=\frac{SCTr}{k-1}
+$$
+
+$$
+MCE = \frac{SCE}{n-k}
+$$
+Los grados de libertad para SCT son $n-1$, para $SCE$ los grados de libertad son $n-k$. Usando @eq-sct3 para los grados de libertad: $gl(Total)=gl(Error)+gl(Tratamiento)$ y reemplazando los grados de libertad totales y del error se obtiene que los grados de libertad de los tratamientos son $k-1$. El procedimiento de la prueba se resume en la **Tabla ANOVA** que se muestra en la  @tbl-anova
+
+| Fuente de Variación                	| Grados de Libertad 	| Suma de Cuadrados 	| Media Cuadrática 	| $F$ 	|
+|------------------------------------	|--------------------	|-------------------	|------------------	|---	|
+| Entre tratamientos                 	| $k-1$              	| $SCTr = \sum_i{n_i\left(\bar{y}_i-\bar{y}\right)^2}$                  	| $MCTr=\frac{SCTr}{k-1}$                 	| $F=\frac{MCTr}{MCE}$  	|
+| Error (dentro de los tratamientos) 	| $n-k$               | $SCE = \sum_i{\sum_j{(y_{ij}-\bar{y}_i)}^2}$                  	| $MCE = \frac{SCE}{n-k}$                 	|   	|
+| Total                              	| $n-1$               | $SCT = \sum_i{\sum_j{(y_{ij}-\bar{y})}^2}$                  	|                  	|   	|
+
+: Tabla del Análisis de Varianza para el modelo de un único factor {#tbl-anova}
 
 
 ## Diseño completo al azar
 
+El diseño experimental más sencillo es un diseño completamente al azar. Este funciona mejor en situaciones muy controladas y condiciones muy uniformes. Por este motivo, el diseño completamente al azar no se suele utilizar en experimentos de campo. Puede utilizarlo si trabaja en un campo muy uniforme, en un invernadero o en una cámara de crecimiento, o si no tiene ni idea de las condiciones de cultivo. de crecimiento, o si no tiene ni idea de la variabilidad de su campo.
+
+El modelo matemático para los datos provenientes de un diseño completo al azar, con un número diferente de repeticiones para cada nivel del factor puede ser escrito como;
+
+$$
+y_{ij} = \mu +\alpha_i + \epsilon_{ij}
+$$
+
 ## Diseño de bloques completos al azar
+
+
 
 ## Diseño de cuadro latino
 
