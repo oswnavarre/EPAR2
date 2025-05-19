@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.6.42">
+<meta name="generator" content="quarto-1.7.29">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -20,6 +20,41 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
@@ -32,15 +67,16 @@ ul.task-list li input[type="checkbox"] {
 <meta name="quarto:offset" content="./">
 <link href="./references.html" rel="next">
 <link href="./06-regresion.html" rel="prev">
-<script src="site_libs/quarto-html/quarto.js"></script>
+<script src="site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-7da2cd4d758cc02249fc92bd4cce19a4.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-385f272fb3d70211fc91839c944f7a79.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -106,7 +142,7 @@ window.Quarto = {
 <link rel="stylesheet" href="include/webex.css">
 </head>
 
-<body class="nav-sidebar floating">
+<body class="nav-sidebar floating quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -218,9 +254,20 @@ window.Quarto = {
   <li><a href="#tabla-anova" id="toc-tabla-anova" class="nav-link" data-scroll-target="#tabla-anova"><span class="header-section-number">8.3.2</span> Tabla ANOVA</a></li>
   </ul></li>
   <li><a href="#diseño-completo-al-azar" id="toc-diseño-completo-al-azar" class="nav-link" data-scroll-target="#diseño-completo-al-azar"><span class="header-section-number">8.4</span> Diseño completo al azar</a></li>
-  <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.5</span> Diseño de bloques completos al azar</a></li>
-  <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino"><span class="header-section-number">8.6</span> Diseño de cuadro latino</a></li>
-  <li><a href="#pruebas-de-comparaciones-múltiples-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-paramétricas"><span class="header-section-number">8.7</span> Pruebas de comparaciones múltiples paramétricas</a></li>
+  <li><a href="#pruebas-de-comparaciones-múltiples-para-la-media." id="toc-pruebas-de-comparaciones-múltiples-para-la-media." class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-para-la-media."><span class="header-section-number">8.5</span> Pruebas de comparaciones múltiples para la media.</a>
+  <ul>
+  <li><a href="#contrastes-a-priori" id="toc-contrastes-a-priori" class="nav-link" data-scroll-target="#contrastes-a-priori"><span class="header-section-number">8.5.1</span> Contrastes <em>a priori</em></a>
+  <ul class="collapse">
+  <li><a href="#contrastes-ortogonales" id="toc-contrastes-ortogonales" class="nav-link" data-scroll-target="#contrastes-ortogonales"><span class="header-section-number">8.5.1.1</span> Contrastes ortogonales</a></li>
+  <li><a href="#contrastes-polinomiales" id="toc-contrastes-polinomiales" class="nav-link" data-scroll-target="#contrastes-polinomiales"><span class="header-section-number">8.5.1.2</span> Contrastes polinomiales</a></li>
+  </ul></li>
+  <li><a href="#contrastes-a-posteriori" id="toc-contrastes-a-posteriori" class="nav-link" data-scroll-target="#contrastes-a-posteriori"><span class="header-section-number">8.5.2</span> Contrastes <em>a posteriori</em></a>
+  <ul class="collapse">
+  <li><a href="#clasificación-de-pruebas-de-comparación-múltiple-de-medias" id="toc-clasificación-de-pruebas-de-comparación-múltiple-de-medias" class="nav-link" data-scroll-target="#clasificación-de-pruebas-de-comparación-múltiple-de-medias"><span class="header-section-number">8.5.2.1</span> Clasificación de Pruebas de Comparación Múltiple de Medias</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.6</span> Diseño de bloques completos al azar</a></li>
+  <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino"><span class="header-section-number">8.7</span> Diseño de cuadro latino</a></li>
   <li><a href="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" id="toc-pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="nav-link" data-scroll-target="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.8</span> Pruebas no paramétricas equivalentes al análisis de varianza</a></li>
   <li><a href="#pruebas-de-comparaciones-múltiples-no-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.9</span> Pruebas de comparaciones múltiples no paramétricas</a></li>
   <li><a href="#diseño-factorial" id="toc-diseño-factorial" class="nav-link" data-scroll-target="#diseño-factorial"><span class="header-section-number">8.10</span> Diseño factorial</a></li>
@@ -515,15 +562,318 @@ Tabla&nbsp;8.2: Tabla del Análisis de Varianza para el modelo de un único fact
 </section>
 <section id="diseño-completo-al-azar" class="level2" data-number="8.4">
 <h2 data-number="8.4" class="anchored" data-anchor-id="diseño-completo-al-azar"><span class="header-section-number">8.4</span> Diseño completo al azar</h2>
+<p>El diseño experimental más sencillo es un diseño completamente al azar. Este funciona mejor en situaciones muy controladas y condiciones muy uniformes. Por este motivo, el diseño completamente al azar no se suele utilizar en experimentos de campo. Puede utilizarlo si trabaja en un campo muy uniforme, en un invernadero o en una cámara de crecimiento, o si no tiene idea de las condiciones de cultivo. de crecimiento, o de la variabilidad de su campo.</p>
+<p>El modelo matemático para los datos provenientes de un diseño completo al azar, con un número diferente de repeticiones para cada nivel del factor puede ser escrito como;</p>
+<p><span class="math display">\[
+y_{ij} = \mu +\alpha_i + \epsilon_{ij}
+\]</span></p>
+<p>La tabla ANOVA correspondiente a este modelo es la mostrada en <a href="#tbl-anova" class="quarto-xref">Tabla&nbsp;<span>8.2</span></a>.</p>
+<p>En el <a href="02-estdesc.html#exr-siete" class="quarto-xref">Ejercicio&nbsp;<span>3.11</span></a>, se presentó el proyecto de graduación de Alfredo Aguilar y José C. Flores, a modo de ejemplo vamos a analizar los datos correspondientes a la última medición para verificar la existencia de diferencias significativas para la altura entre los tratamientos. Para esto inicialmente se va a crear la variable DDS que era una de las actividades que se debía realizar en el ejercicio mencionado, posteriormente se filtrarán los datos para quedarnos unicámente con las observaciones donde la variable DDS sea igual a 56.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.2     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>datos24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/datos24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"datos"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>datos24004 <span class="ot">&lt;-</span> datos24004 <span class="sc">|&gt;</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">DDS =</span> <span class="fu">as.numeric</span>(Fecha <span class="sc">-</span> Siembra)</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>dds56 <span class="ot">&lt;-</span> datos24004 <span class="sc">|&gt;</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    DDS <span class="sc">==</span> <span class="dv">56</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<p>Finalmente vamos a hacer la prueba ANOVA con la función <code>aov()</code>, la forma de usar la función es: <code>aov(formula, data)</code>. El resultado lo guardamos en una variable y para ver los resultados se usa la función <code>summary()</code>.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Altura <span class="sc">~</span> Tratamiento, <span class="at">data =</span> dds56)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
+Tratamiento  6   3965   660.8   1.257  0.284
+Residuals   98  51518   525.7               </code></pre>
+</div>
+</div>
+<p>Se observa que <span class="math inline">\(SCTr \; (3965) &lt; SCE \; (51518)\)</span>, esto sugiere que <strong>la mayor parte de la variabilidad en la altura no se explica por los tratamientos</strong>. El valor <span class="math inline">\(p\)</span> de la prueba ANOVA es 0.2844 que es mayor a la siginificancia de <span class="math inline">\(0.05\)</span>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Comparamos el valor <span class="math inline">\(p\)</span> contra la <span class="math inline">\(\alpha = 0.05\)</span> por convención y porque funciona muy bien como equilibrio. Siempre es recomendable preguntarse:</p>
+<p><strong>¿Qué es más grave en este contexto: rechazar una hipótesis verdadera o no detectar una diferencia real?</strong></p>
+<p>Como dato histórico. Ronald Fisher, uno de los padres de la estadística moderna, propuso <span class="math inline">\(0.05\)</span> como un umbral práctico.</p>
+</div>
+</div>
+<p>De acuerdo con el valor <span class="math inline">\(p\)</span>, se concluye que no hay evidencia suficiente para afirmar que los tratamientos afectan signficativamente la altura. Las diferencias observadas entre tratamientos podrían explicarse por variabilidad aleatoria.</p>
+<p>Ahora vamos a trabajar con datos del mismo proyecto, pero del rendimiento en toneladas por hectárea de cada tratamiento. En la hoja <code>rendimiento_ha</code> del archivo <code>rend_24004.xlsx</code> se encuentran los datos, las variables presentes en el archivo son:</p>
+<ul>
+<li><strong>Tratamiento</strong>: tratamiento al que se sometió la parcela.</li>
+<li><strong>Parcela</strong>: número de parcela</li>
+<li><strong>peso_promedio</strong>: peso de las mazorcas en gramos.</li>
+<li><strong>plantas_hectarea</strong>: número de plantas estimadas por hectárea.</li>
+<li><strong>Rendimiento_ha</strong>: rendimiento en toneladas por hectárea (t/ha)</li>
+</ul>
+<p>Primero, cargamos los datos. Se resumen los datos, este resumen se presenta en la <a href="#tbl-rendaj" class="quarto-xref">Tabla&nbsp;<span>8.3</span></a>. Además se crea un diagrama de cajas, dicho diagrama se presenta en la <a href="#fig-rendaj" class="quarto-xref">Figura&nbsp;<span>8.1</span></a>. De acuerdo a lo que se observa en la tabla y en la figura, el tratamiento T2 tiene el mayor rendimiento promedio mientras que T6 y T7 tienen medias menores al resto de los tratamientos.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rend24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/rend_24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"rendimiento_ha"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>resu_rend <span class="ot">&lt;-</span> rend24004 <span class="sc">|&gt;</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Tratamiento) <span class="sc">|&gt;</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Media =</span> <span class="fu">mean</span>(Rendimiento_ha),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Desv =</span> <span class="fu">sd</span>(Rendimiento_ha)</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell">
+<div id="tbl-rendaj" class="cell quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-rendaj-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;8.3: Estadística descriptiva del rendimiento
+</figcaption>
+<div aria-describedby="tbl-rendaj-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="cell-output-display">
+<table class="do-not-create-environment cell caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tratamiento</th>
+<th style="text-align: right;">Media</th>
+<th style="text-align: right;">Desv</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">T1</td>
+<td style="text-align: right;">10.231230</td>
+<td style="text-align: right;">2.986958</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">T2</td>
+<td style="text-align: right;">14.919665</td>
+<td style="text-align: right;">3.121122</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">T3</td>
+<td style="text-align: right;">10.313008</td>
+<td style="text-align: right;">3.182815</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">T4</td>
+<td style="text-align: right;">10.076396</td>
+<td style="text-align: right;">1.912941</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">T5</td>
+<td style="text-align: right;">10.979170</td>
+<td style="text-align: right;">3.235731</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">T6</td>
+<td style="text-align: right;">7.888415</td>
+<td style="text-align: right;">2.855456</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">T7</td>
+<td style="text-align: right;">6.650138</td>
+<td style="text-align: right;">1.648281</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</figure>
+</div>
+</div>
+<div class="cell">
+<div class="cell-output-display">
+<div id="fig-rendaj" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-rendaj-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="07-DOE_files/figure-html/fig-rendaj-1.png" class="img-fluid figure-img" width="672">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-rendaj-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;8.1: Rendimiento por tratamiento
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Ahora procedemos a hacer la prueba ANOVA.</p>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Rendimiento_ha <span class="sc">~</span> Tratamiento, <span class="at">data =</span> rend24004)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
+Tratamiento  6    245   40.84   5.314 0.000552 ***
+Residuals   35    269    7.68                     
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
+</div>
+</div>
+<p>Podemos apreciar que <span class="math inline">\(SCTr\)</span> es muy similar a <span class="math inline">\(SCE\)</span>, lo que nos sugiere que los tratamientos están explicando una parte importante de la variabilidad del rendimiento. El valor <span class="math inline">\(p\)</span> es muy bajo, inclusive menor que <span class="math inline">\(0.001\)</span>. Hay suficiente evidencia estadística para rechazar la hipótesis nula. Se concluye que, los tratamientos tienen un efecto significativo sobre el rendimiento. Dicho de otra forma, al menos uno de los tratamientos presenta una media significativamente distinta respecto a los demás.</p>
+<p>¿Qué ocurre cuando la prueba ANOVA es significativa? ¿Cómo averigüar dónde se encuentran las diferencias significativas?</p>
 </section>
-<section id="diseño-de-bloques-completos-al-azar" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.5</span> Diseño de bloques completos al azar</h2>
+<section id="pruebas-de-comparaciones-múltiples-para-la-media." class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-para-la-media."><span class="header-section-number">8.5</span> Pruebas de comparaciones múltiples para la media.</h2>
+<p>Cuando la prueba ANOVA es estadísticamente significativa, el paso posterior consiste en buscar entre qué grupos, poblaciones o tratamientos existen diferencias. En algunos casos el investigador podría tener comparaciones planificadas que desea hacer; en otras situaciones podría no tener idea de que comparaciones debe hacer. En el primer caso se habla de <strong>contrastes planificados o <em>a priori</em></strong>, en el segundo caso nos referimos a <strong>contrastes múltiples o <em>a posteriori</em></strong>.</p>
+<section id="contrastes-a-priori" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="contrastes-a-priori"><span class="header-section-number">8.5.1</span> Contrastes <em>a priori</em></h3>
+<p>Los <strong>contrastes</strong> son combinaciones lineales de medias que permiten evaluar hipótesis específicas sobre los tratamientos o grupos. Los <strong>contrastes planificados</strong> se definen antes de observar los datos, con base en hipótesis sustentadas teóricamente.</p>
+<section id="contrastes-ortogonales" class="level4" data-number="8.5.1.1">
+<h4 data-number="8.5.1.1" class="anchored" data-anchor-id="contrastes-ortogonales"><span class="header-section-number">8.5.1.1</span> Contrastes ortogonales</h4>
+<p>Los contrastes son <strong>ortogonales</strong> cuando son <strong>independientes entre sí</strong> es decir, no existe superposición en la información que aportan. Desde el punto de vista matemático, dos contrastes <span class="math inline">\(C_1\)</span> y <span class="math inline">\(C_2\)</span>, con coeficientes <span class="math inline">\(c_{1i}\)</span> y <span class="math inline">\(c_{2i}\)</span>, son ortogonales si se cumple:</p>
+<p><span class="math display">\[
+\sum_{i=1}^k c_{1i} \cdot c_{2i} = 0
+\]</span></p>
+<p>donde <span class="math inline">\(k\)</span> es un número de grupos. Esto garantiza que cada contraste evalúe un aspecto distinto de las diferencias entre grupos, sin redundancia.</p>
+<section id="reglas-para-definir-contrastes-ortogonales." class="level5" data-number="8.5.1.1.1">
+<h5 data-number="8.5.1.1.1" class="anchored" data-anchor-id="reglas-para-definir-contrastes-ortogonales."><span class="header-section-number">8.5.1.1.1</span> Reglas para definir contrastes ortogonales.</h5>
+<ol type="1">
+<li>Los coeficientes de cada contraste deben sumar cero:</li>
+</ol>
+<p><span class="math display">\[
+\sum c_i = 0
+\]</span></p>
+<ol start="2" type="1">
+<li>Los productos cruzados de coeficientes entre pares de contrastes deben sumar cero:</li>
+</ol>
+<p><span class="math display">\[
+\sum c_{1i} \cdot c_{2i} = 0
+\]</span></p>
+<ol start="3" type="1">
+<li>Se pueden definir máximo <span class="math inline">\(k-1\)</span> contrastes ortogonales si hay <span class="math inline">\(k\)</span> grupos.</li>
+</ol>
 </section>
-<section id="diseño-de-cuadro-latino" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="diseño-de-cuadro-latino"><span class="header-section-number">8.6</span> Diseño de cuadro latino</h2>
 </section>
-<section id="pruebas-de-comparaciones-múltiples-paramétricas" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-paramétricas"><span class="header-section-number">8.7</span> Pruebas de comparaciones múltiples paramétricas</h2>
+<section id="contrastes-polinomiales" class="level4" data-number="8.5.1.2">
+<h4 data-number="8.5.1.2" class="anchored" data-anchor-id="contrastes-polinomiales"><span class="header-section-number">8.5.1.2</span> Contrastes polinomiales</h4>
+<p>Los <strong>contrastes polinomiales</strong> son un caso especial de contrastes ortogonales que se utilizan cuando los <strong>niveles del factor están ordenados cuantitativamente</strong> (por ejemplo, dosis de un fertilizante, niveles de estrés, tiempo de exposición, etc.). Sirven para detectar tendencias como efectos lineales, cuadráticos o cúbicos en los datos.</p>
+<p>Los contrastes polinomiales son una técnica utilizada en el contexto del análisis de varianza (ANOVA) cuando los tratamientos o niveles del factor tienen un <strong>orden natural</strong> y están <strong>espaciados regularmente</strong> (por ejemplo, 0, 1, 2, 3 unidades). Su objetivo es identificar si la relación entre los niveles del factor y la media de respuesta sigue una tendencia lineal, cuadrática, cúbica, etc.</p>
+<p>Los contrastes polinomiales son muy comunes en estudios de:</p>
+<p>Son contrastes ortogonales construidos a partir de funciones polinomiales. Cada constante representa una tendencia específica:</p>
+<ul>
+<li><strong>Lineal</strong>: verifica si hay un aumento o disminución constante.</li>
+<li><strong>Cuadrático</strong>: sirve para detectar curvaturas.</li>
+<li><strong>Cúbico</strong>: detecta cambios más complejos en la pendiente.</li>
+<li>El polinomio puede tener máximo grado <span class="math inline">\(k-1\)</span>, donde <span class="math inline">\(k\)</span> es el número de niveles del factor.</li>
+</ul>
+<p>Para construir contrastes polinomiales, el factor debe ser <strong>cuantitativo</strong> u <strong>ordinal</strong> con niveles <strong>equiespaciados</strong>, además debe haber el mismo número de observaciones por tratamiento o grupo. Los contrastes polinomiales cumplen con la ortogonalidad entre ellos.</p>
+</section>
+</section>
+<section id="contrastes-a-posteriori" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="contrastes-a-posteriori"><span class="header-section-number">8.5.2</span> Contrastes <em>a posteriori</em></h3>
+<section id="clasificación-de-pruebas-de-comparación-múltiple-de-medias" class="level4" data-number="8.5.2.1">
+<h4 data-number="8.5.2.1" class="anchored" data-anchor-id="clasificación-de-pruebas-de-comparación-múltiple-de-medias"><span class="header-section-number">8.5.2.1</span> Clasificación de Pruebas de Comparación Múltiple de Medias</h4>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 20%">
+<col style="width: 25%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th><strong>Criterio</strong></th>
+<th><strong>Tipo de Prueba</strong></th>
+<th><strong>Ejemplos</strong></th>
+<th><strong>Características principales</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Propósito</strong></td>
+<td>Pruebas a priori (planeadas)</td>
+<td>Contrastes ortogonales, polinomiales</td>
+<td>Se planifican antes del análisis. Mayor potencia estadística.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Pruebas a posteriori (no planeadas)</td>
+<td>Tukey HSD, Bonferroni, Duncan, LSD, Scheffé</td>
+<td>Se aplican tras ANOVA significativa. Controlan error tipo I por comparaciones múltiples.</td>
+</tr>
+<tr class="odd">
+<td><strong>Control del Error Tipo I</strong></td>
+<td>Estricto</td>
+<td>Bonferroni, Holm</td>
+<td>Muy conservadoras. Reducen el riesgo de falsos positivos.</td>
+</tr>
+<tr class="even">
+<td></td>
+<td>Moderado</td>
+<td>Tukey HSD, Scheffé</td>
+<td>Buen equilibrio entre control de error y potencia.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Laxo</td>
+<td>Fisher LSD, Duncan</td>
+<td>Mayor riesgo de error tipo I. Más potentes pero menos conservadoras.</td>
+</tr>
+<tr class="even">
+<td><strong>Número de Comparaciones</strong></td>
+<td>Comparaciones por pares</td>
+<td>Tukey HSD, LSD, Duncan</td>
+<td>Comparan todas las medias de dos en dos.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Comparaciones con un control o grupo de referencia</td>
+<td>Dunnett, contrastes planeados</td>
+<td>Comparan grupos experimentales con un grupo base.</td>
+</tr>
+<tr class="even">
+<td><strong>Supuestos estadísticos</strong></td>
+<td>Igualdad de varianzas (homocedasticidad)</td>
+<td>Tukey HSD, Bonferroni, Scheffé</td>
+<td>Requieren homogeneidad de varianzas (revisar con pruebas como Levene).</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>Sin igualdad de varianzas (heterocedasticidad)</td>
+<td>Games-Howell, Tamhane’s T2</td>
+<td>Usadas cuando no se cumple la homocedasticidad.</td>
+</tr>
+<tr class="even">
+<td><strong>Tipo de contraste</strong></td>
+<td>Paramétricas</td>
+<td>Tukey, Bonferroni, Scheffé, LSD</td>
+<td>Requieren normalidad y homocedasticidad.</td>
+</tr>
+<tr class="odd">
+<td></td>
+<td>No paramétricas</td>
+<td>Pruebas de Dunn, Nemenyi, Conover</td>
+<td>Se aplican cuando no se cumplen los supuestos paramétricos.</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="diseño-de-bloques-completos-al-azar" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.6</span> Diseño de bloques completos al azar</h2>
+</section>
+<section id="diseño-de-cuadro-latino" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="diseño-de-cuadro-latino"><span class="header-section-number">8.7</span> Diseño de cuadro latino</h2>
 </section>
 <section id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="level2" data-number="8.8">
 <h2 data-number="8.8" class="anchored" data-anchor-id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.8</span> Pruebas no paramétricas equivalentes al análisis de varianza</h2>
@@ -585,12 +935,12 @@ Tabla&nbsp;8.2: Tabla del Análisis de Varianza para el modelo de un único fact
 </ol>
 <ul>
 <li>Realizar la prueba ANOVA por semana para la comparación de la altura promedio por tratamiento, en una tabla llamada <em>valsp_aov_alt</em> guardar los valores <span class="math inline">\(p\)</span> de cada prueba ANOVA.</li>
-<li>Modificar la tabla <em>stats_alt</em> para que quede como se muestra en la <a href="#tbl-doe2" class="quarto-xref">Tabla&nbsp;<span>8.3</span></a>, el resultado guardarlo en una variable llamada <em>stats_alt2</em>:</li>
+<li>Modificar la tabla <em>stats_alt</em> para que quede como se muestra en la <a href="#tbl-doe2" class="quarto-xref">Tabla&nbsp;<span>8.4</span></a>, el resultado guardarlo en una variable llamada <em>stats_alt2</em>:</li>
 </ul>
 <div id="tbl-doe2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-doe2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.3: Tabla modelo 1.
+Tabla&nbsp;8.4: Tabla modelo 1.
 </figcaption>
 <div aria-describedby="tbl-doe2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -663,12 +1013,12 @@ Tabla&nbsp;8.3: Tabla modelo 1.
 </figure>
 </div>
 <ul>
-<li>Utilizar la función <em>left_join()</em> para unir las tablas <em>stats_alt2</em> y <em>valsp_aov_alt</em>, el resultado guardarlo en una tabla llamada <em>stats_alt3</em>, un ejemplo de la tabla se muestra en la <a href="#tbl-doe2_1" class="quarto-xref">Tabla&nbsp;<span>8.4</span></a> .En el reporte se debe incluir esta última tabla.</li>
+<li>Utilizar la función <em>left_join()</em> para unir las tablas <em>stats_alt2</em> y <em>valsp_aov_alt</em>, el resultado guardarlo en una tabla llamada <em>stats_alt3</em>, un ejemplo de la tabla se muestra en la <a href="#tbl-doe2_1" class="quarto-xref">Tabla&nbsp;<span>8.5</span></a> .En el reporte se debe incluir esta última tabla.</li>
 </ul>
 <div id="tbl-doe2_1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-doe2_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.4: Tabla modelo 2.
+Tabla&nbsp;8.5: Tabla modelo 2.
 </figcaption>
 <div aria-describedby="tbl-doe2_1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -834,13 +1184,13 @@ Tabla&nbsp;8.4: Tabla modelo 2.
 <li>Realice la prueba ANOVA para cada medición para verificar si existen diferencias significativas por tratamiento, tomando en cuenta el bloque. Posteriormente realice la prueba de Bonferroni para verificar donde se encuentran las diferencias significativas. En un objeto llamado <code>groups_trt</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por tratamiento y en un objeto llamado <code>groups_block</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por bloque. Con ayuda de la función <code>left_join</code> una estos dos objetos con las tablas <code>stats_all_long_trt</code> y <code>stats_all_long_bl</code> respectivamente.</li>
 <li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>biomass</strong> dentro de la carpeta <strong>graficos</strong>. Dentro de esta carpeta, guarde para cada variable dentro de cada bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>biomass</strong> deben existir 12 gráficos.</li>
 <li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>blocks</strong> dentro de la carpeta <strong>biomass</strong> creada en el literal anterior. Dentro de esta carpeta, guarde para cada variable separados bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>blocks</strong> deben existir 6 gráficos.</li>
-<li>A partir de la tabla <code>stats_all_long_bl</code>, generar una tabla como la <a href="#tbl-mod1dkmn" class="quarto-xref">Tabla&nbsp;<span>8.5</span></a> y guardarla en <code>stats_all_long_bl2</code>, esta última tabla debe tener 12 filas y 4 columnas. A partir de la tabla <code>stats_all_long_trt</code> generar una tabla como la <a href="#tbl-mod2dkmn" class="quarto-xref">Tabla&nbsp;<span>8.6</span></a> y guardarla en <code>stats_all_long_trt2</code>, esta última tabla debe tener 12 filas y 8 columnas.</li>
+<li>A partir de la tabla <code>stats_all_long_bl</code>, generar una tabla como la <a href="#tbl-mod1dkmn" class="quarto-xref">Tabla&nbsp;<span>8.6</span></a> y guardarla en <code>stats_all_long_bl2</code>, esta última tabla debe tener 12 filas y 4 columnas. A partir de la tabla <code>stats_all_long_trt</code> generar una tabla como la <a href="#tbl-mod2dkmn" class="quarto-xref">Tabla&nbsp;<span>8.7</span></a> y guardarla en <code>stats_all_long_trt2</code>, esta última tabla debe tener 12 filas y 8 columnas.</li>
 <li>Guardar las dos tablas del literal anterior en un archivo llamado <strong>stats_biomass.xlsx</strong>, en hojas llamadas <strong>Blocks</strong> y <strong>Treatments</strong> respectivamente.</li>
 </ol>
 <div id="tbl-mod1dkmn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mod1dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.5: Tabla modelo 1
+Tabla&nbsp;8.6: Tabla modelo 1
 </figcaption>
 <div aria-describedby="tbl-mod1dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -897,7 +1247,7 @@ Tabla&nbsp;8.5: Tabla modelo 1
 <div id="tbl-mod2dkmn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mod2dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.6: Tabla modelo 2
+Tabla&nbsp;8.7: Tabla modelo 2
 </figcaption>
 <div aria-describedby="tbl-mod2dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1432,236 +1782,242 @@ window._ojs.selfContained = false;
 window._ojs.runtime.interpretFromScriptTags();
 </script>
 <script id="quarto-html-after-body" type="application/javascript">
-window.document.addEventListener("DOMContentLoaded", function (event) {
-  const toggleBodyColorMode = (bsSheetEl) => {
-    const mode = bsSheetEl.getAttribute("data-mode");
-    const bodyEl = window.document.querySelector("body");
-    if (mode === "dark") {
-      bodyEl.classList.add("quarto-dark");
-      bodyEl.classList.remove("quarto-light");
-    } else {
-      bodyEl.classList.add("quarto-light");
-      bodyEl.classList.remove("quarto-dark");
-    }
-  }
-  const toggleBodyColorPrimary = () => {
-    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
-    if (bsSheetEl) {
-      toggleBodyColorMode(bsSheetEl);
-    }
-  }
-  toggleBodyColorPrimary();  
-  const icon = "";
-  const anchorJS = new window.AnchorJS();
-  anchorJS.options = {
-    placement: 'right',
-    icon: icon
-  };
-  anchorJS.add('.anchored');
-  const isCodeAnnotation = (el) => {
-    for (const clz of el.classList) {
-      if (clz.startsWith('code-annotation-')) {                     
-        return true;
-      }
-    }
-    return false;
-  }
-  const onCopySuccess = function(e) {
-    // button target
-    const button = e.trigger;
-    // don't keep focus
-    button.blur();
-    // flash "checked"
-    button.classList.add('code-copy-button-checked');
-    var currentTitle = button.getAttribute("title");
-    button.setAttribute("title", "Copiada");
-    let tooltip;
-    if (window.bootstrap) {
-      button.setAttribute("data-bs-toggle", "tooltip");
-      button.setAttribute("data-bs-placement", "left");
-      button.setAttribute("data-bs-title", "Copiada");
-      tooltip = new bootstrap.Tooltip(button, 
-        { trigger: "manual", 
-          customClass: "code-copy-button-tooltip",
-          offset: [0, -8]});
-      tooltip.show();    
-    }
-    setTimeout(function() {
-      if (tooltip) {
-        tooltip.hide();
-        button.removeAttribute("data-bs-title");
-        button.removeAttribute("data-bs-toggle");
-        button.removeAttribute("data-bs-placement");
-      }
-      button.setAttribute("title", currentTitle);
-      button.classList.remove('code-copy-button-checked');
-    }, 1000);
-    // clear code selection
-    e.clearSelection();
-  }
-  const getTextToCopy = function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-  }
-  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
-    text: getTextToCopy
-  });
-  clipboard.on('success', onCopySuccess);
-  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
-    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
-      text: getTextToCopy,
-      container: window.document.getElementById('quarto-embedded-source-code-modal')
-    });
-    clipboardModal.on('success', onCopySuccess);
-  }
-    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
-    var mailtoRegex = new RegExp(/^mailto:/);
-      var filterRegex = new RegExp('/' + window.location.host + '/');
-    var isInternal = (href) => {
-        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
-    }
-    // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
-    for (var i=0; i<links.length; i++) {
-      const link = links[i];
-      if (!isInternal(link.href)) {
-        // undo the damage that might have been done by quarto-nav.js in the case of
-        // links that we want to consider external
-        if (link.dataset.originalHref !== undefined) {
-          link.href = link.dataset.originalHref;
-        }
-      }
-    }
-  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
-    const config = {
-      allowHTML: true,
-      maxWidth: 500,
-      delay: 100,
-      arrow: false,
-      appendTo: function(el) {
-          return el.parentElement;
-      },
-      interactive: true,
-      interactiveBorder: 10,
-      theme: 'quarto',
-      placement: 'bottom-start',
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
     };
-    if (contentFn) {
-      config.content = contentFn;
-    }
-    if (onTriggerFn) {
-      config.onTrigger = onTriggerFn;
-    }
-    if (onUntriggerFn) {
-      config.onUntrigger = onUntriggerFn;
-    }
-    window.tippy(el, config); 
-  }
-  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
-  for (var i=0; i<noterefs.length; i++) {
-    const ref = noterefs[i];
-    tippyHover(ref, function() {
-      // use id or data attribute instead here
-      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
-      try { href = new URL(href).hash; } catch {}
-      const id = href.replace(/^#\/?/, "");
-      const note = window.document.getElementById(id);
-      if (note) {
-        return note.innerHTML;
-      } else {
-        return "";
-      }
-    });
-  }
-  const xrefs = window.document.querySelectorAll('a.quarto-xref');
-  const processXRef = (id, note) => {
-    // Strip column container classes
-    const stripColumnClz = (el) => {
-      el.classList.remove("page-full", "page-columns");
-      if (el.children) {
-        for (const child of el.children) {
-          stripColumnClz(child);
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
         }
       }
+      return false;
     }
-    stripColumnClz(note)
-    if (id === null || id.startsWith('sec-')) {
-      // Special case sections, only their first couple elements
-      const container = document.createElement("div");
-      if (note.children && note.children.length > 2) {
-        container.appendChild(note.children[0].cloneNode(true));
-        for (let i = 1; i < note.children.length; i++) {
-          const child = note.children[i];
-          if (child.tagName === "P" && child.innerText === "") {
-            continue;
-          } else {
-            container.appendChild(child.cloneNode(true));
-            break;
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiada");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiada");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
           }
         }
-        if (window.Quarto?.typesetMath) {
-          window.Quarto.typesetMath(container);
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
         }
-        return container.innerHTML
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
       } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
         if (window.Quarto?.typesetMath) {
           window.Quarto.typesetMath(note);
         }
-        return note.innerHTML;
-      }
-    } else {
-      // Remove any anchor links if they are present
-      const anchorLink = note.querySelector('a.anchorjs-link');
-      if (anchorLink) {
-        anchorLink.remove();
-      }
-      if (window.Quarto?.typesetMath) {
-        window.Quarto.typesetMath(note);
-      }
-      if (note.classList.contains("callout")) {
-        return note.outerHTML;
-      } else {
-        return note.innerHTML;
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
       }
     }
-  }
-  for (var i=0; i<xrefs.length; i++) {
-    const xref = xrefs[i];
-    tippyHover(xref, undefined, function(instance) {
-      instance.disable();
-      let url = xref.getAttribute('href');
-      let hash = undefined; 
-      if (url.startsWith('#')) {
-        hash = url;
-      } else {
-        try { hash = new URL(url).hash; } catch {}
-      }
-      if (hash) {
-        const id = hash.replace(/^#\/?/, "");
-        const note = window.document.getElementById(id);
-        if (note !== null) {
-          try {
-            const html = processXRef(id, note.cloneNode(true));
-            instance.setContent(html);
-          } finally {
-            instance.enable();
-            instance.show();
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
           }
         } else {
-          // See if we can fetch this
-          fetch(url.split('#')[0])
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
           .then(res => res.text())
           .then(html => {
             const parser = new DOMParser();
             const htmlDoc = parser.parseFromString(html, "text/html");
-            const note = htmlDoc.getElementById(id);
+            const note = htmlDoc.querySelector('main.content');
             if (note !== null) {
-              const html = processXRef(id, note);
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
               instance.setContent(html);
             } 
           }).finally(() => {
@@ -1669,185 +2025,161 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             instance.show();
           });
         }
-      } else {
-        // See if we can fetch a full url (with no hash to target)
-        // This is a special case and we should probably do some content thinning / targeting
-        fetch(url)
-        .then(res => res.text())
-        .then(html => {
-          const parser = new DOMParser();
-          const htmlDoc = parser.parseFromString(html, "text/html");
-          const note = htmlDoc.querySelector('main.content');
-          if (note !== null) {
-            // This should only happen for chapter cross references
-            // (since there is no id in the URL)
-            // remove the first header
-            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
-              note.children[0].remove();
-            }
-            const html = processXRef(null, note);
-            instance.setContent(html);
-          } 
-        }).finally(() => {
-          instance.enable();
-          instance.show();
-        });
-      }
-    }, function(instance) {
-    });
-  }
-      let selectedAnnoteEl;
-      const selectorForAnnotation = ( cell, annotation) => {
-        let cellAttr = 'data-code-cell="' + cell + '"';
-        let lineAttr = 'data-code-annotation="' +  annotation + '"';
-        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
-        return selector;
-      }
-      const selectCodeLines = (annoteEl) => {
-        const doc = window.document;
-        const targetCell = annoteEl.getAttribute("data-target-cell");
-        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
-        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
-        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
-        const lineIds = lines.map((line) => {
-          return targetCell + "-" + line;
-        })
-        let top = null;
-        let height = null;
-        let parent = null;
-        if (lineIds.length > 0) {
-            //compute the position of the single el (top and bottom and make a div)
-            const el = window.document.getElementById(lineIds[0]);
-            top = el.offsetTop;
-            height = el.offsetHeight;
-            parent = el.parentElement.parentElement;
-          if (lineIds.length > 1) {
-            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
-            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
-            height = bottom - top;
-          }
-          if (top !== null && height !== null && parent !== null) {
-            // cook up a div (if necessary) and position it 
-            let div = window.document.getElementById("code-annotation-line-highlight");
-            if (div === null) {
-              div = window.document.createElement("div");
-              div.setAttribute("id", "code-annotation-line-highlight");
-              div.style.position = 'absolute';
-              parent.appendChild(div);
-            }
-            div.style.top = top - 2 + "px";
-            div.style.height = height + 4 + "px";
-            div.style.left = 0;
-            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
-            if (gutterDiv === null) {
-              gutterDiv = window.document.createElement("div");
-              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
-              gutterDiv.style.position = 'absolute';
-              const codeCell = window.document.getElementById(targetCell);
-              const gutter = codeCell.querySelector('.code-annotation-gutter');
-              gutter.appendChild(gutterDiv);
-            }
-            gutterDiv.style.top = top - 2 + "px";
-            gutterDiv.style.height = height + 4 + "px";
-          }
-          selectedAnnoteEl = annoteEl;
-        }
-      };
-      const unselectCodeLines = () => {
-        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
-        elementsIds.forEach((elId) => {
-          const div = window.document.getElementById(elId);
-          if (div) {
-            div.remove();
-          }
-        });
-        selectedAnnoteEl = undefined;
-      };
-        // Handle positioning of the toggle
-    window.addEventListener(
-      "resize",
-      throttle(() => {
-        elRect = undefined;
-        if (selectedAnnoteEl) {
-          selectCodeLines(selectedAnnoteEl);
-        }
-      }, 10)
-    );
-    function throttle(fn, ms) {
-    let throttle = false;
-    let timer;
-      return (...args) => {
-        if(!throttle) { // first call gets through
-            fn.apply(this, args);
-            throttle = true;
-        } else { // all the others get throttled
-            if(timer) clearTimeout(timer); // cancel #2
-            timer = setTimeout(() => {
-              fn.apply(this, args);
-              timer = throttle = false;
-            }, ms);
-        }
-      };
-    }
-      // Attach click handler to the DT
-      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
-      for (const annoteDlNode of annoteDls) {
-        annoteDlNode.addEventListener('click', (event) => {
-          const clickedEl = event.target;
-          if (clickedEl !== selectedAnnoteEl) {
-            unselectCodeLines();
-            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
-            if (activeEl) {
-              activeEl.classList.remove('code-annotation-active');
-            }
-            selectCodeLines(clickedEl);
-            clickedEl.classList.add('code-annotation-active');
-          } else {
-            // Unselect the line
-            unselectCodeLines();
-            clickedEl.classList.remove('code-annotation-active');
-          }
-        });
-      }
-  const findCites = (el) => {
-    const parentEl = el.parentElement;
-    if (parentEl) {
-      const cites = parentEl.dataset.cites;
-      if (cites) {
-        return {
-          el,
-          cites: cites.split(' ')
-        };
-      } else {
-        return findCites(el.parentElement)
-      }
-    } else {
-      return undefined;
-    }
-  };
-  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
-  for (var i=0; i<bibliorefs.length; i++) {
-    const ref = bibliorefs[i];
-    const citeInfo = findCites(ref);
-    if (citeInfo) {
-      tippyHover(citeInfo.el, function() {
-        var popup = window.document.createElement('div');
-        citeInfo.cites.forEach(function(cite) {
-          var citeDiv = window.document.createElement('div');
-          citeDiv.classList.add('hanging-indent');
-          citeDiv.classList.add('csl-entry');
-          var biblioDiv = window.document.getElementById('ref-' + cite);
-          if (biblioDiv) {
-            citeDiv.innerHTML = biblioDiv.innerHTML;
-          }
-          popup.appendChild(citeDiv);
-        });
-        return popup.innerHTML;
+      }, function(instance) {
       });
     }
-  }
-});
-</script>
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="./06-regresion.html" class="pagination-link" aria-label="Correlación y Regresión">

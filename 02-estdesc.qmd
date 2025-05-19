@@ -74,7 +74,7 @@ h4 <- h3 %>%
 write_xlsx(h4,"resultados/tablafrec1.xlsx")
 ```
 
-```{r tabla3, echo=FALSE}
+```{r, echo=FALSE}
 #| label: tbl-girasoles
 #| tbl-cap: "Ejemplo de tabla de frecuencia para variables cuantitativas"
 
@@ -1456,7 +1456,7 @@ h.  Con el conjunto *descdiam*, crear un gráfico de líneas que muestre la evol
 i.  Con el conjunto de datos previos a la cosecha crear diagramas de caja para la altura por variedad y medición. Guardar el gráfico con el nombre *boxdiam.png* con 6 pulgadas de ancho por 5 pulgadas de alto.
 
 ::: {#exr-siete}
-En el proyecto de graduación de Alfredo Aguilar y José C. Flores, se propone un protocolo de investigación para evaluar la eficacia de tratamientos biológicos y químicos para el control del hongo *Fusarium verticillioides* en el cultivo de maíz. El estudio se llevó a cabo utilizando un diseño experimental de bloques completos al azar con dos tratamientos de semilla cada uno en tres diferentes dosis de cada uno (control, biológico y químico). Los tratamientos biológicos consistieron en tres diferentes dosis del hongo *Trichoderma harzianum/viride*. (CEPA TR-02) con una formulación de *T. harzianum/viride* $2 \times 10^2$ esporas por gramo, de la empresa TRICHO-ECO. Mientras que los tratamientos químicos fueron del fungicida AMISTAR 50 WG, compuesto por Azoxystrobin.Las dosis del tratamiento biológico fueron en las concentraciones de $1 \times 10^6$ esporas por mL para el primero, para el segundo de $1 \times 10^8$ esporas por mL y para el tercero con $1 \times 10^{10}$ esporas por mL. En cuanto al químico para el primer tratamiento 150 g, para el segundo 225 g y el tercero de 300 g. Durante el desarrollo del maíz, se evaluaron variables como altura de planta, número de hojas, germinación, vigor, presencia de fumonisinas, longitud y peso de raíces y afectación en tallos, peso de mazorca y rendimiento. En la hoja *datos* del archivo *datos24004.xlsx* se encuentran las siguientes variables del proyecto:
+En el proyecto de graduación de Alfredo Aguilar y José C. Flores, se propone un protocolo de investigación para evaluar la eficacia de tratamientos biológicos y químicos para el control del hongo *Fusarium verticillioides* en el cultivo de maíz. El estudio se llevó a cabo utilizando un diseño experimental completo al azar con dos tratamientos de semilla cada uno en tres diferentes dosis de cada uno (control, biológico y químico). Los tratamientos biológicos consistieron en tres diferentes dosis del hongo *Trichoderma harzianum/viride*. (CEPA TR-02) con una formulación de *T. harzianum/viride* $2 \times 10^2$ esporas por gramo, de la empresa TRICHO-ECO. Mientras que los tratamientos químicos fueron del fungicida AMISTAR 50 WG, compuesto por Azoxystrobin. Las dosis del tratamiento biológico fueron en las concentraciones de $1 \times 10^6$ esporas por mL para el primero, para el segundo de $1 \times 10^8$ esporas por mL y para el tercero con $1 \times 10^{10}$ esporas por mL. En cuanto al químico para el primer tratamiento 150 g, para el segundo 225 g y el tercero de 300 g. Durante el desarrollo del maíz, se evaluaron variables como altura de planta, número de hojas, germinación, vigor, presencia de fumonisinas, longitud y peso de raíces y afectación en tallos, peso de mazorca y rendimiento. En la hoja *datos* del archivo *datos24004.xlsx* se encuentran las siguientes variables del proyecto:
 
 - **Tratamiento**: tratamiento al que se sometió la planta.
 - **Planta**: número de planta dentro del tratamiento. 
