@@ -387,7 +387,7 @@ En la hoja _Langostinos_ del archivo _baseCB.xlsx_ se almacenan los datos de lon
   n. En la medición 2 para los langostinos sometidos al tratamiento 2 ¿el peso promedio es mayor a 2.60 g?
   o. En la medición 3 para los langostinos sometidos al tratamiento 1 ¿el peso promedio es diferente de 3.00 g?
   p. En la medición 8 ¿son diferentes los pesos promedios de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2?
-  q. Desde la medición 0 a la medición 9 ¿son diferentes los pesos promedios de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2? Guarde los resultados en una tabla llamada _valoresp_.
+  q. Desde la medición 0 a la medición 8 ¿son diferentes los pesos promedios de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2? Guarde los resultados en una tabla llamada _valoresp_.
   r. Guarde las tablas _descpeso_ y _valoresp_ en la carpeta resultados con el nombre _estadisticaspesos.xlsx_, las estadísticas descriptivas deben ir en una hoja llamada _descriptivas_ y los valores _p_ en una hoja llamada _pruebat_.
 
 **2. Análisis de la longitud:** Para esta sección, debe crear un nuevo documento QUARTO, llamado __reporte_long.qmd__.
@@ -400,7 +400,7 @@ En la hoja _Langostinos_ del archivo _baseCB.xlsx_ se almacenan los datos de lon
   f. En la medición 2 para los langostinos sometidos al tratamiento 2 ¿la longitud promedio es menor a 5.90 cm?
   g. En la medición 3 para los langostinos sometidos al tratamiento 1 ¿la longitud promedio es diferente de 6.20 cm?
   h. En la medición 8 ¿son diferentes las longitudes promedio de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2?
-  i. Desde la medición 0 a la medición 9 ¿son diferentes las longitudes promedio de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2? Guarde los resultados en una tabla llamada _valoresp_long_.
+  i. Desde la medición 0 a la medición 8 ¿son diferentes las longitudes promedio de los langostinos que recibieron el tratamiento 1 de los que recibieron el tratamiento 2? Guarde los resultados en una tabla llamada _valoresp_long_.
   j. Guarde las tablas _desclong_ y _valoresp_long_ en la carpeta resultados con el nombre _estadisticaslong.xlsx_, las estadísticas descriptivas deben ir en una hoja llamada _descriptivas_ y los valores _p_ en una hoja llamada _pruebat_.
 
 ::: {#exr-inf2}

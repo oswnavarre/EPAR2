@@ -9,9 +9,22 @@ library(DescTools)
 library(cowplot)
 library(docxtools)
 library(formatdown)
+library(webexercises)
 ```
 
 # Estadística Descriptiva {#estdesc}
+
+## Objetivos del capítulo {#obj-estdesc}
+
+Al finalizar este capítulo, el lector será capaz de:
+
+- Comprender el propósito de la **estadística descriptiva** como primera etapa del análisis de datos.
+- Construir e interpretar **tablas de frecuencia** para variables cualitativas y cuantitativas.
+- Seleccionar y elaborar **gráficos adecuados** según el tipo de variable (barras, histogramas, densidad, cajas y líneas).
+- Calcular e interpretar **medidas numéricas de resumen**: tendencia central, dispersión y posición.
+- Relacionar tablas, gráficos y medidas numéricas para **describir conjuntos de datos reales**.
+- Utilizar R y RStudio para realizar análisis descriptivos reproducibles.
+- Preparar los datos y los resultados descriptivos como base para **análisis inferencial y modelos estadísticos** posteriores.
 
 ## Tablas y gráficos para resumir datos
 
@@ -49,6 +62,27 @@ tbl1 <- data.frame(
 
 kable(tbl1,booktabs = TRUE,format = "pandoc")
 ```
+
+::: callout-tip
+**Con tidyverse**, el flujo típico para tablas cualitativas es:  
+`count()` → calcular proporciones → ordenar → presentar.
+:::
+
+```{r}
+#| label: tbl-cualitativas-count
+#| tbl-cap: "La misma tabla usando count()"
+tbl1b <- tibble(
+  Variedad = c(rep("Variedad 1", 20), rep("Variedad 2", 14), rep("Variedad 3", 16))
+) |>
+  count(Variedad, name = "Frecuencia") |>
+  mutate(
+    Frec_rel = Frecuencia / sum(Frecuencia),
+    Porcentaje = 100 * Frec_rel
+  )
+
+kable(tbl1b, booktabs = TRUE, digits = 3)
+```
+
 
 ### Tablas para variables cuantitativas
 
@@ -97,6 +131,41 @@ Exiten expresiones matemáticas que nos permiten conocer el número de clases ne
 El ingeniero Yorky Gil realizó un experimento con el fin de estimar una curva fenológica para el cultivo de girasol en condiciones del trópico humedo. Recogió datos durante 8 semanas de la altura en centímetros y el número de hojas de las plantas de girasol de determinada variedad. En la @tbl-girasoles se muestra la distribución de frecuencias de la altura para la semana 8. Este es un ejemplo de una tabla de frecuencias para variables cuantitativas. En secciones posteriores discutiremos paso a paso la elaboración de esta tabla.
 
 De la interpretación de esta tabla se obtienen datos importantes. Si nos fijamos en la sexta clase podemos afirmar que en la semana $8$, $78$ observaciones es decir el $32.4\%$ de las plantas tenían una altura entre $130$ y $154$ centímetros. De la misma clase podemos decir que $196$ plantas o el $81.3 \%$ tienen una altura menor a $154$ centímetros. En la última clase se observa que la frecuencia absoluta acumulada es de $241$, este número corresponde al $100\%$ de las observaciones.
+
+Una forma sencilla en tidyverse es construir clases con `cut()` y luego contar.
+
+```{r}
+#| label: tbl-girasoles2
+#| tbl-cap: "Tabla de frecuencias (Altura) - Semana 8 (girasoles)"
+#| message: false
+#| warning: false
+
+library(tidyverse)
+library(agricolae)
+
+girasoles <- read.csv("data/girasoles.csv", sep = ";", dec = ",") |>
+  filter(Semana == 8)
+
+# cortes sugeridos por hist() (regla automática)
+breaks_alt <- with(girasoles,graph.freq(Altura,plot=FALSE))$breaks
+
+tbl_alt <- tibble(Altura = girasoles$Altura) |>
+  mutate(Clase = cut(Altura, breaks = breaks_alt, right = FALSE)) |>
+  count(Clase, name = "Frec") |>
+  mutate(
+    Marca_clase = map_dbl(str_split(as.character(Clase), ","), ~ {
+      # extraer límites de "[a,b)" o "[a,b]"
+      li <- readr::parse_number(.x[1])
+      ls <- readr::parse_number(.x[2])
+      (li + ls) / 2
+    }),
+    Frec_rel = Frec / sum(Frec),
+    Frec_acum = cumsum(Frec),
+    Rel_acum = cumsum(Frec_rel)
+  )
+
+kable(tbl_alt, booktabs = TRUE, digits = 3)
+```
 
 
 ### Gráficos
@@ -1207,6 +1276,68 @@ g2
 ```
 
 ## Ejercicios {.unnumbered}
+
+
+::: {#exr-grafico-adecuado}
+
+**¿Qué gráfico usarías?**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q1 <- "Quieres comparar la frecuencia de 6 variedades de frijol (categorías)."
+q1c <- c(answer = "Gráfico de barras", "Histograma", "Densidad", "Gráfico de líneas")
+
+q2 <- "Quieres ver la forma de la distribución del peso (g) de 200 frutos (numérica continua)."
+q2c <- c("Gráfico de barras", answer = "Histograma o densidad", "Diagrama de dispersión", "Mapa de calor")
+
+q3 <- "Quieres comparar la distribución de altura (cm) entre 4 tratamientos."
+q3c <- c("Histograma", answer = "Diagrama de caja", "Gráfico circular", "Gráfico de barras simple")
+
+cat(
+  q1, longmcq(q1c), "\n\n",
+  q2, longmcq(q2c), "\n\n",
+  q3, longmcq(q3c)
+)
+```
+
+:::
+:::
+
+
+
+::: {#exr-resumen-conceptual}
+
+**Medidas de tendencia y dispersión**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q4 <- "Si existen valores atípicos muy grandes, ¿qué medida suele ser más robusta?"
+q4c <- c("Media", answer = "Mediana", "Media geométrica", "Varianza")
+
+q5 <- "La desviación estándar se interpreta en las mismas unidades que la variable."
+q5c <- c(answer = "Verdadero", "Falso")
+
+q6 <- "El rango intercuartílico (IQR) es:"
+q6c <- c("Q1 - Q3", answer = "Q3 - Q1", "Máximo - mínimo", "Media - mediana")
+
+cat(
+  q4, longmcq(q4c), "\n\n",
+  q5, longmcq(q5c), "\n\n",
+  q6, longmcq(q6c)
+)
+```
+
+:::
+:::
+
 
 ::: {#exr-primero}
 En la @tbl-ejer1_1 se muestran los datos de la altura de 40 girasoles. Se pide:

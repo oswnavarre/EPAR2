@@ -555,4 +555,5 @@ En la hoja _nutriconal_ del archivo _nutricional_24017.xlsx_ se encuentran los d
 - MO: materia orgánica (%)
 - CHOs: carbohidratos totales (%)
 :::
+
 Se pide, analizar el efecto del grado de madurez y del componente junto con la interacción entre la madurez y el componente sobre las variables respuesta. 

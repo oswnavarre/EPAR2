@@ -13,26 +13,38 @@ library(formatdown)
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
-
 # R y RStudio
+
+## Objetivos del capítulo
+
+Al finalizar este capítulo, el lector será capaz de:
+
+- Comprender qué es **R** y para qué se utiliza en el análisis de datos
+- Diferenciar claramente entre **R** y **RStudio**
+- Utilizar la interfaz básica de **RStudio**
+- Instalar paquetes en R (desde consola, scripts y la interfaz)
+- Comprender la sintaxis básica del lenguaje R
+- Reconocer y crear los principales tipos de objetos en R (vectores, listas, matrices y *data frames*)
+
+---
 
 ## ¿Qué es R y por qué lo vamos a usar?
 
-R es un lenguaje de programación que tiene más de 30 años de historia, mientras que RStudio es uno de los tantos entornos de desarrollo integrados que existen para trabajar con R. Es común escuchar las preguntas *¿por qué trabajar con R cuando existen programas mucho más "sencillos" para hacer análisis de datos?*, *¿para qué complicar a los estudiantes enseñándoles a programar si además deben aprender estadística?*. Existen muchas respuestas a esas preguntas, sin embargo, a continuación se presenta una lista de razones que fortalecen la idea de porqué usar R, algunas de estas ideas son expuestas en @tucker_teaching_2022 y @agwu_using_2018.
+R es un lenguaje de programación que tiene más de 30 años de historia, mientras que RStudio es uno de los tantos entornos de desarrollo integrados que existen para trabajar con R. Es común escuchar las preguntas *¿por qué trabajar con R cuando existen programas mucho más "sencillos" para hacer análisis de datos?*, *¿para qué complicar a los estudiantes enseñándoles a programar si además deben aprender estadística?*. Existen muchas respuestas a esas preguntas; a continuación se presenta una lista de razones que fortalecen la idea de por qué usar R, algunas de estas ideas son expuestas en @tucker_teaching_2022 y @agwu_using_2018.
 
 1.  R es un programa libre, gratuito y de desarrollo independiente disponible para la mayoría de sistemas operativos lo que reduce las barreras de acceso.
 2.  Es flexible y poderoso tanto para simulación como para el análisis de datos.
 3.  El hecho de que involucre escribir código permite reproducir los análisis hechos por cualquier persona sin ninguna condición o limitante.
 
-Escribir código en R ayuda a que el pensamiento estadístico y los procesos de análisis estadístico sean más visibles y reproducibles; es decir que usar R, podría ofrecer una herramienta adicional de representación que permite construir el entendimiento de los conceptos (@tucker_teaching_2022).
+Escribir código en R ayuda a que el pensamiento estadístico y los procesos de análisis estadístico sean más visibles y reproducibles; es decir que usar R podría ofrecer una herramienta adicional de representación que permite construir el entendimiento de los conceptos (@tucker_teaching_2022).
 
-Cuando se instala R por defecto vienen incorporados *paquetes* que permiten importar datos, ajustar y evaluar modelos, realizar gráficos. Mas, es posible añadir funcionalidades a R instalando y cargando nuevos *paquetes*, un *paquete* es una colección de funciones de R, datos y código compilado en un formato bien definido, creado para agregar alguna funcionalidad específica (@contributors_packages_2020). En la actualidad existen más de 20000 paquetes (y creciendo) para todo tipo de análisis estadístico, gran parte de los nuevos resultados o metodologías estadísticas publicadas en revistas de investigación generalmente son desarrolladas en paquetes de R lo que hace fácil acceder a las últimas técnicas estadísticas.
+Cuando se instala R por defecto vienen incorporados *paquetes* que permiten importar datos, ajustar y evaluar modelos, realizar gráficos. Mas, es posible añadir funcionalidades a R instalando y cargando nuevos *paquetes*. Un *paquete* es una colección de funciones de R, datos y código compilado en un formato bien definido, creado para agregar alguna funcionalidad específica (@contributors_packages_2020). En la actualidad existen más de 20000 paquetes (y creciendo) para todo tipo de análisis estadístico; gran parte de los nuevos resultados o metodologías estadísticas publicadas en revistas de investigación generalmente son desarrolladas en paquetes de R, lo que facilita el acceso a técnicas estadísticas recientes.
 
-## RStudio.
+## RStudio
 
-La interfaz de R es muy básica y para personas interesadas (u obligadas) a aprender este lenguaje de programación que no están familiarizados con algún otro lenguaje, usar esta interfaz puede resultar frustrante al punto de querer desistir de aprender R. Rstudio es un entorno de desarrollo integrado (IDE) gratuito y de código abierto para R. Incluye una consola, un editor de resaltado de sintaxis que admite la ejecución directa de código, así como herramientas para la graficación, revisar el historial, gestionar conexiones, la depuración del código y la gestión del espacio o directorio de trabajo (@navar2019).
+La interfaz de R es muy básica y para personas interesadas (u obligadas) a aprender este lenguaje de programación que no están familiarizados con algún otro lenguaje, usar esta interfaz puede resultar frustrante al punto de querer desistir de aprender R. RStudio es un entorno de desarrollo integrado (IDE) gratuito y de código abierto para R. Incluye una consola, un editor de resaltado de sintaxis que admite la ejecución directa de código, así como herramientas para la graficación, revisar el historial, gestionar conexiones, la depuración del código y la gestión del espacio o directorio de trabajo (@navar2019).
 
-En @mcconville_statistical se hace una analogía interesante en la que se menciona que R se puede entender como el motor de un vehículo, mientras que Rstudio es el tablero del vehículo que permite tener a la mano todas las funcionalidades del mismo.
+En @mcconville_statistical se hace una analogía interesante en la que se menciona que R se puede entender como el motor de un vehículo, mientras que RStudio es el tablero del vehículo que permite tener a la mano todas las funcionalidades del mismo.
 
 ## Poniendo todo a punto para empezar
 
@@ -46,7 +58,7 @@ A continuación se procede a descargar RStudio de la página <https://posit.co/d
 
 ![Página para descargar RStudio](imagenes/pagRstudio.png){#fig-instRs width="90%"}
 
-En la @fig-consolas se muestran las interfaces de R y RStudio respectivamente, a lo largo de este libro aprenderemos el lenguaje de programación R utilizando RStudio por lo que en la siguiente sección exploraremos la interfaz del segundo programa.
+En la @fig-consolas se muestran las interfaces de R y RStudio respectivamente. A lo largo de este libro aprenderemos el lenguaje de programación R utilizando RStudio, por lo que en la siguiente sección exploraremos la interfaz del segundo programa.
 
 ::: {#fig-consolas layout-ncol=2}
 
@@ -62,8 +74,6 @@ Interfaces de R y RStudio
     title="Instalación de R y RStudio"
 >}}
 
-
-
 ### Conociendo la interfaz de RStudio
 
 Cuando se abre RStudio por primera vez se observan 3 paneles. Sin embargo, cuando se comienza a usar el programa con frecuencia veremos 4 paneles. Por defecto en la parte superior izquierda aparece el *panel de fuente o scripts*, en la parte superior derecha el *panel de espacio de trabajo o ambiente*, en la parte inferior izquierda aparece la *consola* y en la parte inferior derecha aparece el *panel de archivos, gráficos, paquetes y ayuda*. En la @fig-panes se presenta la ubicación de estos cuatro paneles. A continuación una descripción de cada uno de estos paneles.
@@ -72,7 +82,7 @@ Cuando se abre RStudio por primera vez se observan 3 paneles. Sin embargo, cuand
 
 1.  La consola de R, ubicada en la parte inferior izquierda, es donde se envían los comandos para ser ejecutados.
 
-2.  El panel de fuente o scripts, ubicado en la parte superior izquierda, es desde donde la mayoría de las veces se enviará el código a la consola donde R lo ejecutará. Para crear un script hay dos opciones. La primera es en la barra de herramientas principal escoger `File | New File | R Script`, la segunda opción es escribir la combinación de teclas (en Windows) `Ctrl + Shift + N` o `Cmd + Shift + N` (en Mac)
+2.  El panel de fuente o scripts, ubicado en la parte superior izquierda, es desde donde la mayoría de las veces se enviará el código a la consola donde R lo ejecutará. Para crear un script hay dos opciones. La primera es en la barra de herramientas principal escoger `File | New File | R Script`, la segunda opción es escribir la combinación de teclas (en Windows) `Ctrl + Shift + N` o `Cmd + Shift + N` (en Mac).
 
 3.  El panel de espacio de trabajo o ambiente, ubicado en la parte superior derecha, además del ambiente tiene pestañas para el historial, las conexiones y tutoriales. Sin embargo, solo detallaremos del ambiente y el historial. En el ambiente se van mostrando las variables, los objetos y los valores que se van creando o calculando. En el historial se muestran los comandos que se han enviado a R en la sesión de trabajo.
 
@@ -106,22 +116,21 @@ Antes de instalar los paquetes vamos a describir brevemente algunos de los paque
 
 ### Desde la consola o un script {#sec-inspac}
 
-Para instalar paquetes desde la consola o desde un script se debe utilizar la función `ìnstall.packages("nombrepaquete")` así si se quiere instalar el paquete **tidyverse** se escribe en la consola o en un script 
-`ìnstall.packages("tidyverse")`.
+Para instalar paquetes desde la consola o desde un script se debe utilizar la función `install.packages("nombrepaquete")`. Por ejemplo, si se quiere instalar el paquete **tidyverse** se escribe en la consola o en un script:
 
-Para escribir código en la consola de R, debemos identificar el **prompt** (`>`), este nos indica que R está esperando instrucciones para ser ejecutadas.
+`install.packages("tidyverse")`
+
+Para escribir código en la consola de R, debemos identificar el **prompt** (`>`); este nos indica que R está esperando instrucciones para ser ejecutadas.
 
 ![Consola de R y **prompt**](imagenes/consola.png){#fig-consola width="75%"}
 
-
 Un script es un archivo de texto que contiene los mismos comandos que ingresaría en la línea de comandos de R. Una vez abierto RStudio, para crear un script hay dos opciones. La primera es en la barra de herramientas principal escoger `File | New File | R Script`, la segunda opción es escribir la combinación de teclas (en Windows) `Ctrl + Shift + N` o `Cmd + Shift + N` (en Mac).
 
-Cuando el script está creado se puede escribir código como se visualiza a la derecha de la @fig-script. Para ejecutar el código se puede ubicar en cualquier parte de la línea y presionar la combinación de teclas `Ctrl + Enter`o `Cmd + Enter`, otra opción es dar clic en el botón `Run` ubicado en la parte superior derecha del script (encerrada en rectángulo rojo de la @fig-script2). Si solo es una línea de código no es necesario seleccionarla para poder ejecutarla. Al momento de ejecutar el código, el código se ejecuta en la consola (rectángulo azul de la @fig-script2) y además se visualiza el objeto en el ambiente (rectángulo negro de la @fig-script2).
+Cuando el script está creado se puede escribir código como se visualiza a la derecha de la @fig-script. Para ejecutar el código se puede ubicar en cualquier parte de la línea y presionar la combinación de teclas `Ctrl + Enter` o `Cmd + Enter`. Otra opción es dar clic en el botón `Run` ubicado en la parte superior derecha del script (encerrada en rectángulo rojo de la @fig-script2). Si solo es una línea de código no es necesario seleccionarla para poder ejecutarla. Al momento de ejecutar el código, el código se ejecuta en la consola (rectángulo azul de la @fig-script2) y además se visualiza el objeto en el ambiente (rectángulo negro de la @fig-script2).
 
 ![Creación de un script](imagenes/script.png){#fig-script width="75%"}
 
 ![Ejecución de comandos desde un script](imagenes/script2.png){#fig-script2 width="50%"}
-
 
 ![Combinación de teclas para ejecutar código desde un script (Windows)](imagenes/ctrl_enter.png){#fig-ejewindows width="50%"}
 
@@ -129,7 +138,7 @@ Cuando el script está creado se puede escribir código como se visualiza a la d
 
 ### Desde la pestaña de paquetes o desde la barra de menú
 
-En el panel de archivos, gráficos, paquetes y ayuda se escoge la pestaña `Packages` y luego se da clic en la opción `Ìnstall`, aparece una ventana como la que se muestra en la @fig-packages. En caja de texto titulada `Packages (separate multiple with space or comma)` se deben escribir el nombre del o de los paquetes que se van a instalar separados por coma o por un espacio como se muestra en la @fig-packagesinst. A medida que se escribe el nombre del paquete aparecen posibles paquetes a ser instalados. Otra forma de acceder a esta venta es en la barra de menú `Tools -> Install Packages...`.
+En el panel de archivos, gráficos, paquetes y ayuda se escoge la pestaña `Packages` y luego se da clic en la opción `Install`, aparece una ventana como la que se muestra en la @fig-packages. En la caja de texto titulada `Packages (separate multiple with space or comma)` se deben escribir el nombre del o de los paquetes que se van a instalar separados por coma o por un espacio como se muestra en la @fig-packagesinst. A medida que se escribe el nombre del paquete aparecen posibles paquetes a ser instalados. Otra forma de acceder a esta ventana es en la barra de menú `Tools -> Install Packages...`.
 
 ![Ventana de Instalación de Paquetes](imagenes/ventanapackages.png){#fig-packages}
 
@@ -140,17 +149,17 @@ En el panel de archivos, gráficos, paquetes y ayuda se escoge la pestaña `Pack
 >}}
 
 
+---
+
 ## Los básicos del lenguaje R {#sec-basicsR}
 
 ### Sintaxis de R
 
-En la consola de R podemos escribir las siguientes expresiones
-
-
+En la consola de R podemos escribir las siguientes expresiones:
 
 `> x <- 6 # Crear la variable x con un valor igual a 6`
 
-`> print(x) # Impresión explicita`
+`> print(x) # Impresión explícita`
 
 `[1] 6`
 
@@ -170,9 +179,9 @@ El símbolo `#` sirve para poner comentarios a nuestro código. Todo lo que se e
 
 Cuando se escribe un comando en el **prompt**, se evalúa el comando y se obtiene el resultado del comando evaluado.
 
-El resultado se puede **auto-imprimir** que es lo que ocurre cuando se escribe el nombre del objeto. El `[1]` indica que `x` es un vector y el `6` es el primer elemento. De manera general la **impresión explícita** con la función `print()` no se usa con frecuencia. Esta es una práctica que a veces es necesaria cuando se escriben scripts, funciones o programas largos.
+El resultado se puede **auto-imprimir**, que es lo que ocurre cuando se escribe el nombre del objeto. El `[1]` indica que `x` es un vector y el `6` es el primer elemento. De manera general la **impresión explícita** con la función `print()` no se usa con frecuencia. Esta es una práctica que a veces es necesaria cuando se escriben scripts, funciones o programas largos.
 
-Cuando se presenta un vector en R podremos ver que un índice del vector se imprime en corchetes `[]` en el lado izquierdo. En el siguiente ejemplo podemos fijarnos en esto. Los números que se muestran en los corchetes no son parte del vector, únicamente son parte del resultado impreso.
+Cuando se presenta un vector en R podremos ver que un índice del vector se imprime en corchetes `[]` en el lado izquierdo. En el siguiente ejemplo podemos fijarnos en esto. Los números que se muestran en los corchetes no son parte del vector; únicamente son parte del resultado impreso.
 
 ```{r}
 x <- seq(20,200, by = 5)
@@ -193,7 +202,11 @@ R tiene cinco clases de objetos básicos, algunos autores también los llaman ob
 4.  Complejo. (complex, cplx)
 5.  Lógico. (logical, logi)
 
-El objeto más básico de R es el **vector**. Para crear vectores vacíos se utiliza la función `vector()`. La regla única para crear vectores es: *Un vector debe tener solamente objetos de la misma clase*, la excepción de la regla son las listas que son un tipo especial de vectores que pueden contener elementos de diferentes clases. Las listas son un importante tipo de datos en R. La creación de una lista se lo hace con la función `list()`.
+El objeto más básico de R es el **vector**. Para crear vectores vacíos se utiliza la función `vector()`. La regla única para crear vectores es: *Un vector debe tener solamente objetos de la misma clase*, la excepción de la regla son las listas que son un tipo especial de vectores que pueden contener elementos de diferentes clases.
+
+::: callout-tip
+**Nota didáctica:** en estadística, muchas funciones devuelven objetos “complejos” (por ejemplo, modelos ajustados con `lm()` o `aov()`), y estos resultados suelen almacenarse como **listas**. Además, muchas operaciones internas de modelación usan álgebra lineal y se apoyan en **matrices**.
+:::
 
 ### Vectores
 
@@ -210,7 +223,6 @@ v5 <- c(3, 2, 7) # Entero
 ```{webr}
 # Dar enter y comenzar a escribir
 ```
-
 
 Las letras `T` y `F` son abreviaturas para especificar `TRUE` (verdadero) o `FALSE` (falso). Con la función `vector()` se pueden inicializar vectores.
 
@@ -240,7 +252,7 @@ class(v8)
 # Dar enter y comenzar a escribir
 ```
 
-Por su parte la *coerción explicita* ocurre cuando se utiliza la función `as.*`, el `*` puede ser reemplazado por `numeric`, `character`, `logical`, `integer` y `complex`.
+Por su parte la *coerción explícita* ocurre cuando se utiliza la función `as.*`, el `*` puede ser reemplazado por `numeric`, `character`, `logical`, `integer` y `complex`.
 
 ```{r}
 p <- seq(0, 14, 1.4)
@@ -272,7 +284,7 @@ as.logical(q)
 
 ### Listas
 
-Las listas son un tipo especial de vectores que pueden contener elementos de distintas clases. Las listas se pueden crear con la función `list( )`. Con la función `vector( )` se puede crear una lista vacia.
+Las listas son un tipo especial de vectores que pueden contener elementos de distintas clases. Las listas se pueden crear con la función `list( )`. Con la función `vector( )` se puede crear una lista vacía.
 
 ```{r}
 r <- list(2.71, 2, "m", 3+2i, F)
@@ -285,9 +297,36 @@ s
 # Dar enter y comenzar a escribir
 ```
 
+::: callout-tip
+**Sugerencia práctica:** `r[1]` devuelve una *sublista*, mientras que `r[[1]]` devuelve el *elemento*.
+::: 
+
+#### Indexación en listas
+
+En listas, la indexación tiene dos formas comunes:
+
+- `r[ ]` devuelve **una sublista** (conserva la estructura de lista).
+- `r[[ ]]` devuelve **el elemento** (la “pieza” interna).
+
+```{r}
+r[1]      # sublista con el primer elemento
+r[[1]]    # primer elemento (valor)
+```
+
+Si la lista tiene nombres, también puede accederse por nombre:
+
+```{r}
+r2 <- list(media = 10.5, n = 20, cultivo = "banano")
+r2
+r2[["media"]]
+r2$media
+```
+
+
+
 ### Matrices
 
-Las matrices son vectores que tienen un atributo de dimensión, este atributo es en si mismo un vector entero de longitud 2 (número de filas y columnas).
+Las matrices son vectores que tienen un atributo de dimensión, este atributo es en sí mismo un vector entero de longitud 2 (número de filas y columnas).
 
 ```{r}
 m <- matrix(nrow = 3, ncol = 4)
@@ -333,6 +372,24 @@ cbind(s1, s2) # unión por columnas
 rbind(s1, s2) # unión por filas
 ```
 
+#### Indexación en matrices
+
+La indexación de una matriz usa dos coordenadas: `m[fila, columna]`.
+
+```{r}
+m <- matrix(1:12, nrow = 3, ncol = 4)
+m
+m[1, 2]   # fila 1, columna 2
+m[, 1]    # primera columna completa
+m[2, ]    # segunda fila completa
+m[1:2, 3:4]  # submatriz (filas 1-2, columnas 3-4)
+```
+
+::: callout-tip
+**Nota:** Esta forma de indexación será clave cuando trabajemos con **matrices de diseño** en regresión y ANOVA.
+:::
+
+
 ```{webr}
 # Dar enter y comenzar a escribir
 ```
@@ -341,7 +398,7 @@ rbind(s1, s2) # unión por filas
 
 Los *data frames* (marcos de datos, cuadros de datos) son usados para guardar datos tabulares en R. Son un tipo importante de objetos en R y son usados en muchas situaciones de modelación y análisis de datos. Los *data frames* a diferencia de las matrices pueden guardar diferentes clases de objetos en cada columna. Las matrices tienen un atributo de nombres de columnas (`colnames`) los *data frames* tienen además un atributo de nombres de filas (`row.names`).
 
-Los *data frames* pueden ser leídos con funciones como `read.csv()` o `read.table()`. También pueden ser creados con la función `data.frame()`, el metapaquete `tidyverse` tiene funciones que permiten trabajar de forma más eficiente con conjuntos de datos. El equivalente de `data.frame()` en el paquete `dplyr` de `tidyverse` es `tibble()`. Con la función `str()` se puede conocer la estructura de un *data frame*, la función de *dplyr* equivalente a *str()* es *glimpse( )*
+Los *data frames* pueden ser leídos con funciones como `read.csv()` o `read.table()`. También pueden ser creados con la función `data.frame()`, el metapaquete `tidyverse` tiene funciones que permiten trabajar de forma más eficiente con conjuntos de datos. El equivalente de `data.frame()` en el paquete `dplyr` de `tidyverse` es `tibble()`. Con la función `str()` se puede conocer la estructura de un *data frame*, la función de *dplyr* equivalente a *str()* es *glimpse( )*.
 
 ```{r}
 library(dplyr)
@@ -369,3 +426,234 @@ ncol(df2)
 ```{webr}
 # Dar enter y comenzar a escribir
 ```
+
+### Indexación en data frames
+
+Los *data frames* se pueden indexar de forma similar a las matrices (filas y columnas), pero con la ventaja de que cada columna puede tener una clase distinta.
+
+#### Acceso por posición (filas y columnas)
+
+```{r}
+df1[1, 2]     # fila 1, columna 2
+df1[, 1]      # primera columna completa
+df1[2, ]      # segunda fila completa
+df1[1:2, ]    # filas 1 a 2, todas las columnas
+```
+
+#### Acceso por nombre de columna
+
+Existen varias formas equivalentes:
+
+```{r}
+df1$Valor
+df1[["Valor"]]
+df1[, "Valor"]
+```
+
+::: callout-tip
+**Recomendación:** para programación y para evitar sorpresas, `df[["col"]]` suele ser más robusto que `$`.
+:::
+
+---
+
+## R base vs tidyverse
+
+A lo largo de este libro utilizaremos principalmente el **tidyverse**. Sin embargo, es útil entender qué se considera *R base* y cómo se compara con el enfoque tidyverse, porque en la práctica ambos conviven.
+
+### Dos estilos, un mismo lenguaje
+
+- **R base**: funciones incluidas con R (y paquetes recomendados). Suele usar funciones como `read.csv()`, `subset()`, `aggregate()`, `plot()`, etc.
+- **tidyverse**: conjunto de paquetes con una filosofía consistente para trabajar con datos (principalmente *tibbles* y *pipes*), usando verbos como `filter()`, `select()`, `mutate()`, `summarise()` y `ggplot()`.
+
+::: callout-tip
+No es una competencia “uno vs otro”: el tidyverse está construido *sobre* R y se integra con R base. El objetivo del libro es que puedas trabajar de manera **más clara, legible y reproducible**.
+:::
+
+### Lectura de datos
+
+**R base**
+
+```{r}
+# datos <- read.csv("archivo.csv")
+```
+
+**tidyverse (readr)**
+
+```{r}
+# library(readr)
+# datos <- read_csv("archivo.csv")
+```
+
+### Crear y ver datos tabulares
+
+**R base**
+
+```{r}
+df_base <- data.frame(
+  Variable = c("Var1","Var2","Var3","Var4"),
+  Valor = c(12, 14, 13, 16)
+)
+df_base
+str(df_base)
+```
+
+**tidyverse (tibble + glimpse)**
+
+```{r}
+# library(tibble)
+df_tidy <- tibble(
+  Variable = c("Var1","Var2","Var3","Var4"),
+  Valor = c(12, 14, 13, 16)
+)
+df_tidy
+glimpse(df_tidy)
+```
+
+### Transformación de datos: ejemplo comparativo
+
+Usaremos el mismo conjunto de datos para filtrar filas, seleccionar columnas y crear una nueva variable.
+
+```{r}
+df_demo <- tibble(
+  cultivo = c("banano", "banano", "cacao", "cacao"),
+  parcela = c(1, 2, 1, 2),
+  rendimiento = c(32.5, 28.0, 18.2, 20.1)
+)
+df_demo
+```
+
+**R base (indexación + transformaciones manuales)**
+
+```{r}
+# Filtrar: cultivo == "banano"
+df_banano_base <- df_demo[df_demo$cultivo == "banano", ]
+
+# Seleccionar columnas
+df_banano_base <- df_banano_base[, c("parcela", "rendimiento")]
+
+# Crear nueva variable
+df_banano_base$rend_kg_ha <- df_banano_base$rendimiento * 1000
+df_banano_base
+```
+
+**tidyverse (dplyr + pipe)**
+
+```{r}
+library(dplyr)
+
+df_banano_tidy <- df_demo |>
+  filter(cultivo == "banano") |>
+  select(parcela, rendimiento) |>
+  mutate(rend_kg_ha = rendimiento * 1000)
+
+df_banano_tidy
+```
+
+### Resúmenes (estadística descriptiva)
+
+**R base**
+
+```{r}
+mean(df_demo$rendimiento)
+tapply(df_demo$rendimiento, df_demo$cultivo, mean)
+```
+
+**tidyverse (group_by + summarise)**
+
+```{r}
+df_demo |>
+  group_by(cultivo) |>
+  summarise(
+    media = mean(rendimiento),
+    sd = sd(rendimiento),
+    n = n()
+  )
+```
+
+### Gráficos
+
+**R base** (rápido, útil para exploración)
+
+```{r}
+# plot(df_demo$parcela, df_demo$rendimiento)
+```
+
+**tidyverse (ggplot2)** (más control y consistencia)
+
+```{r}
+# library(ggplot2)
+# ggplot(df_demo, aes(x = factor(parcela), y = rendimiento, fill = cultivo)) +
+#   geom_col(position = "dodge")
+```
+
+---
+
+## Preparación para modelos estadísticos
+
+En capítulos posteriores ajustaremos modelos (por ejemplo, regresión y ANOVA). En R, los resultados de un modelo suelen almacenarse como un **objeto** con mucha información interna (coeficientes, residuos, valores ajustados, etc.). Muy frecuentemente, estos objetos se comportan como **listas** (o contienen componentes tipo lista).
+
+### Fórmulas en R
+
+En R, muchos modelos se especifican con una **fórmula** del tipo:
+
+- `y ~ x` (respuesta `y` explicada por `x`)
+- `y ~ x1 + x2` (dos predictores)
+- `y ~ x1 * x2` (incluye efectos principales e interacción)
+- `y ~ x1:x2` (solo interacción)
+
+Estas fórmulas aparecerán con frecuencia en regresión y ANOVA.
+
+### Un ejemplo mínimo con regresión lineal
+
+Ajustaremos un modelo sencillo usando datos simulados (para mantener el ejemplo reproducible).
+
+```{r}
+set.seed(123)
+datos <- data.frame(
+  x = 1:10,
+  y = 5 + 2*(1:10) + rnorm(10, sd = 1)
+)
+
+modelo <- lm(y ~ x, data = datos)
+modelo
+```
+
+### ¿Qué contiene un modelo?
+
+Podemos explorar su estructura con `str()` y ver los nombres de sus componentes con `names()`.
+
+```{r}
+str(modelo)
+names(modelo)
+```
+
+### Extraer resultados comunes
+
+Algunos elementos típicos que usaremos con frecuencia:
+
+```{r}
+coef(modelo)         # coeficientes (intercepto y pendiente)
+fitted(modelo)[1:5]  # valores ajustados (primeros 5)
+residuals(modelo)[1:5] # residuos (primeros 5)
+```
+
+También es común usar `summary()` para ver un reporte estándar (incluye R², pruebas t, etc.).
+
+```{r}
+summary(modelo)
+```
+
+::: callout-important
+En R, gran parte del trabajo práctico consiste en **ajustar modelos** y luego **extraer e interpretar** sus componentes (coeficientes, residuos, diagnósticos). Por eso es tan importante entender **listas**, **matrices** e **indexación** desde el inicio.
+:::
+
+---
+
+## Ejercicios {.unnumbered}
+
+1. Realice una suma y una resta en R desde la consola.
+2. Cree un objeto llamado `edad` con su edad y verifique su clase con `class()`.
+3. Genere un vector con cinco números y calcule su promedio.
+4. Cree una matriz de 3 filas y 4 columnas usando `matrix()` y luego usando `dim(m) <- ...`.
+5. Cree una lista con elementos de diferentes clases y extraiga el primer elemento usando `[[ ]]`.
+6. Cree un *data frame* con dos columnas: nombre y rendimiento.

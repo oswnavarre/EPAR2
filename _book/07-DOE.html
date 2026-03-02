@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -69,14 +69,15 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <link href="./06-regresion.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-385f272fb3d70211fc91839c944f7a79.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-874a94cc35be0778ec714a6aca2fed85.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -123,7 +124,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -299,7 +300,7 @@ window.Quarto = {
 
 <p>El diseño de experimentos fue inventado por Ronald A. Fisher en las décadas de 1920 y 1930 en la Estación Experimental de Rothamsted, conocida ahora como Rothamsted Research. En el primer libro de Fisher sobre diseño de experimentos mostró cómo se podían extraer conclusiones válidas a partir de experimentos con fluctuaciones naturales como la temperatura, las condiciones del suelo y la lluvia, es decir, en presencia de variables molestas o perturbadoras.</p>
 <p>Las variables perturbadoras conocidas suelen causar sesgos sistemáticos en grupos de resultados (por ejemplo, variación entre lotes). Las variables perturbadoras desconocidas suelen causar variabilidad aleatoria en los resultados y se denominan variabilidad inherente o ruido. Aunque el método de diseño experimental se utilizó por primera vez en un contexto agrícola, el método se ha aplicado con éxito en otras industrias y ámbitos.</p>
-<p>En la <a href="01-concepts.html#sec-tipest" class="quarto-xref"><span>Sección 2.4</span></a> se presentaron los tipos de estudio, en esta sección se presentan los principios básicos y los principales diseños experimentales usados en agricultura. ¿Por qué es importante el diseño experimental? Supongamos que deseamos comparar dos variedades de maíz, una variedad estándar ya conocida a la que llamaremos V1 y una variadad nueva de la que recién hemos escuchado a la que llamaremos V2. Podríamos plantar la mitad de un campo con V1 y la otra mitad con V2. Se plantan las dos variedades exactamente el mismo día y se gestionan las dos mitades del campo exactamente igual durante todo el período vegetativo. A lo largo de la cosecha, se llevan registros separados del rendimiento de cada mitad del campo, de modo que al final de la temporada se obtiene el rendimiento total de cada variedad. Supongamos que, en este caso, la nueva variedad (V2) tiene un rendimiento un 20% mayor que la variedad estándar (V1). ¿Puede asegurar que la nueva variedad es mejor que la variedad estándar? La respuesta es no, porque puede haber otros factores que hayan provocado la diferencia de rendimiento, como por ejemplo:</p>
+<p>En la <a href="01-concepts.html#sec-tipest" class="quarto-xref"><span>Sección 2.6</span></a> se presentaron los tipos de estudio, en esta sección se presentan los principios básicos y los principales diseños experimentales usados en agricultura. ¿Por qué es importante el diseño experimental? Supongamos que deseamos comparar dos variedades de maíz, una variedad estándar ya conocida a la que llamaremos V1 y una variadad nueva de la que recién hemos escuchado a la que llamaremos V2. Podríamos plantar la mitad de un campo con V1 y la otra mitad con V2. Se plantan las dos variedades exactamente el mismo día y se gestionan las dos mitades del campo exactamente igual durante todo el período vegetativo. A lo largo de la cosecha, se llevan registros separados del rendimiento de cada mitad del campo, de modo que al final de la temporada se obtiene el rendimiento total de cada variedad. Supongamos que, en este caso, la nueva variedad (V2) tiene un rendimiento un 20% mayor que la variedad estándar (V1). ¿Puede asegurar que la nueva variedad es mejor que la variedad estándar? La respuesta es no, porque puede haber otros factores que hayan provocado la diferencia de rendimiento, como por ejemplo:</p>
 <ul>
 <li>V2 se plantó en una parte del campo que tenía mejor suelo.</li>
 <li>Un extremo del campo era más húmedo que el otro y algunos de las plantes se infectaron con oídio.</li>
@@ -321,7 +322,7 @@ window.Quarto = {
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Efecto borde
+<span class="screen-reader-only">Nota</span>Efecto borde
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -343,7 +344,7 @@ Efecto borde
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Fuentes de la variación
+<span class="screen-reader-only">Tip</span>Fuentes de la variación
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -362,7 +363,7 @@ Fuentes de la variación
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Funciones de las repeticiones
+<span class="screen-reader-only">Tip</span>Funciones de las repeticiones
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -470,7 +471,7 @@ y_{ij} = \mu + \alpha_i +  \epsilon_{ij} \quad \forall \; i,j
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-¿Efectos fijos o aleatorios?
+<span class="screen-reader-only">Importante</span>¿Efectos fijos o aleatorios?
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -568,22 +569,22 @@ Tabla&nbsp;8.2: Tabla del Análisis de Varianza para el modelo de un único fact
 y_{ij} = \mu +\alpha_i + \epsilon_{ij}
 \]</span></p>
 <p>La tabla ANOVA correspondiente a este modelo es la mostrada en <a href="#tbl-anova" class="quarto-xref">Tabla&nbsp;<span>8.2</span></a>.</p>
-<p>En el <a href="02-estdesc.html#exr-siete" class="quarto-xref">Ejercicio&nbsp;<span>3.11</span></a>, se presentó el proyecto de graduación de Alfredo Aguilar y José C. Flores, a modo de ejemplo vamos a analizar los datos correspondientes a la última medición para verificar la existencia de diferencias significativas para la altura entre los tratamientos. Para esto inicialmente se va a crear la variable DDS que era una de las actividades que se debía realizar en el ejercicio mencionado, posteriormente se filtrarán los datos para quedarnos unicámente con las observaciones donde la variable DDS sea igual a 56.</p>
+<p>En el <a href="02-estdesc.html#exr-siete" class="quarto-xref">Ejercicio&nbsp;<span>3.13</span></a>, se presentó el proyecto de graduación de Alfredo Aguilar y José C. Flores, a modo de ejemplo vamos a analizar los datos correspondientes a la última medición para verificar la existencia de diferencias significativas para la altura entre los tratamientos. Para esto inicialmente se va a crear la variable DDS que era una de las actividades que se debía realizar en el ejercicio mencionado, posteriormente se filtrarán los datos para quedarnos unicámente con las observaciones donde la variable DDS sea igual a 56.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
-✔ dplyr     1.1.4     ✔ readr     2.1.5
-✔ forcats   1.0.0     ✔ stringr   1.5.1
-✔ ggplot2   3.5.2     ✔ tibble    3.2.1
-✔ lubridate 1.9.4     ✔ tidyr     1.3.1
-✔ purrr     1.0.4     
+✔ dplyr     1.1.4     ✔ readr     2.1.6
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.1     ✔ tibble    3.3.0
+✔ lubridate 1.9.4     ✔ tidyr     1.3.2
+✔ purrr     1.2.0     
 ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
 ✖ dplyr::filter() masks stats::filter()
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>datos24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/datos24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"datos"</span>)</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
@@ -595,12 +596,12 @@ y_{ij} = \mu +\alpha_i + \epsilon_{ij}
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>dds56 <span class="ot">&lt;-</span> datos24004 <span class="sc">|&gt;</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    DDS <span class="sc">==</span> <span class="dv">56</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finalmente vamos a hacer la prueba ANOVA con la función <code>aov()</code>, la forma de usar la función es: <code>aov(formula, data)</code>. El resultado lo guardamos en una variable y para ver los resultados se usa la función <code>summary()</code>.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Altura <span class="sc">~</span> Tratamiento, <span class="at">data =</span> dds56)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Altura <span class="sc">~</span> Tratamiento, <span class="at">data =</span> dds56)</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
 Tratamiento  6   3965   660.8   1.257  0.284
@@ -634,14 +635,14 @@ Importante
 </ul>
 <p>Primero, cargamos los datos. Se resumen los datos, este resumen se presenta en la <a href="#tbl-rendaj" class="quarto-xref">Tabla&nbsp;<span>8.3</span></a>. Además se crea un diagrama de cajas, dicho diagrama se presenta en la <a href="#fig-rendaj" class="quarto-xref">Figura&nbsp;<span>8.1</span></a>. De acuerdo a lo que se observa en la tabla y en la figura, el tratamiento T2 tiene el mayor rendimiento promedio mientras que T6 y T7 tienen medias menores al resto de los tratamientos.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rend24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/rend_24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"rendimiento_ha"</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rend24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/rend_24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"rendimiento_ha"</span>)</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>resu_rend <span class="ot">&lt;-</span> rend24004 <span class="sc">|&gt;</span></span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Tratamiento) <span class="sc">|&gt;</span></span>
 <span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
 <span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Media =</span> <span class="fu">mean</span>(Rendimiento_ha),</span>
 <span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Desv =</span> <span class="fu">sd</span>(Rendimiento_ha)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  )</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div id="tbl-rendaj" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -718,8 +719,8 @@ Figura&nbsp;8.1: Rendimiento por tratamiento
 </div>
 <p>Ahora procedemos a hacer la prueba ANOVA.</p>
 <div class="cell">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Rendimiento_ha <span class="sc">~</span> Tratamiento, <span class="at">data =</span> rend24004)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Rendimiento_ha <span class="sc">~</span> Tratamiento, <span class="at">data =</span> rend24004)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 Tratamiento  6    245   40.84   5.314 0.000552 ***
@@ -887,7 +888,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <section id="ejercicios" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ejercicios">Ejercicios</h2>
 <div id="exr-doe1" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 8.1</strong></span> Con los datos y el proyecto del <a href="02-estdesc.html#exr-seis" class="quarto-xref">Ejercicio&nbsp;<span>3.10</span></a>. Resuelva las siguientes cuestiones.</p>
+<p><span class="theorem-title"><strong>Ejercicio 8.1</strong></span> Con los datos y el proyecto del <a href="02-estdesc.html#exr-seis" class="quarto-xref">Ejercicio&nbsp;<span>3.12</span></a>. Resuelva las siguientes cuestiones.</p>
 </div>
 <ol type="a">
 <li>¿Existen diferencias significativas para la altura por variedad en la primera medición?</li>
@@ -907,7 +908,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <li>Guarde las tablas <em>valorespalt</em> y <em>valorespdiam</em> en un libro llamado <em>anova_alt_diam.xlsx</em>. Las hojas de este libro se deben llamar <em>altura</em> y <em>diametro</em> respectivamente.</li>
 </ol>
 <div id="exr-doe2" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 8.2</strong></span> Con los datos y el proyecto del <a href="02-estdesc.html#exr-quin3" class="quarto-xref">Ejercicio&nbsp;<span>3.8</span></a>, resolver las siguientes cuestiones.</p>
+<p><span class="theorem-title"><strong>Ejercicio 8.2</strong></span> Con los datos y el proyecto del <a href="02-estdesc.html#exr-quin3" class="quarto-xref">Ejercicio&nbsp;<span>3.10</span></a>, resolver las siguientes cuestiones.</p>
 </div>
 <ol type="a">
 <li>Crear un archivo llamado <em>reporte_GAGS.qmd</em></li>
@@ -1832,13 +1833,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy

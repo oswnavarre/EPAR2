@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.29">
+<meta name="generator" content="quarto-1.8.27">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -54,14 +54,15 @@ div.csl-indent {
 <link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-0815c480559380816a4d1ea211a47e91.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-385f272fb3d70211fc91839c944f7a79.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-874a94cc35be0778ec714a6aca2fed85.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -108,7 +109,7 @@ const typesetMath = (el) => {
     var macros = [];
     for (var i = 0; i < mathElements.length; i++) {
       var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN") {
+      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
         window.katex.render(texText.data, mathElements[i], {
           displayMode: mathElements[i].classList.contains('display'),
           throwOnError: false,
@@ -231,11 +232,16 @@ window.Quarto = {
     <h2 id="toc-title">Indice de contenidos</h2>
    
   <ul>
-  <li><a href="#etapas-del-proceso-estadístico." id="toc-etapas-del-proceso-estadístico." class="nav-link active" data-scroll-target="#etapas-del-proceso-estadístico."><span class="header-section-number">2.1</span> Etapas del proceso estadístico.</a></li>
-  <li><a href="#definiciones-importantes" id="toc-definiciones-importantes" class="nav-link" data-scroll-target="#definiciones-importantes"><span class="header-section-number">2.2</span> Definiciones importantes</a></li>
-  <li><a href="#sec-estypes" id="toc-sec-estypes" class="nav-link" data-scroll-target="#sec-estypes"><span class="header-section-number">2.3</span> Clasificación de la estadística.</a></li>
-  <li><a href="#sec-tipest" id="toc-sec-tipest" class="nav-link" data-scroll-target="#sec-tipest"><span class="header-section-number">2.4</span> Tipos de estudio</a></li>
-  <li><a href="#variables-clasificación-y-niveles-de-medición." id="toc-variables-clasificación-y-niveles-de-medición." class="nav-link" data-scroll-target="#variables-clasificación-y-niveles-de-medición."><span class="header-section-number">2.5</span> Variables, clasificación y niveles de medición.</a></li>
+  <li><a href="#objetivos-del-capítulo" id="toc-objetivos-del-capítulo" class="nav-link active" data-scroll-target="#objetivos-del-capítulo"><span class="header-section-number">2.1</span> Objetivos del capítulo</a></li>
+  <li><a href="#qué-es-la-estadística-origen-y-sentido-actual" id="toc-qué-es-la-estadística-origen-y-sentido-actual" class="nav-link" data-scroll-target="#qué-es-la-estadística-origen-y-sentido-actual"><span class="header-section-number">2.2</span> ¿Qué es la estadística? Origen y sentido actual</a></li>
+  <li><a href="#etapas-del-proceso-estadístico" id="toc-etapas-del-proceso-estadístico" class="nav-link" data-scroll-target="#etapas-del-proceso-estadístico"><span class="header-section-number">2.3</span> Etapas del proceso estadístico</a></li>
+  <li><a href="#definiciones-importantes" id="toc-definiciones-importantes" class="nav-link" data-scroll-target="#definiciones-importantes"><span class="header-section-number">2.4</span> Definiciones importantes</a></li>
+  <li><a href="#sec-estypes" id="toc-sec-estypes" class="nav-link" data-scroll-target="#sec-estypes"><span class="header-section-number">2.5</span> Clasificación de la estadística</a></li>
+  <li><a href="#sec-tipest" id="toc-sec-tipest" class="nav-link" data-scroll-target="#sec-tipest"><span class="header-section-number">2.6</span> Tipos de estudio</a></li>
+  <li><a href="#variables-clasificación-y-niveles-de-medición" id="toc-variables-clasificación-y-niveles-de-medición" class="nav-link" data-scroll-target="#variables-clasificación-y-niveles-de-medición"><span class="header-section-number">2.7</span> Variables, clasificación y niveles de medición</a>
+  <ul>
+  <li><a href="#niveles-de-medición" id="toc-niveles-de-medición" class="nav-link" data-scroll-target="#niveles-de-medición"><span class="header-section-number">2.7.1</span> Niveles de medición</a></li>
+  </ul></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
   </ul>
 </nav>
@@ -262,48 +268,29 @@ window.Quarto = {
 </header>
 
 
-<p>El término <em>estadística</em> tiene su origen en la palabra alemana <em>statistik</em> acuñada por el economista aleman Gottfried Achenwall, la palabra tuvo su génesis en el latín <em>statisticus</em> que se podría traducir como <em>relativo al estado</em>, pues lo que hoy conocemos como estadística estuvo incialmente relacionado con datos relativos a los gobiernos o estados, dichos datos podían provenir de censos, registros de salud, pago de impuestos, etc. En los siglos XVI y XVII hubo un fuerte interés por las probabilidades, más que nada por el deseo de obtener ventaja en juegos de cartas y otras formas de apuesta.</p>
-<p>La ciencia estadística como tal, evolucionó al punto que hoy encontramos <strong>estadísticas</strong> y <strong>estadística</strong> en muchos aspectos de nuestra vida cotidiana. Cuando hablamos de estadística nos referimos a la ciencia (que definiremos formalmente un poco más adelante), mientras que al usar el termino estadísticas nos referimos a datos, o a la presentación de hechos, gráficas o información. Por ejemplo cuando en una hacienda cacaotera se presenta la información relativa a la producción en kilogramos de los híbridos usados en la plantación estamos hablando de estadísticas, mientras que el trabajo de analizar, y establecer las diferencias en el rendimiento medido en kilogramos por hectárea para diferentes híbridos con el fin de aumentar las ganancias de la finca puede ser resuelto usando estadística.</p>
-<p>Una definición clásica de estadística es <strong>ciencia que se encarga de la recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica</strong> (<span class="citation" data-cites="cleff2013">Cleff (<a href="references.html#ref-cleff2013" role="doc-biblioref">2013</a>)</span>). En <span class="citation" data-cites="agresti2023">Agresti et&nbsp;al. (<a href="references.html#ref-agresti2023" role="doc-biblioref">2023</a>)</span>, de manera corta definen a la estadística como <strong>el arte y la ciencia de aprender de los datos</strong>.</p>
-<div class="callout callout-style-default callout-important callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Importante
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p><strong>Definición de Estadística</strong> ciencia que trata de la recolección, presentación y análisis de datos para resolver problemas, tomar decisiones y diseñar productos y procesos.</p>
-</div>
-</div>
-<section id="etapas-del-proceso-estadístico." class="level2" data-number="2.1">
-<h2 data-number="2.1" class="anchored" data-anchor-id="etapas-del-proceso-estadístico."><span class="header-section-number">2.1</span> Etapas del proceso estadístico.</h2>
-<p>El proceso estadístico tiene como principal entrada a los datos. Sin embargo, el proceso estadístico no empieza en los datos. De manera general las etapas del proceso estadístico son:</p>
-<ol type="1">
-<li><strong>Identificación y delimitación del problema</strong>: Un problema en investigación debe ser entendido como una pregunta o cuestión sobre un tema o aspecto que no se conoce. Ejemplos de problema en agronomía pueden ser: comparación de producción lechera en vacas sometidas a diferentes dietas, la identificación de características fenotípicas de variedades de banano resistentes a determinada enfermedad, evaluación del rendimiento de un cultivar utilizando biocarbón en diferentes concentaciones, etc. La delimitación implica recortar el tema dentro de los límites de espacio, tiempo y área de estudio que caracteriza al problema. Por ejemplo, en el problema de la comparación de la producción lechera en vacas sometidas a diferentes dietas la delimitación puede incluir aspectos como, la época del año en que se va a recoger la información, las razas de animales a ser incluidas en el estudio, el lugar dónde se llevará a cabo el estudio. Dentro de esta fase se incluye la definición de los objetivos del estudio.</li>
-<li><strong>Planificación</strong>: Definir bien los objetivos ayuda a realizar una planificación adecuada. A partir de los objetivos se puede identificar los datos que se necesitan, el tipo de datos, la fuente de los datos, la frecuencia de recolección de los datos, la forma de recolección y almacenamiento de los datos y los programas o paquetes estadísticos que serán usados en el análisis.</li>
-<li><strong>Recolección de datos</strong>: la recolección puede ser realizada de fuentes existentes como bases de datos de organismos como la FAO, ministerios de agricultura, cámaras de productores, etc. O los datos pueden provenir de experimentos diseñados para el propósito específico de cumplir con los objetivos planteados.</li>
-<li><strong>Revisión de los datos</strong>: una vez que los datos son recogidos, es necesario revisarlos para verificar inconsistencias o problemas potenciales. Por ejemplo, al registrar las longitudes de hojas de cacao de ciertas accesiones es posible que ocurran cosas como valores mal ingresados. En estudios donde los datos son obtenidos de organismos como la FAO es probable que los datos hayan sido ingresados con un formato no apropiado para el paquete estadístico que se va a usar en el análisis.</li>
-<li><strong>Tabulación</strong> la tabulación permite dar una primera mirada a los datos y ayuda a obtener información sobre los datos. Esta tabulación puede ser presentada ya sea como tablas o como gráficos.</li>
-<li><strong>Análisis estadístico</strong>: en este paso se obtienen medidas de tendencia central, dispersión, posición, o asociación.</li>
-<li><strong>Inferencia</strong>: Basados en los resultados del análisis estadístico se hacen inferencias acerca de los objetivos del estudio. Se hacen pruebas de hipótesis, o se realizan modelos con el fin de contestar las preguntas o cumplir los objetivos del estudio. Aunque los datos provengan de una muestra, utilizando teorías estadísticas, se puede llegar a conclusiones sobre la población de la que fueron tomadas las muestras.</li>
-<li><strong>Comunicación</strong>: Para que los resultados sean conocidos, estos deben ser comunicados. La forma de comunicarlos depende del usuario final. Se pueden comunicar los resultados en artículos científicos, memorias técnicas, cuadros de mando (<em>dahsboards</em>), páginas web, folletos. Sin importar la forma que se utilice para comunicar es primordial saber qué se debe comunicar y cómo hacerlo de manera efectiva.</li>
-</ol>
-</section>
-<section id="definiciones-importantes" class="level2" data-number="2.2">
-<h2 data-number="2.2" class="anchored" data-anchor-id="definiciones-importantes"><span class="header-section-number">2.2</span> Definiciones importantes</h2>
+<section id="objetivos-del-capítulo" class="level2" data-number="2.1">
+<h2 data-number="2.1" class="anchored" data-anchor-id="objetivos-del-capítulo"><span class="header-section-number">2.1</span> Objetivos del capítulo</h2>
+<p>Al finalizar este capítulo, el lector será capaz de:</p>
 <ul>
-<li><strong>Población</strong>: una población es el conjunto de todos los sujetos u objetos de interés en una investigación o análisis. Por ejemplo, en un estudio que tenga como objetivo determinar características fenotípicas de variedades de banano resistentes a cierta enfermedad en el trópico húmedo, la poblacion son todas las plantas de banano sembradas en el trópico húmedo.</li>
-<li><strong>Muestra</strong>: es la parte de la población que es analizada, dicho de otra forma una muestra es un subconjunto de la población. Sigamos con el ejemplo de las características fenotípicas de variedades de banano resistentes a cierta enfermedad en el trópico húmedo, el investigador no va a tomar todas las plantas sino que va a escoger un grupo de plantas de las variedades de interés. La muestra debe representar lo mejor posible a la población. La parte de la estadística que comprende los métodos estadísticos para obtener muestras representativas de una población se llama <em>muestreo</em></li>
-<li><strong>Parámetro</strong>: un parámetro es una cantidad numérica que caracteriza a una población.</li>
-<li><strong>Estadístico</strong>: un estadístico es una cantidad numérica que caracteriza a una muestra.</li>
+<li>Explicar el origen y el sentido moderno del término <strong>estadística</strong></li>
+<li>Describir las <strong>etapas del proceso estadístico</strong> y su lógica</li>
+<li>Distinguir entre <strong>población, muestra, parámetro y estadístico</strong></li>
+<li>Diferenciar <strong>estadística descriptiva</strong> e <strong>inferencial</strong></li>
+<li>Reconocer <strong>tipos de estudio</strong> (retrospectivo, observacional, experimental)</li>
+<li>Identificar <strong>tipos de variables</strong> y sus <strong>niveles de medición</strong></li>
 </ul>
+<hr>
 </section>
-<section id="sec-estypes" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="sec-estypes"><span class="header-section-number">2.3</span> Clasificación de la estadística.</h2>
-<p>De manera general, la estadística se clasifica en dos grandes ramas : estadística descriptiva y estadística inferencial.</p>
+<section id="qué-es-la-estadística-origen-y-sentido-actual" class="level2" data-number="2.2">
+<h2 data-number="2.2" class="anchored" data-anchor-id="qué-es-la-estadística-origen-y-sentido-actual"><span class="header-section-number">2.2</span> ¿Qué es la estadística? Origen y sentido actual</h2>
+<p>El término <em>estadística</em> tiene su origen en la palabra alemana <em>statistik</em>, acuñada por el economista alemán <strong>Gottfried Achenwall</strong>. La palabra tuvo su génesis en el latín <em>statisticus</em>, que se podría traducir como <em>relativo al estado</em>, pues lo que hoy conocemos como estadística estuvo inicialmente relacionado con datos de gobiernos o estados: censos, registros de salud, pago de impuestos, entre otros. En los siglos XVI y XVII hubo un fuerte interés por las probabilidades, motivado en gran medida por el deseo de obtener ventaja en juegos de cartas y otras formas de apuesta.</p>
+<p>La disciplina evolucionó al punto de que hoy encontramos <strong>estadísticas</strong> y <strong>estadística</strong> en muchos aspectos de la vida cotidiana. En este libro usaremos ambos términos de forma precisa:</p>
+<ul>
+<li><strong>estadística</strong> (singular): la ciencia/método para aprender de los datos y tomar decisiones bajo incertidumbre.</li>
+<li><strong>estadísticas</strong> (plural): datos, reportes, tablas, gráficos o resúmenes numéricos (por ejemplo, promedios y porcentajes).</li>
+</ul>
+<p>Por ejemplo, cuando en una hacienda cacaotera se presenta información sobre la producción (kg) de híbridos usados en la plantación, estamos hablando de <strong>estadísticas</strong>. En cambio, el trabajo de analizar los datos y establecer si existen diferencias en el rendimiento (kg/ha) entre híbridos para mejorar las decisiones de manejo y aumentar la rentabilidad corresponde a la <strong>estadística</strong>.</p>
+<p>Una definición clásica de estadística es <strong>ciencia que se encarga de la recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica</strong> (<span class="citation" data-cites="cleff2013">Cleff (<a href="references.html#ref-cleff2013" role="doc-biblioref">2013</a>)</span>). En <span class="citation" data-cites="agresti2023">Agresti et&nbsp;al. (<a href="references.html#ref-agresti2023" role="doc-biblioref">2023</a>)</span>, de manera breve, definen a la estadística como <strong>el arte y la ciencia de aprender de los datos</strong>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -314,7 +301,77 @@ Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Estadística Descriptiva</strong> se refiere a los métodos para resumir los datos recogidos, estos datos pueden provenir de una muestra o de una población. Los resumenes de los datos pueden ser tablas, gráficos, y números como promedios o porcentajes.</p>
+<p><strong>Definición de Estadística</strong>: ciencia que trata de la recolección, presentación y análisis de datos para resolver problemas, tomar decisiones y diseñar productos y procesos.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="etapas-del-proceso-estadístico" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="etapas-del-proceso-estadístico"><span class="header-section-number">2.3</span> Etapas del proceso estadístico</h2>
+<p>El proceso estadístico tiene como entrada principal a los datos. Sin embargo, <strong>no empieza en los datos</strong>: comienza en una pregunta (problema) y termina en una decisión o comunicación útil.</p>
+<p>De manera general, las etapas del proceso estadístico son:</p>
+<ol type="1">
+<li><p><strong>Identificación y delimitación del problema</strong>: un problema en investigación se entiende como una pregunta sobre un fenómeno que no se conoce con suficiente claridad. Ejemplos en agronomía pueden ser: comparación de producción lechera en vacas sometidas a diferentes dietas; identificación de características fenotípicas de variedades de banano resistentes a una enfermedad; evaluación del rendimiento de un cultivar usando biocarbón en diferentes concentraciones. La delimitación recorta el tema dentro de límites de espacio, tiempo y área de estudio. En esta fase se definen objetivos.</p></li>
+<li><p><strong>Planificación</strong>: una vez claros los objetivos, se identifican los datos necesarios, su tipo, fuente, frecuencia de recolección, forma de almacenamiento y las herramientas (software/paquetes) que se usarán en el análisis.</p></li>
+<li><p><strong>Recolección de datos</strong>: la recolección puede hacerse desde fuentes existentes (FAO, ministerios, cámaras de productores) o mediante experimentos/encuestas diseñadas para cumplir los objetivos.</p></li>
+<li><p><strong>Revisión de los datos</strong>: se verifican inconsistencias o problemas potenciales (errores de digitación, unidades mezcladas, valores imposibles, formatos no compatibles con el software). Este paso evita conclusiones erróneas.</p></li>
+<li><p><strong>Tabulación</strong>: permite una primera mirada a los datos. Incluye tablas y gráficos exploratorios que ayudan a detectar patrones y anomalías.</p></li>
+<li><p><strong>Análisis estadístico</strong>: se obtienen medidas de tendencia central, dispersión, posición o asociación (según el tipo de variable y objetivo).</p></li>
+<li><p><strong>Inferencia</strong>: a partir de una muestra y usando teoría estadística, se realizan conclusiones sobre la población: pruebas de hipótesis, estimación, construcción de modelos y predicciones.</p></li>
+<li><p><strong>Comunicación</strong>: los resultados deben comunicarse según el público objetivo (artículo científico, informe técnico, <em>dashboard</em>, sitio web, folleto). La comunicación efectiva es parte esencial del proceso.</p></li>
+</ol>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Un buen análisis no se mide solo por “cuántos métodos” se aplican, sino por <strong>si responde la pregunta original</strong> y si la conclusión es <strong>comprensible y accionable</strong>.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="definiciones-importantes" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="definiciones-importantes"><span class="header-section-number">2.4</span> Definiciones importantes</h2>
+<ul>
+<li><p><strong>Población</strong>: conjunto de todos los sujetos u objetos de interés. Por ejemplo, en un estudio para determinar características fenotípicas de variedades de banano resistentes a una enfermedad en el trópico húmedo, la población son todas las plantas de banano sembradas en el trópico húmedo.</p></li>
+<li><p><strong>Muestra</strong>: parte de la población que se analiza (un subconjunto). La muestra debe representar lo mejor posible a la población. La rama de la estadística que estudia cómo obtener muestras representativas se llama <strong>muestreo</strong>.</p></li>
+<li><p><strong>Parámetro</strong>: cantidad numérica que caracteriza a una población (por ejemplo, media poblacional, varianza poblacional, proporción verdadera).</p></li>
+<li><p><strong>Estadístico</strong>: cantidad numérica que caracteriza a una muestra (por ejemplo, media muestral, desviación estándar muestral, proporción muestral).</p></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Idea clave</strong>: un <strong>parámetro</strong> es “de la población” y suele ser desconocido; un <strong>estadístico</strong> es “de la muestra” y se calcula con los datos disponibles.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="sec-estypes" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="sec-estypes"><span class="header-section-number">2.5</span> Clasificación de la estadística</h2>
+<p>De manera general, la estadística se clasifica en dos grandes ramas: <strong>estadística descriptiva</strong> y <strong>estadística inferencial</strong>.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Estadística descriptiva</strong>: métodos para resumir datos (de una muestra o población) mediante tablas, gráficos y números como promedios o porcentajes.</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -327,10 +384,10 @@ Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Estadística Inferencial</strong> se refiere a los métodos para sacar conclusiones, hacer predicciones o tomar decisiones sobre una población, basándose en datos de una muestra perteneciente a una población.</p>
+<p><strong>Estadística inferencial</strong>: métodos para sacar conclusiones, hacer predicciones o tomar decisiones sobre una población basándose en datos de una muestra.</p>
 </div>
 </div>
-<p>En la <a href="#fig-popsample" class="quarto-xref">Figura&nbsp;<span>2.1</span></a> se muestra la relación entre algunos conceptos revisados hasta ahora. Supongamos que en una finca lechera se desea hacer un estudio sobre el efecto de una dieta en la producción de leche en una determinada raza de vacas lecheras. El conjunto de todas las vacas representa a toda la <strong>población</strong>. El objetivo de estudio es determinar el rendimiento promedio de todas las vacas, esta medida de toda la población es un <strong>parámetro</strong>. Debido a ser un producto de prueba el estudio no es aplicado a toda la población, por lo que se utiliza técnicas de <strong>muestreo</strong> para escoger una <strong>muestra</strong> representativa, con <strong>estadística descriptiva</strong> se determina el rendimiento promedio de la muestra, este valor es un <strong>estadístico</strong>. Con técnicas de <strong>estadística inferencial</strong> se estima el valor del parámetro de interés.</p>
+<p>En la <a href="#fig-popsample" class="quarto-xref">Figura&nbsp;<span>2.1</span></a> se muestra la relación entre algunos conceptos revisados. Supongamos que en una finca lechera se desea estudiar el efecto de una dieta en la producción de leche de una raza. El conjunto de todas las vacas es la <strong>población</strong>. El rendimiento promedio de toda la población es un <strong>parámetro</strong>. Debido a limitaciones prácticas, se selecciona una <strong>muestra</strong> mediante técnicas de <strong>muestreo</strong>. Con <strong>estadística descriptiva</strong> se obtiene el rendimiento promedio de la muestra (un <strong>estadístico</strong>), y con <strong>estadística inferencial</strong> se estima el parámetro poblacional y se evalúa la evidencia sobre el efecto de la dieta.</p>
 <div id="fig-popsample" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-popsample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -341,10 +398,12 @@ Figura&nbsp;2.1: Relación entre algunos conceptos estadísticos
 </figcaption>
 </figure>
 </div>
+<hr>
 </section>
-<section id="sec-tipest" class="level2" data-number="2.4">
-<h2 data-number="2.4" class="anchored" data-anchor-id="sec-tipest"><span class="header-section-number">2.4</span> Tipos de estudio</h2>
-<p>Supongamos que un investigador desea analizar las tendencias de las exportaciones de maíz durante la última década en Latinoamérica y el Caribe, puede obtener esta información de la página FAOSTAT <a href="https://www.fao.org/faostat/en/#home" class="uri">https://www.fao.org/faostat/en/#home</a>. En este caso los datos no son recogidos directamente por el investigador sino que usa una fuente de información secundaria que le proporciona estos datos históricos, en este caso estamos ante un estudio <strong>retrospectivo</strong>. Ahora supongamos que el mismo investigador quiere conocer la impresión de las medidas tomadas por el gobierno para ayudar a los pequeños productores de maíz, para registrar esto puede realizar una encuesta a una muestra de pequeños productores de maíz. Tanto al tomar datos de una fuente secundaria o al realizar una encuesta el investigador está observando los datos como aparecen y no está interviniendo en el problema que se investiga. Este tipo de estudios recibe el nombre de <strong>observacional</strong></p>
+<section id="sec-tipest" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="sec-tipest"><span class="header-section-number">2.6</span> Tipos de estudio</h2>
+<p>Supongamos que un investigador desea analizar tendencias de exportaciones de maíz durante la última década en Latinoamérica y el Caribe y obtiene los datos desde FAOSTAT <a href="https://www.fao.org/faostat/en/#home" class="uri">https://www.fao.org/faostat/en/#home</a>. En este caso, el investigador usa datos ya existentes: se trata de un estudio <strong>retrospectivo</strong>.</p>
+<p>Ahora supongamos que el investigador quiere conocer la impresión de medidas gubernamentales para ayudar a pequeños productores y aplica una encuesta. En ambos casos (datos secundarios o encuesta), el investigador observa sin intervenir en el fenómeno: es un estudio <strong>observacional</strong>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -355,7 +414,7 @@ Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Estudio retrospectivo</strong> se basa en datos ya existentes.</p>
+<p><strong>Estudio retrospectivo</strong>: se basa en datos ya existentes (históricos o previamente recolectados).</p>
 </div>
 </div>
 <div class="callout callout-style-default callout-important callout-titled">
@@ -368,10 +427,10 @@ Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Estudio observacional</strong> se observan los datos como aparecen y no se interviene en el problema o fenómeno investigado. Un estudio observacional puede ser <em>analítico</em> o <em>descriptivo</em></p>
+<p><strong>Estudio observacional</strong>: se observan los datos como aparecen y no se interviene en el fenómeno. Un estudio observacional puede ser <em>descriptivo</em> o <em>analítico</em>.</p>
 </div>
 </div>
-<p>Ahora imaginemos que se desea evaluar los parámetros nutricionales y fermentativos de un tipo de pasto, así como la inclusión de diferentes niveles de maíz molido en el proceso de ensilaje. El investigador diseña un experimento utilizando microsilos experimentales para evaluar el efecto de incluir diferentes porcentajes de maíz molido en el ensilaje del pasto, el diseño de este experimento incluye la determinación del número de tratamientos y repeticiones. En este caso el investigador está manipulando los porcentajes de maíz molido para evaluar el efecto sobre los parámetros nutricionales y fermentativos del pasto. Este tipo de estudios recibe el nombre de <strong>experimental</strong></p>
+<p>Ahora imaginemos que se desea evaluar parámetros nutricionales y fermentativos de un pasto en ensilaje, incluyendo diferentes niveles de maíz molido. El investigador <strong>diseña</strong> un experimento con microsilos, define tratamientos y repeticiones, y manipula intencionalmente el porcentaje de maíz para observar su efecto. Este es un estudio <strong>experimental</strong>.</p>
 <div class="callout callout-style-default callout-important callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -382,95 +441,117 @@ Importante
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p><strong>Estudio experimental</strong> se interviene de manera intencionada y programada para manipular una o más variables con el fin de analizar los efectos de estas manipulaciones en otras variables</p>
+<p><strong>Estudio experimental</strong>: se interviene de manera intencionada y programada para manipular una o más variables con el fin de analizar los efectos en otras variables.</p>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En términos prácticos: en un <strong>observacional</strong> “miramos lo que pasa”; en un <strong>experimental</strong> “provocamos cambios controlados” para aprender sobre causas y efectos.</p>
+</div>
+</div>
+<hr>
 </section>
-<section id="variables-clasificación-y-niveles-de-medición." class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="variables-clasificación-y-niveles-de-medición."><span class="header-section-number">2.5</span> Variables, clasificación y niveles de medición.</h2>
-<p>En un estudio sobre características fenotípicas de girasoles cultivadas en el trópico húmedo se registra información sobre el número de planta, el número de parcela donde se encuentra la planta, la variedad de girasol observada, el número de fila, la altura de las plantas, la circunferencia del tallo, el color de las flores, el número de pétalos de las flores y número de hojas. Estas características, medidas o valores de interés para la persona que investiga reciben el nombre de <strong>variables</strong>.</p>
-<p>En la variable <strong>Variedad de Girasol</strong> se puede almacenar respuestas como Almonte, Ariadna, Candela, etc. Mientras que en la variable <strong>Color de las flores</strong> se puede registrar valores como Marfil, Amarillo pálido, Naranja, Púrpura, Rojo o Multicolor. Estas dos variables son <strong>variables cualitativas</strong>, pues describen una cualidad o categoría.</p>
-<p>En las variables <strong>altura de las plantas</strong>, <strong>circunferencia del tallo</strong>, <strong>número de pétalos de las flores</strong> y <strong>número de hojas</strong> se almacenan respuestas numéricas. Estas variables son ejemplo de <strong>variables cuantitativas</strong>. Para la altura de las plantas en centímetros ejemplos de respuestas son <span class="math inline">\(75.23\)</span>, <span class="math inline">\(92.15\)</span>, etc. Mientras que para el número de pétalos o para el número de hojas las respuestas pueden ser, por ejemplo, <span class="math inline">\(10\)</span>, <span class="math inline">\(5\)</span>, <span class="math inline">\(20\)</span>, etc. Para el caso de la altura, como se observa, aceptamos respuestas con decimales, en este caso la variable es <strong>cuantitativa continua</strong>. La variable número de hojas es un ejemplo de variable <strong>cuantitativa discreta</strong> pues es una variable que solo acepta números enteros. En la <a href="#fig-clasvars" class="quarto-xref">Figura&nbsp;<span>2.2</span></a> se presenta un resumen de la clasificación de las variables.</p>
-<p>Las variables además presentan <strong>niveles de medición</strong>, estos pueden ser:</p>
+<section id="variables-clasificación-y-niveles-de-medición" class="level2" data-number="2.7">
+<h2 data-number="2.7" class="anchored" data-anchor-id="variables-clasificación-y-niveles-de-medición"><span class="header-section-number">2.7</span> Variables, clasificación y niveles de medición</h2>
+<p>En un estudio sobre características fenotípicas de girasoles en el trópico húmedo se registra: número de planta, parcela, variedad, fila, altura, circunferencia del tallo, color de flores, número de pétalos y número de hojas. Estas características medidas reciben el nombre de <strong>variables</strong>.</p>
+<ul>
+<li>En <strong>Variedad de girasol</strong> se almacenan categorías como <em>Almonte, Ariadna, Candela</em>.<br>
+</li>
+<li>En <strong>Color de las flores</strong> se registran categorías como <em>Marfil, Amarillo pálido, Naranja, Púrpura</em>.</li>
+</ul>
+<p>Estas son <strong>variables cualitativas</strong> (categóricas), porque describen una cualidad o categoría.</p>
+<p>En cambio, <strong>altura</strong>, <strong>circunferencia del tallo</strong>, <strong>número de pétalos</strong> y <strong>número de hojas</strong> almacenan valores numéricos; son <strong>variables cuantitativas</strong>.<br>
+- Si aceptan decimales (altura en cm: 75.23, 92.15), son <strong>cuantitativas continuas</strong>.<br>
+- Si solo aceptan enteros (número de hojas: 10, 5, 20), son <strong>cuantitativas discretas</strong>.</p>
+<p>En la <a href="#fig-clasvars" class="quarto-xref">Figura&nbsp;<span>2.2</span></a> se resume esta clasificación.</p>
+<section id="niveles-de-medición" class="level3" data-number="2.7.1">
+<h3 data-number="2.7.1" class="anchored" data-anchor-id="niveles-de-medición"><span class="header-section-number">2.7.1</span> Niveles de medición</h3>
+<p>Las variables además presentan <strong>niveles de medición</strong>. Los cuatro niveles clásicos son:</p>
 <ol type="1">
-<li>Nominal: toman valores que no se ordenan o clasifican de forma lógica, ejemplos de variables con este nivel de medición pueden ser <strong>variedad de semilla de maíz sembrada</strong>, <strong>raza de ganado sometida a una dieta</strong>.</li>
+<li><strong>Nominal</strong>: categorías sin orden lógico (por ejemplo, variedad de semilla, raza de ganado).</li>
 </ol>
-<div class="callout callout-style-default callout-important callout-titled" title="Características">
+<div class="callout callout-style-default callout-important callout-titled" title="Características (Nominal)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Características
+<span class="screen-reader-only">Importante</span>Características (Nominal)
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Una variable de escala nominal se clasifica en dos o más categorías. En este mecanismo de medida, la respuesta debe pertenecer a cualquiera de las clases.</li>
-<li>Es cualitativa. Los números se utilizan aquí para identificar los objetos.</li>
-<li>Los números no definen las características del objeto. El único aspecto admisible de los números en la escala nominal es “contar”.</li>
+<li>Se clasifica en dos o más categorías.</li>
+<li>Es cualitativa.</li>
+<li>Los números (si existen) se usan solo para identificar o contar; no representan magnitud.</li>
 </ul>
 </div>
 </div>
 <ol start="2" type="1">
-<li>Ordinal: toman valores que se ordenan o clasifican de forma lógica, ejemplos de variables con este nivel de medición pueden ser <strong>fila en que se encuentra una planta</strong>, <strong>nivel de aceptación de un producto (muy alto, alto, medio, bajo, muy bajo)</strong></li>
+<li><strong>Ordinal</strong>: categorías con orden lógico (por ejemplo, nivel de aceptación: muy alto, alto, medio, bajo, muy bajo).</li>
 </ol>
-<div class="callout callout-style-default callout-important callout-titled" title="Características">
+<div class="callout callout-style-default callout-important callout-titled" title="Características (Ordinal)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Características
+<span class="screen-reader-only">Importante</span>Características (Ordinal)
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>La escala ordinal muestra la clasificación relativa de las variables.</li>
-<li>Identifica y describe la magnitud de una variable</li>
-<li>Junto con la información proporcionada por la escala nominal, las escalas ordinales dan la clasificación de esas variables.</li>
+<li>Muestra la clasificación relativa (orden).</li>
+<li>Describe magnitud en términos de “más/menos”, pero sin distancias numéricas interpretables.</li>
 </ul>
 </div>
 </div>
 <ol start="3" type="1">
-<li>Intervalo: existe diferencia significativa entre valores pero el cero no representa la ausencia de la característica, es decir que el cero no es significativo, ejemplos de este nivel de medición son <strong>calificación obtenida en un examen</strong>, <strong>temperatura media en grados Farenheit</strong>.</li>
+<li><strong>Intervalo</strong>: diferencias significativas entre valores; el cero no representa ausencia de la característica (por ejemplo, temperatura en °C o °F, calificación si el “cero” no implica ausencia del atributo).</li>
 </ol>
-<div class="callout callout-style-default callout-important callout-titled" title="Características">
+<div class="callout callout-style-default callout-important callout-titled" title="Características (Intervalo)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Características
+<span class="screen-reader-only">Importante</span>Características (Intervalo)
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>La escala de intervalo es cuantitativa ya que puede cuantificar la diferencia entre los valores.</li>
-<li>Permite calcular la media y la mediana de las variables.</li>
-<li>Para comprender la diferencia entre las variables, se pueden restar los valores entre las variables.</li>
-<li>La escala de intervalo ayuda a asignar cualquier valor numérico a una evaluación arbitraria como sentimientos, agrado, percepción sensorial, etc.</li>
+<li>Es cuantitativa y permite comparar diferencias.</li>
+<li>Permite calcular media y mediana.</li>
+<li>Se pueden restar valores; la razón (división) no es interpretable de forma general por falta de cero absoluto.</li>
 </ul>
 </div>
 </div>
 <ol start="4" type="1">
-<li>Razón: el 0 es significativo y la razón entre dos números es significativa, ejemplos de este nivel de medición son <strong>edad</strong>, <strong>altura de una planta</strong>, <strong>circunferencia del tallo de una planta</strong>.</li>
+<li><strong>Razón</strong>: el cero es absoluto y las razones son significativas (por ejemplo, edad, altura, circunferencia del tallo).</li>
 </ol>
-<div class="callout callout-style-default callout-important callout-titled" title="Características">
+<div class="callout callout-style-default callout-important callout-titled" title="Características (Razón)">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Características
+<span class="screen-reader-only">Importante</span>Características (Razón)
 </div>
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>La escala de razón tiene una característica de cero absoluto.</li>
-<li>No tiene números negativos, debido a su característica de punto cero.</li>
-<li>La media, la mediana y la moda pueden calcularse utilizando la escala de razón.</li>
-<li>La escala de razón permite conversiones de unidades.</li>
+<li>Tiene cero absoluto.</li>
+<li>No admite valores negativos en la interpretación natural del fenómeno.</li>
+<li>Permite media, mediana y moda.</li>
+<li>Permite comparar razones (el doble, la mitad) y convertir unidades.</li>
 </ul>
 </div>
 </div>
@@ -488,11 +569,61 @@ Figura&nbsp;2.2: Clasificación de las variables
 </div>
 </div>
 </div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Puente hacia R y tidyverse</strong></p>
+<p>En capítulos posteriores: - una <strong>variable</strong> corresponderá a una columna de un <em>data frame</em> - una <strong>observación</strong> corresponderá a una fila - una <strong>muestra</strong> será un subconjunto de filas - un <strong>estadístico</strong> se calculará con funciones como <code>mean()</code>, <code>sd()</code> o <code>summarise()</code></p>
+</div>
+</div>
+</section>
 </section>
 <section id="ejercicios" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ejercicios">Ejercicios</h2>
+<div id="exr-errors" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 2.1</strong></span> <strong>Identifique la afirmación correcta</strong></p>
+<div class="webex-check webex-box">
+¿Cuál de las siguientes afirmaciones es correcta?
+<div id="radio_RADXGBBWAJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RADXGBBWAJ" value=""> <span>Un estadístico describe una población completa</span></label><label><input type="radio" autocomplete="off" name="radio_RADXGBBWAJ" value="answer"> <span>Un parámetro describe una población</span></label><label><input type="radio" autocomplete="off" name="radio_RADXGBBWAJ" value=""> <span>Un parámetro se calcula a partir de una muestra</span></label><label><input type="radio" autocomplete="off" name="radio_RADXGBBWAJ" value=""> <span>Un estadístico siempre es desconocido</span></label>
+</div>
+Seleccione la afirmación correcta sobre estadística descriptiva e inferencial
+<div id="radio_XCNHPGLZCQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XCNHPGLZCQ" value=""> <span>La estadística descriptiva permite generalizar a la población</span></label><label><input type="radio" autocomplete="off" name="radio_XCNHPGLZCQ" value="answer"> <span>La estadística inferencial permite hacer conclusiones sobre una población a partir de una muestra</span></label><label><input type="radio" autocomplete="off" name="radio_XCNHPGLZCQ" value=""> <span>La estadística inferencial solo se usa con censos</span></label><label><input type="radio" autocomplete="off" name="radio_XCNHPGLZCQ" value=""> <span>Ambas significan lo mismo</span></label>
+</div>
+</div>
+</div>
+<div id="exr-process" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 2.2</strong></span> <strong>Seleccione la secuencia correcta del proceso estadístico</strong></p>
+<div class="webex-check webex-box">
+¿Cuál es el orden correcto de las etapas del proceso estadístico?
+<div id="radio_OYIZCKNSNP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OYIZCKNSNP" value=""> <span>Recolección → Análisis → Problema → Comunicación</span></label><label><input type="radio" autocomplete="off" name="radio_OYIZCKNSNP" value="answer"> <span>Problema → Planificación → Recolección → Revisión → Análisis → Inferencia → Comunicación</span></label><label><input type="radio" autocomplete="off" name="radio_OYIZCKNSNP" value=""> <span>Planificación → Comunicación → Recolección → Inferencia</span></label><label><input type="radio" autocomplete="off" name="radio_OYIZCKNSNP" value=""> <span>Problema → Recolección → Publicación</span></label>
+</div>
+</div>
+</div>
+<div id="exr-context" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 2.3</strong></span> <strong>Identifique el tipo de estudio</strong></p>
+<div class="webex-check webex-box">
+Un investigador compara el rendimiento de maíz usando tres dosis de fertilizante asignadas al azar. ¿Qué tipo de estudio es?
+<div id="radio_POAUKUBDCS" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_POAUKUBDCS" value=""> <span>Observacional</span></label><label><input type="radio" autocomplete="off" name="radio_POAUKUBDCS" value=""> <span>Retrospectivo</span></label><label><input type="radio" autocomplete="off" name="radio_POAUKUBDCS" value="answer"> <span>Experimental</span></label><label><input type="radio" autocomplete="off" name="radio_POAUKUBDCS" value=""> <span>Descriptivo</span></label>
+</div>
+Un análisis de datos históricos de precipitación de los últimos 30 años obtenidos de una base climática nacional es un estudio:
+<div id="radio_QJKBQNMKKP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_QJKBQNMKKP" value=""> <span>Experimental</span></label><label><input type="radio" autocomplete="off" name="radio_QJKBQNMKKP" value="answer"> <span>Retrospectivo</span></label><label><input type="radio" autocomplete="off" name="radio_QJKBQNMKKP" value=""> <span>Intervencionista</span></label><label><input type="radio" autocomplete="off" name="radio_QJKBQNMKKP" value=""> <span>De laboratorio</span></label>
+</div>
+</div>
+</div>
 <div id="exr-first" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.1</strong></span> <strong>Complete el siguiente cuadro</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.4</strong></span> <strong>Complete el siguiente cuadro</strong></p>
 <div class="webex-check webex-box">
 <table class="caption-top table">
 <colgroup>
@@ -593,47 +724,47 @@ Figura&nbsp;2.2: Clasificación de las variables
 </div>
 </div>
 <div id="exr-fourth" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.2</strong></span> <strong>Seleccione la respuesta correcta</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.5</strong></span> <strong>Seleccione la respuesta correcta</strong></p>
 <div class="webex-check webex-box">
 ¿Cuál es el origen etimológico de la palabra ‘estadística’?
-<div id="radio_LYCCVOSHUA" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_LYCCVOSHUA" value=""> <span>Del griego 'statikos'</span></label><label><input type="radio" autocomplete="off" name="radio_LYCCVOSHUA" value=""> <span>Del latín 'statisticus'</span></label><label><input type="radio" autocomplete="off" name="radio_LYCCVOSHUA" value="answer"> <span>Del alemán 'statistik'</span></label>
+<div id="radio_UGPGBLFWYH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UGPGBLFWYH" value=""> <span>Del griego 'statikos'</span></label><label><input type="radio" autocomplete="off" name="radio_UGPGBLFWYH" value=""> <span>Del latín 'statisticus'</span></label><label><input type="radio" autocomplete="off" name="radio_UGPGBLFWYH" value="answer"> <span>Del alemán 'statistik'</span></label>
 </div>
 ¿Quién acuñó el término ‘statistik’?
-<div id="radio_YTUGOZGSFH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YTUGOZGSFH" value=""> <span>Karl Pearson</span></label><label><input type="radio" autocomplete="off" name="radio_YTUGOZGSFH" value=""> <span>Ronald Fisher</span></label><label><input type="radio" autocomplete="off" name="radio_YTUGOZGSFH" value="answer"> <span>Gottfried Achenwall</span></label>
+<div id="radio_MHZRSMVUOU" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MHZRSMVUOU" value=""> <span>Karl Pearson</span></label><label><input type="radio" autocomplete="off" name="radio_MHZRSMVUOU" value=""> <span>Ronald Fisher</span></label><label><input type="radio" autocomplete="off" name="radio_MHZRSMVUOU" value="answer"> <span>Gottfried Achenwall</span></label>
 </div>
 ¿Qué estudia la estadística?
-<div id="radio_KUFAPXPSFW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KUFAPXPSFW" value=""> <span>La recolección de datos únicamente</span></label><label><input type="radio" autocomplete="off" name="radio_KUFAPXPSFW" value=""> <span>La organización y presentación de datos únicamente</span></label><label><input type="radio" autocomplete="off" name="radio_KUFAPXPSFW" value="answer"> <span>La recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica</span></label><label><input type="radio" autocomplete="off" name="radio_KUFAPXPSFW" value=""> <span>La interpretación de datos únicamente</span></label>
+<div id="radio_NKZWFMYMHM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_NKZWFMYMHM" value=""> <span>La recolección de datos únicamente</span></label><label><input type="radio" autocomplete="off" name="radio_NKZWFMYMHM" value=""> <span>La organización y presentación de datos únicamente</span></label><label><input type="radio" autocomplete="off" name="radio_NKZWFMYMHM" value="answer"> <span>La recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica</span></label><label><input type="radio" autocomplete="off" name="radio_NKZWFMYMHM" value=""> <span>La interpretación de datos únicamente</span></label>
 </div>
 ¿Cuál de las siguientes NO es una etapa del proceso estadístico?
-<div id="radio_EZAPDZWNYO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_EZAPDZWNYO" value=""> <span>Identificación y delimitación del problema</span></label><label><input type="radio" autocomplete="off" name="radio_EZAPDZWNYO" value=""> <span>Planificación</span></label><label><input type="radio" autocomplete="off" name="radio_EZAPDZWNYO" value=""> <span>Recolección de datos</span></label><label><input type="radio" autocomplete="off" name="radio_EZAPDZWNYO" value="answer"> <span>Publicación de resultados</span></label>
+<div id="radio_KPXISSWEDM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KPXISSWEDM" value=""> <span>Identificación y delimitación del problema</span></label><label><input type="radio" autocomplete="off" name="radio_KPXISSWEDM" value=""> <span>Planificación</span></label><label><input type="radio" autocomplete="off" name="radio_KPXISSWEDM" value=""> <span>Recolección de datos</span></label><label><input type="radio" autocomplete="off" name="radio_KPXISSWEDM" value="answer"> <span>Publicación de resultados</span></label>
 </div>
 ¿Qué implica la delimitación del problema en estadística?
-<div id="radio_COFZNAOSIP" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_COFZNAOSIP" value=""> <span>Definir los objetivos del estudio</span></label><label><input type="radio" autocomplete="off" name="radio_COFZNAOSIP" value="answer"> <span>Recortar el tema dentro de los límites de espacio, tiempo y área de estudio</span></label><label><input type="radio" autocomplete="off" name="radio_COFZNAOSIP" value=""> <span>Identificar las fuentes de datos</span></label><label><input type="radio" autocomplete="off" name="radio_COFZNAOSIP" value=""> <span>Analizar los datos recolectados</span></label>
+<div id="radio_KOSRSHXWJI" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KOSRSHXWJI" value=""> <span>Definir los objetivos del estudio</span></label><label><input type="radio" autocomplete="off" name="radio_KOSRSHXWJI" value="answer"> <span>Recortar el tema dentro de los límites de espacio, tiempo y área de estudio</span></label><label><input type="radio" autocomplete="off" name="radio_KOSRSHXWJI" value=""> <span>Identificar las fuentes de datos</span></label><label><input type="radio" autocomplete="off" name="radio_KOSRSHXWJI" value=""> <span>Analizar los datos recolectados</span></label>
 </div>
 ¿Qué se debe hacer después de recolectar los datos en el proceso estadístico?
-<div id="radio_SGIOHRUGGI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SGIOHRUGGI" value=""> <span>Publicar los datos inmediatamente</span></label><label><input type="radio" autocomplete="off" name="radio_SGIOHRUGGI" value="answer"> <span>Revisar los datos para verificar inconsistencias o problemas potenciales</span></label><label><input type="radio" autocomplete="off" name="radio_SGIOHRUGGI" value=""> <span>Analizar los datos sin revisión previa</span></label><label><input type="radio" autocomplete="off" name="radio_SGIOHRUGGI" value=""> <span>Almacenar los datos sin analizarlos</span></label>
+<div id="radio_XDDGEJLSSJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XDDGEJLSSJ" value=""> <span>Publicar los datos inmediatamente</span></label><label><input type="radio" autocomplete="off" name="radio_XDDGEJLSSJ" value="answer"> <span>Revisar los datos para verificar inconsistencias o problemas potenciales</span></label><label><input type="radio" autocomplete="off" name="radio_XDDGEJLSSJ" value=""> <span>Analizar los datos sin revisión previa</span></label><label><input type="radio" autocomplete="off" name="radio_XDDGEJLSSJ" value=""> <span>Almacenar los datos sin analizarlos</span></label>
 </div>
 ¿Qué es una variable en estadística?
-<div id="radio_HXIJVKYCOZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_HXIJVKYCOZ" value=""> <span>Un conjunto de datos sin relación</span></label><label><input type="radio" autocomplete="off" name="radio_HXIJVKYCOZ" value="answer"> <span>Una característica de los elementos u objetos que se estudian</span></label><label><input type="radio" autocomplete="off" name="radio_HXIJVKYCOZ" value=""> <span>Un valor constante en un estudio</span></label><label><input type="radio" autocomplete="off" name="radio_HXIJVKYCOZ" value=""> <span>Un método de recolección de datos</span></label>
+<div id="radio_IRQBPBKDKP" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IRQBPBKDKP" value=""> <span>Un conjunto de datos sin relación</span></label><label><input type="radio" autocomplete="off" name="radio_IRQBPBKDKP" value="answer"> <span>Una característica de los elementos u objetos que se estudian</span></label><label><input type="radio" autocomplete="off" name="radio_IRQBPBKDKP" value=""> <span>Un valor constante en un estudio</span></label><label><input type="radio" autocomplete="off" name="radio_IRQBPBKDKP" value=""> <span>Un método de recolección de datos</span></label>
 </div>
 ¿Qué tipo de datos representan etiquetas o nominaciones que identifican atributos?
-<div id="radio_WWFGJXAJBU" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WWFGJXAJBU" value=""> <span>Datos cuantitativos</span></label><label><input type="radio" autocomplete="off" name="radio_WWFGJXAJBU" value="answer"> <span>Datos cualitativos</span></label><label><input type="radio" autocomplete="off" name="radio_WWFGJXAJBU" value=""> <span>Datos continuos</span></label><label><input type="radio" autocomplete="off" name="radio_WWFGJXAJBU" value=""> <span>Datos discretos</span></label>
+<div id="radio_PPKTRZQTGY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PPKTRZQTGY" value=""> <span>Datos cuantitativos</span></label><label><input type="radio" autocomplete="off" name="radio_PPKTRZQTGY" value="answer"> <span>Datos cualitativos</span></label><label><input type="radio" autocomplete="off" name="radio_PPKTRZQTGY" value=""> <span>Datos continuos</span></label><label><input type="radio" autocomplete="off" name="radio_PPKTRZQTGY" value=""> <span>Datos discretos</span></label>
 </div>
 ¿Qué tipo de datos son aquellos que pueden ser contados y no admiten valores intermedios?
-<div id="radio_GHRKOQZOYG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_GHRKOQZOYG" value=""> <span>Datos cualitativos</span></label><label><input type="radio" autocomplete="off" name="radio_GHRKOQZOYG" value=""> <span>Datos continuos</span></label><label><input type="radio" autocomplete="off" name="radio_GHRKOQZOYG" value="answer"> <span>Datos discretos</span></label><label><input type="radio" autocomplete="off" name="radio_GHRKOQZOYG" value=""> <span>Datos nominales</span></label>
+<div id="radio_EMYMYDDDZV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_EMYMYDDDZV" value=""> <span>Datos cualitativos</span></label><label><input type="radio" autocomplete="off" name="radio_EMYMYDDDZV" value=""> <span>Datos continuos</span></label><label><input type="radio" autocomplete="off" name="radio_EMYMYDDDZV" value="answer"> <span>Datos discretos</span></label><label><input type="radio" autocomplete="off" name="radio_EMYMYDDDZV" value=""> <span>Datos nominales</span></label>
 </div>
 ¿Qué tipo de variable es el ‘número de hijos en una familia’?
-<div id="radio_SZAEWUSWZG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SZAEWUSWZG" value=""> <span>Variable cualitativa</span></label><label><input type="radio" autocomplete="off" name="radio_SZAEWUSWZG" value=""> <span>Variable cuantitativa continua</span></label><label><input type="radio" autocomplete="off" name="radio_SZAEWUSWZG" value="answer"> <span>Variable cuantitativa discreta</span></label><label><input type="radio" autocomplete="off" name="radio_SZAEWUSWZG" value=""> <span>Variable ordinal</span></label>
+<div id="radio_LTKZTTCOVL" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_LTKZTTCOVL" value=""> <span>Variable cualitativa</span></label><label><input type="radio" autocomplete="off" name="radio_LTKZTTCOVL" value=""> <span>Variable cuantitativa continua</span></label><label><input type="radio" autocomplete="off" name="radio_LTKZTTCOVL" value="answer"> <span>Variable cuantitativa discreta</span></label><label><input type="radio" autocomplete="off" name="radio_LTKZTTCOVL" value=""> <span>Variable ordinal</span></label>
 </div>
 </div>
 </div>
@@ -1139,13 +1270,14 @@ window._ojs.runtime.interpretFromScriptTags();
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
