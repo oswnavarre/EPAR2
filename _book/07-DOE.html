@@ -911,7 +911,7 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p><span class="theorem-title"><strong>Ejercicio 8.2</strong></span> Con los datos y el proyecto del <a href="02-estdesc.html#exr-quin3" class="quarto-xref">Ejercicio&nbsp;<span>3.10</span></a>, resolver las siguientes cuestiones.</p>
 </div>
 <ol type="a">
-<li>Crear un archivo llamado <em>reporte_GAGS.qmd</em></li>
+<li>Crear un archivo llamado <em>reporte_GAGS.qmd</em>, puede continuar trabajando con el script creado en el <a href="02-estdesc.html#exr-quin3" class="quarto-xref">Ejercicio&nbsp;<span>3.10</span></a>.</li>
 <li>Cargar los paquetes <em>agricolae</em>, <em>tidyverse</em>, <em>writexl</em>, <em>readxl</em> y <em>jtools</em>.</li>
 <li>Cargar los datos almacenados en el archivo de Excel, los datos deben ser almacenados en una variable llamada <em>data23035</em>.</li>
 <li>Crear una variable llamada <strong>Diámetro</strong>. Esta variable es el promedio del diámetro horizontal y el diámetro vertical.</li>
@@ -1124,7 +1124,7 @@ Tabla&nbsp;8.5: Tabla modelo 2.
 <li>Para todas las mediciones, grafique un diagrama de caja de la altura por medición. En cada gráfico muestre además los grupos de la prueba de Fisher en la parte superior de las cajas. Guarde cada uno de los gráficos con los nombres <em>boxaltM1.png</em>, <em>boxaltM2.png</em>, <em>boxaltM3.png</em> y <em>boxaltM4.png</em> respectivamente para cada medición.</li>
 </ol>
 <div id="exr-doe4" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 8.4</strong></span> Con los datos y el proyecto del ejercicio <a href="#exr-doe2" class="quarto-xref">Ejercicio&nbsp;<span>8.2</span></a> resolver las siguientes cuestiones.</p>
+<p><span class="theorem-title"><strong>Ejercicio 8.4</strong></span> Con los datos y el proyecto del ejercicio <a href="#exr-doe2" class="quarto-xref">Ejercicio&nbsp;<span>8.2</span></a> resolver las siguientes cuestiones. Puede continuar trabajando en el script y en el proyecto anteriores. En el script puede crear una sección llamada <strong>Comparaciones</strong> y en el reporte con un título de nivel 2, cree una sección llamada <strong>Comparaciones múltiples de medias</strong></p>
 </div>
 <ol type="a">
 <li>Para la semana 1, utilizando la prueba de Fisher ¿dónde se encuentran las diferencias significativas?</li>
@@ -1166,89 +1166,30 @@ Tabla&nbsp;8.5: Tabla modelo 2.
 <li>Para cada repetición se tomaron 3 mediciones, es decir que se debe calcular el promedio de las 3 mediciones para tener el valor de cada repetición. Utilizando la función <code>summarise_at</code>, calcule la media de las 3 mediciones para cada repetición.</li>
 <li>Daniel y Mark tuvieron problemas con los datos del tratamiento 3, repetición 2, bloque B por lo que decidieron eliminar estos datos del análisis. Filtre los datos para poder realizar esta tarea.</li>
 <li>La variable <strong>Measurement</strong> no está relacionada con las fechas en que se tomaron los datos. Crear una variable llamada <strong>Measurement</strong> a partir de la variable <strong>Date</strong>.</li>
-<li>Utilizando la función <code>pivot_longer</code>, transforme los datos de formato ancho a formato largo. Las columnas que deben ser transformadas son <strong>Leaves</strong>, <strong>Height</strong> y <strong>Diameter</strong>. Los nombres de las variables deben ser guardados en una variable llamada <strong>Variable</strong> y los valores en una variable llamada <strong>Value</strong>. Adicionalmente crear una variable llamada <strong>Week</strong> que sea igual al doble del número de medición.</li>
+<li>Utilizando la función <code>pivot_longer</code>, transforme los datos de formato ancho a formato largo. Las columnas que deben ser transformadas son <strong>Height</strong> y <strong>Diameter</strong>, debe eliminar previamente la variable <strong>Leaves</strong>. Los nombres de las variables deben ser guardados en una variable llamada <strong>Variable</strong> y los valores en una variable llamada <strong>Value</strong>. Adicionalmente crear una variable llamada <strong>Week</strong> que sea igual al doble del número de medición.</li>
 <li>Crear las siguientes tablas:</li>
 </ol>
 <ul>
 <li><code>stats_all_long_trt_bl</code>: estadísticas agrupando por medición, semana, tratamiento, bloque y variable.</li>
-<li><code>stats_all_long_bl</code>: estadísticas agrupando por medición, semana, bloque y variable.</li>
 <li><code>stats_all_long_trt</code>: estadísticas agrupando por medición, semana, tratamiento y variable.</li>
 </ul>
-<p>Todas las tablas deben contener:</p>
+<p>Las tablas deben contener:</p>
 <ul>
-<li>La media y la desviación de la altura.</li>
+<li>La media y la desviación de la variable.</li>
 <li>El valor crítico de la distribución <span class="math inline">\(t\)</span> para el número de observaciones calculado con un <span class="math inline">\(95\%\)</span> de confianza.</li>
-<li>El error estándar de la media de la altura.</li>
-<li>Los extremos del intervalo del <span class="math inline">\(95\%\)</span> de confianza para la media de la altura.</li>
+<li>El error estándar de la media de la variable.</li>
+<li>Los extremos del intervalo del <span class="math inline">\(95\%\)</span> de confianza para la media de la variable.</li>
 </ul>
 <ol start="8" type="a">
-<li>Realice la prueba ANOVA para cada medición para verificar si existen diferencias significativas por tratamiento, tomando en cuenta el bloque. Posteriormente realice la prueba de Bonferroni para verificar donde se encuentran las diferencias significativas. En un objeto llamado <code>groups_trt</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por tratamiento y en un objeto llamado <code>groups_block</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por bloque. Con ayuda de la función <code>left_join</code> una estos dos objetos con las tablas <code>stats_all_long_trt</code> y <code>stats_all_long_bl</code> respectivamente.</li>
-<li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>biomass</strong> dentro de la carpeta <strong>graficos</strong>. Dentro de esta carpeta, guarde para cada variable dentro de cada bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>biomass</strong> deben existir 12 gráficos.</li>
-<li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>blocks</strong> dentro de la carpeta <strong>biomass</strong> creada en el literal anterior. Dentro de esta carpeta, guarde para cada variable separados bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>blocks</strong> deben existir 6 gráficos.</li>
-<li>A partir de la tabla <code>stats_all_long_bl</code>, generar una tabla como la <a href="#tbl-mod1dkmn" class="quarto-xref">Tabla&nbsp;<span>8.6</span></a> y guardarla en <code>stats_all_long_bl2</code>, esta última tabla debe tener 12 filas y 4 columnas. A partir de la tabla <code>stats_all_long_trt</code> generar una tabla como la <a href="#tbl-mod2dkmn" class="quarto-xref">Tabla&nbsp;<span>8.7</span></a> y guardarla en <code>stats_all_long_trt2</code>, esta última tabla debe tener 12 filas y 8 columnas.</li>
-<li>Guardar las dos tablas del literal anterior en un archivo llamado <strong>stats_biomass.xlsx</strong>, en hojas llamadas <strong>Blocks</strong> y <strong>Treatments</strong> respectivamente.</li>
+<li>Realice la prueba ANOVA para cada medición para verificar si existen diferencias significativas por tratamiento, tomando en cuenta el bloque. Posteriormente realice la prueba de Bonferroni para verificar donde se encuentran las diferencias significativas. En un objeto llamado <code>groups_trt</code> almacene los grupos resultantes de realizar la prueba de Bonferroni por tratamiento. Con ayuda de la función <code>left_join</code> una este objeto con las tabla <code>stats_all_long_trt</code>.</li>
+<li>Con la función <code>dir.create</code> crear una subcarpeta llamada <strong>biomass</strong> dentro de la carpeta <strong>graficos</strong>. Dentro de esta carpeta, guarde para cada variable dentro de cada bloque un gráfico de líneas y un diagrama de cajas. En la carpeta <strong>biomass</strong> deben existir 12 gráficos o puede reducir el número de gráficos usando la función <code>facet_wrap</code>.</li>
+<li>A partir de la tabla <code>stats_all_long_trt</code> generar una tabla como la <a href="#tbl-mod2dkmn" class="quarto-xref">Tabla&nbsp;<span>8.6</span></a> y guardarla en <code>stats_all_long_trt2</code>, esta última tabla debe tener 12 filas y 8 columnas.</li>
+<li>Guardar la tabla del literal anterior en un archivo llamado <strong>stats_biomass.xlsx</strong>, en una hoja llamada <strong>Treatments</strong>.</li>
 </ol>
-<div id="tbl-mod1dkmn" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mod1dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.6: Tabla modelo 1
-</figcaption>
-<div aria-describedby="tbl-mod1dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<table class="caption-top table">
-<colgroup>
-<col style="width: 7%">
-<col style="width: 7%">
-<col style="width: 42%">
-<col style="width: 42%">
-</colgroup>
-<thead>
-<tr class="header">
-<th>Week</th>
-<th>Variable</th>
-<th>A</th>
-<th>B</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>2</td>
-<td>Diameter</td>
-<td><span class="math inline">\(\mu_{W2-DA} \pm \sigma_{W2-DA}\)</span> grupo</td>
-<td><span class="math inline">\(\mu_{W2-DB} \pm \sigma_{w2-DB}\)</span> grupo</td>
-</tr>
-<tr class="even">
-<td>2</td>
-<td>Height</td>
-<td><span class="math inline">\(\mu_{W2-HA} \pm \sigma_{W2-HA}\)</span> grupo</td>
-<td><span class="math inline">\(\mu_{W2-HB} \pm \sigma_{W2-HB}\)</span> grupo</td>
-</tr>
-<tr class="odd">
-<td><span class="math inline">\(\vdots\)</span></td>
-<td><span class="math inline">\(\vdots\)</span></td>
-<td><span class="math inline">\(\vdots\)</span></td>
-<td><span class="math inline">\(\vdots\)</span></td>
-</tr>
-<tr class="even">
-<td>8</td>
-<td>Diameter</td>
-<td><span class="math inline">\(\mu_{W8-DA} \pm \sigma_{W8-DA}\)</span> grupo</td>
-<td><span class="math inline">\(\mu_{W8-DB} \pm \sigma_{W8-DB}\)</span> grupo</td>
-</tr>
-<tr class="odd">
-<td>8</td>
-<td>Height</td>
-<td><span class="math inline">\(\mu_{W8-HA} \pm \sigma_{W8-HA}\)</span> grupo</td>
-<td><span class="math inline">\(\mu_{W8-HB} \pm \sigma_{W8-HB}\)</span> grupo</td>
-</tr>
-</tbody>
-</table>
-</div>
-</figure>
-</div>
 <div id="tbl-mod2dkmn" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mod2dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8.7: Tabla modelo 2
+Tabla&nbsp;8.6: Tabla modelo 2
 </figcaption>
 <div aria-describedby="tbl-mod2dkmn-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">

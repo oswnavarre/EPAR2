@@ -1492,7 +1492,7 @@ c. Cargar y almacenar los datos en una variable llamada *data23035.xlsx*
 d. El diámetro del pseudotallo se calcula como el promedio del diámetro vertical y horizontal. Utilizando la función *mutate*, crear una variable llamada *Diámetro*.
 e. Gabriela recogió información de 11 semanas, sin embargo a partir de la semana 9 las plantas sufrieron caídas por acción del viento. Utilice la función **filter** para seleccionar los datos desde la semana 1 a la semana 8. Los datos filtrados se deben mantener en la variable  *data23035*.
 f. En el script, crear una sección llamada **Altura y diámetro**. Para crear secciones puede usar la ruta `Code + Insert Section`, o desde el teclado la combinación de teclas `Ctrl + Shift + R` en Windows o `Cmd + Shift + R` en Mac.
-g. En una variable llamada **stats\_alt** almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil de la altura de las plantas **por semana y tratamiento**. Estos valores se deben almacenar en las columnas *Media*, *Mediana*, *Desv*, *Q1* y *Q3*. Con ayuda de la tabla creada, conteste las siguientes preguntas:
+g. En una variable llamada **stats\_alt** almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil de la altura de las plantas **por semana y tratamiento**. Estos valores se deben almacenar en las columnas *Media*, *Mediana*, *Desv*, *Q1* y *Q3*. Con ayuda de la tabla creada en un reporte llamado **descriptiva.qmd**, conteste las siguientes preguntas:
 
     - En la semana 1 ¿qué tratamiento tiene la menor altura promedio? 
     - En la semana 2 ¿qué tratamiento tiene el valor más alto para el segundo cuartil de la altura?
@@ -1503,7 +1503,7 @@ g. En una variable llamada **stats\_alt** almacene la media, la mediana, la desv
 h. En una variable llamada *stats\_diam* almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil del diámetro del pseudotallo de las plantas **por semana y tratamiento**. Estos valores se deben almacenar en las variables *Media*, *Mediana*, *Desv*, *Q1* y *Q3*. 
 i. Graficar diagramas de caja para la altura de la planta y el diámetro del pseudotallo, recuerde que estos diagramas de caja deben ayudar a comparar por semana y por tratamiento. Almacénelos en la carpeta *graficos* con los nombres *box\_altura.png* y  *box\_diam.png* con un tamaño de 8 pulgadas de ancho por 4 de altura. 
 j. Realizar un gráfico de líneas para la altura mostrando la evolución a lo largo de las semanas por tratamiento. Almacénelo en la carpeta *graficos* con el nombre *evol\_altura.png* con un tamaño de 6 pulgadas de ancho por 3 de altura.
-k. Utilizando las tablas y gráficos creados, ¿cree usted que existen diferencias significativas en la altura de las plantas por tratamiento a lo largo de las semanas?. Justifique su respuesta. Esta pregunta aprenderemos a responderla de manera formal en las próximas semanas, por ahora la respuesta debe basarse en lo que observa en las tablas y gráficas obtenidas. 
+k. Utilizando las tablas y gráficos creados, ¿cree usted que existen diferencias significativas en la altura de las plantas por tratamiento a lo largo de las semanas?. Justifique su respuesta. Incluya su respuesta en el reporte **descriptiva.qmd**
 l. En una carpeta apropiada, guardar la tabla *stats\_alt* en una hoja llamada altura y la tabla *stats\_diam* en una hoja llamada diametro, en un archivo *estadisticas.xlsx*. 
 
 ::: {#exr-quin4}

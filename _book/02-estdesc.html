@@ -374,7 +374,7 @@ Importante
 <ol start="3" type="1">
 <li><strong>Porcentaje</strong>: el porcentaje se lo obtiene multiplicando la frecuencia relativa <span class="math inline">\(h_i\)</span> por <span class="math inline">\(100\)</span>. La frecuencia relativa es igual a la frecuencia absoluta <span class="math inline">\(f_i\)</span> dividida por el número <span class="math inline">\(n\)</span> de observaciones. La frecuencia relativa también recibe el nombre de proporción. <span class="math inline">\(h_i = \dfrac{f_i}{n}\)</span></li>
 </ol>
-<p>Supongamos que en un estudio se utilizaron 50 semillas de 3 variedades de tomate. En la <a href="#tbl-cars" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-cars</span></a> se muestra un resumen del número de semillas usadas de cada variedad, esta tabla es un ejemplo de una tabla para variables cualitativas. De la tabla se deduce que la menor proporción de semillas utilizadas corresponde a la variedad 2, mientras que la mayor proporción de semillas corresponde a la variedad 1.</p>
+<p>Supongamos que en un estudio se utilizaron 50 semillas de 3 variedades de tomate. En la <a href="#tbl-cars" class="quarto-xref">Tabla&nbsp;<span>3.1</span></a> se muestra un resumen del número de semillas usadas de cada variedad, esta tabla es un ejemplo de una tabla para variables cualitativas. De la tabla se deduce que la menor proporción de semillas utilizadas corresponde a la variedad 2, mientras que la mayor proporción de semillas corresponde a la variedad 1.</p>
 <div class="cell">
 <div id="tbl-cars" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -583,7 +583,7 @@ Tabla&nbsp;3.3: Ejemplo de tabla de frecuencia para variables cuantitativas
 </figure>
 </div>
 </div>
-<p>Como se observa en la <a href="#tbl-girasoles" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-girasoles</span></a> Una tabla de frecuencias para variables cuantitativas tiene 6 columnas:</p>
+<p>Como se observa en la <a href="#tbl-girasoles" class="quarto-xref">Tabla&nbsp;<span>3.3</span></a> Una tabla de frecuencias para variables cuantitativas tiene 6 columnas:</p>
 <ol type="1">
 <li>Clase: una clase es un intervalo semi abierto o semicerrado con la forma <span class="math display">\[\left[ \text{Límite Inferior}, \text{Límite Superior} \right)\]</span></li>
 <li>Marca de Clase <span class="math inline">\(X_i\)</span>: es un valor igual al promedio de los dos límites de la clase. <span id="eq-mc"><span class="math display">\[X_i = \dfrac{\text{Límite Superior} + \text{Límite inferior}}{2}  \tag{3.1}\]</span></span></li>
@@ -593,7 +593,7 @@ Tabla&nbsp;3.3: Ejemplo de tabla de frecuencia para variables cuantitativas
 <li>Frecuencia Relativa acumulada <span class="math inline">\(H_i\)</span>: se la calcula sumando las frecuencias relativas desde la primera clase hasta la clase en consideración. <span id="eq-fracum"><span class="math display">\[F_i = \sum_{j=1}^{i}h_j  \tag{3.4}\]</span></span></li>
 </ol>
 <p>Exiten expresiones matemáticas que nos permiten conocer el número de clases necesarias y la amplitud de las clases sin embargo, por el enfoque de este texto en algunas ocasiones dejaremos eso a criterio del investigador o trabajaremos con las clases que por defecto obtengamos de las funciones que aprenderemos a usar de R.</p>
-<p>El ingeniero Yorky Gil realizó un experimento con el fin de estimar una curva fenológica para el cultivo de girasol en condiciones del trópico humedo. Recogió datos durante 8 semanas de la altura en centímetros y el número de hojas de las plantas de girasol de determinada variedad. En la <a href="#tbl-girasoles" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-girasoles</span></a> se muestra la distribución de frecuencias de la altura para la semana 8. Este es un ejemplo de una tabla de frecuencias para variables cuantitativas. En secciones posteriores discutiremos paso a paso la elaboración de esta tabla.</p>
+<p>El ingeniero Yorky Gil realizó un experimento con el fin de estimar una curva fenológica para el cultivo de girasol en condiciones del trópico humedo. Recogió datos durante 8 semanas de la altura en centímetros y el número de hojas de las plantas de girasol de determinada variedad. En la <a href="#tbl-girasoles" class="quarto-xref">Tabla&nbsp;<span>3.3</span></a> se muestra la distribución de frecuencias de la altura para la semana 8. Este es un ejemplo de una tabla de frecuencias para variables cuantitativas. En secciones posteriores discutiremos paso a paso la elaboración de esta tabla.</p>
 <p>De la interpretación de esta tabla se obtienen datos importantes. Si nos fijamos en la sexta clase podemos afirmar que en la semana <span class="math inline">\(8\)</span>, <span class="math inline">\(78\)</span> observaciones es decir el <span class="math inline">\(32.4\%\)</span> de las plantas tenían una altura entre <span class="math inline">\(130\)</span> y <span class="math inline">\(154\)</span> centímetros. De la misma clase podemos decir que <span class="math inline">\(196\)</span> plantas o el <span class="math inline">\(81.3 \%\)</span> tienen una altura menor a <span class="math inline">\(154\)</span> centímetros. En la última clase se observa que la frecuencia absoluta acumulada es de <span class="math inline">\(241\)</span>, este número corresponde al <span class="math inline">\(100\%\)</span> de las observaciones.</p>
 <p>Una forma sencilla en tidyverse es construir clases con <code>cut()</code> y luego contar.</p>
 <div class="cell">
@@ -725,7 +725,7 @@ Tabla&nbsp;3.4: Tabla de frecuencias (Altura) - Semana 8 (girasoles)
 <h3 data-number="3.2.3" class="anchored" data-anchor-id="gráficos"><span class="header-section-number">3.2.3</span> Gráficos</h3>
 <section id="diagrama-de-barras" class="level4" data-number="3.2.3.1">
 <h4 data-number="3.2.3.1" class="anchored" data-anchor-id="diagrama-de-barras"><span class="header-section-number">3.2.3.1</span> Diagrama de barras</h4>
-<p>Un gráfico de barras es la representación visual de una tabla de distribución de frecuencias. En el eje de las <span class="math inline">\(x\)</span> se colocan los niveles de la variable cualitativa y en el eje de las <span class="math inline">\(y\)</span> los valores de las frecuencias o de los porcentajes. En la <a href="#fig-grafico1" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-grafico1</span></a> se presenta el gráfico de barras para la <a href="#tbl-cars" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-cars</span></a>. Mientras que en la <a href="#fig-tablabar" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-tablabar</span></a> se muestra la relación entre estos dos objetos. En general cuando se tiene una variable categórica <strong>única</strong> que se quiere desglosar y cuantificar por cada categoría este es el tipo de gráfico adecuado.</p>
+<p>Un gráfico de barras es la representación visual de una tabla de distribución de frecuencias. En el eje de las <span class="math inline">\(x\)</span> se colocan los niveles de la variable cualitativa y en el eje de las <span class="math inline">\(y\)</span> los valores de las frecuencias o de los porcentajes. En la <a href="#fig-grafico1" class="quarto-xref">Figura&nbsp;<span>3.1</span></a> se presenta el gráfico de barras para la <a href="#tbl-cars" class="quarto-xref">Tabla&nbsp;<span>3.1</span></a>. Mientras que en la <a href="#fig-tablabar" class="quarto-xref">Figura&nbsp;<span>3.2</span></a> se muestra la relación entre estos dos objetos. En general cuando se tiene una variable categórica <strong>única</strong> que se quiere desglosar y cuantificar por cada categoría este es el tipo de gráfico adecuado.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-grafico1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
@@ -734,7 +734,7 @@ Tabla&nbsp;3.4: Tabla de frecuencias (Altura) - Semana 8 (girasoles)
 <img src="02-estdesc_files/figure-html/fig-grafico1-1.png" class="img-fluid figure-img" data-fig-pos="H" width="672">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-grafico1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.1: Gráfico de Barras para la <a href="#tbl-cars" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-cars</span></a>
+Figura&nbsp;3.1: Gráfico de Barras para la <a href="#tbl-cars" class="quarto-xref">Tabla&nbsp;<span>3.1</span></a>
 </figcaption>
 </figure>
 </div>
@@ -746,14 +746,14 @@ Figura&nbsp;3.1: Gráfico de Barras para la <a href="#tbl-cars" class="quarto-xr
 <img src="imagenes/tabla_barplot.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tablabar-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.2: Relación entre la <a href="#tbl-cars" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-cars</span></a> y la <a href="#fig-grafico1" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-grafico1</span></a>
+Figura&nbsp;3.2: Relación entre la <a href="#tbl-cars" class="quarto-xref">Tabla&nbsp;<span>3.1</span></a> y la <a href="#fig-grafico1" class="quarto-xref">Figura&nbsp;<span>3.1</span></a>
 </figcaption>
 </figure>
 </div>
 </section>
 <section id="diagrama-de-barras-agrupadas" class="level4" data-number="3.2.3.2">
 <h4 data-number="3.2.3.2" class="anchored" data-anchor-id="diagrama-de-barras-agrupadas"><span class="header-section-number">3.2.3.2</span> Diagrama de barras agrupadas</h4>
-<p>En un diagrama de barras agrupadas, al igual que en un diagrama de barras, se muestran los conteos para un grupo, pero además se desglosa para una variable cuantitativa adicional. Por ejemplo en la <a href="#fig-grafico2" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-grafico2</span></a> se muestran los porcentajes de nitrógeno (N), fósforo (P) y potasio (K) para cuatro variedades diferentes de maíz.</p>
+<p>En un diagrama de barras agrupadas, al igual que en un diagrama de barras, se muestran los conteos para un grupo, pero además se desglosa para una variable cuantitativa adicional. Por ejemplo en la <a href="#fig-grafico2" class="quarto-xref">Figura&nbsp;<span>3.3</span></a> se muestran los porcentajes de nitrógeno (N), fósforo (P) y potasio (K) para cuatro variedades diferentes de maíz.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-grafico2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
@@ -771,7 +771,7 @@ Figura&nbsp;3.3: Diagrama de Barras Agrupadas
 </section>
 <section id="diagrama-de-barras-apiladas" class="level4" data-number="3.2.3.3">
 <h4 data-number="3.2.3.3" class="anchored" data-anchor-id="diagrama-de-barras-apiladas"><span class="header-section-number">3.2.3.3</span> Diagrama de barras apiladas</h4>
-<p>Una variación muy útil de los diagramas de barras son los diagramas de barras apiladas. A diferencia de los diagramas de barras agrupadas en este caso se apilan las barras una sobre otra. Esto es útil cuando las barras suman <span class="math inline">\(100 \%\)</span>, o la suma de los porcentajes o frecuencias es constante. En la <a href="#fig-grafico3" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-grafico3</span></a> se muestra la relación Humedad, Materia Seca para cuatro variedades de maíz.</p>
+<p>Una variación muy útil de los diagramas de barras son los diagramas de barras apiladas. A diferencia de los diagramas de barras agrupadas en este caso se apilan las barras una sobre otra. Esto es útil cuando las barras suman <span class="math inline">\(100 \%\)</span>, o la suma de los porcentajes o frecuencias es constante. En la <a href="#fig-grafico3" class="quarto-xref">Figura&nbsp;<span>3.4</span></a> se muestra la relación Humedad, Materia Seca para cuatro variedades de maíz.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-grafico3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
@@ -790,7 +790,7 @@ Figura&nbsp;3.4: Diagrama de Barras Apiladas
 <section id="histograma" class="level4" data-number="3.2.3.4">
 <h4 data-number="3.2.3.4" class="anchored" data-anchor-id="histograma"><span class="header-section-number">3.2.3.4</span> Histograma</h4>
 <p>Un histograma es un gráfico que utiliza barras para representar las frecuencias absolutas o las frecuencias relativas de los posibles resultados de una variable cuantitativa y ayuda a entender los valores que se tienen en un conjunto de datos, cuando hablamos de un histograma o histograma de frecuencias nos referimos a las frecuencias absolutas. Con un histograma se puede conocer la forma, el centro y la variabilidad de la distribución. La altura de las barras corresponde a las frecuencias absolutas.</p>
-<p>Es importante tener en cuenta que un histograma no debe ser usado para hacer inferencias ya que nos dan una rápida visión de la distribución de los datos y solo sugieren información sobre ciertas características. En la <a href="#fig-histograma1" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-histograma1</span></a> se aprecia el histograma de la altura de los girasoles. En la figura <a href="#fig-tablahist" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-tablahist</span></a> se esquematiza la relación entre la tabla de frecuencias y el histograma de frecuencias absolutas.</p>
+<p>Es importante tener en cuenta que un histograma no debe ser usado para hacer inferencias ya que nos dan una rápida visión de la distribución de los datos y solo sugieren información sobre ciertas características. En la <a href="#fig-histograma1" class="quarto-xref">Figura&nbsp;<span>3.5</span></a> se aprecia el histograma de la altura de los girasoles. En la figura <a href="#fig-tablahist" class="quarto-xref">Figura&nbsp;<span>3.6</span></a> se esquematiza la relación entre la tabla de frecuencias y el histograma de frecuencias absolutas.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-histograma1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
@@ -811,11 +811,11 @@ Figura&nbsp;3.5: Histograma de la altura de girasoles
 <img src="imagenes/table_to_hist.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tablahist-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.6: Relación entre la <a href="#tbl-girasoles" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-girasoles</span></a> y la <a href="#fig-histograma1" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-histograma1</span></a>
+Figura&nbsp;3.6: Relación entre la <a href="#tbl-girasoles" class="quarto-xref">Tabla&nbsp;<span>3.3</span></a> y la <a href="#fig-histograma1" class="quarto-xref">Figura&nbsp;<span>3.5</span></a>
 </figcaption>
 </figure>
 </div>
-<p>En algunas ocasiones es de interés graficar las frecuencias relativas. El histograma de las frecuencias relativas tiene la misma forma que el histograma de las frecuencias absolutas, pero las alturas ahora corresponden a las frecuencias relativas. En la <a href="#fig-histfr" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-histfr</span></a> se muestra el histograma de frecuencias relativas para las alturas de los girasoles. Se puede apreciar que este histograma tiene la misma forma que el histograma de la <a href="#fig-histograma1" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-histograma1</span></a>.</p>
+<p>En algunas ocasiones es de interés graficar las frecuencias relativas. El histograma de las frecuencias relativas tiene la misma forma que el histograma de las frecuencias absolutas, pero las alturas ahora corresponden a las frecuencias relativas. En la <a href="#fig-histfr" class="quarto-xref">Figura&nbsp;<span>3.7</span></a> se muestra el histograma de frecuencias relativas para las alturas de los girasoles. Se puede apreciar que este histograma tiene la misma forma que el histograma de la <a href="#fig-histograma1" class="quarto-xref">Figura&nbsp;<span>3.5</span></a>.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-histfr" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
@@ -836,7 +836,7 @@ Figura&nbsp;3.7: Histograma de frecuencias relativas para las alturas de los gir
 <img src="imagenes/table_to_hist_REL.png" class="img-fluid figure-img">
 </div>
 <figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-tablahistfr-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figura&nbsp;3.8: Relación entre la <a href="#tbl-girasoles" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-girasoles</span></a> y la <a href="#fig-histfr" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-histfr</span></a>
+Figura&nbsp;3.8: Relación entre la <a href="#tbl-girasoles" class="quarto-xref">Tabla&nbsp;<span>3.3</span></a> y la <a href="#fig-histfr" class="quarto-xref">Figura&nbsp;<span>3.7</span></a>
 </figcaption>
 </figure>
 </div>
@@ -861,7 +861,7 @@ Figura&nbsp;3.9: Gráfico de Densidad para la altura de los girasoles
 </section>
 <section id="sec-cajas" class="level4" data-number="3.2.3.6">
 <h4 data-number="3.2.3.6" class="anchored" data-anchor-id="sec-cajas"><span class="header-section-number">3.2.3.6</span> Diagramas de caja</h4>
-<p>Un diagrama de caja resume los valores numéricos de una variable categórica, pero no se limitan solamente a la comparación de los valores sino que además ofrece una idea del rango de valores que puede tomar cada categoría dentro de la variable. En la <a href="#fig-boxplot" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-boxplot</span></a> se muestra el diagrama de caja para la altura de plantas de caña de azúcar que fueron sometidas a 3 tratamientos diferentes de riego y fertilización, estas mediciones corresponden a los 149 días después de la siembra.</p>
+<p>Un diagrama de caja resume los valores numéricos de una variable categórica, pero no se limitan solamente a la comparación de los valores sino que además ofrece una idea del rango de valores que puede tomar cada categoría dentro de la variable. En la <a href="#fig-boxplot" class="quarto-xref">Figura&nbsp;<span>3.10</span></a> se muestra el diagrama de caja para la altura de plantas de caña de azúcar que fueron sometidas a 3 tratamientos diferentes de riego y fertilización, estas mediciones corresponden a los 149 días después de la siembra.</p>
 <p>Para la interpretación de un diagrama de caja principalmente hay que fijarse en la línea central de la caja. Este valor corresponde a la mediana, en secciones posteriores desarrollaremos este concepto, por el momento podemos decir que el <span class="math inline">\(50 \%\)</span> de los valores son menores a esta cantidad. Cuando la distribución de los datos es simétrica, la mediana se ubicará justo en el centro de la caja. Cuando la distribución de los datos es sesgada, la mediana estará posicionada más cerca de la parte superior o inferior de la caja. Los puntos que se ven sobre o bajo la caja son considerados valores atípicos. En secciones subsiguientes se desarrollarán en detalle los conceptos de sesgo, simetría y valores atípicos.</p>
 <div class="cell">
 <div class="cell-output-display">
@@ -880,7 +880,7 @@ Figura&nbsp;3.10: Diagrama de Caja para la Altura de plantas de caña de azúcar
 </section>
 <section id="sec-gralin" class="level4" data-number="3.2.3.7">
 <h4 data-number="3.2.3.7" class="anchored" data-anchor-id="sec-gralin"><span class="header-section-number">3.2.3.7</span> Gráficos de líneas</h4>
-<p>Estos gráficos son útiles para mostrar la tendencia de una variable cuantitativa en el tiempo. En la <a href="#fig-lineas" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-lineas</span></a> se muestra la evolución de la altura de las plantas de caña separadas por tratamiento.</p>
+<p>Estos gráficos son útiles para mostrar la tendencia de una variable cuantitativa en el tiempo. En la <a href="#fig-lineas" class="quarto-xref">Figura&nbsp;<span>3.11</span></a> se muestra la evolución de la altura de las plantas de caña separadas por tratamiento.</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-lineas" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
@@ -1078,13 +1078,13 @@ Tip
 </section>
 <section id="simetría-y-sesgo" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="simetría-y-sesgo"><span class="header-section-number">3.3.3</span> Simetría y sesgo</h3>
-<p>La forma de una distribución unimodal, puede ser simétrica o sesgada. Una distribución es <strong>simétrica</strong> si hacia la derecha y la izquierda de un valor central tiene la misma forma como se observa en el histograma de la <a href="#fig-simetria" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-simetria</span></a>, además en esta figura se muestra un diagrama de caja y un gráfico de densidad para una distribución simétrica.</p>
-<p>Una distribución es <strong>sesgada a la derecha</strong> si la cola derecha es más larga que la izquierda, en la <a href="#fig-derecha" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-derecha</span></a> se muestran el histograma, el diagrama de caja y el gráfico de densidad para una distribución sesgada a la derecha. Finalmente, cuando la cola izquierda es más larga que la derecha la distribución es <strong>sesgada a la izquierda</strong> en la <a href="#fig-izquierda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-izquierda</span></a> se aprecia una distribución sesgada a la izquierda.</p>
+<p>La forma de una distribución unimodal, puede ser simétrica o sesgada. Una distribución es <strong>simétrica</strong> si hacia la derecha y la izquierda de un valor central tiene la misma forma como se observa en el histograma de la <a href="#fig-simetria" class="quarto-xref">Figura&nbsp;<span>3.14</span></a>, además en esta figura se muestra un diagrama de caja y un gráfico de densidad para una distribución simétrica.</p>
+<p>Una distribución es <strong>sesgada a la derecha</strong> si la cola derecha es más larga que la izquierda, en la <a href="#fig-derecha" class="quarto-xref">Figura&nbsp;<span>3.12</span></a> se muestran el histograma, el diagrama de caja y el gráfico de densidad para una distribución sesgada a la derecha. Finalmente, cuando la cola izquierda es más larga que la derecha la distribución es <strong>sesgada a la izquierda</strong> en la <a href="#fig-izquierda" class="quarto-xref">Figura&nbsp;<span>3.13</span></a> se aprecia una distribución sesgada a la izquierda.</p>
 <p>Entre el sesgo y las medidas de tendencia central existen las siguientes relaciones.</p>
 <ol type="1">
-<li>Cuando la distribución es sesgada a la derecha se cumple <span class="math inline">\(Mo&lt; \tilde{x}&lt; \bar{x}\)</span>. En el gráfico de densidad de la <a href="#fig-derecha" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-derecha</span></a> la línea vertical de color azul representa la moda, la línea vertical de color rojo representa a la mediana y la línea vertical de color naranja representa la media<br>
+<li>Cuando la distribución es sesgada a la derecha se cumple <span class="math inline">\(Mo&lt; \tilde{x}&lt; \bar{x}\)</span>. En el gráfico de densidad de la <a href="#fig-derecha" class="quarto-xref">Figura&nbsp;<span>3.12</span></a> la línea vertical de color azul representa la moda, la línea vertical de color rojo representa a la mediana y la línea vertical de color naranja representa la media<br>
 </li>
-<li>Cuando la distribución es sesgada a la izquierda se cumple que <span class="math inline">\(\bar{x} &lt; \tilde{x} &lt; Mo\)</span>. Con los mismos códigos de colores anteriores podemos observar la ubicación de estos valores en la <a href="#fig-izquierda" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-izquierda</span></a>.</li>
+<li>Cuando la distribución es sesgada a la izquierda se cumple que <span class="math inline">\(\bar{x} &lt; \tilde{x} &lt; Mo\)</span>. Con los mismos códigos de colores anteriores podemos observar la ubicación de estos valores en la <a href="#fig-izquierda" class="quarto-xref">Figura&nbsp;<span>3.13</span></a>.</li>
 <li>Cuando la distribución es simétrica se cumple que <span class="math inline">\(\bar{x} = \tilde{x} = Mo\)</span>.</li>
 </ol>
 <div id="fig-derecha" class="quarto-float quarto-figure quarto-figure-center anchored">
@@ -1121,8 +1121,8 @@ Figura&nbsp;3.14: Distribución Simétrica
 </section>
 <section id="sec-disp" class="level3" data-number="3.3.4">
 <h3 data-number="3.3.4" class="anchored" data-anchor-id="sec-disp"><span class="header-section-number">3.3.4</span> Medidas de dispersión</h3>
-<p>Supongamos que en una empresa distribuidora de agroquímicos se forman dos equipos de ventas, la empresa ofrece un bono al equipo que tiene el mejor desempeño en las ventas mensuales promedio. En la <a href="#tbl-ventas" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-ventas</span></a> se muestra el mínimo, la media, la mediana, el máximo y el total para las ventas mensuales de ambos equipos. Se observa que ambos equipos vendieron la misma cantidad total durante el mes por lo que tuvieron la misma media para las ventas mensuales. Es decir, que si se quisiera escoger al mejor equipo por el total de ventas mensuales o por el promedio de ventas mensuales no hay un equipo que haya tenido un mejor desempeño. Por otro lado el equipo 2 tiene un valor mínimo menor que el equipo 1 y en cuanto al máximo el equipo 2 tiene un valor máximo mayor al del equipo 1, esto nos llevaría a pensar que aunque ambos equipos tienen la misma media mensual la distribución de los datos para ambos equipos es diferente.</p>
-<p>En la <a href="#fig-puntosventas" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-puntosventas</span></a> se muestra un gráfico de puntos de las ventas por equipo, se ha incluido una línea punteada de color negro en la media de ambos conjuntos (<span class="math inline">\(20000.00\)</span>), con este gráfico se puede notar que las ventas del equipo 2 están más <em>dispersas</em> que las ventas del equipo 1. El histograma que se muestra en la <a href="#fig-histventas" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-histventas</span></a> permite visualizar la distribución de las ventas, y finalmente en el diagrama de caja de la <a href="#fig-cajaventas" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-cajaventas</span></a> se aprecia que el equipo 2 tuvo valores atípicos en sus ventas.</p>
+<p>Supongamos que en una empresa distribuidora de agroquímicos se forman dos equipos de ventas, la empresa ofrece un bono al equipo que tiene el mejor desempeño en las ventas mensuales promedio. En la <a href="#tbl-ventas" class="quarto-xref">Tabla&nbsp;<span>3.5</span></a> se muestra el mínimo, la media, la mediana, el máximo y el total para las ventas mensuales de ambos equipos. Se observa que ambos equipos vendieron la misma cantidad total durante el mes por lo que tuvieron la misma media para las ventas mensuales. Es decir, que si se quisiera escoger al mejor equipo por el total de ventas mensuales o por el promedio de ventas mensuales no hay un equipo que haya tenido un mejor desempeño. Por otro lado el equipo 2 tiene un valor mínimo menor que el equipo 1 y en cuanto al máximo el equipo 2 tiene un valor máximo mayor al del equipo 1, esto nos llevaría a pensar que aunque ambos equipos tienen la misma media mensual la distribución de los datos para ambos equipos es diferente.</p>
+<p>En la <a href="#fig-puntosventas" class="quarto-xref">Figura&nbsp;<span>3.15</span></a> se muestra un gráfico de puntos de las ventas por equipo, se ha incluido una línea punteada de color negro en la media de ambos conjuntos (<span class="math inline">\(20000.00\)</span>), con este gráfico se puede notar que las ventas del equipo 2 están más <em>dispersas</em> que las ventas del equipo 1. El histograma que se muestra en la <a href="#fig-histventas" class="quarto-xref">Figura&nbsp;<span>3.16</span></a> permite visualizar la distribución de las ventas, y finalmente en el diagrama de caja de la <a href="#fig-cajaventas" class="quarto-xref">Figura&nbsp;<span>3.17</span></a> se aprecia que el equipo 2 tuvo valores atípicos en sus ventas.</p>
 <div class="cell">
 <div id="tbl-ventas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1243,7 +1243,7 @@ s^2 = \dfrac{\sum_{i=1}^n(x_i-\bar{x})^2}{n-1}
 s = \sqrt{s^2} = \sqrt{\dfrac{\sum_{i=1}^n(x_i-\bar{x})^2}{n-1}}
 \tag{3.13}\]</span></span></p>
 </div>
-<p>Finalmente, en la <a href="#tbl-dispventas" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-dispventas</span></a> podemos apreciar que el equipo 1 tiene un rango menor que el equipo 2, lo mismo ocurre con las otras dos medidas de dispersión. El hecho de que las medidas de dispersión del equipo 1 sean menores a las del equipo 2 nos da a entender que aunque ambos equipos tienen el mismo promedio de ventas, en el equipo 1 las ventas son más homogéneas.</p>
+<p>Finalmente, en la <a href="#tbl-dispventas" class="quarto-xref">Tabla&nbsp;<span>3.6</span></a> podemos apreciar que el equipo 1 tiene un rango menor que el equipo 2, lo mismo ocurre con las otras dos medidas de dispersión. El hecho de que las medidas de dispersión del equipo 1 sean menores a las del equipo 2 nos da a entender que aunque ambos equipos tienen el mismo promedio de ventas, en el equipo 1 las ventas son más homogéneas.</p>
 <div class="cell">
 <div id="tbl-dispventas" class="cell quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -1331,7 +1331,7 @@ Figura&nbsp;3.18: Cuantiles
 </section>
 <section id="relación-entre-los-cuartiles-y-el-diagrama-de-caja." class="level4" data-number="3.3.5.3">
 <h4 data-number="3.3.5.3" class="anchored" data-anchor-id="relación-entre-los-cuartiles-y-el-diagrama-de-caja."><span class="header-section-number">3.3.5.3</span> Relación entre los cuartiles y el diagrama de caja.</h4>
-<p>En la <a href="#sec-cajas" class="quarto-xref"><span class="quarto-unresolved-ref">sec-cajas</span></a> se dijo que la línea central de la caja corresponde a la mediana de los datos, ahora que conocemos a los cuartiles es útil saber cuál es la relación entre los cuartiles y los diagramas de caja. En la <a href="#fig-boxparts" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-boxparts</span></a> se muestran las partes del diagrama de cajas. El límite inferior y el límite superior se calculan en función del <strong>rango intercuartílico</strong> (<span class="math inline">\(IQR\)</span> por sus siglas en inglés) que es igual a la diferencia entre el tercer y primer cuartil.</p>
+<p>En la <a href="#sec-cajas" class="quarto-xref"><span>Sección 3.2.3.6</span></a> se dijo que la línea central de la caja corresponde a la mediana de los datos, ahora que conocemos a los cuartiles es útil saber cuál es la relación entre los cuartiles y los diagramas de caja. En la <a href="#fig-boxparts" class="quarto-xref">Figura&nbsp;<span>3.19</span></a> se muestran las partes del diagrama de cajas. El límite inferior y el límite superior se calculan en función del <strong>rango intercuartílico</strong> (<span class="math inline">\(IQR\)</span> por sus siglas en inglés) que es igual a la diferencia entre el tercer y primer cuartil.</p>
 <p><span id="eq-iqr"><span class="math display">\[
 IQR = Q_3 - Q_1
 \tag{3.16}\]</span></span></p>
@@ -1390,7 +1390,7 @@ Tip
 <li><code>resultados</code>: para guardar las tablas resultado del análisis de datos.</li>
 <li><code>scripts</code>: en esta carpeta se guardan todos los scripts utilizados en el análisis.</li>
 </ol>
-<p>En este texto se utilizará un solo proyecto al que llamaremos <strong>r4agro</strong>. En cualquier ubicación de nuestra computadora vamos a crear la carpeta llamada <strong>r4agro</strong> y dentro de esta carpeta las carpetas <strong>datos</strong>, <strong>graficos</strong>, <strong>resultados</strong> y <strong>scripts</strong> como se muestra en la <a href="#fig-project1" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-project1</span></a>.</p>
+<p>En este texto se utilizará un solo proyecto al que llamaremos <strong>r4agro</strong>. En cualquier ubicación de nuestra computadora vamos a crear la carpeta llamada <strong>r4agro</strong> y dentro de esta carpeta las carpetas <strong>datos</strong>, <strong>graficos</strong>, <strong>resultados</strong> y <strong>scripts</strong> como se muestra en la <a href="#fig-project1" class="quarto-xref">Figura&nbsp;<span>3.20</span></a>.</p>
 <div id="fig-project1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-project1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1401,7 +1401,7 @@ Figura&nbsp;3.20: Carpeta del proyecto r4agro
 </figcaption>
 </figure>
 </div>
-<p>Para crear un proyecto, se debe dar clic en <code>File -&gt; New Project</code> y aparecerá la ventana mostrada en la <a href="#fig-project2" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-project2</span></a>.</p>
+<p>Para crear un proyecto, se debe dar clic en <code>File -&gt; New Project</code> y aparecerá la ventana mostrada en la <a href="#fig-project2" class="quarto-xref">Figura&nbsp;<span>3.21</span></a>.</p>
 <div id="fig-project2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-project2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1424,7 +1424,7 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li><strong>New Directory</strong>: escogemos esta opción si vamos a crear un nuevo directorio desde 0. Cuando se da clic, aparece una nueva ventana como se muestra en la <a href="#fig-project3" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-project3</span></a></li>
+<li><strong>New Directory</strong>: escogemos esta opción si vamos a crear un nuevo directorio desde 0. Cuando se da clic, aparece una nueva ventana como se muestra en la <a href="#fig-project3" class="quarto-xref">Figura&nbsp;<span>3.22</span></a></li>
 </ul>
 <div id="fig-project3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
@@ -1457,10 +1457,10 @@ Tip
 <ul>
 <li><code>File -&gt; New Project</code></li>
 <li><code>Existing Directory</code></li>
-<li>Se abre una ventana como la de la <a href="#fig-project4" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-project4</span></a> y damos clic en <code>Browse</code>.</li>
-<li>Se abre una ventana en la que buscamos la ubicación de la carpeta de nuestro proyecto y damos clic en <code>Open</code> (<a href="#fig-project5" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-project5</span></a>).</li>
-<li>Posteriormente, escogemos la opción <code>Create New Project</code> (<a href="#fig-project6" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-project6</span></a>).</li>
-<li>Finalmente, el proyecto se crea. Identificamos que el proyecto ha sido creado porque ahora aparece el nombre del proyecto en las esquinas superior izquierda y derecha de nuestra ventana de RStudio (<a href="#fig-project7" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-project7</span></a>).</li>
+<li>Se abre una ventana como la de la <a href="#fig-project4" class="quarto-xref">Figura&nbsp;<span>3.23</span></a> y damos clic en <code>Browse</code>.</li>
+<li>Se abre una ventana en la que buscamos la ubicación de la carpeta de nuestro proyecto y damos clic en <code>Open</code> (<a href="#fig-project5" class="quarto-xref">Figura&nbsp;<span>3.24</span></a>).</li>
+<li>Posteriormente, escogemos la opción <code>Create New Project</code> (<a href="#fig-project6" class="quarto-xref">Figura&nbsp;<span>3.25</span></a>).</li>
+<li>Finalmente, el proyecto se crea. Identificamos que el proyecto ha sido creado porque ahora aparece el nombre del proyecto en las esquinas superior izquierda y derecha de nuestra ventana de RStudio (<a href="#fig-project7" class="quarto-xref">Figura&nbsp;<span>3.26</span></a>).</li>
 </ul>
 </div>
 </div>
@@ -1519,7 +1519,7 @@ Figura&nbsp;3.26: Proyecto creado
 <li><strong>Altura</strong>: altura de la planta en centímetros.</li>
 <li><strong>NHV</strong>: Número de hojas verdaderas.</li>
 </ol>
-<p>En la <a href="#sec-bars1" class="quarto-xref"><span class="quarto-unresolved-ref">sec-bars1</span></a>, explicaremos paso a paso como obtener el gráfico mostrado en la figura <a href="#fig-bars1" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-bars1</span></a>:</p>
+<p>En la <a href="#sec-bars1" class="quarto-xref"><span>Sección 3.5.3</span></a>, explicaremos paso a paso como obtener el gráfico mostrado en la figura <a href="#fig-bars1" class="quarto-xref">Figura&nbsp;<span>3.27</span></a>:</p>
 <div class="cell">
 <div class="cell-output-display">
 <div id="fig-bars1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-pos="H">
@@ -1556,7 +1556,7 @@ Tip
 </ol>
 </div>
 </div>
-<p>En este primer script trabajaremos solamente con los paquetes <strong>dplyr</strong> y <strong>ggplot2</strong> descritos en la <a href="#sec-packs" class="quarto-xref"><span class="quarto-unresolved-ref">sec-packs</span></a>. En las primeras líneas escribiremos las siguientes líneas de código.</p>
+<p>En este primer script trabajaremos solamente con los paquetes <strong>dplyr</strong> y <strong>ggplot2</strong> descritos en la <a href="intro.html#sec-packs" class="quarto-xref"><span>Sección 1.5</span></a>. En las primeras líneas escribiremos las siguientes líneas de código.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
@@ -1702,7 +1702,7 @@ Tip
 </div>
 </div>
 </div>
-<p>Si comparamos este último gráfico con el de la <a href="#fig-bars1" class="quarto-xref">Figura&nbsp;<span class="quarto-unresolved-ref">fig-bars1</span></a>, podemos notar que el eje de las <span class="math inline">\(y\)</span> aparece la palabra “Frecuencia”. Para lograr esto, podemos usar la función <code>ylab()</code> y añadir una capa donde establecemos la etiqueta del eje <span class="math inline">\(y\)</span>.</p>
+<p>Si comparamos este último gráfico con el de la <a href="#fig-bars1" class="quarto-xref">Figura&nbsp;<span>3.27</span></a>, podemos notar que el eje de las <span class="math inline">\(y\)</span> aparece la palabra “Frecuencia”. Para lograr esto, podemos usar la función <code>ylab()</code> y añadir una capa donde establecemos la etiqueta del eje <span class="math inline">\(y\)</span>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb13"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Variedad)) <span class="sc">+</span></span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_bar</span>() <span class="sc">+</span></span>
@@ -1778,7 +1778,7 @@ Importante
 </section>
 <section id="diagrama-de-cajas" class="level3" data-number="3.5.4">
 <h3 data-number="3.5.4" class="anchored" data-anchor-id="diagrama-de-cajas"><span class="header-section-number">3.5.4</span> Diagrama de cajas</h3>
-<p>En la <a href="#sec-cajas" class="quarto-xref"><span class="quarto-unresolved-ref">sec-cajas</span></a>, explicamos qué es un diagrama de cajas. A continuación vamos a elaborar un diagrama de cajas para la altura por variedad. El objeto geométrico para elaborar un diagrama de cajas es <code>geom_boxplot</code>.</p>
+<p>En la <a href="#sec-cajas" class="quarto-xref"><span>Sección 3.2.3.6</span></a>, explicamos qué es un diagrama de cajas. A continuación vamos a elaborar un diagrama de cajas para la altura por variedad. El objeto geométrico para elaborar un diagrama de cajas es <code>geom_boxplot</code>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(<span class="at">data =</span> datos, <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> Variedad, <span class="at">y =</span> Altura, <span class="at">fill =</span> Variedad )) <span class="sc">+</span></span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>() <span class="sc">+</span></span>
@@ -1908,7 +1908,7 @@ Tip
 <section id="sec-res1" class="level3" data-number="3.6.1">
 <h3 data-number="3.6.1" class="anchored" data-anchor-id="sec-res1"><span class="header-section-number">3.6.1</span> Ingresando los datos (pequeños conjuntos de datos).</h3>
 <p>En esta sección vamos a presentar cómo calcular medidas númericas de resumen ingresando los datos directamente en la consola, es decir que crearemos una variable que contenga los datos.</p>
-<p>El ingeniero Yorky Gil, con la finalidad de elaborar la curva fenológica para el cultivo de girasol en condiciones del trópico húmedo, realizó una siembra de girasoles. Periódicamente realizó mediciones del número de hojas y la altura de las plantas. De los datos obtenidos por Yorky de la semana 8 se extrajo una muestra de las alturas de 20 observaciones las cuales se muestran en la <a href="#tbl-altgir" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-altgir</span></a>. Con estos datos calcular la media, la mediana, la desviación estándar, el rango. Adicionalmente calcular los 3 cuartiles, y los 9 deciles.</p>
+<p>El ingeniero Yorky Gil, con la finalidad de elaborar la curva fenológica para el cultivo de girasol en condiciones del trópico húmedo, realizó una siembra de girasoles. Periódicamente realizó mediciones del número de hojas y la altura de las plantas. De los datos obtenidos por Yorky de la semana 8 se extrajo una muestra de las alturas de 20 observaciones las cuales se muestran en la <a href="#tbl-altgir" class="quarto-xref">Tabla&nbsp;<span>3.7</span></a>. Con estos datos calcular la media, la mediana, la desviación estándar, el rango. Adicionalmente calcular los 3 cuartiles, y los 9 deciles.</p>
 <div id="tbl-altgir" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-altgir-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -1970,7 +1970,7 @@ Tabla&nbsp;3.7: Altura de girasoles en centímetros. Semana 8
 <pre><code>[1] 27.8709</code></pre>
 </div>
 </div>
-<p>En el paquete <code>base</code> de R no existe una función que nos permita calcular el rango directamente, sin embargo podemos usar la definición dada en la <a href="#sec-disp" class="quarto-xref"><span class="quarto-unresolved-ref">sec-disp</span></a> y utilizar las funciones <code>max()</code> y <code>min()</code> para calcular el rango como la diferencia entre el máximo y el mínimo del conjunto.</p>
+<p>En el paquete <code>base</code> de R no existe una función que nos permita calcular el rango directamente, sin embargo podemos usar la definición dada en la <a href="#sec-disp" class="quarto-xref"><span>Sección 3.3.4</span></a> y utilizar las funciones <code>max()</code> y <code>min()</code> para calcular el rango como la diferencia entre el máximo y el mínimo del conjunto.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb31"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb31-1"><a href="#cb31-1" aria-hidden="true" tabindex="-1"></a><span class="fu">max</span>(alt_gir) <span class="sc">-</span> <span class="fu">min</span>(alt_gir)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
@@ -2024,7 +2024,7 @@ Tip
 </section>
 <section id="sec-res2" class="level3" data-number="3.6.2">
 <h3 data-number="3.6.2" class="anchored" data-anchor-id="sec-res2"><span class="header-section-number">3.6.2</span> Leyendo los datos desde un archivo en Excel, usando el pipe (<code>|&gt;</code>) (grandes conjuntos de datos).</h3>
-<p>En la <a href="#sec-datos" class="quarto-xref"><span class="quarto-unresolved-ref">sec-datos</span></a>, aprendimos a leer datos que se encuentran en un archivo <code>.csv</code>. Ahora trabajaremos con datos que se encuentran disponibles en un libro de Excel. El archivo se llama <code>alt_transp.xlsx</code> y la información está en la hoja de cálculo llamada <code>transplante</code>. Contiene la información de mediciones de altura hechas a plantas de tomate de cinco variedades. Las variables presentes son:</p>
+<p>En la <a href="#sec-datos" class="quarto-xref"><span>Sección 3.5.2</span></a>, aprendimos a leer datos que se encuentran en un archivo <code>.csv</code>. Ahora trabajaremos con datos que se encuentran disponibles en un libro de Excel. El archivo se llama <code>alt_transp.xlsx</code> y la información está en la hoja de cálculo llamada <code>transplante</code>. Contiene la información de mediciones de altura hechas a plantas de tomate de cinco variedades. Las variables presentes son:</p>
 <ol type="1">
 <li><strong>Planta</strong>: número de planta.</li>
 <li><strong>Fecha_med</strong>: fecha de la medición.</li>
@@ -2197,7 +2197,7 @@ Importante
 </ol>
 </div>
 </div>
-<p>Volvemos a calcular la media y la desviación, pero esta vez agrupamos por variedad y por día después de transplante (DDT). Esta vez el resultado será almacenado en la variable <code>tbl_alt_var_ddt</code>. En la <a href="#tbl-altvarddt" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-altvarddt</span></a> se muestra el resultado final.</p>
+<p>Volvemos a calcular la media y la desviación, pero esta vez agrupamos por variedad y por día después de transplante (DDT). Esta vez el resultado será almacenado en la variable <code>tbl_alt_var_ddt</code>. En la <a href="#tbl-altvarddt" class="quarto-xref">Tabla&nbsp;<span>3.8</span></a> se muestra el resultado final.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb50"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a>tbl_alt_var_ddt <span class="ot">&lt;-</span> transplante <span class="sc">|&gt;</span></span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Variedad, DDT) <span class="sc">|&gt;</span></span>
@@ -2453,7 +2453,7 @@ Tabla&nbsp;3.8: Medidas numéricas de resumen por Variedad y Día después de tr
 </section>
 <section id="bono-haciendo-un-gráfico-de-líneas" class="level2" data-number="3.7">
 <h2 data-number="3.7" class="anchored" data-anchor-id="bono-haciendo-un-gráfico-de-líneas"><span class="header-section-number">3.7</span> Bono: Haciendo un gráfico de líneas</h2>
-<p>En la <a href="#sec-gralin" class="quarto-xref"><span class="quarto-unresolved-ref">sec-gralin</span></a> se presentaron los gráficos de líneas. Para construir un gráfico de líneas debemos tener los datos resumidos como en la <a href="#tbl-altvarddt" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-altvarddt</span></a>.</p>
+<p>En la <a href="#sec-gralin" class="quarto-xref"><span>Sección 3.2.3.7</span></a> se presentaron los gráficos de líneas. Para construir un gráfico de líneas debemos tener los datos resumidos como en la <a href="#tbl-altvarddt" class="quarto-xref">Tabla&nbsp;<span>3.8</span></a>.</p>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb53"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1" aria-hidden="true" tabindex="-1"></a>g2 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>(tbl_alt_var_ddt, <span class="fu">aes</span>(<span class="at">x =</span> DDT, <span class="at">y =</span> Media)) <span class="sc">+</span></span>
 <span id="cb53-2"><a href="#cb53-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">col =</span> Variedad)) <span class="sc">+</span></span>
@@ -2526,16 +2526,16 @@ Tabla&nbsp;3.8: Medidas numéricas de resumen por Variedad y Día después de tr
 <p><span class="theorem-title"><strong>Ejercicio 3.1</strong></span> <strong>¿Qué gráfico usarías?</strong></p>
 <div class="webex-check webex-box">
 Quieres comparar la frecuencia de 6 variedades de frijol (categorías).
-<div id="radio_AVXPEGSBWM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_AVXPEGSBWM" value="answer"> <span>Gráfico de barras</span></label><label><input type="radio" autocomplete="off" name="radio_AVXPEGSBWM" value=""> <span>Histograma</span></label><label><input type="radio" autocomplete="off" name="radio_AVXPEGSBWM" value=""> <span>Densidad</span></label><label><input type="radio" autocomplete="off" name="radio_AVXPEGSBWM" value=""> <span>Gráfico de líneas</span></label>
+<div id="radio_XBVJFWSJBY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XBVJFWSJBY" value="answer"> <span>Gráfico de barras</span></label><label><input type="radio" autocomplete="off" name="radio_XBVJFWSJBY" value=""> <span>Histograma</span></label><label><input type="radio" autocomplete="off" name="radio_XBVJFWSJBY" value=""> <span>Densidad</span></label><label><input type="radio" autocomplete="off" name="radio_XBVJFWSJBY" value=""> <span>Gráfico de líneas</span></label>
 </div>
 Quieres ver la forma de la distribución del peso (g) de 200 frutos (numérica continua).
-<div id="radio_SRBEPIHZVU" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_SRBEPIHZVU" value=""> <span>Gráfico de barras</span></label><label><input type="radio" autocomplete="off" name="radio_SRBEPIHZVU" value="answer"> <span>Histograma o densidad</span></label><label><input type="radio" autocomplete="off" name="radio_SRBEPIHZVU" value=""> <span>Diagrama de dispersión</span></label><label><input type="radio" autocomplete="off" name="radio_SRBEPIHZVU" value=""> <span>Mapa de calor</span></label>
+<div id="radio_WCLBSGTSXB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WCLBSGTSXB" value=""> <span>Gráfico de barras</span></label><label><input type="radio" autocomplete="off" name="radio_WCLBSGTSXB" value="answer"> <span>Histograma o densidad</span></label><label><input type="radio" autocomplete="off" name="radio_WCLBSGTSXB" value=""> <span>Diagrama de dispersión</span></label><label><input type="radio" autocomplete="off" name="radio_WCLBSGTSXB" value=""> <span>Mapa de calor</span></label>
 </div>
 Quieres comparar la distribución de altura (cm) entre 4 tratamientos.
-<div id="radio_IXYQONYFNL" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_IXYQONYFNL" value=""> <span>Histograma</span></label><label><input type="radio" autocomplete="off" name="radio_IXYQONYFNL" value="answer"> <span>Diagrama de caja</span></label><label><input type="radio" autocomplete="off" name="radio_IXYQONYFNL" value=""> <span>Gráfico circular</span></label><label><input type="radio" autocomplete="off" name="radio_IXYQONYFNL" value=""> <span>Gráfico de barras simple</span></label>
+<div id="radio_WGHHNHJAHW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WGHHNHJAHW" value=""> <span>Histograma</span></label><label><input type="radio" autocomplete="off" name="radio_WGHHNHJAHW" value="answer"> <span>Diagrama de caja</span></label><label><input type="radio" autocomplete="off" name="radio_WGHHNHJAHW" value=""> <span>Gráfico circular</span></label><label><input type="radio" autocomplete="off" name="radio_WGHHNHJAHW" value=""> <span>Gráfico de barras simple</span></label>
 </div>
 </div>
 </div>
@@ -2543,21 +2543,21 @@ Quieres comparar la distribución de altura (cm) entre 4 tratamientos.
 <p><span class="theorem-title"><strong>Ejercicio 3.2</strong></span> <strong>Medidas de tendencia y dispersión</strong></p>
 <div class="webex-check webex-box">
 Si existen valores atípicos muy grandes, ¿qué medida suele ser más robusta?
-<div id="radio_UQGSYUSLZG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UQGSYUSLZG" value=""> <span>Media</span></label><label><input type="radio" autocomplete="off" name="radio_UQGSYUSLZG" value="answer"> <span>Mediana</span></label><label><input type="radio" autocomplete="off" name="radio_UQGSYUSLZG" value=""> <span>Media geométrica</span></label><label><input type="radio" autocomplete="off" name="radio_UQGSYUSLZG" value=""> <span>Varianza</span></label>
+<div id="radio_HSPZIULQAZ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_HSPZIULQAZ" value=""> <span>Media</span></label><label><input type="radio" autocomplete="off" name="radio_HSPZIULQAZ" value="answer"> <span>Mediana</span></label><label><input type="radio" autocomplete="off" name="radio_HSPZIULQAZ" value=""> <span>Media geométrica</span></label><label><input type="radio" autocomplete="off" name="radio_HSPZIULQAZ" value=""> <span>Varianza</span></label>
 </div>
 La desviación estándar se interpreta en las mismas unidades que la variable.
-<div id="radio_KNFJFWLFJV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_KNFJFWLFJV" value="answer"> <span>Verdadero</span></label><label><input type="radio" autocomplete="off" name="radio_KNFJFWLFJV" value=""> <span>Falso</span></label>
+<div id="radio_YRDTSIIPRV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_YRDTSIIPRV" value="answer"> <span>Verdadero</span></label><label><input type="radio" autocomplete="off" name="radio_YRDTSIIPRV" value=""> <span>Falso</span></label>
 </div>
 El rango intercuartílico (IQR) es:
-<div id="radio_ISNQZCWDKM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ISNQZCWDKM" value=""> <span>Q1 - Q3</span></label><label><input type="radio" autocomplete="off" name="radio_ISNQZCWDKM" value="answer"> <span>Q3 - Q1</span></label><label><input type="radio" autocomplete="off" name="radio_ISNQZCWDKM" value=""> <span>Máximo - mínimo</span></label><label><input type="radio" autocomplete="off" name="radio_ISNQZCWDKM" value=""> <span>Media - mediana</span></label>
+<div id="radio_NCZGJFTBVM" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_NCZGJFTBVM" value=""> <span>Q1 - Q3</span></label><label><input type="radio" autocomplete="off" name="radio_NCZGJFTBVM" value="answer"> <span>Q3 - Q1</span></label><label><input type="radio" autocomplete="off" name="radio_NCZGJFTBVM" value=""> <span>Máximo - mínimo</span></label><label><input type="radio" autocomplete="off" name="radio_NCZGJFTBVM" value=""> <span>Media - mediana</span></label>
 </div>
 </div>
 </div>
 <div id="exr-primero" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.3</strong></span> En la <a href="#tbl-ejer1_1" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-ejer1_1</span></a> se muestran los datos de la altura de 40 girasoles. Se pide:</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.3</strong></span> En la <a href="#tbl-ejer1_1" class="quarto-xref">Tabla&nbsp;<span>3.9</span></a> se muestran los datos de la altura de 40 girasoles. Se pide:</p>
 </div>
 <div id="tbl-ejer1_1" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -2628,7 +2628,7 @@ Tabla&nbsp;3.9: Altura de girasoles en centímetros. Semana 8
 <li>Determinar el valor mayor al 37% de los datos.</li>
 </ol>
 <div id="exr-segundo" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.4</strong></span> En la <a href="#tbl-ejer1_2" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-ejer1_2</span></a> se muestran los datos del número de hojas de 40 girasoles. Se pide:</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.4</strong></span> En la <a href="#tbl-ejer1_2" class="quarto-xref">Tabla&nbsp;<span>3.10</span></a> se muestran los datos del número de hojas de 40 girasoles. Se pide:</p>
 </div>
 <div id="tbl-ejer1_2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -2699,7 +2699,7 @@ Tabla&nbsp;3.10: Número de Hojas de girasoles. Semana 8
 <li>Determine el valor menor al 25% de los datos.</li>
 </ol>
 <div id="exr-terc" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.5</strong></span> Con los datos de la <a href="#tbl-ejer1_3" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-ejer1_3</span></a>, determine:</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.5</strong></span> Con los datos de la <a href="#tbl-ejer1_3" class="quarto-xref">Tabla&nbsp;<span>3.11</span></a>, determine:</p>
 </div>
 <div id="tbl-ejer1_3" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -2749,7 +2749,7 @@ Tabla&nbsp;3.11: Diámetro de plantas de banano en centímetros.
 <li>Los percentiles 33, 47, 65 y 89</li>
 </ol>
 <div id="exr-terc2" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.6</strong></span> El Pepino Africano (<em>Cucumis metuliferus</em>) pertenece a la familia Cucurbitácea y tiene potencial comercial y nutricional. A pesar de sus prometedoras cualidades como larga vida útil y beneficios para la salud como propiedades antioxidantes y antidiabéticas, sigue siendo poco cultivado debido a la limitada investigación. En Costa Rica no existía documentación previa de la especie, ni de su uso y por eso, la investigación de Ann Alubiri Khaira y Charles Munga Muiruri tuvo como objetivo establecer la primera accesión de <em>C. metuliferus</em> en el país mediante la caracterización fenotípica bajo un sistema de manejo agronómico que proporcione información sobre la diversidad genética del fruto, contribuyendo a futuros trabajos de investigación sobre este cultivo. En la <a href="#tbl-ejer1_3_2" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-ejer1_3_2</span></a> se presentan los datos de las alturas de las plantas estudiadas 32 días posteriores al transplante, con estos datos determine:</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.6</strong></span> El Pepino Africano (<em>Cucumis metuliferus</em>) pertenece a la familia Cucurbitácea y tiene potencial comercial y nutricional. A pesar de sus prometedoras cualidades como larga vida útil y beneficios para la salud como propiedades antioxidantes y antidiabéticas, sigue siendo poco cultivado debido a la limitada investigación. En Costa Rica no existía documentación previa de la especie, ni de su uso y por eso, la investigación de Ann Alubiri Khaira y Charles Munga Muiruri tuvo como objetivo establecer la primera accesión de <em>C. metuliferus</em> en el país mediante la caracterización fenotípica bajo un sistema de manejo agronómico que proporcione información sobre la diversidad genética del fruto, contribuyendo a futuros trabajos de investigación sobre este cultivo. En la <a href="#tbl-ejer1_3_2" class="quarto-xref">Tabla&nbsp;<span>3.12</span></a> se presentan los datos de las alturas de las plantas estudiadas 32 días posteriores al transplante, con estos datos determine:</p>
 </div>
 <div id="tbl-ejer1_3_2" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -2814,7 +2814,7 @@ Tabla&nbsp;3.12: Altura de plantas de pepino africano.
 <li>El valor mayor al 48% de los datos.</li>
 </ol>
 <div id="exr-cuarto" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.7</strong></span> Para este ejercicio se trabajará con el conjunto de datos <em>girasoles.csv</em>. Se recomienda crear un proyecto llamado <strong>Practica01</strong>. Puede revisar la <a href="#sec-projectR" class="quarto-xref"><span class="quarto-unresolved-ref">sec-projectR</span></a> para revisar los pasos para crear un proyecto. Recuerde que el archivo <em>girasoles.csv</em> debe ser guardado en la carpeta <em>datos</em> del proyecto.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.7</strong></span> Para este ejercicio se trabajará con el conjunto de datos <em>girasoles.csv</em>. Se recomienda crear un proyecto llamado <strong>Practica01</strong>. Puede revisar la <a href="#sec-projectR" class="quarto-xref"><span>Sección 3.4.1</span></a> para revisar los pasos para crear un proyecto. Recuerde que el archivo <em>girasoles.csv</em> debe ser guardado en la carpeta <em>datos</em> del proyecto.</p>
 </div>
 <ol type="a">
 <li>Crear un script y guardarlo en la carpeta correspondiente con el nombre <em>01girasoles.R</em></li>
@@ -2835,10 +2835,10 @@ Tabla&nbsp;3.12: Altura de plantas de pepino africano.
 <li>Utilizando diagramas de caja compare el número de hojas por semana y por fila.</li>
 </ol>
 <div id="exr-quin" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.8</strong></span> En el conjunto de datos <em>fenologia_camote.xlsx</em> se presentan datos de un experimento realizado en una plantación de camote en la que se aplicaron 4 tratamientos, dentro de la plantación se escogieron puntos de evaluación y en cada punto se aplicó cada tratamiento a determinado número de tubérculos. Al final a cada tubérculo se le midió el peso en gramos, el grosor en milímetros y la longitud de la guía en centímetros. Utilizando Rstudio realice el análisis estadístico descriptivo de los datos, con medidas de resumen, gráficos y tablas adecuados. <strong>Sugerencias:</strong> puede resolver este ejercicio en el mismo proyecto creado en el <a href="#exr-cuarto" class="quarto-xref">Ejercicio&nbsp;<span class="quarto-unresolved-ref">exr-cuarto</span></a>, además es conveniente crear un nuevo script.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.8</strong></span> En el conjunto de datos <em>fenologia_camote.xlsx</em> se presentan datos de un experimento realizado en una plantación de camote en la que se aplicaron 4 tratamientos, dentro de la plantación se escogieron puntos de evaluación y en cada punto se aplicó cada tratamiento a determinado número de tubérculos. Al final a cada tubérculo se le midió el peso en gramos, el grosor en milímetros y la longitud de la guía en centímetros. Utilizando Rstudio realice el análisis estadístico descriptivo de los datos, con medidas de resumen, gráficos y tablas adecuados. <strong>Sugerencias:</strong> puede resolver este ejercicio en el mismo proyecto creado en el <a href="#exr-cuarto" class="quarto-xref">Ejercicio&nbsp;<span>3.7</span></a>, además es conveniente crear un nuevo script.</p>
 </div>
 <div id="exr-quin2" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 3.9</strong></span> El cacao <em>(Theobroma cacao L.)</em> es una fruta de origen tropical utilizada como materia prima en la industria del chocolate. El proyecto desarrolado por Paula Reyes y Osvin Aldana tuvo como objetivo caracterizar fenotípica y genotípicamente 19 accesiones de cacao <em>(Theobroma cacao L.)</em>, ubicadas en el Banco de Germoplasma de la Universidad EARTH, además evaluar la susceptibilidad, tolerancia o resistencia a las enfermedades moniliasis <em>(Moniliophthora roreri Cif y Par)</em> y mazorca negra <em>(Phytophthora palmivora Bult)</em>, y comprobar la efectividad del protocolo de extracción de ADN genómico utilizando buffer CTAB en muestras foliares de cacao. Los resultados de la caracterización fenotípica dieron a conocer una alta variabilidad entre las accesiones formando agrupaciones en cada descriptor evaluado. En el archivo <em>baseEX2G1.xlsx</em> se almacenan los datos de 4 de las 19 accesiones. En la tabla <a href="#tbl-ejer6" class="quarto-xref">Tabla&nbsp;<span class="quarto-unresolved-ref">tbl-ejer6</span></a> se muestran los descriptores de la variable, junto con el nombre de la variable y su respectiva descripción.</p>
+<p><span class="theorem-title"><strong>Ejercicio 3.9</strong></span> El cacao <em>(Theobroma cacao L.)</em> es una fruta de origen tropical utilizada como materia prima en la industria del chocolate. El proyecto desarrolado por Paula Reyes y Osvin Aldana tuvo como objetivo caracterizar fenotípica y genotípicamente 19 accesiones de cacao <em>(Theobroma cacao L.)</em>, ubicadas en el Banco de Germoplasma de la Universidad EARTH, además evaluar la susceptibilidad, tolerancia o resistencia a las enfermedades moniliasis <em>(Moniliophthora roreri Cif y Par)</em> y mazorca negra <em>(Phytophthora palmivora Bult)</em>, y comprobar la efectividad del protocolo de extracción de ADN genómico utilizando buffer CTAB en muestras foliares de cacao. Los resultados de la caracterización fenotípica dieron a conocer una alta variabilidad entre las accesiones formando agrupaciones en cada descriptor evaluado. En el archivo <em>baseEX2G1.xlsx</em> se almacenan los datos de 4 de las 19 accesiones. En la tabla <a href="#tbl-ejer6" class="quarto-xref">Tabla&nbsp;<span>3.13</span></a> se muestran los descriptores de la variable, junto con el nombre de la variable y su respectiva descripción.</p>
 </div>
 <div id="tbl-ejer6" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -2944,7 +2944,7 @@ Tabla&nbsp;3.13: Descriptores Cacao.
 <li><p>El diámetro del pseudotallo se calcula como el promedio del diámetro vertical y horizontal. Utilizando la función <em>mutate</em>, crear una variable llamada <em>Diámetro</em>.</p></li>
 <li><p>Gabriela recogió información de 11 semanas, sin embargo a partir de la semana 9 las plantas sufrieron caídas por acción del viento. Utilice la función <strong>filter</strong> para seleccionar los datos desde la semana 1 a la semana 8. Los datos filtrados se deben mantener en la variable <em>data23035</em>.</p></li>
 <li><p>En el script, crear una sección llamada <strong>Altura y diámetro</strong>. Para crear secciones puede usar la ruta <code>Code + Insert Section</code>, o desde el teclado la combinación de teclas <code>Ctrl + Shift + R</code> en Windows o <code>Cmd + Shift + R</code> en Mac.</p></li>
-<li><p>En una variable llamada <strong>stats_alt</strong> almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil de la altura de las plantas <strong>por semana y tratamiento</strong>. Estos valores se deben almacenar en las columnas <em>Media</em>, <em>Mediana</em>, <em>Desv</em>, <em>Q1</em> y <em>Q3</em>. Con ayuda de la tabla creada, conteste las siguientes preguntas:</p>
+<li><p>En una variable llamada <strong>stats_alt</strong> almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil de la altura de las plantas <strong>por semana y tratamiento</strong>. Estos valores se deben almacenar en las columnas <em>Media</em>, <em>Mediana</em>, <em>Desv</em>, <em>Q1</em> y <em>Q3</em>. Con ayuda de la tabla creada en un reporte llamado <strong>descriptiva.qmd</strong>, conteste las siguientes preguntas:</p>
 <ul>
 <li>En la semana 1 ¿qué tratamiento tiene la menor altura promedio?</li>
 <li>En la semana 2 ¿qué tratamiento tiene el valor más alto para el segundo cuartil de la altura?</li>
@@ -2955,7 +2955,7 @@ Tabla&nbsp;3.13: Descriptores Cacao.
 <li><p>En una variable llamada <em>stats_diam</em> almacene la media, la mediana, la desviación, el primer cuartil y el tercer cuartil del diámetro del pseudotallo de las plantas <strong>por semana y tratamiento</strong>. Estos valores se deben almacenar en las variables <em>Media</em>, <em>Mediana</em>, <em>Desv</em>, <em>Q1</em> y <em>Q3</em>.</p></li>
 <li><p>Graficar diagramas de caja para la altura de la planta y el diámetro del pseudotallo, recuerde que estos diagramas de caja deben ayudar a comparar por semana y por tratamiento. Almacénelos en la carpeta <em>graficos</em> con los nombres <em>box_altura.png</em> y <em>box_diam.png</em> con un tamaño de 8 pulgadas de ancho por 4 de altura.</p></li>
 <li><p>Realizar un gráfico de líneas para la altura mostrando la evolución a lo largo de las semanas por tratamiento. Almacénelo en la carpeta <em>graficos</em> con el nombre <em>evol_altura.png</em> con un tamaño de 6 pulgadas de ancho por 3 de altura.</p></li>
-<li><p>Utilizando las tablas y gráficos creados, ¿cree usted que existen diferencias significativas en la altura de las plantas por tratamiento a lo largo de las semanas?. Justifique su respuesta. Esta pregunta aprenderemos a responderla de manera formal en las próximas semanas, por ahora la respuesta debe basarse en lo que observa en las tablas y gráficas obtenidas.</p></li>
+<li><p>Utilizando las tablas y gráficos creados, ¿cree usted que existen diferencias significativas en la altura de las plantas por tratamiento a lo largo de las semanas?. Justifique su respuesta. Incluya su respuesta en el reporte <strong>descriptiva.qmd</strong></p></li>
 <li><p>En una carpeta apropiada, guardar la tabla <em>stats_alt</em> en una hoja llamada altura y la tabla <em>stats_diam</em> en una hoja llamada diametro, en un archivo <em>estadisticas.xlsx</em>.</p></li>
 </ol>
 <div id="exr-quin4" class="theorem exercise">
