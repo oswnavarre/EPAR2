@@ -247,31 +247,51 @@ window.Quarto = {
     <h2 id="toc-title">Indice de contenidos</h2>
    
   <ul>
-  <li><a href="#conceptos-básicos" id="toc-conceptos-básicos" class="nav-link active" data-scroll-target="#conceptos-básicos"><span class="header-section-number">8.1</span> Conceptos básicos</a></li>
-  <li><a href="#principios-básicos" id="toc-principios-básicos" class="nav-link" data-scroll-target="#principios-básicos"><span class="header-section-number">8.2</span> Principios básicos</a></li>
-  <li><a href="#análisis-de-varianza-anova-andeva" id="toc-análisis-de-varianza-anova-andeva" class="nav-link" data-scroll-target="#análisis-de-varianza-anova-andeva"><span class="header-section-number">8.3</span> Análisis de Varianza (ANOVA, ANDEVA)</a>
+  <li><a href="#objetivos-del-capítulo" id="toc-objetivos-del-capítulo" class="nav-link active" data-scroll-target="#objetivos-del-capítulo"><span class="header-section-number">8.1</span> Objetivos del capítulo</a></li>
+  <li><a href="#introducción" id="toc-introducción" class="nav-link" data-scroll-target="#introducción"><span class="header-section-number">8.2</span> Introducción</a></li>
+  <li><a href="#conceptos-básicos" id="toc-conceptos-básicos" class="nav-link" data-scroll-target="#conceptos-básicos"><span class="header-section-number">8.3</span> Conceptos básicos</a></li>
+  <li><a href="#principios-básicos" id="toc-principios-básicos" class="nav-link" data-scroll-target="#principios-básicos"><span class="header-section-number">8.4</span> Principios básicos</a>
   <ul>
-  <li><a href="#modelos-para-el-análisis-de-varianza" id="toc-modelos-para-el-análisis-de-varianza" class="nav-link" data-scroll-target="#modelos-para-el-análisis-de-varianza"><span class="header-section-number">8.3.1</span> Modelos para el análisis de varianza</a></li>
-  <li><a href="#tabla-anova" id="toc-tabla-anova" class="nav-link" data-scroll-target="#tabla-anova"><span class="header-section-number">8.3.2</span> Tabla ANOVA</a></li>
+  <li><a href="#aleatorización" id="toc-aleatorización" class="nav-link" data-scroll-target="#aleatorización"><span class="header-section-number">8.4.1</span> Aleatorización</a>
+  <ul class="collapse">
+  <li><a href="#por-qué-es-importante-la-aleatorización" id="toc-por-qué-es-importante-la-aleatorización" class="nav-link" data-scroll-target="#por-qué-es-importante-la-aleatorización"><span class="header-section-number">8.4.1.1</span> ¿Por qué es importante la aleatorización?</a></li>
   </ul></li>
-  <li><a href="#diseño-completo-al-azar" id="toc-diseño-completo-al-azar" class="nav-link" data-scroll-target="#diseño-completo-al-azar"><span class="header-section-number">8.4</span> Diseño completo al azar</a></li>
-  <li><a href="#pruebas-de-comparaciones-múltiples-para-la-media." id="toc-pruebas-de-comparaciones-múltiples-para-la-media." class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-para-la-media."><span class="header-section-number">8.5</span> Pruebas de comparaciones múltiples para la media.</a>
+  <li><a href="#repetición" id="toc-repetición" class="nav-link" data-scroll-target="#repetición"><span class="header-section-number">8.4.2</span> Repetición</a></li>
+  <li><a href="#bloqueo" id="toc-bloqueo" class="nav-link" data-scroll-target="#bloqueo"><span class="header-section-number">8.4.3</span> Bloqueo</a></li>
+  </ul></li>
+  <li><a href="#diseño-completo-al-azar" id="toc-diseño-completo-al-azar" class="nav-link" data-scroll-target="#diseño-completo-al-azar"><span class="header-section-number">8.5</span> Diseño completo al azar</a>
   <ul>
-  <li><a href="#contrastes-a-priori" id="toc-contrastes-a-priori" class="nav-link" data-scroll-target="#contrastes-a-priori"><span class="header-section-number">8.5.1</span> Contrastes <em>a priori</em></a>
+  <li><a href="#ventajas-del-diseño-completamente-al-azar" id="toc-ventajas-del-diseño-completamente-al-azar" class="nav-link" data-scroll-target="#ventajas-del-diseño-completamente-al-azar"><span class="header-section-number">8.5.1</span> Ventajas del diseño completamente al azar</a></li>
+  <li><a href="#limitaciones-del-diseño-completamente-al-azar" id="toc-limitaciones-del-diseño-completamente-al-azar" class="nav-link" data-scroll-target="#limitaciones-del-diseño-completamente-al-azar"><span class="header-section-number">8.5.2</span> Limitaciones del diseño completamente al azar</a></li>
+  <li><a href="#modelo-matemático" id="toc-modelo-matemático" class="nav-link" data-scroll-target="#modelo-matemático"><span class="header-section-number">8.5.3</span> Modelo matemático</a></li>
+  <li><a href="#generación-del-diseño-en-r-con-agricolae" id="toc-generación-del-diseño-en-r-con-agricolae" class="nav-link" data-scroll-target="#generación-del-diseño-en-r-con-agricolae"><span class="header-section-number">8.5.4</span> Generación del diseño en R con <code>agricolae</code></a>
   <ul class="collapse">
-  <li><a href="#contrastes-ortogonales" id="toc-contrastes-ortogonales" class="nav-link" data-scroll-target="#contrastes-ortogonales"><span class="header-section-number">8.5.1.1</span> Contrastes ortogonales</a></li>
-  <li><a href="#contrastes-polinomiales" id="toc-contrastes-polinomiales" class="nav-link" data-scroll-target="#contrastes-polinomiales"><span class="header-section-number">8.5.1.2</span> Contrastes polinomiales</a></li>
+  <li><a href="#interpretación-del-diseño" id="toc-interpretación-del-diseño" class="nav-link" data-scroll-target="#interpretación-del-diseño"><span class="header-section-number">8.5.4.1</span> Interpretación del diseño</a></li>
   </ul></li>
-  <li><a href="#contrastes-a-posteriori" id="toc-contrastes-a-posteriori" class="nav-link" data-scroll-target="#contrastes-a-posteriori"><span class="header-section-number">8.5.2</span> Contrastes <em>a posteriori</em></a>
+  </ul></li>
+  <li><a href="#análisis-de-varianza-anova-andeva" id="toc-análisis-de-varianza-anova-andeva" class="nav-link" data-scroll-target="#análisis-de-varianza-anova-andeva"><span class="header-section-number">8.6</span> Análisis de Varianza (ANOVA, ANDEVA)</a>
+  <ul>
+  <li><a href="#modelos-para-el-análisis-de-varianza" id="toc-modelos-para-el-análisis-de-varianza" class="nav-link" data-scroll-target="#modelos-para-el-análisis-de-varianza"><span class="header-section-number">8.6.1</span> Modelos para el análisis de varianza</a></li>
+  <li><a href="#tabla-anova" id="toc-tabla-anova" class="nav-link" data-scroll-target="#tabla-anova"><span class="header-section-number">8.6.2</span> Tabla ANOVA</a></li>
+  </ul></li>
+  <li><a href="#ejemplo-de-dca-desarrollado-en-r" id="toc-ejemplo-de-dca-desarrollado-en-r" class="nav-link" data-scroll-target="#ejemplo-de-dca-desarrollado-en-r"><span class="header-section-number">8.7</span> Ejemplo de DCA desarrollado en R</a></li>
+  <li><a href="#pruebas-de-comparaciones-múltiples-para-la-media." id="toc-pruebas-de-comparaciones-múltiples-para-la-media." class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-para-la-media."><span class="header-section-number">8.8</span> Pruebas de comparaciones múltiples para la media.</a>
+  <ul>
+  <li><a href="#contrastes-a-priori" id="toc-contrastes-a-priori" class="nav-link" data-scroll-target="#contrastes-a-priori"><span class="header-section-number">8.8.1</span> Contrastes <em>a priori</em></a>
   <ul class="collapse">
-  <li><a href="#clasificación-de-pruebas-de-comparación-múltiple-de-medias" id="toc-clasificación-de-pruebas-de-comparación-múltiple-de-medias" class="nav-link" data-scroll-target="#clasificación-de-pruebas-de-comparación-múltiple-de-medias"><span class="header-section-number">8.5.2.1</span> Clasificación de Pruebas de Comparación Múltiple de Medias</a></li>
+  <li><a href="#contrastes-ortogonales" id="toc-contrastes-ortogonales" class="nav-link" data-scroll-target="#contrastes-ortogonales"><span class="header-section-number">8.8.1.1</span> Contrastes ortogonales</a></li>
+  <li><a href="#contrastes-polinomiales" id="toc-contrastes-polinomiales" class="nav-link" data-scroll-target="#contrastes-polinomiales"><span class="header-section-number">8.8.1.2</span> Contrastes polinomiales</a></li>
+  </ul></li>
+  <li><a href="#contrastes-a-posteriori" id="toc-contrastes-a-posteriori" class="nav-link" data-scroll-target="#contrastes-a-posteriori"><span class="header-section-number">8.8.2</span> Contrastes <em>a posteriori</em></a>
+  <ul class="collapse">
+  <li><a href="#clasificación-de-pruebas-de-comparación-múltiple-de-medias" id="toc-clasificación-de-pruebas-de-comparación-múltiple-de-medias" class="nav-link" data-scroll-target="#clasificación-de-pruebas-de-comparación-múltiple-de-medias"><span class="header-section-number">8.8.2.1</span> Clasificación de Pruebas de Comparación Múltiple de Medias</a></li>
   </ul></li>
   </ul></li>
-  <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.6</span> Diseño de bloques completos al azar</a></li>
-  <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino"><span class="header-section-number">8.7</span> Diseño de cuadro latino</a></li>
-  <li><a href="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" id="toc-pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="nav-link" data-scroll-target="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.8</span> Pruebas no paramétricas equivalentes al análisis de varianza</a></li>
-  <li><a href="#pruebas-de-comparaciones-múltiples-no-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.9</span> Pruebas de comparaciones múltiples no paramétricas</a></li>
-  <li><a href="#diseño-factorial" id="toc-diseño-factorial" class="nav-link" data-scroll-target="#diseño-factorial"><span class="header-section-number">8.10</span> Diseño factorial</a></li>
+  <li><a href="#diseño-de-bloques-completos-al-azar" id="toc-diseño-de-bloques-completos-al-azar" class="nav-link" data-scroll-target="#diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.9</span> Diseño de bloques completos al azar</a></li>
+  <li><a href="#diseño-de-cuadro-latino" id="toc-diseño-de-cuadro-latino" class="nav-link" data-scroll-target="#diseño-de-cuadro-latino"><span class="header-section-number">8.10</span> Diseño de cuadro latino</a></li>
+  <li><a href="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" id="toc-pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="nav-link" data-scroll-target="#pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.11</span> Pruebas no paramétricas equivalentes al análisis de varianza</a></li>
+  <li><a href="#pruebas-de-comparaciones-múltiples-no-paramétricas" id="toc-pruebas-de-comparaciones-múltiples-no-paramétricas" class="nav-link" data-scroll-target="#pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.12</span> Pruebas de comparaciones múltiples no paramétricas</a></li>
+  <li><a href="#diseño-factorial" id="toc-diseño-factorial" class="nav-link" data-scroll-target="#diseño-factorial"><span class="header-section-number">8.13</span> Diseño factorial</a></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
   </ul>
 </nav>
@@ -298,24 +318,42 @@ window.Quarto = {
 </header>
 
 
-<p>El diseño de experimentos fue inventado por Ronald A. Fisher en las décadas de 1920 y 1930 en la Estación Experimental de Rothamsted, conocida ahora como Rothamsted Research. En el primer libro de Fisher sobre diseño de experimentos mostró cómo se podían extraer conclusiones válidas a partir de experimentos con fluctuaciones naturales como la temperatura, las condiciones del suelo y la lluvia, es decir, en presencia de variables molestas o perturbadoras.</p>
-<p>Las variables perturbadoras conocidas suelen causar sesgos sistemáticos en grupos de resultados (por ejemplo, variación entre lotes). Las variables perturbadoras desconocidas suelen causar variabilidad aleatoria en los resultados y se denominan variabilidad inherente o ruido. Aunque el método de diseño experimental se utilizó por primera vez en un contexto agrícola, el método se ha aplicado con éxito en otras industrias y ámbitos.</p>
-<p>En la <a href="01-concepts.html#sec-tipest" class="quarto-xref"><span>Sección 2.6</span></a> se presentaron los tipos de estudio, en esta sección se presentan los principios básicos y los principales diseños experimentales usados en agricultura. ¿Por qué es importante el diseño experimental? Supongamos que deseamos comparar dos variedades de maíz, una variedad estándar ya conocida a la que llamaremos V1 y una variadad nueva de la que recién hemos escuchado a la que llamaremos V2. Podríamos plantar la mitad de un campo con V1 y la otra mitad con V2. Se plantan las dos variedades exactamente el mismo día y se gestionan las dos mitades del campo exactamente igual durante todo el período vegetativo. A lo largo de la cosecha, se llevan registros separados del rendimiento de cada mitad del campo, de modo que al final de la temporada se obtiene el rendimiento total de cada variedad. Supongamos que, en este caso, la nueva variedad (V2) tiene un rendimiento un 20% mayor que la variedad estándar (V1). ¿Puede asegurar que la nueva variedad es mejor que la variedad estándar? La respuesta es no, porque puede haber otros factores que hayan provocado la diferencia de rendimiento, como por ejemplo:</p>
-<ul>
-<li>V2 se plantó en una parte del campo que tenía mejor suelo.</li>
-<li>Un extremo del campo era más húmedo que el otro y algunos de las plantes se infectaron con oídio.</li>
-<li>Las diferencias de textura del suelo provocaron un aumento de la humedad del suelo de un extremo del campo al otro.</li>
-<li>Una parte del campo con la variedad estándar recibe sombra por la tarde de una línea de árboles adyacente.</li>
-<li>La presencia de malezas es mayor en una parte del campo con V1.</li>
-<li>Los bosques o zonas silvestres adyacentes son una fuente de plagas que afectan más a un extremo del campo que al otro.</li>
-</ul>
-<p>Como el experimento no se preparó para tener en cuenta la variabilidad del campo, no se puede concluir si el rendimiento superior de una variedad se debió a la propia variedad o a diferencias en las condiciones de cultivo. No se repitieron los tratamientos. Por lo tanto, no tiene forma de aplicar una prueba estadística a sus datos. Si piensa en su propia explotación, ¿qué otras fuentes de variación podrían influir en su pregunta de investigación?</p>
-<p>Con el diseño experimental y el análisis estadístico adecuados, puede identificar y aislar los efectos de la variación natural y determinar si las diferencias entre tratamientos son «reales», dentro de ciertos niveles de probabilidad. La elección del diseño experimental, dependerá en gran medida de la pregunta de investigación que se plantee y del número de tratamientos del experimento.</p>
-<section id="conceptos-básicos" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="conceptos-básicos"><span class="header-section-number">8.1</span> Conceptos básicos</h2>
+<section id="objetivos-del-capítulo" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="objetivos-del-capítulo"><span class="header-section-number">8.1</span> Objetivos del capítulo</h2>
+<p>Al finalizar este capítulo, el estudiante será capaz de:</p>
 <ol type="1">
-<li><strong>Unidad experimental</strong>: el objeto o espacio al cual se aplica el tratamiento y donde se analiza la variable o variables investigadas. Dependiendo del tipo de experimento la unidad experimental puede ser un animal, un árbol o una parcela. Cuando la unidad experimental es una parcela, en algunas ocsiones se presenta el efecto borde.</li>
+<li>Explicar la importancia del diseño experimental en la investigación agrícola y su papel en el control de la variabilidad.</li>
+<li>Identificar y diferenciar los conceptos de unidad experimental, tratamiento, repetición, unidad de muestreo y error experimental.</li>
+<li>Describir los principios fundamentales del diseño experimental: aleatorización, repetición y bloqueo.</li>
+<li>Reconocer y comparar las características de los principales diseños experimentales utilizados en agricultura: diseño completamente al azar, diseño de bloques completos al azar y cuadrado latino.</li>
+<li>Aplicar el análisis de varianza (ANOVA) en R para evaluar diferencias entre tratamientos.</li>
+<li>Interpretar los resultados del ANOVA y de las pruebas de comparaciones múltiples de medias</li>
 </ol>
+</section>
+<section id="introducción" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="introducción"><span class="header-section-number">8.2</span> Introducción</h2>
+<p>En investigación agrícola, las diferencias observadas entre tratamientos no siempre se deben exclusivamente al tratamiento que se desea evaluar. En un experimento de campo, variables como la fertilidad del suelo, la humedad, la sombra, la presencia de malezas, la presión de plagas o pequeñas variaciones en el manejo agronómico pueden influir sobre la respuesta observada. Por esta razón, para obtener conclusiones válidas no basta con aplicar tratamientos y comparar resultados: es necesario planificar cuidadosamente cómo se asignarán los tratamientos a las unidades experimentales y cómo se controlará la variabilidad natural del ambiente.</p>
+<p>Supongamos que se desea comparar dos variedades de maíz: una variedad estándar ya conocida, a la que llamaremos V1, y una variedad nueva, a la que llamaremos V2. Una posibilidad aparentemente sencilla sería sembrar la mitad de un campo con V1 y la otra mitad con V2, manejar ambas zonas de la misma manera durante todo el ciclo y, al final, comparar el rendimiento obtenido. Si la variedad nueva produce un 20% más que la variedad estándar, podría pensarse que V2 es superior. Sin embargo, esta conclusión no sería necesariamente correcta. La diferencia observada podría deberse, total o parcialmente, a otras causas, por ejemplo:</p>
+<ul>
+<li><p>V2 pudo haberse sembrado en la parte del terreno con mejor fertilidad.</p></li>
+<li><p>Un extremo del campo pudo haber retenido más humedad que el otro.</p></li>
+<li><p>Las diferencias de textura del suelo pudieron afectar la disponibilidad de agua.</p></li>
+<li><p>Una parte del terreno pudo recibir sombra en ciertas horas del día.</p></li>
+</ul>
+<p>La presencia de malezas pudo haber sido mayor en una mitad del campo.</p>
+<p>La cercanía a bosques o áreas silvestres pudo favorecer una mayor incidencia de plagas o enfermedades en uno de los extremos.</p>
+<p>En este caso, el experimento no fue preparado para controlar la variabilidad del campo, por lo que no es posible saber con certeza si la diferencia en rendimiento se debe realmente a la variedad o a diferencias en las condiciones de cultivo. Además, al no existir repeticiones adecuadas, tampoco sería posible estimar el error experimental ni aplicar correctamente una prueba estadística.</p>
+<p>El diseño de experimentos surge precisamente para resolver este problema. Su propósito es organizar los tratamientos y las unidades experimentales de tal manera que sea posible separar el efecto real de los tratamientos de la variabilidad natural del ambiente. Con un diseño experimental y un análisis estadístico adecuados, el investigador puede reducir el sesgo, mejorar la precisión de sus resultados y determinar si las diferencias observadas entre tratamientos son estadísticamente significativas.</p>
+<p>Aunque el diseño de experimentos tuvo su desarrollo formal en la agricultura, especialmente a partir del trabajo de Ronald A. Fisher en las décadas de 1920 y 1930 en la Estación Experimental de Rothamsted, sus principios se aplican hoy en muchas otras áreas. Fisher mostró que era posible obtener conclusiones válidas aun en presencia de fluctuaciones naturales como la temperatura, las condiciones del suelo o la lluvia, sentando así las bases de la experimentación moderna.</p>
+<p>En la <a href="01-concepts.html#sec-tipest" class="quarto-xref"><span>Sección 2.6</span></a> se presentaron los tipos de estudio. En este capítulo se desarrollan los principios básicos del diseño experimental y los principales diseños utilizados en agricultura, así como su relación con el análisis de varianza y la comparación de tratamientos.</p>
+</section>
+<section id="conceptos-básicos" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="conceptos-básicos"><span class="header-section-number">8.3</span> Conceptos básicos</h2>
+<p>Antes de estudiar los distintos diseños experimentales, es necesario definir algunos conceptos fundamentales que aparecen con frecuencia en la planificación y análisis de experimentos agrícolas.</p>
+<ol type="1">
+<li><strong>Unidad experimental</strong>: La unidad experimental es el objeto o espacio al cual se aplica un tratamiento de manera independiente y sobre el cual se evalúa la respuesta del experimento. Dependiendo del tipo de estudio, la unidad experimental puede ser un animal, un árbol, una planta individual o una parcela de terreno.</li>
+</ol>
+<p>En experimentos de campo es común que la unidad experimental sea una parcela. En estos casos puede presentarse el efecto borde, el cual debe considerarse al momento de definir el tamaño y la forma de las parcelas.</p>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -326,18 +364,66 @@ window.Quarto = {
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Las diferencias que se observan en el crecimiento y producción de plantas que se ubican en los perímetros de una parcela comparadas con las que se ubican en la zona central de la parcela se conocen como efecto borde, este efecto puede ser causado por:</p>
+<p>El efecto borde se refiere a las diferencias en crecimiento o producción que pueden presentar las plantas ubicadas en los bordes de una parcela en comparación con las plantas ubicadas en el interior. Este fenómeno puede ocurrir por diversas razones, entre ellas:</p>
 <ul>
-<li>Vecindad de las parcelas o áreas no cultivadas lo que puede producir que las plantas del perímetro tengan menor competencia de luz y nutrientes.</li>
-<li>Competencia entre los tratamientos.</li>
+<li>Menor competencia por luz, agua o nutrientes en los bordes de la parcela.</li>
+<li>Influencia de parcelas vecinas con tratamientos distintos.</li>
+<li>Influencia de áreas no cultivadas adyacentes.</li>
 </ul>
+<p>Para reducir este efecto, es común excluir las plantas del perímetro al momento de realizar las mediciones o definir áreas útiles dentro de la parcela</p>
 </div>
 </div>
 <ol start="2" type="1">
-<li><p><strong>Tratamiento</strong>: el tratamiento es el procedimiento cuyo efecto se mide y que se desea comparar con otros tratamientos. Ejemplos de tratamiento pueden ser la ración alimenticia, una variedad de semillas, un programa de riego, la concentración de un herbicida o fungicida, una combinación de temperatura y humedad.</p></li>
-<li><p><strong>Unidad de muestreo</strong>: el efecto del tratamiento se puede medir en una fracción de la unidad experimental o en toda la unidad experimental. Es decir que la unidad de muestreo puede ser toda la unidad experimental o una fracción de la misma. Ejemplos de unidad de muestreo son: un animal sometido a una ración de alimento, muestra aleatoria de las hojas de una planta, la cosecha de 10 plantas de la unidad experimental en una parcela.</p></li>
-<li><p><strong>Error experimental</strong>: Medida de la variación existente entre las observaciones realizadas en las unidades experimentales tratadas en forma similar. La variación puede provenir de dos fuentes:</p></li>
+<li><strong>Factor</strong>: Un factor es una variable controlada o de interés en un experimento cuyos niveles se comparan para evaluar su efecto sobre una variable respuesta. Los niveles de un factor determinan los tratamientos cuando se considera un solo factor. En experimentos con varios factores, los tratamientos corresponden a las combinaciones de los niveles de dichos factores.</li>
 </ol>
+<ul>
+<li>Si el factor es “Fertilizante”, sus niveles podrían ser: 0, 50 y 100 kg/ha.</li>
+<li>Si el factor es “Variedad”, sus niveles podrían ser: A, B y C.</li>
+</ul>
+<ol start="3" type="1">
+<li><strong>Tratamiento</strong>: Un tratamiento es la condición o intervención cuyo efecto se desea evaluar en un experimento. Los tratamientos representan los diferentes niveles del factor o factores de interés. Cuando un experimento incluye varios factores, un tratamiento corresponde a una combinación específica de niveles de esos factores</li>
+</ol>
+<p>Ejemplos de tratamientos en experimentos agrícolas incluyen:</p>
+<ul>
+<li>Variedades de cultivos,</li>
+<li>Dosis de fertilizante,</li>
+<li>Programas de riego,</li>
+<li>Diferentes herbicidas o fungicidas,</li>
+<li>Combinaciones de temperatura y humedad.</li>
+</ul>
+<p>El objetivo del experimento es comparar las respuestas obtenidas bajo cada tratamiento para determinar si existen diferencias significativas entre ellos.</p>
+<ol start="4" type="1">
+<li><strong>Unidad de muestreo</strong>: La unidad de muestreo es la entidad específica sobre la cual se realiza la medición de la variable de interés. En algunos casos la unidad de muestreo coincide con la unidad experimental, pero en otros casos corresponde a una fracción de esta.</li>
+</ol>
+<p>Por ejemplo:</p>
+<ul>
+<li><p>Si el tratamiento se aplica a una parcela, pero la medición se realiza en 10 plantas dentro de la parcela, la parcela es la unidad experimental y cada planta medida es una unidad de muestreo.</p></li>
+<li><p>Si el tratamiento se aplica a un animal y la medición se realiza sobre ese mismo animal, la unidad experimental y la unidad de muestreo coinciden.</p></li>
+</ul>
+<p>Distinguir correctamente entre unidad experimental y unidad de muestreo es fundamental para evitar errores en el análisis estadístico. Confundir la unidad de muestreo con la unidad experimental puede conducir a errores en el análisis estadístico, como la pseudorreplicación.</p>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Pseudorreplicación
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La pseudorreplicación ocurre cuando varias mediciones tomadas dentro de una misma unidad experimental se analizan como si fueran repeticiones independientes del tratamiento. Esto puede inflar artificialmente el tamaño de muestra y conducir a conclusiones incorrectas.</p>
+</div>
+</div>
+<ol start="5" type="1">
+<li><strong>Variable respuesta</strong>: La variable respuesta es la medición observada en cada unidad experimental y representa el resultado que se desea explicar o predecir a partir de los factores estudiados. Es “lo que queremos explicar” o “lo que cambia” según el tratamiento. Puede ser cuantitativa (rendimiento, altura, peso) o cualitativa (sí/no, presencia/ausencia, categoría).</li>
+</ol>
+<ul>
+<li>Ejemplo: si el factor es fertilizante y el objetivo es ver si aumenta la producción, la variable respuesta puede ser el rendimiento (kg/ha).</li>
+</ul>
+<ol start="6" type="1">
+<li><strong>Error experimental</strong>: El error experimental es la variabilidad observada entre unidades experimentales que reciben el mismo tratamiento. Representa la variabilidad de la variable respuesta que no puede ser explicada por los tratamientos incluidos en el experimento.</li>
+</ol>
+<p>El error experimental puede originarse en diferentes fuentes, entre ellas:</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -349,14 +435,17 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Variabilidad propia del material experimental al que se aplican los tratamientos.</li>
-<li>Variación resultado de cualquier falta de uniformidad en la realización física del experimento.</li>
+<li>Variabilidad inherente del material experimental, como diferencias genéticas entre plantas o animales.</li>
+<li>Variación ambiental, como cambios en suelo, temperatura, humedad o radiación.</li>
+<li>Variación en la ejecución del experimento, como pequeñas diferencias en la aplicación de tratamientos o en las mediciones realizadas.</li>
 </ul>
 </div>
 </div>
-<ol start="5" type="1">
-<li><strong>Repeticiones</strong>: número de veces que un tratamiento aparece en un experimento.</li>
+<p>Una estimación adecuada del error experimental es esencial para poder realizar pruebas estadísticas confiables.</p>
+<ol start="7" type="1">
+<li><strong>Repeticiones</strong>: Las repeticiones (o replicaciones) corresponden al número de unidades experimentales que reciben el mismo tratamiento dentro de un experimento.</li>
 </ol>
+<p>La inclusión de repeticiones cumple varias funciones importantes:</p>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -368,36 +457,200 @@ window.Quarto = {
 </div>
 <div class="callout-body-container callout-body">
 <ul>
-<li>Permitir una estimación del error experimental.</li>
-<li>Mejorar la precisión de un experimento mediante la reducción del error estándar de una media de tratamiento.</li>
-<li>Aumentar el alcance de la inferencia del experimento mediante la selección y el uso adecuado de unidades experimentales más variables.</li>
-<li>Controlar la varianza del error.</li>
+<li>Permitir la estimación del error experimental.</li>
+<li>Mejorar la precisión de las estimaciones de las medias de tratamiento.</li>
+<li>Aumentar la capacidad para detectar diferencias reales entre tratamientos.</li>
+<li>Ampliar el alcance de la inferencia cuando las unidades experimentales representan una población más amplia.</li>
 </ul>
 </div>
 </div>
-<p>Aumentar el número de repeticiones, la mayoría de las veces, mejora la precisión. La elección del número de repeticiones de un experimento depende de varios factores, como el nivel de confianza deseado, la variabilidad esperada de los datos, el tamaño del efecto que se desea detectar, la disponibilidad de recursos y la complejidad del experimento; por lo general, un buen punto de partida es intentar realizar al menos tres repeticiones por condición, pero es posible que se necesiten más dependiendo de la pregunta de investigación específica y del diseño experimental.</p>
+<p>En general, aumentar el número de repeticiones mejora la precisión de los resultados, siempre que las repeticiones sean verdaderamente independientes. Sin embargo, el número adecuado de repeticiones depende de factores como la variabilidad esperada de los datos, el tamaño del efecto que se desea detectar, los recursos disponibles y la complejidad del experimento.</p>
+<p>En muchos experimentos agrícolas se utilizan al menos tres o cuatro repeticiones por tratamiento, aunque en algunos casos pueden requerirse más.</p>
+<p>Una vez definidos estos conceptos fundamentales, es posible comprender los principios que guían la planificación de los experimentos: aleatorización, repetición y bloqueo, los cuales permiten controlar la variabilidad y mejorar la validez de las conclusiones.</p>
 </section>
-<section id="principios-básicos" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="principios-básicos"><span class="header-section-number">8.2</span> Principios básicos</h2>
-<p>En el diseño de experimentos, el <strong>control del error experimental</strong> se refiere a la minimización de la variabilidad de los resultados que no está directamente relacionada con los factores estudiados, lo que se consigue mediante los principios como la aleatorización, la replicación y el bloqueo (control local), cuyo objetivo es aislar el verdadero efecto de las variables manipuladas y reducir la influencia de factores ajenos al resultado.</p>
-<ol type="1">
-<li><strong>Aleatorización</strong>: La asignación aleatoria de los tratamientos a las unidades experimentales ayuda a distribuir por igual cualquier fuente desconocida de variación entre los grupos de tratamiento, reduciendo el sesgo.</li>
-<li><strong>Repetición</strong>: La repetición de cada condición de tratamiento varias veces en diferentes unidades experimentales permite estimar el error experimental y aumenta la precisión de los resultados.</li>
-<li><strong>Bloqueo (control local)</strong>: Agrupar unidades experimentales similares en bloques y asignar tratamientos dentro de cada bloque ayuda a controlar las fuentes conocidas de variación que podrían afectar a los resultados, como las diferencias en las condiciones ambientales.</li>
-</ol>
+<section id="principios-básicos" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="principios-básicos"><span class="header-section-number">8.4</span> Principios básicos</h2>
+<p>En el diseño de experimentos, el <strong>control del error experimental</strong> consiste en reducir, en la mayor medida posible, la variabilidad de la respuesta que no se debe a los tratamientos estudiados. Para lograrlo, el diseño experimental se apoya en tres principios fundamentales: <strong>aleatorización, repetición y bloqueo</strong>. Estos principios permiten disminuir el sesgo, mejorar la precisión de las estimaciones y separar el efecto real de los tratamientos de otras fuentes de variación presentes en el experimento.</p>
+<section id="aleatorización" class="level3" data-number="8.4.1">
+<h3 data-number="8.4.1" class="anchored" data-anchor-id="aleatorización"><span class="header-section-number">8.4.1</span> Aleatorización</h3>
+<p>La aleatorización consiste en asignar los tratamientos al azar a las unidades experimentales. Su propósito principal es evitar sesgos sistemáticos y distribuir, de la forma más equilibrada posible, las fuentes desconocidas de variación entre los tratamientos.</p>
+<p>En términos prácticos, aleatorizar significa que cada unidad experimental tiene la misma probabilidad de recibir cualquiera de los tratamientos considerados en el estudio. De esta manera, factores no controlados como pequeñas diferencias en el suelo, humedad, sombra o manejo quedan repartidos entre los tratamientos y no favorecen sistemáticamente a uno de ellos.</p>
+<p>En R, una asignación aleatoria simple puede realizarse con la función <code>sample()</code>. Por ejemplo, si se desea asignar tres tratamientos a tres parcelas dentro de un bloque, se puede escribir:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>tratamientos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"A"</span>, <span class="st">"B"</span>, <span class="st">"C"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">sample</span>(tratamientos)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "B" "A" "C"</code></pre>
+</div>
+</div>
+<section id="por-qué-es-importante-la-aleatorización" class="level4 [.callout-tip]" data-number="8.4.1.1">
+<h4 data-number="8.4.1.1" class="anchored" data-anchor-id="por-qué-es-importante-la-aleatorización"><span class="header-section-number">8.4.1.1</span> ¿Por qué es importante la aleatorización?</h4>
+<ul>
+<li>Reduce el sesgo en la asignación de tratamientos.</li>
+<li>Ayuda a balancear fuentes desconocidas de variación.</li>
+<li>Justifica el uso de pruebas estadísticas basadas en el azar.</li>
+</ul>
 </section>
-<section id="análisis-de-varianza-anova-andeva" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="análisis-de-varianza-anova-andeva"><span class="header-section-number">8.3</span> Análisis de Varianza (ANOVA, ANDEVA)</h2>
-<p>El <strong>An</strong>álisis <strong>De</strong> <strong>Va</strong>rianza o prueba ANOVA (abreviatura de <strong>An</strong>alysis <strong>o</strong>f <strong>Va</strong>riance) es una técnica que se utiliza para comparar las medias de más de dos grupos. Las comparaciones se hacen analizando la <strong>variabilidad</strong> dentro y entre los grupos. Como toda prueba de hipótesis tiene una hipótesis nula (<span class="math inline">\(H_0\)</span>), en este caso, para los <span class="math inline">\(k\)</span> grupos o poblaciones la hipótesis nula es que las medias de todos los grupos o poblaciones son iguales; mientras que la hipótesis alternativa es que al menos una de las medias es diferente:</p>
+<p><strong>Ejemplo:</strong> si se comparan tres fertilizantes en un lote, no conviene asignarlos siempre en el mismo orden espacial, porque una parte del terreno podría tener mejores condiciones que otra. La asignación aleatoria reduce este riesgo.</p>
+</section>
+<section id="repetición" class="level3" data-number="8.4.2">
+<h3 data-number="8.4.2" class="anchored" data-anchor-id="repetición"><span class="header-section-number">8.4.2</span> Repetición</h3>
+<p>La repetición consiste en aplicar cada tratamiento a varias unidades experimentales independientes. Gracias a la repetición es posible estimar el error experimental y aumentar la precisión de las comparaciones entre tratamientos.</p>
+<p>Cuando un tratamiento se aplica una sola vez, cualquier diferencia observada podría deberse tanto al tratamiento como al azar. En cambio, al repetir cada tratamiento en varias unidades experimentales, se obtiene una mejor idea de la variabilidad natural presente en el experimento y se puede evaluar si las diferencias observadas entre tratamientos son suficientemente grandes como para considerarlas reales.</p>
+<p>Es importante que las repeticiones sean verdaderamente independientes. Si varias observaciones provienen de la misma unidad experimental, no deben considerarse como repeticiones del tratamiento.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Por qué es importante la repetición?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Permite estimar el error experimental.</li>
+<li>Mejora la precisión de las medias de tratamiento.</li>
+<li>Aumenta la capacidad para detectar diferencias reales.</li>
+<li>Hace más robustas las conclusiones del experimento.</li>
+</ul>
+</div>
+</div>
+<p><strong>Ejemplo</strong>: si se desea comparar cuatro variedades de maíz, no es suficiente sembrar una sola parcela por variedad. Se necesitan varias parcelas para cada variedad, de modo que sea posible separar el efecto de la variedad de la variabilidad del ambiente.</p>
+</section>
+<section id="bloqueo" class="level3" data-number="8.4.3">
+<h3 data-number="8.4.3" class="anchored" data-anchor-id="bloqueo"><span class="header-section-number">8.4.3</span> Bloqueo</h3>
+<p>El bloqueo o control local consiste en agrupar unidades experimentales similares en bloques y asignar los tratamientos dentro de cada bloque. Su objetivo es controlar fuentes conocidas de variación que podrían afectar la respuesta del experimento.</p>
+<p>El bloqueo se utiliza cuando el investigador reconoce que existe una fuente de variación importante en el terreno o en el material experimental, por ejemplo un gradiente de fertilidad, humedad, pendiente, sombra o tamaño inicial de las plantas. En lugar de ignorar esta variabilidad, el diseño la incorpora formando bloques lo más homogéneos posible.</p>
+<p>Dentro de cada bloque, los tratamientos se comparan en condiciones más parecidas. Esto hace que la comparación entre tratamientos sea más justa y que el error experimental se reduzca.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>¿Por qué es importante el bloqueo?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<ul>
+<li>Controla fuentes conocidas de variación.</li>
+<li>Reduce el error experimental.</li>
+<li>Mejora la precisión de las comparaciones.</li>
+<li>Hace más eficiente el experimento cuando el material no es completamente homogéneo.</li>
+</ul>
+</div>
+</div>
+<p><strong>Ejemplo</strong>: si un lote presenta un gradiente de fertilidad de un extremo al otro, puede dividirse en bloques perpendiculares a ese gradiente. Luego, dentro de cada bloque, se asignan aleatoriamente los tratamientos. Así, el efecto del suelo queda parcialmente controlado y la comparación entre tratamientos es más precisa.</p>
+<p>En la práctica, estos tres principios no actúan de manera aislada, sino de forma complementaria. Un experimento bien diseñado combina aleatorización, repetición y, cuando es necesario, bloqueo, con el fin de obtener conclusiones válidas y precisas.</p>
+</section>
+</section>
+<section id="diseño-completo-al-azar" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="diseño-completo-al-azar"><span class="header-section-number">8.5</span> Diseño completo al azar</h2>
+<p>El diseño completamente al azar (DCA) es el diseño experimental más simple. En este diseño, los tratamientos se asignan aleatoriamente a las unidades experimentales, de manera que cada unidad tenga la misma probabilidad de recibir cualquiera de los tratamientos.</p>
+<p>El DCA funciona mejor cuando las unidades experimentales son relativamente homogéneas, es decir, cuando no se espera que existan diferencias importantes entre ellas debidas a factores externos como gradientes de fertilidad, humedad, sombra o pendiente. Por esta razón, este diseño suele utilizarse en condiciones muy controladas, por ejemplo:</p>
+<ul>
+<li>ensayos en invernadero,</li>
+<li>cámaras de crecimiento,</li>
+<li>laboratorios,</li>
+<li>o experimentos de campo realizados en áreas muy uniformes.</li>
+</ul>
+<p>Cuando existe una heterogeneidad importante en el terreno, el DCA puede perder eficiencia, ya que toda la variabilidad no explicada por los tratamientos queda incorporada en el error experimental.</p>
+<section id="ventajas-del-diseño-completamente-al-azar" class="level3" data-number="8.5.1">
+<h3 data-number="8.5.1" class="anchored" data-anchor-id="ventajas-del-diseño-completamente-al-azar"><span class="header-section-number">8.5.1</span> Ventajas del diseño completamente al azar</h3>
+<ul>
+<li>Es el diseño más sencillo de implementar.</li>
+<li>Permite gran flexibilidad en el número de tratamientos y repeticiones.</li>
+<li>Su análisis estadístico es relativamente simple.</li>
+<li>Es adecuado cuando las unidades experimentales son homogéneas.</li>
+</ul>
+</section>
+<section id="limitaciones-del-diseño-completamente-al-azar" class="level3" data-number="8.5.2">
+<h3 data-number="8.5.2" class="anchored" data-anchor-id="limitaciones-del-diseño-completamente-al-azar"><span class="header-section-number">8.5.2</span> Limitaciones del diseño completamente al azar</h3>
+<ul>
+<li>No controla fuentes conocidas de variación.</li>
+<li>Puede ser poco eficiente en experimentos de campo heterogéneos.</li>
+<li>Si existe un gradiente importante en el ambiente, el error experimental puede aumentar.</li>
+</ul>
+</section>
+<section id="modelo-matemático" class="level3" data-number="8.5.3">
+<h3 data-number="8.5.3" class="anchored" data-anchor-id="modelo-matemático"><span class="header-section-number">8.5.3</span> Modelo matemático</h3>
+<p>El modelo matemático para los datos provenientes de un diseño completo al azar, con un número diferente de repeticiones para cada nivel del factor puede ser escrito como;</p>
+<p><span class="math display">\[
+y_{ij} = \mu +\alpha_i + \epsilon_{ij}
+\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(y_{ij}\)</span> es la respuesta observada en la <span class="math inline">\(j\)</span>-ésima repetición del tratamiento <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(\mu\)</span> es la media general,</li>
+<li><span class="math inline">\(\alpha_i\)</span> es el efecto del tratamiento <span class="math inline">\(i\)</span>,</li>
+<li><span class="math inline">\(\epsilon_{ij}\)</span> es el error aleatorio asociado a la observación.</li>
+</ul>
+</section>
+<section id="generación-del-diseño-en-r-con-agricolae" class="level3" data-number="8.5.4">
+<h3 data-number="8.5.4" class="anchored" data-anchor-id="generación-del-diseño-en-r-con-agricolae"><span class="header-section-number">8.5.4</span> Generación del diseño en R con <code>agricolae</code></h3>
+<p>En R, el paquete <code>agricolae</code> permite generar fácilmente la distribución aleatoria de un diseño completamente al azar. Supongamos que se desea trabajar con 4 tratamientos y 3 repeticiones por tratamiento.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(agricolae)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>tratamientos <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"T1"</span>, <span class="st">"T2"</span>, <span class="st">"T3"</span>, <span class="st">"T4"</span>)</span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>dca <span class="ot">&lt;-</span> <span class="fu">design.crd</span>(</span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="at">trt =</span> tratamientos,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="at">r =</span> <span class="dv">3</span>,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">seed =</span> <span class="dv">123</span>,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">serie =</span> <span class="dv">2</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>dca<span class="sc">$</span>book</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>   plots r tratamientos
+1    101 1           T3
+2    102 2           T3
+3    103 1           T1
+4    104 1           T2
+5    105 3           T3
+6    106 2           T1
+7    107 2           T2
+8    108 1           T4
+9    109 3           T2
+10   110 2           T4
+11   111 3           T1
+12   112 3           T4</code></pre>
+</div>
+</div>
+<p>La tabla generada muestra la distribución aleatoria de los tratamientos en las unidades experimentales. Esta salida puede usarse como guía para establecer físicamente el experimento o para construir una base de datos inicial.</p>
+<section id="interpretación-del-diseño" class="level4" data-number="8.5.4.1">
+<h4 data-number="8.5.4.1" class="anchored" data-anchor-id="interpretación-del-diseño"><span class="header-section-number">8.5.4.1</span> Interpretación del diseño</h4>
+<p>En este ejemplo:</p>
+<ul>
+<li>hay 4 tratamientos,</li>
+<li>cada tratamiento aparece 3 veces,</li>
+<li>por lo tanto, hay 12 unidades experimentales en total.</li>
+</ul>
+<p>La función <code>design.crd()</code> asigna los tratamientos aleatoriamente a las unidades experimentales, respetando el número de repeticiones definido.</p>
+<p>Una vez establecido el diseño y recolectados los datos, el siguiente paso es analizar si las diferencias observadas entre tratamientos son mayores de lo que cabría esperar por variación aleatoria. Para ello se utiliza el análisis de varianza (ANOVA).</p>
+</section>
+</section>
+</section>
+<section id="análisis-de-varianza-anova-andeva" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="análisis-de-varianza-anova-andeva"><span class="header-section-number">8.6</span> Análisis de Varianza (ANOVA, ANDEVA)</h2>
+<p>El <strong>An</strong>álisis <strong>De</strong> <strong>Va</strong>rianza o prueba ANOVA (abreviatura de <strong>An</strong>alysis <strong>o</strong>f <strong>Va</strong>riance) es una técnica utilizada para comparar las medias de más de dos grupos o tratamientos. Su lógica consiste en descomponer la variabilidad total observada en los datos en componentes atribuibles a distintas fuentes, principalmente:</p>
+<ul>
+<li>la variabilidad <strong>entre tratamientos</strong> y</li>
+<li>la variabilidad <strong>dentro de tratamientos</strong> o <strong>error experimental</strong></li>
+</ul>
+<p>Como toda prueba de hipótesis tiene una hipótesis nula (<span class="math inline">\(H_0\)</span>), en este caso, para los <span class="math inline">\(k\)</span> grupos o poblaciones la hipótesis nula es que todas las medias poblacionales son iguales; mientras que la hipótesis alternativa es que al menos una de ellas difiere de las demás:</p>
 <p><span class="math display">\[
 \begin{cases}
 H_0: \mu_1 = \mu_2 = \ldots = \mu_k \\
 H_1: \exists \; i, \; j \; \text{tal que} \; \mu_i \neq \mu_j
 \end{cases}
 \]</span></p>
-<section id="modelos-para-el-análisis-de-varianza" class="level3" data-number="8.3.1">
-<h3 data-number="8.3.1" class="anchored" data-anchor-id="modelos-para-el-análisis-de-varianza"><span class="header-section-number">8.3.1</span> Modelos para el análisis de varianza</h3>
-<p>Vamos a suponer que deseamos comparar <span class="math inline">\(k\)</span> tratamientos o niveles para un <span class="math inline">\(único factor\)</span>, cada tratamiento o nivel tiene <span class="math inline">\(r\)</span> repeticiones. La respuesta observada es una variable aleatoria. Los datos del modelo se pueden presentar de la siguiente forma:</p>
+<p>El ANOVA no indica directamente entre cuáles tratamientos existen diferencias, sino únicamente si hay evidencia estadística de que al menos una media es distinta.</p>
+<section id="modelos-para-el-análisis-de-varianza" class="level3" data-number="8.6.1">
+<h3 data-number="8.6.1" class="anchored" data-anchor-id="modelos-para-el-análisis-de-varianza"><span class="header-section-number">8.6.1</span> Modelos para el análisis de varianza</h3>
+<p>Supongamos que deseamos comparar <span class="math inline">\(k\)</span> tratamientos o niveles para un <em>único factor</em>, cada tratamiento o nivel tiene <span class="math inline">\(r\)</span> repeticiones. La respuesta observada es una variable aleatoria. Los datos pueden representarse como se muestra en la <a href="#tbl-datosanova" class="quarto-xref">Tabla&nbsp;<span>8.1</span></a>:</p>
 <div id="tbl-datosanova" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-datosanova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -485,8 +738,8 @@ y_{ij} = \mu + \alpha_i +  \epsilon_{ij} \quad \forall \; i,j
 </div>
 </div>
 </section>
-<section id="tabla-anova" class="level3" data-number="8.3.2">
-<h3 data-number="8.3.2" class="anchored" data-anchor-id="tabla-anova"><span class="header-section-number">8.3.2</span> Tabla ANOVA</h3>
+<section id="tabla-anova" class="level3" data-number="8.6.2">
+<h3 data-number="8.6.2" class="anchored" data-anchor-id="tabla-anova"><span class="header-section-number">8.6.2</span> Tabla ANOVA</h3>
 <p>Sea <span class="math inline">\(\bar{y}\)</span> la media general, o media de todos los datos, y <span class="math inline">\(\bar{y_i}\)</span> la media por el grupo <span class="math inline">\(i-ésimo\)</span>. La suma cuadrática total está dada por</p>
 <p><span id="eq-SCT"><span class="math display">\[
 SCT = \sum_i{\sum_j{(y_{ij}-\bar{y})}^2}
@@ -508,7 +761,8 @@ MCTr=\frac{SCTr}{k-1}
 \]</span></p>
 <p><span class="math display">\[
 MCE = \frac{SCE}{n-k}
-\]</span> Los grados de libertad para SCT son <span class="math inline">\(n-1\)</span>, para <span class="math inline">\(SCE\)</span> los grados de libertad son <span class="math inline">\(n-k\)</span>. Usando <a href="#eq-sct3" class="quarto-xref">Ecuación&nbsp;<span>8.5</span></a> para los grados de libertad: <span class="math inline">\(gl(Total)=gl(Error)+gl(Tratamiento)\)</span> y reemplazando los grados de libertad totales y del error se obtiene que los grados de libertad de los tratamientos son <span class="math inline">\(k-1\)</span>. El procedimiento de la prueba se resume en la <strong>Tabla ANOVA</strong> que se muestra en la <a href="#tbl-anova" class="quarto-xref">Tabla&nbsp;<span>8.2</span></a></p>
+\]</span></p>
+<p>Los grados de libertad para SCT son <span class="math inline">\(n-1\)</span>, para <span class="math inline">\(SCE\)</span> los grados de libertad son <span class="math inline">\(n-k\)</span>. Usando <a href="#eq-sct3" class="quarto-xref">Ecuación&nbsp;<span>8.5</span></a> para los grados de libertad: <span class="math inline">\(gl(Total)=gl(Error)+gl(Tratamiento)\)</span> y reemplazando los grados de libertad totales y del error se obtiene que los grados de libertad de los tratamientos son <span class="math inline">\(k-1\)</span>. El procedimiento de la prueba se resume en la <strong>Tabla ANOVA</strong> que se muestra en la <a href="#tbl-anova" class="quarto-xref">Tabla&nbsp;<span>8.2</span></a></p>
 <div id="tbl-anova" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-anova-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -561,17 +815,11 @@ Tabla&nbsp;8.2: Tabla del Análisis de Varianza para el modelo de un único fact
 </div>
 </section>
 </section>
-<section id="diseño-completo-al-azar" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="diseño-completo-al-azar"><span class="header-section-number">8.4</span> Diseño completo al azar</h2>
-<p>El diseño experimental más sencillo es un diseño completamente al azar. Este funciona mejor en situaciones muy controladas y condiciones muy uniformes. Por este motivo, el diseño completamente al azar no se suele utilizar en experimentos de campo. Puede utilizarlo si trabaja en un campo muy uniforme, en un invernadero o en una cámara de crecimiento, o si no tiene idea de las condiciones de cultivo. de crecimiento, o de la variabilidad de su campo.</p>
-<p>El modelo matemático para los datos provenientes de un diseño completo al azar, con un número diferente de repeticiones para cada nivel del factor puede ser escrito como;</p>
-<p><span class="math display">\[
-y_{ij} = \mu +\alpha_i + \epsilon_{ij}
-\]</span></p>
-<p>La tabla ANOVA correspondiente a este modelo es la mostrada en <a href="#tbl-anova" class="quarto-xref">Tabla&nbsp;<span>8.2</span></a>.</p>
+<section id="ejemplo-de-dca-desarrollado-en-r" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="ejemplo-de-dca-desarrollado-en-r"><span class="header-section-number">8.7</span> Ejemplo de DCA desarrollado en R</h2>
 <p>En el <a href="02-estdesc.html#exr-siete" class="quarto-xref">Ejercicio&nbsp;<span>3.13</span></a>, se presentó el proyecto de graduación de Alfredo Aguilar y José C. Flores, a modo de ejemplo vamos a analizar los datos correspondientes a la última medición para verificar la existencia de diferencias significativas para la altura entre los tratamientos. Para esto inicialmente se va a crear la variable DDS que era una de las actividades que se debía realizar en el ejercicio mencionado, posteriormente se filtrarán los datos para quedarnos unicámente con las observaciones donde la variable DDS sea igual a 56.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
 <pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
 ✔ dplyr     1.1.4     ✔ readr     2.1.6
@@ -584,24 +832,24 @@ y_{ij} = \mu +\alpha_i + \epsilon_{ij}
 ✖ dplyr::lag()    masks stats::lag()
 ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>datos24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/datos24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"datos"</span>)</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>datos24004 <span class="ot">&lt;-</span> datos24004 <span class="sc">|&gt;</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">DDS =</span> <span class="fu">as.numeric</span>(Fecha <span class="sc">-</span> Siembra)</span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  ) </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>dds56 <span class="ot">&lt;-</span> datos24004 <span class="sc">|&gt;</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>    DDS <span class="sc">==</span> <span class="dv">56</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(readxl)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>datos24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/datos24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"datos"</span>)</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>datos24004 <span class="ot">&lt;-</span> datos24004 <span class="sc">|&gt;</span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">DDS =</span> <span class="fu">as.numeric</span>(Fecha <span class="sc">-</span> Siembra)</span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  ) </span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>dds56 <span class="ot">&lt;-</span> datos24004 <span class="sc">|&gt;</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    DDS <span class="sc">==</span> <span class="dv">56</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <p>Finalmente vamos a hacer la prueba ANOVA con la función <code>aov()</code>, la forma de usar la función es: <code>aov(formula, data)</code>. El resultado lo guardamos en una variable y para ver los resultados se usa la función <code>summary()</code>.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Altura <span class="sc">~</span> Tratamiento, <span class="at">data =</span> dds56)</span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>mod1 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Altura <span class="sc">~</span> Tratamiento, <span class="at">data =</span> dds56)</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value Pr(&gt;F)
 Tratamiento  6   3965   660.8   1.257  0.284
@@ -635,14 +883,14 @@ Importante
 </ul>
 <p>Primero, cargamos los datos. Se resumen los datos, este resumen se presenta en la <a href="#tbl-rendaj" class="quarto-xref">Tabla&nbsp;<span>8.3</span></a>. Además se crea un diagrama de cajas, dicho diagrama se presenta en la <a href="#fig-rendaj" class="quarto-xref">Figura&nbsp;<span>8.1</span></a>. De acuerdo a lo que se observa en la tabla y en la figura, el tratamiento T2 tiene el mayor rendimiento promedio mientras que T6 y T7 tienen medias menores al resto de los tratamientos.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>rend24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/rend_24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"rendimiento_ha"</span>)</span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>resu_rend <span class="ot">&lt;-</span> rend24004 <span class="sc">|&gt;</span></span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Tratamiento) <span class="sc">|&gt;</span></span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Media =</span> <span class="fu">mean</span>(Rendimiento_ha),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Desv =</span> <span class="fu">sd</span>(Rendimiento_ha)</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>rend24004 <span class="ot">&lt;-</span> <span class="fu">read_excel</span>(<span class="st">"datos/rend_24004.xlsx"</span>, <span class="at">sheet =</span> <span class="st">"rendimiento_ha"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>resu_rend <span class="ot">&lt;-</span> rend24004 <span class="sc">|&gt;</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(Tratamiento) <span class="sc">|&gt;</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">Media =</span> <span class="fu">mean</span>(Rendimiento_ha),</span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">Desv =</span> <span class="fu">sd</span>(Rendimiento_ha)</span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 </div>
 <div class="cell">
 <div id="tbl-rendaj" class="cell quarto-float quarto-figure quarto-figure-center anchored">
@@ -719,8 +967,8 @@ Figura&nbsp;8.1: Rendimiento por tratamiento
 </div>
 <p>Ahora procedemos a hacer la prueba ANOVA.</p>
 <div class="cell">
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Rendimiento_ha <span class="sc">~</span> Tratamiento, <span class="at">data =</span> rend24004)</span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>mod2 <span class="ot">&lt;-</span> <span class="fu">aov</span>(Rendimiento_ha <span class="sc">~</span> Tratamiento, <span class="at">data =</span> rend24004)</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(mod2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>            Df Sum Sq Mean Sq F value   Pr(&gt;F)    
 Tratamiento  6    245   40.84   5.314 0.000552 ***
@@ -732,21 +980,21 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Podemos apreciar que <span class="math inline">\(SCTr\)</span> es muy similar a <span class="math inline">\(SCE\)</span>, lo que nos sugiere que los tratamientos están explicando una parte importante de la variabilidad del rendimiento. El valor <span class="math inline">\(p\)</span> es muy bajo, inclusive menor que <span class="math inline">\(0.001\)</span>. Hay suficiente evidencia estadística para rechazar la hipótesis nula. Se concluye que, los tratamientos tienen un efecto significativo sobre el rendimiento. Dicho de otra forma, al menos uno de los tratamientos presenta una media significativamente distinta respecto a los demás.</p>
 <p>¿Qué ocurre cuando la prueba ANOVA es significativa? ¿Cómo averigüar dónde se encuentran las diferencias significativas?</p>
 </section>
-<section id="pruebas-de-comparaciones-múltiples-para-la-media." class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-para-la-media."><span class="header-section-number">8.5</span> Pruebas de comparaciones múltiples para la media.</h2>
+<section id="pruebas-de-comparaciones-múltiples-para-la-media." class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-para-la-media."><span class="header-section-number">8.8</span> Pruebas de comparaciones múltiples para la media.</h2>
 <p>Cuando la prueba ANOVA es estadísticamente significativa, el paso posterior consiste en buscar entre qué grupos, poblaciones o tratamientos existen diferencias. En algunos casos el investigador podría tener comparaciones planificadas que desea hacer; en otras situaciones podría no tener idea de que comparaciones debe hacer. En el primer caso se habla de <strong>contrastes planificados o <em>a priori</em></strong>, en el segundo caso nos referimos a <strong>contrastes múltiples o <em>a posteriori</em></strong>.</p>
-<section id="contrastes-a-priori" class="level3" data-number="8.5.1">
-<h3 data-number="8.5.1" class="anchored" data-anchor-id="contrastes-a-priori"><span class="header-section-number">8.5.1</span> Contrastes <em>a priori</em></h3>
+<section id="contrastes-a-priori" class="level3" data-number="8.8.1">
+<h3 data-number="8.8.1" class="anchored" data-anchor-id="contrastes-a-priori"><span class="header-section-number">8.8.1</span> Contrastes <em>a priori</em></h3>
 <p>Los <strong>contrastes</strong> son combinaciones lineales de medias que permiten evaluar hipótesis específicas sobre los tratamientos o grupos. Los <strong>contrastes planificados</strong> se definen antes de observar los datos, con base en hipótesis sustentadas teóricamente.</p>
-<section id="contrastes-ortogonales" class="level4" data-number="8.5.1.1">
-<h4 data-number="8.5.1.1" class="anchored" data-anchor-id="contrastes-ortogonales"><span class="header-section-number">8.5.1.1</span> Contrastes ortogonales</h4>
+<section id="contrastes-ortogonales" class="level4" data-number="8.8.1.1">
+<h4 data-number="8.8.1.1" class="anchored" data-anchor-id="contrastes-ortogonales"><span class="header-section-number">8.8.1.1</span> Contrastes ortogonales</h4>
 <p>Los contrastes son <strong>ortogonales</strong> cuando son <strong>independientes entre sí</strong> es decir, no existe superposición en la información que aportan. Desde el punto de vista matemático, dos contrastes <span class="math inline">\(C_1\)</span> y <span class="math inline">\(C_2\)</span>, con coeficientes <span class="math inline">\(c_{1i}\)</span> y <span class="math inline">\(c_{2i}\)</span>, son ortogonales si se cumple:</p>
 <p><span class="math display">\[
 \sum_{i=1}^k c_{1i} \cdot c_{2i} = 0
 \]</span></p>
 <p>donde <span class="math inline">\(k\)</span> es un número de grupos. Esto garantiza que cada contraste evalúe un aspecto distinto de las diferencias entre grupos, sin redundancia.</p>
-<section id="reglas-para-definir-contrastes-ortogonales." class="level5" data-number="8.5.1.1.1">
-<h5 data-number="8.5.1.1.1" class="anchored" data-anchor-id="reglas-para-definir-contrastes-ortogonales."><span class="header-section-number">8.5.1.1.1</span> Reglas para definir contrastes ortogonales.</h5>
+<section id="reglas-para-definir-contrastes-ortogonales." class="level5" data-number="8.8.1.1.1">
+<h5 data-number="8.8.1.1.1" class="anchored" data-anchor-id="reglas-para-definir-contrastes-ortogonales."><span class="header-section-number">8.8.1.1.1</span> Reglas para definir contrastes ortogonales.</h5>
 <ol type="1">
 <li>Los coeficientes de cada contraste deben sumar cero:</li>
 </ol>
@@ -764,8 +1012,8 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </ol>
 </section>
 </section>
-<section id="contrastes-polinomiales" class="level4" data-number="8.5.1.2">
-<h4 data-number="8.5.1.2" class="anchored" data-anchor-id="contrastes-polinomiales"><span class="header-section-number">8.5.1.2</span> Contrastes polinomiales</h4>
+<section id="contrastes-polinomiales" class="level4" data-number="8.8.1.2">
+<h4 data-number="8.8.1.2" class="anchored" data-anchor-id="contrastes-polinomiales"><span class="header-section-number">8.8.1.2</span> Contrastes polinomiales</h4>
 <p>Los <strong>contrastes polinomiales</strong> son un caso especial de contrastes ortogonales que se utilizan cuando los <strong>niveles del factor están ordenados cuantitativamente</strong> (por ejemplo, dosis de un fertilizante, niveles de estrés, tiempo de exposición, etc.). Sirven para detectar tendencias como efectos lineales, cuadráticos o cúbicos en los datos.</p>
 <p>Los contrastes polinomiales son una técnica utilizada en el contexto del análisis de varianza (ANOVA) cuando los tratamientos o niveles del factor tienen un <strong>orden natural</strong> y están <strong>espaciados regularmente</strong> (por ejemplo, 0, 1, 2, 3 unidades). Su objetivo es identificar si la relación entre los niveles del factor y la media de respuesta sigue una tendencia lineal, cuadrática, cúbica, etc.</p>
 <p>Los contrastes polinomiales son muy comunes en estudios de:</p>
@@ -779,10 +1027,10 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 <p>Para construir contrastes polinomiales, el factor debe ser <strong>cuantitativo</strong> u <strong>ordinal</strong> con niveles <strong>equiespaciados</strong>, además debe haber el mismo número de observaciones por tratamiento o grupo. Los contrastes polinomiales cumplen con la ortogonalidad entre ellos.</p>
 </section>
 </section>
-<section id="contrastes-a-posteriori" class="level3" data-number="8.5.2">
-<h3 data-number="8.5.2" class="anchored" data-anchor-id="contrastes-a-posteriori"><span class="header-section-number">8.5.2</span> Contrastes <em>a posteriori</em></h3>
-<section id="clasificación-de-pruebas-de-comparación-múltiple-de-medias" class="level4" data-number="8.5.2.1">
-<h4 data-number="8.5.2.1" class="anchored" data-anchor-id="clasificación-de-pruebas-de-comparación-múltiple-de-medias"><span class="header-section-number">8.5.2.1</span> Clasificación de Pruebas de Comparación Múltiple de Medias</h4>
+<section id="contrastes-a-posteriori" class="level3" data-number="8.8.2">
+<h3 data-number="8.8.2" class="anchored" data-anchor-id="contrastes-a-posteriori"><span class="header-section-number">8.8.2</span> Contrastes <em>a posteriori</em></h3>
+<section id="clasificación-de-pruebas-de-comparación-múltiple-de-medias" class="level4" data-number="8.8.2.1">
+<h4 data-number="8.8.2.1" class="anchored" data-anchor-id="clasificación-de-pruebas-de-comparación-múltiple-de-medias"><span class="header-section-number">8.8.2.1</span> Clasificación de Pruebas de Comparación Múltiple de Medias</h4>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 13%">
@@ -870,20 +1118,20 @@ Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1</code></pre>
 </section>
 </section>
 </section>
-<section id="diseño-de-bloques-completos-al-azar" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.6</span> Diseño de bloques completos al azar</h2>
+<section id="diseño-de-bloques-completos-al-azar" class="level2" data-number="8.9">
+<h2 data-number="8.9" class="anchored" data-anchor-id="diseño-de-bloques-completos-al-azar"><span class="header-section-number">8.9</span> Diseño de bloques completos al azar</h2>
 </section>
-<section id="diseño-de-cuadro-latino" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="diseño-de-cuadro-latino"><span class="header-section-number">8.7</span> Diseño de cuadro latino</h2>
+<section id="diseño-de-cuadro-latino" class="level2" data-number="8.10">
+<h2 data-number="8.10" class="anchored" data-anchor-id="diseño-de-cuadro-latino"><span class="header-section-number">8.10</span> Diseño de cuadro latino</h2>
 </section>
-<section id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="level2" data-number="8.8">
-<h2 data-number="8.8" class="anchored" data-anchor-id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.8</span> Pruebas no paramétricas equivalentes al análisis de varianza</h2>
+<section id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza" class="level2" data-number="8.11">
+<h2 data-number="8.11" class="anchored" data-anchor-id="pruebas-no-paramétricas-equivalentes-al-análisis-de-varianza"><span class="header-section-number">8.11</span> Pruebas no paramétricas equivalentes al análisis de varianza</h2>
 </section>
-<section id="pruebas-de-comparaciones-múltiples-no-paramétricas" class="level2" data-number="8.9">
-<h2 data-number="8.9" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.9</span> Pruebas de comparaciones múltiples no paramétricas</h2>
+<section id="pruebas-de-comparaciones-múltiples-no-paramétricas" class="level2" data-number="8.12">
+<h2 data-number="8.12" class="anchored" data-anchor-id="pruebas-de-comparaciones-múltiples-no-paramétricas"><span class="header-section-number">8.12</span> Pruebas de comparaciones múltiples no paramétricas</h2>
 </section>
-<section id="diseño-factorial" class="level2" data-number="8.10">
-<h2 data-number="8.10" class="anchored" data-anchor-id="diseño-factorial"><span class="header-section-number">8.10</span> Diseño factorial</h2>
+<section id="diseño-factorial" class="level2" data-number="8.13">
+<h2 data-number="8.13" class="anchored" data-anchor-id="diseño-factorial"><span class="header-section-number">8.13</span> Diseño factorial</h2>
 </section>
 <section id="ejercicios" class="level2 unnumbered">
 <h2 class="unnumbered anchored" data-anchor-id="ejercicios">Ejercicios</h2>
@@ -1280,6 +1528,28 @@ Tabla&nbsp;8.6: Tabla modelo 2
 </ul>
 </div>
 <p>Se pide, analizar el efecto del grado de madurez y del componente junto con la interacción entre la madurez y el componente sobre las variables respuesta.</p>
+<div id="exr-doe9" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 8.7</strong></span> El crecimiento de cultivos durante todo el año es posible gracias a la producción hidropónica de plantas, una técnica de cultivo sostenible sin suelo que se distingue por el uso eficaz del agua y los nutrientes. La investigación de Achieng Akuak y Melissa Moyo utiliza la hidroponía Deep Water Culture (DWC) para comparar los efectos de varias soluciones nutritivas en la producción de lechuga (Lactuca sativa). Se probaron cuatro tratamientos: dos mezclas suplementadas con efluente de biodigestor, una formulación institucional de la Universidad EARTH y un fertilizante comercial (Ever Green). Durante 21 días, se midieron parámetros de crecimiento de las plantas como altura, número de hojas, biomasa de raíces y brotes, absorción de nutrientes, pH y fluctuaciones de conductividad eléctrica (CE). Este estudio proporciona información sobre opciones de fertilización a largo plazo y de bajo costo para la agricultura hidropónica, lo cual es especialmente importante en zonas con tierras agrícolas limitadas. En la hoja <strong>data</strong> del archivo <strong>data25002.xlsx</strong>, se encuentran los datos recolectados por Melissa y Achieng para 3 de los 4 tratamientos. En la hoja <strong>labels</strong> se encuentran las etiquetas. El documento completo del proyecto de graduación se encuentra en este <a href="https://bsi.earth.ac.cr/ProyectosDeGraduacion/pdf/2025/25002.pdf">enlace</a> Se pide analizar las variables:</p>
+<ul>
+<li>Wet root weight.</li>
+<li>Wet shoot weight.</li>
+<li>Height.</li>
+<li>Dry roots weight.</li>
+<li>Dry shoos weight.</li>
+</ul>
+</div>
+<p>Para realizar el análisis, debe:</p>
+<ol type="a">
+<li>Crear un proyecto con las carpetas necesarias.</li>
+<li>Crear un script y un archivo <em>.qmd</em></li>
+<li>Cargar los datos.</li>
+<li>Calcular estadísticas descriptivas apropiadas para las variables solicitadas.</li>
+<li>Realizar ANOVA y una prueba de comparación múltiple de medias para las variables solicitadas.<br>
+</li>
+<li>Guardar los valores <em>p</em>.</li>
+<li>Crear gráficos adecuados o tablas para el reporte.</li>
+<li>Escribir sus conclusiones en el archivo <em>.qmd</em></li>
+</ol>
 
 
 

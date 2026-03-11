@@ -1,70 +1,278 @@
 # Diseño de experimentos {#doe}
 
-El diseño de experimentos fue inventado por Ronald A. Fisher en las décadas de 1920 y 1930 en la Estación Experimental de Rothamsted, conocida ahora como Rothamsted Research. En el primer libro de Fisher sobre diseño de experimentos mostró cómo se podían extraer conclusiones válidas a partir de experimentos con fluctuaciones naturales como la temperatura, las condiciones del suelo y la lluvia, es decir, en presencia de variables molestas o perturbadoras. 
+## Objetivos del capítulo
 
-Las variables perturbadoras conocidas suelen causar sesgos sistemáticos en grupos de resultados (por ejemplo, variación entre lotes). Las variables perturbadoras desconocidas suelen causar variabilidad aleatoria en los resultados y se denominan variabilidad inherente o ruido. Aunque el método de diseño experimental se utilizó por primera vez en un contexto agrícola, el método se ha aplicado con éxito en otras industrias y ámbitos. 
+Al finalizar este capítulo, el estudiante será capaz de:
 
-En la @sec-tipest se presentaron los tipos de estudio, en esta sección se presentan los principios básicos y los principales diseños experimentales usados en agricultura. ¿Por qué es importante el diseño experimental? Supongamos que deseamos comparar dos variedades de maíz, una variedad estándar ya conocida a la que llamaremos V1 y una variadad nueva de la que recién hemos escuchado a la que llamaremos V2. Podríamos plantar la mitad de un campo con V1 y la otra mitad con V2. Se plantan las dos variedades exactamente el mismo día y se gestionan las dos mitades del campo exactamente igual durante todo el período vegetativo. A lo largo de la cosecha, se llevan registros separados del rendimiento de cada mitad del campo, de modo que al final de la temporada se obtiene el rendimiento total de cada variedad. Supongamos que, en este caso, la nueva variedad (V2) tiene un rendimiento un 20% mayor que la variedad estándar (V1). ¿Puede asegurar que la nueva variedad es mejor que la  variedad estándar? La respuesta es no, porque puede haber otros factores que hayan provocado la diferencia de rendimiento, como por ejemplo:
+1. Explicar la importancia del diseño experimental en la investigación agrícola y su papel en el control de la variabilidad.
+2. Identificar y diferenciar los conceptos de unidad experimental, tratamiento, repetición, unidad de muestreo y error experimental.
+3. Describir los principios fundamentales del diseño experimental: aleatorización, repetición y bloqueo.
+4. Reconocer y comparar las características de los principales diseños experimentales utilizados en agricultura: diseño completamente al azar, diseño de bloques completos al azar y cuadrado latino.
+5. Aplicar el análisis de varianza (ANOVA) en R para evaluar diferencias entre tratamientos.
+6. Interpretar los resultados del ANOVA y de las pruebas de comparaciones múltiples de medias
 
-- V2 se plantó en una parte del campo que tenía mejor suelo.
-- Un extremo del campo era más húmedo que el otro y algunos de las plantes se infectaron con oídio.
-- Las diferencias de textura del suelo provocaron un aumento de la humedad del suelo de un extremo del campo al otro.
-- Una parte del campo con la variedad estándar recibe sombra por la tarde de una línea de árboles adyacente.
-- La presencia de malezas es mayor en una parte del campo con V1. 
-- Los bosques o zonas silvestres adyacentes son una fuente de plagas que afectan más a un extremo del campo que al otro.
+## Introducción 
 
-Como el experimento no se preparó para tener en cuenta la variabilidad del campo, no se puede concluir si el rendimiento superior de una variedad se debió a la propia variedad o a diferencias en las condiciones de cultivo. No se repitieron los tratamientos. Por lo tanto, no tiene forma de aplicar una prueba estadística a sus datos. Si piensa en su propia explotación, ¿qué otras fuentes de variación podrían influir en su pregunta de investigación?
+En investigación agrícola, las diferencias observadas entre tratamientos no siempre se deben exclusivamente al tratamiento que se desea evaluar. En un experimento de campo, variables como la fertilidad del suelo, la humedad, la sombra, la presencia de malezas, la presión de plagas o pequeñas variaciones en el manejo agronómico pueden influir sobre la respuesta observada. Por esta razón, para obtener conclusiones válidas no basta con aplicar tratamientos y comparar resultados: es necesario planificar cuidadosamente cómo se asignarán los tratamientos a las unidades experimentales y cómo se controlará la variabilidad natural del ambiente.
 
-Con el diseño experimental y el análisis estadístico adecuados, puede identificar y aislar los efectos de la variación natural y determinar si las diferencias entre tratamientos son «reales», dentro de ciertos niveles de probabilidad. La elección del diseño experimental, dependerá en gran medida de la pregunta de investigación que se plantee y del número de tratamientos del experimento.
+Supongamos que se desea comparar dos variedades de maíz: una variedad estándar ya conocida, a la que llamaremos V1, y una variedad nueva, a la que llamaremos V2. Una posibilidad aparentemente sencilla sería sembrar la mitad de un campo con V1 y la otra mitad con V2, manejar ambas zonas de la misma manera durante todo el ciclo y, al final, comparar el rendimiento obtenido. Si la variedad nueva produce un 20% más que la variedad estándar, podría pensarse que V2 es superior. Sin embargo, esta conclusión no sería necesariamente correcta. La diferencia observada podría deberse, total o parcialmente, a otras causas, por ejemplo:
+
+- V2 pudo haberse sembrado en la parte del terreno con mejor fertilidad.
+
+- Un extremo del campo pudo haber retenido más humedad que el otro.
+
+- Las diferencias de textura del suelo pudieron afectar la disponibilidad de agua.
+
+- Una parte del terreno pudo recibir sombra en ciertas horas del día.
+
+La presencia de malezas pudo haber sido mayor en una mitad del campo.
+
+La cercanía a bosques o áreas silvestres pudo favorecer una mayor incidencia de plagas o enfermedades en uno de los extremos.
+
+En este caso, el experimento no fue preparado para controlar la variabilidad del campo, por lo que no es posible saber con certeza si la diferencia en rendimiento se debe realmente a la variedad o a diferencias en las condiciones de cultivo. Además, al no existir repeticiones adecuadas, tampoco sería posible estimar el error experimental ni aplicar correctamente una prueba estadística.
+
+El diseño de experimentos surge precisamente para resolver este problema. Su propósito es organizar los tratamientos y las unidades experimentales de tal manera que sea posible separar el efecto real de los tratamientos de la variabilidad natural del ambiente. Con un diseño experimental y un análisis estadístico adecuados, el investigador puede reducir el sesgo, mejorar la precisión de sus resultados y determinar si las diferencias observadas entre tratamientos son estadísticamente significativas.
+
+Aunque el diseño de experimentos tuvo su desarrollo formal en la agricultura, especialmente a partir del trabajo de Ronald A. Fisher en las décadas de 1920 y 1930 en la Estación Experimental de Rothamsted, sus principios se aplican hoy en muchas otras áreas. Fisher mostró que era posible obtener conclusiones válidas aun en presencia de fluctuaciones naturales como la temperatura, las condiciones del suelo o la lluvia, sentando así las bases de la experimentación moderna.
+
+En la @sec-tipest se presentaron los tipos de estudio. En este capítulo se desarrollan los principios básicos del diseño experimental y los principales diseños utilizados en agricultura, así como su relación con el análisis de varianza y la comparación de tratamientos.
 
 ## Conceptos básicos
 
+Antes de estudiar los distintos diseños experimentales, es necesario definir algunos conceptos fundamentales que aparecen con frecuencia en la planificación y análisis de experimentos agrícolas.
 
-1. **Unidad experimental**: el objeto o espacio al cual se aplica el tratamiento y donde se analiza la variable o variables investigadas. Dependiendo del tipo de experimento la unidad experimental puede ser un animal, un árbol o una parcela. Cuando la unidad experimental es una parcela, en algunas ocsiones se presenta el efecto borde.
+1. **Unidad experimental**: La unidad experimental es el objeto o espacio al cual se aplica un tratamiento de manera independiente y sobre el cual se evalúa la respuesta del experimento. Dependiendo del tipo de estudio, la unidad experimental puede ser un animal, un árbol, una planta individual o una parcela de terreno.
+
+En experimentos de campo es común que la unidad experimental sea una parcela. En estos casos puede presentarse el efecto borde, el cual debe considerarse al momento de definir el tamaño y la forma de las parcelas.
 
 ::: {.callout-note}
-## Efecto borde
-Las diferencias que se observan en el crecimiento y producción de plantas que se ubican en los perímetros de una parcela comparadas con las que se ubican en la zona central de la parcela se conocen como efecto borde, este efecto puede ser causado por: 
+### Efecto borde
+El efecto borde se refiere a las diferencias en crecimiento o producción que pueden presentar las plantas ubicadas en los bordes de una parcela en comparación con las plantas ubicadas en el interior. Este fenómeno puede ocurrir por diversas razones, entre ellas:
 
-- Vecindad de las parcelas o áreas no cultivadas lo que puede producir que las plantas del perímetro tengan menor competencia de luz y nutrientes.
-- Competencia entre los tratamientos.
+- Menor competencia por luz, agua o nutrientes en los bordes de la parcela.
+- Influencia de parcelas vecinas con tratamientos distintos.
+- Influencia de áreas no cultivadas adyacentes.
+
+Para reducir este efecto, es común excluir las plantas del perímetro al momento de realizar las mediciones o definir áreas útiles dentro de la parcela
 :::
 
-2. **Tratamiento**: el tratamiento es el procedimiento cuyo efecto se mide y que se desea comparar con otros tratamientos. Ejemplos de tratamiento pueden ser la ración alimenticia, una variedad de semillas, un programa de riego, la concentración de un herbicida o fungicida, una combinación de temperatura y humedad. 
+2. **Factor**: Un factor es una variable controlada o de interés en un experimento cuyos niveles se comparan para evaluar su efecto sobre una variable respuesta. Los niveles de un factor determinan los tratamientos cuando se considera un solo factor. En experimentos con varios factores, los tratamientos corresponden a las combinaciones de los niveles de dichos factores.
 
-3. **Unidad de muestreo**: el efecto del tratamiento se puede medir en una fracción de la unidad experimental o en toda la unidad experimental. Es decir que la unidad de muestreo puede ser toda la unidad experimental o una fracción de la misma. Ejemplos de unidad de muestreo son: un animal sometido a una ración de alimento, muestra aleatoria de las hojas de una planta, la cosecha de 10 plantas de la unidad experimental en una parcela.
+  + Si el factor es “Fertilizante”, sus niveles podrían ser: 0, 50 y 100 kg/ha.
+  + Si el factor es “Variedad”, sus niveles podrían ser: A, B y C.
 
-4. **Error experimental**: Medida de la variación existente entre las observaciones realizadas en las unidades experimentales tratadas en forma similar. La variación puede provenir de dos fuentes:
+3. **Tratamiento**: Un tratamiento es la condición o intervención cuyo efecto se desea evaluar en un experimento. Los tratamientos representan los diferentes niveles del factor o factores de interés. Cuando un experimento incluye varios factores, un tratamiento corresponde a una combinación específica de niveles de esos factores
+
+Ejemplos de tratamientos en experimentos agrícolas incluyen:
+
+  + Variedades de cultivos,
+  + Dosis de fertilizante,
+  + Programas de riego,
+  + Diferentes herbicidas o fungicidas,
+  + Combinaciones de temperatura y humedad.
+
+El objetivo del experimento es comparar las respuestas obtenidas bajo cada tratamiento para determinar si existen diferencias significativas entre ellos.
+
+4. **Unidad de muestreo**: La unidad de muestreo es la entidad específica sobre la cual se realiza la medición de la variable de interés. En algunos casos la unidad de muestreo coincide con la unidad experimental, pero en otros casos corresponde a una fracción de esta.
+
+Por ejemplo:
+
+  - Si el tratamiento se aplica a una parcela, pero la medición se realiza en 10 plantas dentro de la parcela, la parcela es la unidad experimental y cada planta medida es una unidad de muestreo.
+
+  - Si el tratamiento se aplica a un animal y la medición se realiza sobre ese mismo animal, la unidad experimental y la unidad de muestreo coinciden.
+
+Distinguir correctamente entre unidad experimental y unidad de muestreo es fundamental para evitar errores en el análisis estadístico. Confundir la unidad de muestreo con la unidad experimental puede conducir a errores en el análisis estadístico, como la pseudorreplicación.
+
+::: {.callout-warning}
+### Pseudorreplicación
+
+La pseudorreplicación ocurre cuando varias mediciones tomadas dentro de una misma unidad experimental se analizan como si fueran repeticiones independientes del tratamiento. Esto puede inflar artificialmente el tamaño de muestra y conducir a conclusiones incorrectas.
+:::
+
+5. **Variable respuesta**: La variable respuesta es la medición observada en cada unidad experimental y representa el resultado que se desea explicar o predecir a partir de los factores estudiados. Es “lo que queremos explicar” o “lo que cambia” según el tratamiento. Puede ser cuantitativa (rendimiento, altura, peso) o cualitativa (sí/no, presencia/ausencia, categoría).
+
+  + Ejemplo: si el factor es fertilizante y el objetivo es ver si aumenta la producción, la variable respuesta puede ser el rendimiento (kg/ha).
+
+6. **Error experimental**: El error experimental es la variabilidad observada entre unidades experimentales que reciben el mismo tratamiento. Representa la variabilidad de la variable respuesta que no puede ser explicada por los tratamientos incluidos en el experimento.
+
+El error experimental puede originarse en diferentes fuentes, entre ellas:
 
 ::: {.callout-tip}
-## Fuentes de la variación
-- Variabilidad propia del material experimental al que se aplican los tratamientos. 
-- Variación resultado de cualquier falta de uniformidad en la realización física del experimento.
+### Fuentes de la variación
+- Variabilidad inherente del material experimental, como diferencias genéticas entre plantas o animales.
+- Variación ambiental, como cambios en suelo, temperatura, humedad o radiación.
+- Variación en la ejecución del experimento, como pequeñas diferencias en la aplicación de tratamientos o en las mediciones realizadas.
 :::
 
-5. **Repeticiones**: número de veces que un tratamiento aparece en un experimento.
+Una estimación adecuada del error experimental es esencial para poder realizar pruebas estadísticas confiables.
+
+7. **Repeticiones**: Las repeticiones (o replicaciones) corresponden al número de unidades experimentales que reciben el mismo tratamiento dentro de un experimento.
+
+La inclusión de repeticiones cumple varias funciones importantes:
 
 ::: {.callout-tip}
-## Funciones de las repeticiones
-- Permitir una estimación del error experimental.
-- Mejorar la precisión de un experimento mediante la reducción del error estándar de una media de tratamiento.
-- Aumentar el alcance de la inferencia del experimento mediante la selección y el uso adecuado de unidades experimentales más variables.
-- Controlar la varianza del error. 
+### Funciones de las repeticiones
+- Permitir la estimación del error experimental.
+- Mejorar la precisión de las estimaciones de las medias de tratamiento.
+- Aumentar la capacidad para detectar diferencias reales entre tratamientos.
+- Ampliar el alcance de la inferencia cuando las unidades experimentales representan una población más amplia.
 :::
 
-Aumentar el número de repeticiones, la mayoría de las veces, mejora la precisión. La elección del número de repeticiones de un experimento depende de varios factores, como el nivel de confianza deseado, la variabilidad esperada de los datos, el tamaño del efecto que se desea detectar, la disponibilidad de recursos y la complejidad del experimento; por lo general, un buen punto de partida es intentar realizar al menos tres repeticiones por condición, pero es posible que se necesiten más dependiendo de la pregunta de investigación específica y del diseño experimental.
+En general, aumentar el número de repeticiones mejora la precisión de los resultados, siempre que las repeticiones sean verdaderamente independientes. Sin embargo, el número adecuado de repeticiones depende de factores como la variabilidad esperada de los datos, el tamaño del efecto que se desea detectar, los recursos disponibles y la complejidad del experimento.
+
+En muchos experimentos agrícolas se utilizan al menos tres o cuatro repeticiones por tratamiento, aunque en algunos casos pueden requerirse más.
+
+Una vez definidos estos conceptos fundamentales, es posible comprender los principios que guían la planificación de los experimentos: aleatorización, repetición y bloqueo, los cuales permiten controlar la variabilidad y mejorar la validez de las conclusiones.
 
 ## Principios básicos
 
-En el diseño de experimentos, el __control del error experimental__ se refiere a la minimización de la variabilidad de los resultados que no está directamente relacionada con los factores estudiados, lo que se consigue mediante los principios como la aleatorización, la replicación y el bloqueo (control local), cuyo objetivo es aislar el verdadero efecto de las variables manipuladas y reducir la influencia de factores ajenos al resultado. 
+En el diseño de experimentos, el __control del error experimental__ consiste en reducir, en la mayor medida posible, la variabilidad de la respuesta que no se debe a los tratamientos estudiados. Para lograrlo, el diseño experimental se apoya en tres principios fundamentales: **aleatorización, repetición y bloqueo**. Estos principios permiten disminuir el sesgo, mejorar la precisión de las estimaciones y separar el efecto real de los tratamientos de otras fuentes de variación presentes en el experimento.
 
-1. **Aleatorización**: La asignación aleatoria de los tratamientos a las unidades experimentales ayuda a distribuir por igual cualquier fuente desconocida de variación entre los grupos de tratamiento, reduciendo el sesgo. 
-2. **Repetición**: La repetición de cada condición de tratamiento varias veces en diferentes unidades experimentales permite estimar el error experimental y aumenta la precisión de los resultados. 
-3. **Bloqueo (control local)**: Agrupar unidades experimentales similares en bloques y asignar tratamientos dentro de cada bloque ayuda a controlar las fuentes conocidas de variación que podrían afectar a los resultados, como las diferencias en las condiciones ambientales. 
+### Aleatorización 
+
+La aleatorización consiste en asignar los tratamientos al azar a las unidades experimentales. Su propósito principal es evitar sesgos sistemáticos y distribuir, de la forma más equilibrada posible, las fuentes desconocidas de variación entre los tratamientos.
+
+En términos prácticos, aleatorizar significa que cada unidad experimental tiene la misma probabilidad de recibir cualquiera de los tratamientos considerados en el estudio. De esta manera, factores no controlados como pequeñas diferencias en el suelo, humedad, sombra o manejo quedan repartidos entre los tratamientos y no favorecen sistemáticamente a uno de ellos.
+
+En R, una asignación aleatoria simple puede realizarse con la función `sample()`. Por ejemplo, si se desea asignar tres tratamientos a tres parcelas dentro de un bloque, se puede escribir:
+
+```{r}
+#| echo: true
+tratamientos <- c("A", "B", "C")
+sample(tratamientos)
+```
+
+:::[.callout-tip]
+#### ¿Por qué es importante la aleatorización?
++ Reduce el sesgo en la asignación de tratamientos.
++ Ayuda a balancear fuentes desconocidas de variación.
++ Justifica el uso de pruebas estadísticas basadas en el azar.
+:::
+
+**Ejemplo:** si se comparan tres fertilizantes en un lote, no conviene asignarlos siempre en el mismo orden espacial, porque una parte del terreno podría tener mejores condiciones que otra. La asignación aleatoria reduce este riesgo.
+
+### Repetición 
+
+La repetición consiste en aplicar cada tratamiento a varias unidades experimentales independientes. Gracias a la repetición es posible estimar el error experimental y aumentar la precisión de las comparaciones entre tratamientos.
+
+Cuando un tratamiento se aplica una sola vez, cualquier diferencia observada podría deberse tanto al tratamiento como al azar. En cambio, al repetir cada tratamiento en varias unidades experimentales, se obtiene una mejor idea de la variabilidad natural presente en el experimento y se puede evaluar si las diferencias observadas entre tratamientos son suficientemente grandes como para considerarlas reales.
+
+Es importante que las repeticiones sean verdaderamente independientes. Si varias observaciones provienen de la misma unidad experimental, no deben considerarse como repeticiones del tratamiento.
+
+:::{.callout-tip}
+#### ¿Por qué es importante la repetición?
+
++ Permite estimar el error experimental.
++ Mejora la precisión de las medias de tratamiento.
++ Aumenta la capacidad para detectar diferencias reales.
++ Hace más robustas las conclusiones del experimento.
+:::
+
+**Ejemplo**: si se desea comparar cuatro variedades de maíz, no es suficiente sembrar una sola parcela por variedad. Se necesitan varias parcelas para cada variedad, de modo que sea posible separar el efecto de la variedad de la variabilidad del ambiente.
+
+### Bloqueo
+
+El bloqueo o control local consiste en agrupar unidades experimentales similares en bloques y asignar los tratamientos dentro de cada bloque. Su objetivo es controlar fuentes conocidas de variación que podrían afectar la respuesta del experimento.
+
+El bloqueo se utiliza cuando el investigador reconoce que existe una fuente de variación importante en el terreno o en el material experimental, por ejemplo un gradiente de fertilidad, humedad, pendiente, sombra o tamaño inicial de las plantas. En lugar de ignorar esta variabilidad, el diseño la incorpora formando bloques lo más homogéneos posible.
+
+Dentro de cada bloque, los tratamientos se comparan en condiciones más parecidas. Esto hace que la comparación entre tratamientos sea más justa y que el error experimental se reduzca.
+
+:::{.callout-tip}
+#### ¿Por qué es importante el bloqueo?
+
++ Controla fuentes conocidas de variación.
++ Reduce el error experimental.
++ Mejora la precisión de las comparaciones.
++ Hace más eficiente el experimento cuando el material no es completamente homogéneo.
+:::
+
+**Ejemplo**: si un lote presenta un gradiente de fertilidad de un extremo al otro, puede dividirse en bloques perpendiculares a ese gradiente. Luego, dentro de cada bloque, se asignan aleatoriamente los tratamientos. Así, el efecto del suelo queda parcialmente controlado y la comparación entre tratamientos es más precisa.
+
+En la práctica, estos tres principios no actúan de manera aislada, sino de forma complementaria. Un experimento bien diseñado combina aleatorización, repetición y, cuando es necesario, bloqueo, con el fin de obtener conclusiones válidas y precisas.
+
+## Diseño completo al azar
+
+El diseño completamente al azar (DCA) es el diseño experimental más simple. En este diseño, los tratamientos se asignan aleatoriamente a las unidades experimentales, de manera que cada unidad tenga la misma probabilidad de recibir cualquiera de los tratamientos.
+
+El DCA funciona mejor cuando las unidades experimentales son relativamente homogéneas, es decir, cuando no se espera que existan diferencias importantes entre ellas debidas a factores externos como gradientes de fertilidad, humedad, sombra o pendiente. Por esta razón, este diseño suele utilizarse en condiciones muy controladas, por ejemplo:
+
+- ensayos en invernadero,
+- cámaras de crecimiento,
+- laboratorios,
+- o experimentos de campo realizados en áreas muy uniformes.
+
+Cuando existe una heterogeneidad importante en el terreno, el DCA puede perder eficiencia, ya que toda la variabilidad no explicada por los tratamientos queda incorporada en el error experimental.
+
+### Ventajas del diseño completamente al azar
+
+- Es el diseño más sencillo de implementar.
+- Permite gran flexibilidad en el número de tratamientos y repeticiones.
+- Su análisis estadístico es relativamente simple.
+- Es adecuado cuando las unidades experimentales son homogéneas.
+
+### Limitaciones del diseño completamente al azar
+
+- No controla fuentes conocidas de variación.
+- Puede ser poco eficiente en experimentos de campo heterogéneos.
+- Si existe un gradiente importante en el ambiente, el error experimental puede aumentar.
+
+### Modelo matemático
+
+El modelo matemático para los datos provenientes de un diseño completo al azar, con un número diferente de repeticiones para cada nivel del factor puede ser escrito como;
+
+$$
+y_{ij} = \mu +\alpha_i + \epsilon_{ij}
+$$
+
+donde:
+
+- $y_{ij}$ es la respuesta observada en la $j$-ésima repetición del tratamiento $i$,
+- $\mu$ es la media general,
+- $\alpha_i$ es el efecto del tratamiento $i$,
+- $\epsilon_{ij}$ es el error aleatorio asociado a la observación.
+
+### Generación del diseño en R con `agricolae`
+
+En R, el paquete `agricolae` permite generar fácilmente la distribución aleatoria de un diseño completamente al azar. Supongamos que se desea trabajar con 4 tratamientos y 3 repeticiones por tratamiento.
+
+```{r}
+library(agricolae)
+
+tratamientos <- c("T1", "T2", "T3", "T4")
+
+dca <- design.crd(
+  trt = tratamientos,
+  r = 3,
+  seed = 123,
+  serie = 2
+)
+
+dca$book
+```
+
+La tabla generada muestra la distribución aleatoria de los tratamientos en las unidades experimentales. Esta salida puede usarse como guía para establecer físicamente el experimento o para construir una base de datos inicial.
+
+#### Interpretación del diseño
+
+En este ejemplo:
+
+- hay 4 tratamientos,
+- cada tratamiento aparece 3 veces,
+- por lo tanto, hay 12 unidades experimentales en total.
+
+La función `design.crd()` asigna los tratamientos aleatoriamente a las unidades experimentales, respetando el número de repeticiones definido.
+
+Una vez establecido el diseño y recolectados los datos, el siguiente paso es analizar si las diferencias observadas entre tratamientos son mayores de lo que cabría esperar por variación aleatoria. Para ello se utiliza el análisis de varianza (ANOVA).
 
 ## Análisis de Varianza (ANOVA, ANDEVA)
 
-El **An**álisis **De** **Va**rianza o prueba ANOVA (abreviatura de **An**alysis **o**f **Va**riance) es una técnica que se utiliza para comparar las medias de más de dos grupos. Las comparaciones se hacen analizando la  **variabilidad** dentro y entre los grupos. Como toda prueba de hipótesis tiene una hipótesis nula ($H_0$), en este caso, para los $k$ grupos o poblaciones la hipótesis nula es que las medias de todos los grupos o poblaciones son iguales; mientras que la hipótesis alternativa es que al menos una de las medias es diferente:
+El **An**álisis **De** **Va**rianza o prueba ANOVA (abreviatura de **An**alysis **o**f **Va**riance) es una técnica utilizada para comparar las medias de más de dos grupos o tratamientos. Su lógica consiste en descomponer la variabilidad total observada en los datos en componentes atribuibles a distintas fuentes, principalmente:
+
+- la variabilidad **entre tratamientos** y
+- la variabilidad **dentro de tratamientos** o **error experimental**
+
+Como toda prueba de hipótesis tiene una hipótesis nula ($H_0$), en este caso, para los $k$ grupos o poblaciones la hipótesis nula es que todas las medias poblacionales son iguales; mientras que la hipótesis alternativa es que al menos una de ellas difiere de las demás:
 
 $$
 \begin{cases}
@@ -73,11 +281,11 @@ H_1: \exists \; i, \; j \; \text{tal que} \; \mu_i \neq \mu_j
 \end{cases}
 $$
 
+El ANOVA no indica directamente entre cuáles tratamientos existen diferencias, sino únicamente si hay evidencia estadística de que al menos una media es distinta.
+
 ### Modelos para el análisis de varianza
 
-Vamos a suponer que deseamos comparar $k$ tratamientos o niveles para un $único factor$, cada tratamiento o nivel tiene $r$ repeticiones. La respuesta observada es una variable aleatoria. Los datos del modelo se pueden presentar de la siguiente forma:
-
-
+Supongamos que deseamos comparar $k$ tratamientos o niveles para un _único factor_, cada tratamiento o nivel tiene $r$ repeticiones. La respuesta observada es una variable aleatoria. Los datos pueden representarse como se muestra en la @tbl-datosanova:
 
 | Trat.-Nivel | Repetición 1	| Repetición 2| $\ldots$ 	| Repetición $r$ |
 |------------:|--------------:|------------:|----------:|---------------:|
@@ -105,7 +313,7 @@ $$ {#eq-modeff}
 En la @eq-modeff llamada comúnmente el **modelo de efectos**, el término $\mu$ es un parámetro para todos los tratamientos y se conoce como la **media general** y $\alpha_i$ es el efecto del tratamiento (nivel) $i$. 
 
 ::: {.callout-important}
-## ¿Efectos fijos o aleatorios?
+### ¿Efectos fijos o aleatorios?
 La @eq-modeff tiene dos posibilidades.
  
 - Los $k$ tratamientos fueron escogidos por el experimentador.
@@ -150,6 +358,7 @@ $$
 $$
 MCE = \frac{SCE}{n-k}
 $$
+
 Los grados de libertad para SCT son $n-1$, para $SCE$ los grados de libertad son $n-k$. Usando @eq-sct3 para los grados de libertad: $gl(Total)=gl(Error)+gl(Tratamiento)$ y reemplazando los grados de libertad totales y del error se obtiene que los grados de libertad de los tratamientos son $k-1$. El procedimiento de la prueba se resume en la **Tabla ANOVA** que se muestra en la  @tbl-anova
 
 | Fuente de Variación                	| Grados de Libertad 	| Suma de Cuadrados 	| Media Cuadrática 	| $F$ 	|
@@ -160,18 +369,7 @@ Los grados de libertad para SCT son $n-1$, para $SCE$ los grados de libertad son
 
 : Tabla del Análisis de Varianza para el modelo de un único factor {#tbl-anova}
 
-
-## Diseño completo al azar
-
-El diseño experimental más sencillo es un diseño completamente al azar. Este funciona mejor en situaciones muy controladas y condiciones muy uniformes. Por este motivo, el diseño completamente al azar no se suele utilizar en experimentos de campo. Puede utilizarlo si trabaja en un campo muy uniforme, en un invernadero o en una cámara de crecimiento, o si no tiene idea de las condiciones de cultivo. de crecimiento, o de la variabilidad de su campo.
-
-El modelo matemático para los datos provenientes de un diseño completo al azar, con un número diferente de repeticiones para cada nivel del factor puede ser escrito como;
-
-$$
-y_{ij} = \mu +\alpha_i + \epsilon_{ij}
-$$
-
-La tabla ANOVA correspondiente a este modelo es la mostrada en @tbl-anova.
+## Ejemplo de DCA desarrollado en R
 
 En el @exr-siete, se presentó el proyecto de graduación de Alfredo Aguilar y José C. Flores, a modo de ejemplo vamos a analizar los datos correspondientes a la última medición para verificar la existencia de diferencias significativas para la altura entre los tratamientos. Para esto inicialmente se va a crear la variable DDS que era una de las actividades que se debía realizar en el ejercicio mencionado, posteriormente se filtrarán los datos para quedarnos unicámente con las observaciones donde la variable DDS sea igual a 56. 
 
@@ -274,6 +472,7 @@ summary(mod2)
 Podemos apreciar que $SCTr$ es muy similar a $SCE$, lo que nos sugiere que los tratamientos están explicando una parte importante de la variabilidad del rendimiento.  El valor $p$ es muy bajo, inclusive menor que $0.001$. Hay suficiente evidencia estadística para rechazar la hipótesis nula. Se concluye que, los tratamientos tienen un efecto significativo sobre el rendimiento. Dicho de otra forma, al menos uno de los tratamientos presenta una media significativamente distinta respecto a los demás.
 
 ¿Qué ocurre cuando la prueba ANOVA es significativa? ¿Cómo averigüar dónde se encuentran las diferencias significativas?
+
 
 ## Pruebas de comparaciones múltiples para la media.
 
@@ -545,3 +744,24 @@ En la hoja _nutriconal_ del archivo _nutricional_24017.xlsx_ se encuentran los d
 :::
 
 Se pide, analizar el efecto del grado de madurez y del componente junto con la interacción entre la madurez y el componente sobre las variables respuesta. 
+
+::: {#exr-doe9}
+El crecimiento de cultivos durante todo el año es posible gracias a la producción hidropónica de plantas, una técnica de cultivo sostenible sin suelo que se distingue por el uso eficaz del agua y los nutrientes. La investigación de Achieng Akuak y Melissa Moyo utiliza la hidroponía Deep Water Culture (DWC) para comparar los efectos de varias soluciones nutritivas en la producción de lechuga (Lactuca sativa). Se probaron cuatro tratamientos: dos mezclas suplementadas con efluente de biodigestor, una formulación institucional de la Universidad EARTH y un fertilizante comercial (Ever Green). Durante 21 días, se midieron parámetros de crecimiento de las plantas como altura, número de hojas, biomasa de raíces y brotes, absorción de nutrientes, pH y fluctuaciones de conductividad eléctrica (CE). Este estudio proporciona información sobre opciones de fertilización a largo plazo y de bajo costo para la agricultura hidropónica, lo cual es especialmente importante en zonas con tierras agrícolas limitadas. En la hoja **data** del archivo **data25002.xlsx**, se encuentran los datos recolectados por Melissa y Achieng para 3 de los 4 tratamientos. En la hoja **labels** se encuentran las etiquetas. El documento completo del proyecto de graduación se encuentra en este [enlace](https://bsi.earth.ac.cr/ProyectosDeGraduacion/pdf/2025/25002.pdf) Se pide analizar las variables:
+
+- Wet root weight.
+- Wet shoot weight.
+- Height.
+- Dry roots weight.
+- Dry shoos weight.
+:::
+
+Para realizar el análisis, debe:
+
+a. Crear un proyecto con las carpetas necesarias.
+b. Crear un script y un archivo *.qmd*
+c. Cargar los datos.
+d. Calcular estadísticas descriptivas apropiadas para las variables solicitadas.
+e. Realizar ANOVA y una prueba de comparación múltiple de medias para las variables solicitadas.  
+f. Guardar los valores *p*. 
+g. Crear gráficos adecuados o tablas para el reporte. 
+h. Escribir sus conclusiones en el archivo *.qmd*
