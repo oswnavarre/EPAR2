@@ -9,6 +9,7 @@ library(DescTools)
 library(cowplot)
 library(docxtools)
 library(formatdown)
+library(webexercises)
 ```
 
 {{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
@@ -25,6 +26,10 @@ Al finalizar este capítulo, el lector será capaz de:
 - Instalar paquetes en R (desde consola, scripts y la interfaz)
 - Comprender la sintaxis básica del lenguaje R
 - Reconocer y crear los principales tipos de objetos en R (vectores, listas, matrices y *data frames*)
+- Aplicar operadores aritméticos, relacionales y lógicos en R
+- Manejar valores especiales (`NA`, `NULL`, `NaN`, `Inf`)
+- Importar datos desde archivos CSV y Excel
+- Utilizar el operador pipe (`|>`) para encadenar operaciones
 
 ---
 
@@ -40,11 +45,34 @@ Escribir código en R ayuda a que el pensamiento estadístico y los procesos de 
 
 Cuando se instala R por defecto vienen incorporados *paquetes* que permiten importar datos, ajustar y evaluar modelos, realizar gráficos. Mas, es posible añadir funcionalidades a R instalando y cargando nuevos *paquetes*. Un *paquete* es una colección de funciones de R, datos y código compilado en un formato bien definido, creado para agregar alguna funcionalidad específica (@contributors_packages_2020). En la actualidad existen más de 20000 paquetes (y creciendo) para todo tipo de análisis estadístico; gran parte de los nuevos resultados o metodologías estadísticas publicadas en revistas de investigación generalmente son desarrolladas en paquetes de R, lo que facilita el acceso a técnicas estadísticas recientes.
 
+### Una breve historia de R {#sec-histR}
+
+R tiene sus raíces en el lenguaje **S**, desarrollado en los Laboratorios Bell (AT&T) por **John Chambers** y colegas a partir de 1976, para facilitar el análisis estadístico. En 1992, **Ross Ihaka** y **Robert Gentleman** de la Universidad de Auckland (Nueva Zelanda) comenzaron a desarrollar R como una implementación libre y abierta de S. El nombre "R" hace referencia, en parte, a las iniciales de sus creadores.
+
+| Año  | Hito                                                    |
+|------|---------------------------------------------------------|
+| 1976 | Desarrollo del lenguaje S en los Laboratorios Bell      |
+| 1992 | Ihaka y Gentleman inician el desarrollo de R            |
+| 1995 | Primera versión pública de R (licencia GPL)             |
+| 1997 | Fundación del **R Core Team** y de **CRAN**             |
+| 2000 | Lanzamiento de R 1.0.0                                  |
+| 2011 | Primera versión de RStudio (IDE)                        |
+| 2020 | Introducción del operador nativo pipe `\|>` en R 4.1    |
+| 2024 | Más de 20 000 paquetes en CRAN                          |
+
+::: callout-tip
+CRAN (*Comprehensive R Archive Network*) es el repositorio oficial donde se publican y distribuyen los paquetes de R. Al instalar un paquete con `install.packages()`, por defecto R lo descarga de CRAN.
+:::
+
 ## RStudio
 
 La interfaz de R es muy básica y para personas interesadas (u obligadas) a aprender este lenguaje de programación que no están familiarizados con algún otro lenguaje, usar esta interfaz puede resultar frustrante al punto de querer desistir de aprender R. RStudio es un entorno de desarrollo integrado (IDE) gratuito y de código abierto para R. Incluye una consola, un editor de resaltado de sintaxis que admite la ejecución directa de código, así como herramientas para la graficación, revisar el historial, gestionar conexiones, la depuración del código y la gestión del espacio o directorio de trabajo (@navar2019).
 
 En @mcconville_statistical se hace una analogía interesante en la que se menciona que R se puede entender como el motor de un vehículo, mientras que RStudio es el tablero del vehículo que permite tener a la mano todas las funcionalidades del mismo.
+
+::: callout-tip
+**Posit y el futuro de RStudio**: en 2022, la empresa detrás de RStudio cambió su nombre a **Posit**, reflejando un enfoque más amplio hacia Python y otros lenguajes de ciencia de datos, sin abandonar R. Posit también desarrolla **Quarto**, el sucesor de R Markdown, que es el sistema de publicación reproducible usado en este libro.
+:::
 
 ## Poniendo todo a punto para empezar
 
@@ -148,7 +176,6 @@ En el panel de archivos, gráficos, paquetes y ayuda se escoge la pestaña `Pack
     title="Instalación de paquetes"
 >}}
 
-
 ---
 
 ## Los básicos del lenguaje R {#sec-basicsR}
@@ -192,6 +219,87 @@ x
 # Dar enter y comenzar a escribir
 ```
 
+### Operadores en R {#sec-operadores}
+
+R tiene tres tipos principales de operadores: **aritméticos**, **relacionales** y **lógicos**.
+
+#### Operadores aritméticos
+
+| Operador | Operación                    | Ejemplo          | Resultado |
+|:--------:|------------------------------|:----------------:|:---------:|
+| `+`      | Suma                         | `3 + 2`          | `5`       |
+| `-`      | Resta                        | `10 - 4`         | `6`       |
+| `*`      | Multiplicación               | `3 * 4`          | `12`      |
+| `/`      | División                     | `15 / 4`         | `3.75`    |
+| `^`      | Potencia                     | `2^3`            | `8`       |
+| `%%`     | Módulo (residuo)             | `17 %% 5`        | `2`       |
+| `%/%`    | División entera              | `17 %/% 5`       | `3`       |
+
+```{r}
+# Ejemplo agrícola: rendimiento por hectárea
+area_ha    <- 3.5
+produccion_kg <- 12250
+rendimiento   <- produccion_kg / area_ha
+rendimiento
+```
+
+```{webr}
+# Prueba los operadores aritméticos
+15 / 4
+17 %% 5
+2^8
+```
+
+#### Operadores relacionales
+
+Los operadores relacionales devuelven valores lógicos (`TRUE` o `FALSE`).
+
+| Operador | Significado             | Ejemplo        | Resultado |
+|:--------:|-------------------------|:--------------:|:---------:|
+| `==`     | Igual a                 | `5 == 5`       | `TRUE`    |
+| `!=`     | Diferente de            | `5 != 3`       | `TRUE`    |
+| `>`      | Mayor que               | `7 > 3`        | `TRUE`    |
+| `<`      | Menor que               | `2 < 1`        | `FALSE`   |
+| `>=`     | Mayor o igual que       | `5 >= 5`       | `TRUE`    |
+| `<=`     | Menor o igual que       | `3 <= 2`       | `FALSE`   |
+
+```{r}
+# Ejemplo: filtrar plantas con altura mayor a 120 cm
+alturas <- c(115, 130, 98, 145, 121, 89, 133)
+alturas > 120
+alturas[alturas > 120]   # extrae solo las que cumplen la condición
+```
+
+```{webr}
+alturas <- c(115, 130, 98, 145, 121, 89, 133)
+alturas[alturas > 120]
+```
+
+#### Operadores lógicos
+
+| Operador | Significado             | Ejemplo                   | Resultado |
+|:--------:|-------------------------|:-------------------------:|:---------:|
+| `&`      | Y (AND), elemento a elemento | `TRUE & FALSE`       | `FALSE`   |
+| `\|`     | O (OR), elemento a elemento  | `TRUE \| FALSE`      | `TRUE`    |
+| `!`      | NO (NOT)                | `!TRUE`                   | `FALSE`   |
+| `&&`     | Y escalar (cortocircuito)    | `TRUE && FALSE`      | `FALSE`   |
+| `\|\|`   | O escalar (cortocircuito)    | `FALSE \|\| TRUE`    | `TRUE`    |
+
+::: callout-tip
+Prefiere `&` y `|` cuando trabajas con vectores (operación elemento a elemento). Usa `&&` y `||` únicamente en condiciones de control de flujo (`if`), donde solo se evalúa el primer elemento.
+:::
+
+```{r}
+# Plantas con altura entre 100 y 130 cm
+alturas <- c(115, 130, 98, 145, 121, 89, 133)
+alturas[alturas >= 100 & alturas <= 130]
+```
+
+```{webr}
+alturas <- c(115, 130, 98, 145, 121, 89, 133)
+alturas[alturas >= 100 & alturas <= 130]
+```
+
 ### Objetos de R
 
 R tiene cinco clases de objetos básicos, algunos autores también los llaman objetos atómicos.
@@ -205,8 +313,52 @@ R tiene cinco clases de objetos básicos, algunos autores también los llaman ob
 El objeto más básico de R es el **vector**. Para crear vectores vacíos se utiliza la función `vector()`. La regla única para crear vectores es: *Un vector debe tener solamente objetos de la misma clase*, la excepción de la regla son las listas que son un tipo especial de vectores que pueden contener elementos de diferentes clases.
 
 ::: callout-tip
-**Nota didáctica:** en estadística, muchas funciones devuelven objetos “complejos” (por ejemplo, modelos ajustados con `lm()` o `aov()`), y estos resultados suelen almacenarse como **listas**. Además, muchas operaciones internas de modelación usan álgebra lineal y se apoyan en **matrices**.
+**Nota didáctica:** en estadística, muchas funciones devuelven objetos "complejos" (por ejemplo, modelos ajustados con `lm()` o `aov()`), y estos resultados suelen almacenarse como **listas**. Además, muchas operaciones internas de modelación usan álgebra lineal y se apoyan en **matrices**.
 :::
+
+### Valores especiales en R {#sec-especiales}
+
+En R existen cuatro valores especiales que aparecen con frecuencia en el análisis de datos reales:
+
+| Valor   | Significado                                | Función para verificar |
+|---------|--------------------------------------------|------------------------|
+| `NA`    | Dato faltante (*Not Available*)            | `is.na()`              |
+| `NULL`  | Objeto vacío (sin tipo ni longitud)        | `is.null()`            |
+| `NaN`   | No es un número (*Not a Number*)           | `is.nan()`             |
+| `Inf`   | Infinito (positivo o negativo)             | `is.infinite()`        |
+
+```{r}
+# NA: dato faltante
+rendimientos <- c(3200, NA, 2800, 3500, NA, 3100)
+mean(rendimientos)                   # devuelve NA si hay NA
+mean(rendimientos, na.rm = TRUE)     # ignora los NA
+is.na(rendimientos)
+```
+
+```{r}
+# NaN e Inf
+0 / 0          # NaN
+1 / 0          # Inf
+-1 / 0         # -Inf
+sqrt(-1)       # NaN con advertencia
+```
+
+```{r}
+# NULL: útil para inicializar objetos
+x <- NULL
+is.null(x)
+length(x)      # longitud 0
+```
+
+::: callout-important
+En análisis de datos agronómicos, los `NA` son frecuentes (plantas que murieron, mediciones perdidas, parcelas dañadas). Siempre revisa cuántos `NA` tiene tu conjunto de datos antes de calcular medidas de resumen. Usa `sum(is.na(datos))` para contarlos.
+:::
+
+```{webr}
+rendimientos <- c(3200, NA, 2800, 3500, NA, 3100)
+mean(rendimientos, na.rm = TRUE)
+sum(is.na(rendimientos))
+```
 
 ### Vectores
 
@@ -233,6 +385,29 @@ y
 
 ```{webr}
 # Dar enter y comenzar a escribir
+```
+
+#### Funciones útiles para explorar vectores {#sec-fvect}
+
+Antes de trabajar con un vector en un análisis, es útil conocer sus características básicas:
+
+```{r}
+alturas_gir <- c(140, 123, 110, 100, 137, 117, 120, 112, 168, 109,
+                  165, 133, 178,  81, 135, 145, 109,  78, 169, 132)
+
+length(alturas_gir)    # número de elementos
+sum(alturas_gir)       # suma
+mean(alturas_gir)      # media
+median(alturas_gir)    # mediana
+sd(alturas_gir)        # desviación estándar
+range(alturas_gir)     # mínimo y máximo
+summary(alturas_gir)   # resumen de 5 números + media
+```
+
+```{webr}
+alturas_gir <- c(140, 123, 110, 100, 137, 117, 120, 112, 168, 109,
+                  165, 133, 178,  81, 135, 145, 109,  78, 169, 132)
+summary(alturas_gir)
 ```
 
 ### Coerción implícita y explícita
@@ -306,7 +481,7 @@ s
 En listas, la indexación tiene dos formas comunes:
 
 - `r[ ]` devuelve **una sublista** (conserva la estructura de lista).
-- `r[[ ]]` devuelve **el elemento** (la “pieza” interna).
+- `r[[ ]]` devuelve **el elemento** (la "pieza" interna).
 
 ```{r}
 r[1]      # sublista con el primer elemento
@@ -321,8 +496,6 @@ r2
 r2[["media"]]
 r2$media
 ```
-
-
 
 ### Matrices
 
@@ -466,7 +639,37 @@ A lo largo de este libro utilizaremos principalmente el **tidyverse**. Sin embar
 - **tidyverse**: conjunto de paquetes con una filosofía consistente para trabajar con datos (principalmente *tibbles* y *pipes*), usando verbos como `filter()`, `select()`, `mutate()`, `summarise()` y `ggplot()`.
 
 ::: callout-tip
-No es una competencia “uno vs otro”: el tidyverse está construido *sobre* R y se integra con R base. El objetivo del libro es que puedas trabajar de manera **más clara, legible y reproducible**.
+No es una competencia "uno vs otro": el tidyverse está construido *sobre* R y se integra con R base. El objetivo del libro es que puedas trabajar de manera **más clara, legible y reproducible**.
+:::
+
+### El operador pipe `|>` {#sec-pipe}
+
+El operador **pipe** (`|>`, introducido en R 4.1) permite encadenar operaciones de forma legible, pasando el resultado de una expresión como primer argumento de la siguiente. Es equivalente a decir "y luego...".
+
+**Sin pipe:**
+
+```{r}
+datos_finca <- data.frame(
+  cultivo     = c("banano","cacao","banano","cacao","banano"),
+  rendimiento = c(32.5, 18.2, 28.0, 20.1, 35.4)
+)
+
+round(mean(subset(datos_finca, cultivo == "banano")$rendimiento), 1)
+```
+
+**Con pipe:**
+
+```{r}
+library(dplyr)
+
+datos_finca |>
+  filter(cultivo == "banano") |>
+  summarise(media_rend = mean(rendimiento)) |>
+  round(1)
+```
+
+::: callout-tip
+El operador pipe `|>` (R nativo desde 4.1) y el pipe `%>%` del paquete **magrittr** (que carga automáticamente `tidyverse`) son funcionalmente equivalentes en la mayoría de los casos. En este libro usaremos siempre `|>`.
 :::
 
 ### Lectura de datos
@@ -588,6 +791,72 @@ df_demo |>
 
 ---
 
+## Importar datos {#sec-importar}
+
+En la práctica, los datos rara vez se ingresan directamente en R. Lo más común es importarlos desde archivos externos. En esta sección se presentan los formatos más usados en agronomía.
+
+### Importar desde CSV
+
+El formato CSV (*Comma-Separated Values*) es el más portable. En R existen dos funciones principales:
+
+| Función        | Paquete    | Separador | Decimal | Resultado      |
+|----------------|------------|:---------:|:-------:|----------------|
+| `read.csv()`   | R base     | `,`       | `.`     | `data.frame`   |
+| `read.csv2()`  | R base     | `;`       | `,`     | `data.frame`   |
+| `read_csv()`   | readr      | `,`       | `.`     | `tibble`       |
+| `read_csv2()`  | readr      | `;`       | `,`     | `tibble`       |
+
+```{r}
+#| eval: false
+library(readr)
+
+# Archivo con coma como separador
+datos1 <- read_csv("datos/rendimientos.csv")
+
+# Archivo con punto y coma como separador (común en español)
+datos2 <- read_csv2("datos/rendimientos.csv")
+
+# Inspección inicial obligatoria
+glimpse(datos1)
+head(datos1)
+summary(datos1)
+```
+
+::: callout-important
+**Buenas prácticas al importar datos:**
+
+1. Siempre inspecciona los datos inmediatamente con `glimpse()` o `str()`.
+2. Verifica que las columnas numéricas no hayan sido importadas como texto.
+3. Convierte las variables categóricas a `factor` con `mutate(var = factor(var))`.
+4. Revisa cuántos `NA` hay con `colSums(is.na(datos))`.
+:::
+
+### Importar desde Excel {#sec-importexcel}
+
+El paquete `readxl` permite leer archivos `.xlsx` y `.xls` directamente desde R.
+
+```{r}
+#| eval: false
+library(readxl)
+
+# Leer la primera hoja
+datos_excel <- read_excel("datos/experimento.xlsx")
+
+# Leer una hoja específica por nombre
+datos_trat  <- read_excel("datos/experimento.xlsx", sheet = "Tratamientos")
+
+# Especificar el rango de celdas
+datos_rango <- read_excel("datos/experimento.xlsx", sheet = 1, range = "A1:E50")
+
+glimpse(datos_excel)
+```
+
+::: callout-tip
+Si el archivo de Excel tiene encabezados en la primera fila (lo más común), `read_excel()` los reconoce automáticamente. Si no hay encabezados, usa `col_names = FALSE`.
+:::
+
+---
+
 ## Preparación para modelos estadísticos
 
 En capítulos posteriores ajustaremos modelos (por ejemplo, regresión y ANOVA). En R, los resultados de un modelo suelen almacenarse como un **objeto** con mucha información interna (coeficientes, residuos, valores ajustados, etc.). Muy frecuentemente, estos objetos se comportan como **listas** (o contienen componentes tipo lista).
@@ -651,9 +920,123 @@ En R, gran parte del trabajo práctico consiste en **ajustar modelos** y luego *
 
 ## Ejercicios {.unnumbered}
 
+::: {#exr-basicos}
+
+**Operaciones básicas y operadores**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q1 <- "¿Cuál operador en R devuelve el residuo de una división entera?"
+q1c <- c("`/`", "`%/%`", answer = "`%%`", "`^`")
+
+q2 <- "Evalúa: `17 %/% 5`. ¿Cuál es el resultado?"
+q2c <- c("2", answer = "3", "17", "5")
+
+q3 <- "¿Cuál expresión filtra solo los valores mayores a 100 de un vector `x`?"
+q3c <- c("`x[x == 100]`", answer = "`x[x > 100]`", "`x(x > 100)`", "`filter(x, > 100)`")
+
+q4 <- "¿Cuál valor especial se produce al ejecutar `0 / 0`?"
+q4c <- c("`NA`", "`NULL`", "`Inf`", answer = "`NaN`")
+
+q5 <- "¿Cuál función permite calcular la media ignorando los valores `NA`?"
+q5c <- c("`mean(x)`", "`mean(x, rm.na = TRUE)`", answer = "`mean(x, na.rm = TRUE)`", "`mean(na.rm(x))`")
+
+cat(
+  q1, longmcq(q1c), "\n\n",
+  q2, longmcq(q2c), "\n\n",
+  q3, longmcq(q3c), "\n\n",
+  q4, longmcq(q4c), "\n\n",
+  q5, longmcq(q5c)
+)
+```
+
+:::
+:::
+
+::: {#exr-pipe}
+
+**El operador pipe**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q6 <- "¿Qué hace el operador `|>` en R?"
+q6c <- c(
+  "Realiza una división entera",
+  answer = "Pasa el resultado de una expresión como primer argumento de la siguiente función",
+  "Verifica si un objeto es `NULL`",
+  "Crea un vector lógico"
+)
+
+q7 <- "La expresión `x |> mean()` es equivalente a:"
+q7c <- c("`mean |> x()`", "`x$mean()`", answer = "`mean(x)`", "`x == mean`")
+
+cat(
+  q6, longmcq(q6c), "\n\n",
+  q7, longmcq(q7c)
+)
+```
+
+:::
+:::
+
+::: {#exr-objetos}
+
+**Tipos de objetos en R**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q8 <- "¿Cuál es la clase del vector `c(3.14, 'x')`?"
+q8c <- c("`numeric`", "`complex`", answer = "`character`", "`logical`")
+
+q9 <- "¿Cuál es la diferencia principal entre una matriz y un data frame en R?"
+q9c <- c(
+  "Las matrices son más lentas que los data frames",
+  "Los data frames siempre tienen más filas que las matrices",
+  answer = "Los data frames pueden tener columnas de diferentes clases; las matrices solo una clase",
+  "Las matrices no pueden ser indexadas por posición"
+)
+
+q10 <- "¿Cuál función permite conocer la estructura interna de un objeto en R base?"
+q10c <- c("`glimpse()`", "`head()`", answer = "`str()`", "`summary()`")
+
+cat(
+  q8, longmcq(q8c), "\n\n",
+  q9, longmcq(q9c), "\n\n",
+  q10, longmcq(q10c)
+)
+```
+
+:::
+:::
+
+**Ejercicios prácticos:**
+
 1. Realice una suma y una resta en R desde la consola.
 2. Cree un objeto llamado `edad` con su edad y verifique su clase con `class()`.
 3. Genere un vector con cinco números y calcule su promedio.
 4. Cree una matriz de 3 filas y 4 columnas usando `matrix()` y luego usando `dim(m) <- ...`.
 5. Cree una lista con elementos de diferentes clases y extraiga el primer elemento usando `[[ ]]`.
 6. Cree un *data frame* con dos columnas: nombre y rendimiento.
+7. Dado el vector `temp_c <- c(28.5, 30.1, 27.8, 32.0, 29.4)` que representa temperaturas en °C:
+   a. Convierta a Fahrenheit usando la fórmula \(F = C \times 1.8 + 32\) con operadores aritméticos.
+   b. Filtre solo las temperaturas mayores a 30°C.
+   c. Verifique si alguna temperatura supera 35°C con un operador lógico.
+8. Cree el vector `rend <- c(3200, NA, 2800, 3500, NA, 3100)`:
+   a. Calcule la media ignorando los `NA`.
+   b. Cuente cuántos `NA` hay.
+   c. Reemplace los `NA` con la media del vector usando `is.na()`.
+9. Importe un archivo CSV con `read_csv()` e inspecciónelo con `glimpse()`.
+10. Cree un *tibble* con datos de tres cultivos (nombre, rendimiento, área) y use el pipe `|>` para filtrar solo los cultivos con rendimiento mayor a 3000 kg/ha.
+11. Cree un vector de rendimientos de 10 parcelas y calcule: media, mediana, desviación estándar, valor mínimo y máximo usando las funciones apropiadas de R.

@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>7&nbsp; Correlación y Regresión – Análisis de Datos en Agricultura con R y RStudio</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -19,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 </style>
 
@@ -34,15 +72,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="./05-icph.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-874a94cc35be0778ec714a6aca2fed85.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1344c1620ed4191602f8ad0091617ec7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -76,7 +113,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -212,14 +249,53 @@ window.Quarto = {
     <h2 id="toc-title">Indice de contenidos</h2>
    
   <ul>
-  <li><a href="#gráficos-de-dispersión" id="toc-gráficos-de-dispersión" class="nav-link active" data-scroll-target="#gráficos-de-dispersión"><span class="header-section-number">7.1</span> Gráficos de dispersión</a></li>
-  <li><a href="#sec-correl" id="toc-sec-correl" class="nav-link" data-scroll-target="#sec-correl"><span class="header-section-number">7.2</span> Análisis de correlación</a></li>
-  <li><a href="#regresión" id="toc-regresión" class="nav-link" data-scroll-target="#regresión"><span class="header-section-number">7.3</span> Regresión</a>
+  <li><a href="#objetivos-del-capítulo" id="toc-objetivos-del-capítulo" class="nav-link active" data-scroll-target="#objetivos-del-capítulo"><span class="header-section-number">7.1</span> Objetivos del capítulo</a></li>
+  <li><a href="#datos-del-capítulo" id="toc-datos-del-capítulo" class="nav-link" data-scroll-target="#datos-del-capítulo"><span class="header-section-number">7.2</span> Datos del capítulo</a></li>
+  <li><a href="#sec-dispersion" id="toc-sec-dispersion" class="nav-link" data-scroll-target="#sec-dispersion"><span class="header-section-number">7.3</span> Gráficos de dispersión</a>
   <ul>
-  <li><a href="#regresión-lineal-simple" id="toc-regresión-lineal-simple" class="nav-link" data-scroll-target="#regresión-lineal-simple"><span class="header-section-number">7.3.1</span> Regresión lineal simple</a></li>
-  <li><a href="#regresión-lineal-múltiple" id="toc-regresión-lineal-múltiple" class="nav-link" data-scroll-target="#regresión-lineal-múltiple"><span class="header-section-number">7.3.2</span> Regresión lineal múltiple</a></li>
-  <li><a href="#regresión-logística" id="toc-regresión-logística" class="nav-link" data-scroll-target="#regresión-logística"><span class="header-section-number">7.3.3</span> Regresión logística</a></li>
+  <li><a href="#cómo-saber-si-dos-variables-están-relacionadas" id="toc-cómo-saber-si-dos-variables-están-relacionadas" class="nav-link" data-scroll-target="#cómo-saber-si-dos-variables-están-relacionadas"><span class="header-section-number">7.3.1</span> ¿Cómo saber si dos variables están relacionadas?</a></li>
+  <li><a href="#dirección-de-la-relación" id="toc-dirección-de-la-relación" class="nav-link" data-scroll-target="#dirección-de-la-relación"><span class="header-section-number">7.3.2</span> Dirección de la relación</a></li>
+  <li><a href="#forma-y-fuerza-de-la-relación" id="toc-forma-y-fuerza-de-la-relación" class="nav-link" data-scroll-target="#forma-y-fuerza-de-la-relación"><span class="header-section-number">7.3.3</span> Forma y fuerza de la relación</a></li>
   </ul></li>
+  <li><a href="#sec-correl" id="toc-sec-correl" class="nav-link" data-scroll-target="#sec-correl"><span class="header-section-number">7.4</span> Análisis de correlación</a>
+  <ul>
+  <li><a href="#covarianza" id="toc-covarianza" class="nav-link" data-scroll-target="#covarianza"><span class="header-section-number">7.4.1</span> Covarianza</a></li>
+  <li><a href="#coeficiente-de-correlación-de-pearson" id="toc-coeficiente-de-correlación-de-pearson" class="nav-link" data-scroll-target="#coeficiente-de-correlación-de-pearson"><span class="header-section-number">7.4.2</span> Coeficiente de correlación de Pearson</a></li>
+  <li><a href="#escala-de-interpretación" id="toc-escala-de-interpretación" class="nav-link" data-scroll-target="#escala-de-interpretación"><span class="header-section-number">7.4.3</span> Escala de interpretación</a></li>
+  <li><a href="#sec-quiz-correlacion" id="toc-sec-quiz-correlacion" class="nav-link" data-scroll-target="#sec-quiz-correlacion"><span class="header-section-number">7.4.4</span> Adivina la correlación</a></li>
+  <li><a href="#correlación-en-r" id="toc-correlación-en-r" class="nav-link" data-scroll-target="#correlación-en-r"><span class="header-section-number">7.4.5</span> Correlación en R</a></li>
+  <li><a href="#matriz-de-correlaciones" id="toc-matriz-de-correlaciones" class="nav-link" data-scroll-target="#matriz-de-correlaciones"><span class="header-section-number">7.4.6</span> Matriz de correlaciones</a></li>
+  </ul></li>
+  <li><a href="#sec-regresion" id="toc-sec-regresion" class="nav-link" data-scroll-target="#sec-regresion"><span class="header-section-number">7.5</span> Regresión</a>
+  <ul>
+  <li><a href="#sec-regsimple" id="toc-sec-regsimple" class="nav-link" data-scroll-target="#sec-regsimple"><span class="header-section-number">7.5.1</span> Regresión lineal simple</a>
+  <ul class="collapse">
+  <li><a href="#el-modelo" id="toc-el-modelo" class="nav-link" data-scroll-target="#el-modelo"><span class="header-section-number">7.5.1.1</span> El modelo</a></li>
+  <li><a href="#mínimos-cuadrados-ordinarios-mco" id="toc-mínimos-cuadrados-ordinarios-mco" class="nav-link" data-scroll-target="#mínimos-cuadrados-ordinarios-mco"><span class="header-section-number">7.5.1.2</span> Mínimos Cuadrados Ordinarios (MCO)</a></li>
+  <li><a href="#ajuste-del-modelo-en-r" id="toc-ajuste-del-modelo-en-r" class="nav-link" data-scroll-target="#ajuste-del-modelo-en-r"><span class="header-section-number">7.5.1.3</span> Ajuste del modelo en R</a></li>
+  <li><a href="#interpretación-de-los-coeficientes" id="toc-interpretación-de-los-coeficientes" class="nav-link" data-scroll-target="#interpretación-de-los-coeficientes"><span class="header-section-number">7.5.1.4</span> Interpretación de los coeficientes</a></li>
+  <li><a href="#predicción" id="toc-predicción" class="nav-link" data-scroll-target="#predicción"><span class="header-section-number">7.5.1.5</span> Predicción</a></li>
+  <li><a href="#bondad-de-ajuste-r2" id="toc-bondad-de-ajuste-r2" class="nav-link" data-scroll-target="#bondad-de-ajuste-r2"><span class="header-section-number">7.5.1.6</span> Bondad de ajuste: <span class="math inline">\(R^2\)</span></a></li>
+  <li><a href="#pruebas-de-hipótesis-sobre-los-coeficientes" id="toc-pruebas-de-hipótesis-sobre-los-coeficientes" class="nav-link" data-scroll-target="#pruebas-de-hipótesis-sobre-los-coeficientes"><span class="header-section-number">7.5.1.7</span> Pruebas de hipótesis sobre los coeficientes</a></li>
+  <li><a href="#diagnósticos-del-modelo" id="toc-diagnósticos-del-modelo" class="nav-link" data-scroll-target="#diagnósticos-del-modelo"><span class="header-section-number">7.5.1.8</span> Diagnósticos del modelo</a></li>
+  </ul></li>
+  <li><a href="#sec-regmultiple" id="toc-sec-regmultiple" class="nav-link" data-scroll-target="#sec-regmultiple"><span class="header-section-number">7.5.2</span> Regresión lineal múltiple</a>
+  <ul class="collapse">
+  <li><a href="#ajuste-en-r" id="toc-ajuste-en-r" class="nav-link" data-scroll-target="#ajuste-en-r"><span class="header-section-number">7.5.2.1</span> Ajuste en R</a></li>
+  <li><a href="#r2-ajustado" id="toc-r2-ajustado" class="nav-link" data-scroll-target="#r2-ajustado"><span class="header-section-number">7.5.2.2</span> <span class="math inline">\(R^2\)</span> ajustado</a></li>
+  <li><a href="#interpretación-en-regresión-múltiple" id="toc-interpretación-en-regresión-múltiple" class="nav-link" data-scroll-target="#interpretación-en-regresión-múltiple"><span class="header-section-number">7.5.2.3</span> Interpretación en regresión múltiple</a></li>
+  </ul></li>
+  <li><a href="#sec-reglogistica" id="toc-sec-reglogistica" class="nav-link" data-scroll-target="#sec-reglogistica"><span class="header-section-number">7.5.3</span> Regresión logística</a>
+  <ul class="collapse">
+  <li><a href="#el-problema-con-la-regresión-lineal" id="toc-el-problema-con-la-regresión-lineal" class="nav-link" data-scroll-target="#el-problema-con-la-regresión-lineal"><span class="header-section-number">7.5.3.1</span> El problema con la regresión lineal</a></li>
+  <li><a href="#el-modelo-logístico" id="toc-el-modelo-logístico" class="nav-link" data-scroll-target="#el-modelo-logístico"><span class="header-section-number">7.5.3.2</span> El modelo logístico</a></li>
+  <li><a href="#ajuste-en-r-con-glm" id="toc-ajuste-en-r-con-glm" class="nav-link" data-scroll-target="#ajuste-en-r-con-glm"><span class="header-section-number">7.5.3.3</span> Ajuste en R con <code>glm()</code></a></li>
+  <li><a href="#interpretación-odds-ratio" id="toc-interpretación-odds-ratio" class="nav-link" data-scroll-target="#interpretación-odds-ratio"><span class="header-section-number">7.5.3.4</span> Interpretación: odds ratio</a></li>
+  <li><a href="#visualización-de-la-curva-logística" id="toc-visualización-de-la-curva-logística" class="nav-link" data-scroll-target="#visualización-de-la-curva-logística"><span class="header-section-number">7.5.3.5</span> Visualización de la curva logística</a></li>
+  </ul></li>
+  </ul></li>
+  <li><a href="#resumen-de-funciones-r-del-capítulo" id="toc-resumen-de-funciones-r-del-capítulo" class="nav-link" data-scroll-target="#resumen-de-funciones-r-del-capítulo"><span class="header-section-number">7.6</span> Resumen de funciones R del capítulo</a></li>
+  <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
   </ul>
 </nav>
     </div>
@@ -245,40 +321,1241 @@ window.Quarto = {
 </header>
 
 
+<section id="objetivos-del-capítulo" class="level2" data-number="7.1">
+<h2 data-number="7.1" class="anchored" data-anchor-id="objetivos-del-capítulo"><span class="header-section-number">7.1</span> Objetivos del capítulo</h2>
+<p>Al finalizar este capítulo, el lector será capaz de:</p>
+<ul>
+<li>Construir e interpretar <strong>diagramas de dispersión</strong> identificando dirección, forma y fuerza de la relación entre dos variables cuantitativas</li>
+<li>Calcular e interpretar la <strong>covarianza</strong> como medida de asociación lineal</li>
+<li>Calcular e interpretar el <strong>coeficiente de correlación de Pearson</strong> y reconocer sus limitaciones</li>
+<li>Ajustar un modelo de <strong>regresión lineal simple</strong> usando mínimos cuadrados ordinarios (MCO) en R</li>
+<li>Interpretar los coeficientes <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span> y evaluar la bondad de ajuste mediante <span class="math inline">\(R^2\)</span></li>
+<li>Extender el modelo a <strong>regresión lineal múltiple</strong> e interpretar el <span class="math inline">\(R^2\)</span> ajustado</li>
+<li>Ajustar e interpretar un modelo de <strong>regresión logística</strong> para variables respuesta binarias</li>
+</ul>
+<hr>
+</section>
+<section id="datos-del-capítulo" class="level2" data-number="7.2">
+<h2 data-number="7.2" class="anchored" data-anchor-id="datos-del-capítulo"><span class="header-section-number">7.2</span> Datos del capítulo</h2>
+<p>A lo largo de este capítulo usaremos datos simulados representativos de experimentos agrícolas típicos en Costa Rica. El conjunto principal contiene observaciones de parcelas de cacao donde se registró la dosis de nitrógeno aplicada (kg N/ha) y el rendimiento obtenido (kg/ha).</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">42</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">60</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>fertilizacion <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">runif</span>(n, <span class="at">min =</span> <span class="dv">40</span>, <span class="at">max =</span> <span class="dv">200</span>), <span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>precipitacion  <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">2800</span>, <span class="at">sd =</span> <span class="dv">300</span>), <span class="dv">0</span>)</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>rendimiento <span class="ot">&lt;-</span> <span class="dv">250</span> <span class="sc">+</span> <span class="fl">1.8</span> <span class="sc">*</span> fertilizacion <span class="sc">+</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>               <span class="fl">0.05</span> <span class="sc">*</span> precipitacion <span class="sc">+</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>               <span class="fu">rnorm</span>(n, <span class="dv">0</span>, <span class="dv">35</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>rendimiento <span class="ot">&lt;-</span> <span class="fu">round</span>(rendimiento, <span class="dv">1</span>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Presencia de monilia (enfermedad): más probable con alta humedad relativa</span></span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>humedad_rel <span class="ot">&lt;-</span> <span class="fu">round</span>(<span class="fu">rnorm</span>(n, <span class="at">mean =</span> <span class="dv">82</span>, <span class="at">sd =</span> <span class="dv">6</span>), <span class="dv">1</span>)</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>prob_monilia <span class="ot">&lt;-</span> <span class="fu">plogis</span>(<span class="sc">-</span><span class="dv">10</span> <span class="sc">+</span> <span class="fl">0.12</span> <span class="sc">*</span> humedad_rel)</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>monilia      <span class="ot">&lt;-</span> <span class="fu">rbinom</span>(n, <span class="dv">1</span>, prob_monilia)</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>cacao <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  fertilizacion,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  precipitacion,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  rendimiento,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  humedad_rel,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  monilia</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(cacao)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 60
+Columns: 5
+$ fertilizacion &lt;dbl&gt; 186.4, 189.9, 85.8, 172.9, 142.7, 123.1, 157.9, 61.5, 14…
+$ precipitacion &lt;dbl&gt; 2937, 3011, 3111, 2617, 2951, 2285, 2565, 2545, 2076, 28…
+$ rendimiento   &lt;dbl&gt; 781.1, 725.7, 582.8, 740.8, 615.5, 555.7, 622.9, 436.9, …
+$ humedad_rel   &lt;dbl&gt; 81.8, 72.7, 89.0, 80.4, 79.2, 74.6, 82.0, 77.2, 78.8, 89…
+$ monilia       &lt;int&gt; 0, 0, 0, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 1, 0, 1, 0,…</code></pre>
+</div>
+</div>
 <div class="cell">
 <div>
 <div id="webr-1" class="exercise-cell">
 
 </div>
 <script type="webr-1-contents">
-eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiZml0ID0gbG0obXBnIH4gYW0sIGRhdGEgPSBtdGNhcnMpXG5zdW1tYXJ5KGZpdClcbnBsb3QoZml0KSJ9
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBDYXJnYSBlbCBjb25qdW50byBkZSBkYXRvcyB5IGV4cGzDs3JhbG9cbnNldC5zZWVkKDQyKVxubiA8LSA2MFxuZmVydGlsaXphY2lvbiA8LSByb3VuZChydW5pZihuLCA0MCwgMjAwKSwgMSlcbnByZWNpcGl0YWNpb24gPC0gcm91bmQocm5vcm0obiwgMjgwMCwgMzAwKSwgMClcbnJlbmRpbWllbnRvICAgPC0gcm91bmQoMjUwICsgMS44KmZlcnRpbGl6YWNpb24gKyAwLjA1KnByZWNpcGl0YWNpb24gKyBybm9ybShuLDAsMzUpLCAxKVxuaHVtZWRhZF9yZWwgICA8LSByb3VuZChybm9ybShuLCA4MiwgNiksIDEpXG5wcm9iX21vbmlsaWEgIDwtIHBsb2dpcygtMTAgKyAwLjEyKmh1bWVkYWRfcmVsKVxubW9uaWxpYSAgICAgICA8LSByYmlub20obiwgMSwgcHJvYl9tb25pbGlhKVxuXG5jYWNhbyA8LSBkYXRhLmZyYW1lKGZlcnRpbGl6YWNpb24sIHByZWNpcGl0YWNpb24sIHJlbmRpbWllbnRvLCBodW1lZGFkX3JlbCwgbW9uaWxpYSlcbnN1bW1hcnkoY2FjYW8pIn0=
 </script>
 </div>
 </div>
-<section id="gráficos-de-dispersión" class="level2" data-number="7.1">
-<h2 data-number="7.1" class="anchored" data-anchor-id="gráficos-de-dispersión"><span class="header-section-number">7.1</span> Gráficos de dispersión</h2>
+<hr>
 </section>
-<section id="sec-correl" class="level2" data-number="7.2">
-<h2 data-number="7.2" class="anchored" data-anchor-id="sec-correl"><span class="header-section-number">7.2</span> Análisis de correlación</h2>
+<section id="sec-dispersion" class="level2" data-number="7.3">
+<h2 data-number="7.3" class="anchored" data-anchor-id="sec-dispersion"><span class="header-section-number">7.3</span> Gráficos de dispersión</h2>
+<section id="cómo-saber-si-dos-variables-están-relacionadas" class="level3" data-number="7.3.1">
+<h3 data-number="7.3.1" class="anchored" data-anchor-id="cómo-saber-si-dos-variables-están-relacionadas"><span class="header-section-number">7.3.1</span> ¿Cómo saber si dos variables están relacionadas?</h3>
+<p>A veces queremos responder preguntas como: ¿a mayor fertilización, mayor rendimiento? ¿a mayor humedad relativa, mayor presencia de enfermedades? Para estudiar la relación entre dos variables cuantitativas, el primer paso es siempre <strong>mirar los datos</strong> mediante un <strong>diagrama de dispersión</strong>.</p>
+<p>En un diagrama de dispersión cada punto representa una unidad de observación (por ejemplo, una parcela). Nos permite detectar rápidamente tres características de la relación:</p>
+<ul>
+<li><strong>Dirección</strong>: ¿es positiva, negativa o nula?</li>
+<li><strong>Forma</strong>: ¿es lineal o no lineal?</li>
+<li><strong>Fuerza</strong>: ¿qué tan cerca están los puntos de una recta?</li>
+</ul>
 </section>
-<section id="regresión" class="level2" data-number="7.3">
-<h2 data-number="7.3" class="anchored" data-anchor-id="regresión"><span class="header-section-number">7.3</span> Regresión</h2>
-<section id="regresión-lineal-simple" class="level3" data-number="7.3.1">
-<h3 data-number="7.3.1" class="anchored" data-anchor-id="regresión-lineal-simple"><span class="header-section-number">7.3.1</span> Regresión lineal simple</h3>
+<section id="dirección-de-la-relación" class="level3" data-number="7.3.2">
+<h3 data-number="7.3.2" class="anchored" data-anchor-id="dirección-de-la-relación"><span class="header-section-number">7.3.2</span> Dirección de la relación</h3>
+<p>La dirección indica el sentido de la asociación entre las variables:</p>
+<ul>
+<li><strong>Positiva</strong>: cuando al aumentar <span class="math inline">\(X\)</span>, tiende a aumentar <span class="math inline">\(Y\)</span>.</li>
+<li><strong>Negativa</strong>: cuando al aumentar <span class="math inline">\(X\)</span>, tiende a disminuir <span class="math inline">\(Y\)</span>.</li>
+<li><strong>Nula o casi nula</strong>: cuando no se aprecia un patrón claro.</li>
+</ul>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-dispersion-dir" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dispersion-dir-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-regresion_files/figure-html/fig-dispersion-dir-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dispersion-dir-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.1: Ejemplos de dirección en diagramas de dispersión
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-2" class="exercise-cell">
+
+</div>
+<script type="webr-2-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBDb25zdHJ1eWUgZWwgZGlhZ3JhbWEgZGUgZGlzcGVyc2nDs24gZGUgZmVydGlsaXphY2nDs24gdnMgcmVuZGltaWVudG9cbnBsb3QoY2FjYW8kZmVydGlsaXphY2lvbiwgY2FjYW8kcmVuZGltaWVudG8sXG4gICAgIHhsYWIgPSBcIkZlcnRpbGl6YWNpw7NuIChrZyBOL2hhKVwiLFxuICAgICB5bGFiID0gXCJSZW5kaW1pZW50byAoa2cvaGEpXCIsXG4gICAgIG1haW4gPSBcIkRpYWdyYW1hIGRlIGRpc3BlcnNpw7NuXCIsXG4gICAgIHBjaCA9IDE5LCBjb2wgPSBcIiMwMTY5NmZcIikifQ==
+</script>
+</div>
+</div>
 </section>
-<section id="regresión-lineal-múltiple" class="level3" data-number="7.3.2">
-<h3 data-number="7.3.2" class="anchored" data-anchor-id="regresión-lineal-múltiple"><span class="header-section-number">7.3.2</span> Regresión lineal múltiple</h3>
+<section id="forma-y-fuerza-de-la-relación" class="level3" data-number="7.3.3">
+<h3 data-number="7.3.3" class="anchored" data-anchor-id="forma-y-fuerza-de-la-relación"><span class="header-section-number">7.3.3</span> Forma y fuerza de la relación</h3>
+<p>La <strong>forma</strong> indica si la relación sigue una recta (lineal) o una curva (no lineal). La <strong>fuerza</strong> indica qué tan cerca están los puntos de esa recta: una relación fuerte tiene puntos muy agrupados alrededor de la línea, mientras que una relación débil los tiene muy dispersos.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-fuerza" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-fuerza-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-regresion_files/figure-html/fig-fuerza-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-fuerza-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.2: Fuerza de la relación lineal: débil, moderada y fuerte
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Recomendación:</strong> Siempre construye el diagrama de dispersión <strong>antes</strong> de calcular cualquier medida numérica. Un valor de correlación alto puede enmascarar una relación no lineal o la presencia de valores atípicos (<em>outliers</em>).</p>
+</div>
+</div>
+<hr>
 </section>
-<section id="regresión-logística" class="level3" data-number="7.3.3">
-<h3 data-number="7.3.3" class="anchored" data-anchor-id="regresión-logística"><span class="header-section-number">7.3.3</span> Regresión logística</h3>
+</section>
+<section id="sec-correl" class="level2" data-number="7.4">
+<h2 data-number="7.4" class="anchored" data-anchor-id="sec-correl"><span class="header-section-number">7.4</span> Análisis de correlación</h2>
+<section id="covarianza" class="level3" data-number="7.4.1">
+<h3 data-number="7.4.1" class="anchored" data-anchor-id="covarianza"><span class="header-section-number">7.4.1</span> Covarianza</h3>
+<p>Para cuantificar la relación lineal entre dos variables, necesitamos entender primero la <strong>covarianza</strong>. La idea central es que si dos variables tienden a estar por encima (o por debajo) de sus medias al mismo tiempo, su producto <span class="math inline">\((x_i - \bar{x})(y_i - \bar{y})\)</span> será positivo, lo que indica una relación positiva.</p>
+<p>El punto <span class="math inline">\((\bar{x}, \bar{y})\)</span> se denomina <strong>centroide</strong> y divide el diagrama de dispersión en cuatro cuadrantes. Los puntos en los cuadrantes I y III aportan productos positivos; los de los cuadrantes II y IV, productos negativos.</p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output-display">
+<div id="fig-centroide" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-centroide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-regresion_files/figure-html/fig-centroide-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-centroide-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.3: Centroide y cuadrantes en el diagrama de dispersión de fertilización vs rendimiento
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>La <strong>covarianza muestral</strong> se define formalmente como:</p>
+<p><span class="math display">\[S_{xy} = \dfrac{1}{n-1} \sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})\]</span></p>
+<p>Una forma equivalente que facilita el cálculo es:</p>
+<p><span class="math display">\[S_{xy} = \dfrac{1}{n}\sum_{i=1}^{n} x_i y_i - \bar{x}\,\bar{y}\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Limitación de la covarianza</strong>: su valor depende de las unidades de medida. Si cambiamos kg/ha por toneladas/ha, la covarianza cambia, pero la relación entre variables no ha cambiado. Por eso necesitamos estandarizarla.</p>
+</div>
+</div>
+</section>
+<section id="coeficiente-de-correlación-de-pearson" class="level3" data-number="7.4.2">
+<h3 data-number="7.4.2" class="anchored" data-anchor-id="coeficiente-de-correlación-de-pearson"><span class="header-section-number">7.4.2</span> Coeficiente de correlación de Pearson</h3>
+<p>El <strong>coeficiente de correlación de Pearson</strong> <span class="math inline">\(r\)</span> resuelve la limitación de la covarianza al dividirla entre el producto de las desviaciones estándar:</p>
+<p><span class="math display">\[r = \dfrac{S_{xy}}{S_x \cdot S_y} = \dfrac{\dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}(x_i-\bar{x})^2 \cdot \dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}(y_i-\bar{y})^2}}\]</span></p>
+<p>El coeficiente <span class="math inline">\(r\)</span> toma valores entre <span class="math inline">\(-1\)</span> y <span class="math inline">\(1\)</span>:</p>
+<ul>
+<li><span class="math inline">\(r = 1\)</span>: relación lineal positiva perfecta</li>
+<li><span class="math inline">\(r = -1\)</span>: relación lineal negativa perfecta</li>
+<li><span class="math inline">\(r \approx 0\)</span>: no hay relación lineal clara</li>
+</ul>
+</section>
+<section id="escala-de-interpretación" class="level3" data-number="7.4.3">
+<h3 data-number="7.4.3" class="anchored" data-anchor-id="escala-de-interpretación"><span class="header-section-number">7.4.3</span> Escala de interpretación</h3>
+<p>Una guía práctica para interpretar la magnitud de <span class="math inline">\(r\)</span> es:</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;"><span class="math inline">\(|r|\)</span></th>
+<th style="text-align: left;">Interpretación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(0 &lt; |r| &lt; 0.30\)</span></td>
+<td style="text-align: left;">Relación casi inexistente</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(0.30 \leq |r| &lt; 0.50\)</span></td>
+<td style="text-align: left;">Relación débil</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(0.50 \leq |r| &lt; 0.70\)</span></td>
+<td style="text-align: left;">Relación moderada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><span class="math inline">\(0.70 \leq |r| &lt; 1\)</span></td>
+<td style="text-align: left;">Relación fuerte</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><span class="math inline">\(|r| = 1\)</span></td>
+<td style="text-align: left;">Relación perfecta</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="sec-quiz-correlacion" class="level3" data-number="7.4.4">
+<h3 data-number="7.4.4" class="anchored" data-anchor-id="sec-quiz-correlacion"><span class="header-section-number">7.4.4</span> Adivina la correlación</h3>
+<p>Desarrolla tu <strong>intuición estadística</strong> sobre el coeficiente de correlación de Pearson <span class="math inline">\(r\)</span>. Cada vez que pulses <strong>🎲 Nueva nube</strong>, aparecerá una nube de puntos con una correlación oculta. Mueve el control para estimar <span class="math inline">\(r\)</span> y pulsa <strong>✅ Verificar</strong> cuando estés listo. El historial solo se actualiza al verificar.</p>
+<div id="corr-quiz" style="font-family: system-ui, sans-serif; max-width: 560px;">
+
+  <!-- Controles superiores -->
+  <div style="display:flex; gap:10px; flex-wrap:wrap; margin-bottom:12px;">
+    <button id="btn-nuevo" style="padding:8px 16px; background:#01696f; color:#fff; border:none;
+             border-radius:6px; font-size:14px; cursor:pointer;">
+      🎲 Nueva nube de puntos
+    </button>
+  </div>
+
+  <!-- Canvas del gráfico -->
+  <canvas id="corr-canvas" width="520" height="370" style="border:1px solid #ccc; border-radius:6px; background:#f9f8f5;
+           display:block; max-width:100%;"></canvas>
+
+  <!-- Slider -->
+  <div style="margin:14px 0 6px; display:flex; align-items:center; gap:12px;">
+    <label for="slider-r" style="font-size:13px; color:#444; white-space:nowrap;">
+      Mi estimación de <em>r</em>:
+    </label>
+    <input id="slider-r" type="range" min="-1" max="1" step="0.01" value="0" style="flex:1; accent-color:#01696f;">
+    <span id="slider-val" style="font-size:15px; font-weight:700; color:#006494; min-width:44px; text-align:right;">
+      0.00
+    </span>
+  </div>
+
+  <!-- Botón verificar -->
+  <button id="btn-verificar" style="padding:8px 18px; background:#437a22; color:#fff; border:none;
+           border-radius:6px; font-size:14px; cursor:pointer; margin-bottom:14px;">
+    ✅ Verificar mi respuesta
+  </button>
+
+  <!-- Panel de resultado -->
+  <div id="panel-resultado" style="padding:12px 16px; background:#f3f0ec; border-radius:8px;
+           font-size:13px; color:#7a7974; margin-bottom:14px; min-height:42px;">
+    Ajusta el slider y pulsa <strong>✅ Verificar</strong> para ver tu puntuación.
+  </div>
+
+  <!-- Historial -->
+  <div id="historial-wrap" style="display:none;">
+    
+<table id="tabla-historial" class="caption-top" style="border-collapse:collapse; width:100%; font-size:13px;">
+<thead>
+<tr class="header" style="background:#edeae5;">
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 6px 10px;">#</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 6px 10px;">r real</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 6px 10px;">Estimación</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 6px 10px;">Diferencia</th>
+<th data-quarto-table-cell-role="th" style="text-align: center; padding: 6px 10px;">Evaluación</th>
+</tr>
+</thead>
+<tbody id="tabla-body">
+</tbody>
+</table>
+
+    <div id="resumen-stats" style="text-align:right; font-size:13px; color:#555; margin-top:6px;"></div>
+  </div>
+</div>
+
+<script>
+(function () {
+  // ── Utilidades ──────────────────────────────────────────────────────────────
+  function rnorm(n) {
+    const out = [];
+    for (let i = 0; i < n; i += 2) {
+      const u1 = Math.random() + 1e-12, u2 = Math.random();
+      const mag = Math.sqrt(-2 * Math.log(u1));
+      out.push(mag * Math.cos(2 * Math.PI * u2));
+      if (i + 1 < n) out.push(mag * Math.sin(2 * Math.PI * u2));
+    }
+    return out;
+  }
+
+  function generateCloud(rho, n) {
+    const z1 = rnorm(n), z2 = rnorm(n);
+    const raw = z1.map((v, i) => ({
+      x: v,
+      y: rho * v + Math.sqrt(Math.max(0, 1 - rho * rho)) * z2[i]
+    }));
+    const xMin = Math.min(...raw.map(p => p.x));
+    const xMax = Math.max(...raw.map(p => p.x));
+    const yMin = Math.min(...raw.map(p => p.y));
+    const yMax = Math.max(...raw.map(p => p.y));
+    return raw.map(p => ({
+      x: 40  + ((p.x - xMin) / (xMax - xMin + 1e-9)) * 160,
+      y: 250 + ((p.y - yMin) / (yMax - yMin + 1e-9)) * 350
+    }));
+  }
+
+  function pearson(pts) {
+    const n = pts.length;
+    const mx = pts.reduce((s, p) => s + p.x, 0) / n;
+    const my = pts.reduce((s, p) => s + p.y, 0) / n;
+    let sxy = 0, sx2 = 0, sy2 = 0;
+    pts.forEach(p => {
+      sxy += (p.x - mx) * (p.y - my);
+      sx2 += (p.x - mx) ** 2;
+      sy2 += (p.y - my) ** 2;
+    });
+    return sxy / Math.sqrt(sx2 * sy2 + 1e-12);
+  }
+
+  // ── Estado ──────────────────────────────────────────────────────────────────
+  const STEPS = Array.from({ length: 39 }, (_, i) =>
+    Math.round((-0.95 + i * 0.05) * 100) / 100
+  );
+
+  let currentCloud = null;
+  let currentRhoReal = 0;
+  let historial = [];
+
+  // ── Referencias DOM ─────────────────────────────────────────────────────────
+  const canvas   = document.getElementById("corr-canvas");
+  const ctx      = canvas.getContext("2d");
+  const slider   = document.getElementById("slider-r");
+  const sliderVal= document.getElementById("slider-val");
+  const btnNuevo = document.getElementById("btn-nuevo");
+  const btnVer   = document.getElementById("btn-verificar");
+  const panelRes = document.getElementById("panel-resultado");
+  const histWrap = document.getElementById("historial-wrap");
+  const tablaBody= document.getElementById("tabla-body");
+  const resStats = document.getElementById("resumen-stats");
+
+  // ── Dibujar ─────────────────────────────────────────────────────────────────
+  const W = canvas.width, H = canvas.height;
+  const mg = { top: 28, right: 18, bottom: 50, left: 56 };
+  const iW = W - mg.left - mg.right;
+  const iH = H - mg.top  - mg.bottom;
+  const xD = [35, 205], yD = [235, 615];
+
+  function scX(v) { return mg.left + (v - xD[0]) / (xD[1] - xD[0]) * iW; }
+  function scY(v) { return mg.top  + (1 - (v - yD[0]) / (yD[1] - yD[0])) * iH; }
+  function clampY(v) { return Math.max(yD[0], Math.min(yD[1], v)); }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    ctx.fillStyle = "#f9f8f5";
+    ctx.fillRect(0, 0, W, H);
+
+    // Cuadrícula
+    ctx.strokeStyle = "#ddd"; ctx.lineWidth = 1;
+    [60,80,100,120,140,160,180,200].forEach(t => {
+      ctx.beginPath(); ctx.moveTo(scX(t), mg.top); ctx.lineTo(scX(t), mg.top + iH); ctx.stroke();
+      ctx.fillStyle = "#888"; ctx.font = "11px system-ui"; ctx.textAlign = "center";
+      ctx.fillText(t, scX(t), mg.top + iH + 16);
+    });
+    [300,350,400,450,500,550,600].forEach(t => {
+      ctx.beginPath(); ctx.moveTo(mg.left, scY(t)); ctx.lineTo(mg.left + iW, scY(t)); ctx.stroke();
+      ctx.fillStyle = "#888"; ctx.font = "11px system-ui"; ctx.textAlign = "right";
+      ctx.fillText(t, mg.left - 5, scY(t) + 4);
+    });
+
+    // Borde área
+    ctx.strokeStyle = "#ccc"; ctx.lineWidth = 1;
+    ctx.strokeRect(mg.left, mg.top, iW, iH);
+
+    // Etiquetas ejes
+    ctx.fillStyle = "#555"; ctx.font = "12px system-ui"; ctx.textAlign = "center";
+    ctx.fillText("Fertilización (kg N/ha)", mg.left + iW / 2, H - 6);
+    ctx.save();
+    ctx.translate(13, mg.top + iH / 2); ctx.rotate(-Math.PI / 2);
+    ctx.fillText("Rendimiento (kg/ha)", 0, 0);
+    ctx.restore();
+
+    if (!currentCloud) return;
+
+    const pts = currentCloud;
+    const n   = pts.length;
+    const mx  = pts.reduce((s, p) => s + p.x, 0) / n;
+    const my  = pts.reduce((s, p) => s + p.y, 0) / n;
+    const sx  = Math.sqrt(pts.reduce((s, p) => s + (p.x - mx) ** 2, 0) / n);
+    const sy  = Math.sqrt(pts.reduce((s, p) => s + (p.y - my) ** 2, 0) / n);
+
+    // Línea de estimación del usuario
+    const g = parseFloat(slider.value);
+    const slope = g * (sy / (sx + 1e-9));
+    ctx.beginPath();
+    ctx.setLineDash([7, 4]);
+    ctx.strokeStyle = "#006494"; ctx.lineWidth = 2.2;
+    ctx.moveTo(scX(xD[0]), scY(clampY(my + slope * (xD[0] - mx))));
+    ctx.lineTo(scX(xD[1]), scY(clampY(my + slope * (xD[1] - mx))));
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Puntos
+    ctx.fillStyle = "#01696f";
+    pts.forEach(p => {
+      ctx.beginPath();
+      ctx.arc(scX(p.x), scY(p.y), 4.5, 0, 2 * Math.PI);
+      ctx.globalAlpha = 0.65; ctx.fill(); ctx.globalAlpha = 1;
+    });
+
+    // Etiqueta estimación
+    const gStr = (g >= 0 ? "+" : "") + g.toFixed(2);
+    ctx.fillStyle = "#006494"; ctx.font = "bold 14px system-ui"; ctx.textAlign = "right";
+    ctx.fillText("Mi r = " + gStr, W - mg.right - 4, mg.top + 18);
+  }
+
+  // ── Nueva nube ───────────────────────────────────────────────────────────────
+  function nuevaNube() {
+    const rhoTarget = STEPS[Math.floor(Math.random() * STEPS.length)];
+    currentCloud    = generateCloud(rhoTarget, 60);
+    currentRhoReal  = Math.round(pearson(currentCloud) * 100) / 100;
+    slider.value    = "0";
+    sliderVal.textContent = "0.00";
+    panelRes.style.background = "#f3f0ec";
+    panelRes.style.color      = "#7a7974";
+    panelRes.innerHTML = "Ajusta el slider y pulsa <strong>✅ Verificar</strong> para ver tu puntuación.";
+    draw();
+  }
+
+  // ── Verificar (solo aquí se toca el historial) ───────────────────────────────
+  function verificar() {
+    if (!currentCloud) { alert("Genera primero una nube con 🎲"); return; }
+
+    const g    = Math.round(parseFloat(slider.value) * 100) / 100;
+    const diff = Math.round(Math.abs(g - currentRhoReal) * 100) / 100;
+
+    const [emoji, msg, color, bg] =
+      diff <= 0.05 ? ["🏆","¡Excelente! Muy cerca.",    "#437a22","#d4dfcc"] :
+      diff <= 0.10 ? ["🎯","¡Muy bien! Casi exacto.",   "#01696f","#cedcd8"] :
+      diff <= 0.20 ? ["👍","Bien. Diferencia aceptable.","#d19900","#e9e0c6"] :
+      diff <= 0.35 ? ["📉","Cerca, pero puedes mejorar.","#da7101","#e7d7c4"] :
+                     ["❌","Sigue practicando.",         "#a12c7b","#e0ced7"];
+
+    // Panel de resultado
+    panelRes.style.background = bg;
+    panelRes.style.color      = color;
+    panelRes.innerHTML =
+      `<div style="font-size:18px;font-weight:700;margin-bottom:4px;">${emoji} ${msg}</div>
+       <div style="font-size:14px;display:flex;gap:20px;flex-wrap:wrap;">
+         <span>r real = <strong>${currentRhoReal.toFixed(2)}</strong></span>
+         <span>Tu estimación = <strong>${g.toFixed(2)}</strong></span>
+         <span>Diferencia = <strong>${diff.toFixed(2)}</strong></span>
+       </div>
+       <div style="margin-top:6px;font-size:12px;opacity:0.8;">
+         Pulsa 🎲 <strong>Nueva nube</strong> para continuar.
+       </div>`;
+
+    // Agregar al historial (una sola vez, aquí)
+    historial.push({ n: historial.length + 1, rReal: currentRhoReal, guess: g, diff, emoji, bg });
+    renderHistorial();
+  }
+
+  // ── Renderizar historial ─────────────────────────────────────────────────────
+  function renderHistorial() {
+    histWrap.style.display = "block";
+    tablaBody.innerHTML = historial.map(h =>
+      `<tr style="background:${h.bg}">
+        <td style="padding:5px 10px;text-align:center">${h.n}</td>
+        <td style="padding:5px 10px;text-align:center;font-weight:700">${h.rReal.toFixed(2)}</td>
+        <td style="padding:5px 10px;text-align:center">${h.guess.toFixed(2)}</td>
+        <td style="padding:5px 10px;text-align:center">${h.diff.toFixed(2)}</td>
+        <td style="padding:5px 10px;text-align:center">${h.emoji}</td>
+      </tr>`
+    ).join("");
+
+    const avg = (historial.reduce((s, h) => s + h.diff, 0) / historial.length).toFixed(2);
+    resStats.innerHTML =
+      `Diferencia promedio: <strong>${avg}</strong> &nbsp;|&nbsp;
+       Intentos: <strong>${historial.length}</strong>`;
+  }
+
+  // ── Eventos ──────────────────────────────────────────────────────────────────
+  slider.addEventListener("input", () => {
+    const v = parseFloat(slider.value);
+    sliderVal.textContent = (v >= 0 ? "+" : "") + v.toFixed(2);
+    draw();
+  });
+
+  btnNuevo.addEventListener("click", nuevaNube);
+  btnVer.addEventListener("click", verificar);
+
+  // Arrancar con una nube inicial
+  nuevaNube();
+})();
+</script>
+</section>
+<section id="correlación-en-r" class="level3" data-number="7.4.5">
+<h3 data-number="7.4.5" class="anchored" data-anchor-id="correlación-en-r"><span class="header-section-number">7.4.5</span> Correlación en R</h3>
+<p>En R la covarianza y la correlación se calculan con <code>cov()</code> y <code>cor()</code>. Para pruebas de hipótesis sobre la correlación se usa <code>cor.test()</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Covarianza</span></span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cov</span>(cacao<span class="sc">$</span>fertilizacion, cacao<span class="sc">$</span>rendimiento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 4397.997</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Coeficiente de correlación</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor</span>(cacao<span class="sc">$</span>fertilizacion, cacao<span class="sc">$</span>rendimiento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] 0.9336342</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Prueba de hipótesis: H0: rho = 0  vs  H1: rho ≠ 0</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">cor.test</span>(cacao<span class="sc">$</span>fertilizacion, cacao<span class="sc">$</span>rendimiento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+    Pearson's product-moment correlation
+
+data:  cacao$fertilizacion and cacao$rendimiento
+t = 19.849, df = 58, p-value &lt; 2.2e-16
+alternative hypothesis: true correlation is not equal to 0
+95 percent confidence interval:
+ 0.8909231 0.9599749
+sample estimates:
+      cor 
+0.9336342 </code></pre>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-3" class="exercise-cell">
+
+</div>
+<script type="webr-3-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBDYWxjdWxhIGxhIGNvcnJlbGFjacOzbiB5IHBydWViYSBkZSBoaXDDs3Rlc2lzXG5jb3IoY2FjYW8kZmVydGlsaXphY2lvbiwgY2FjYW8kcmVuZGltaWVudG8pXG5jb3IudGVzdChjYWNhbyRmZXJ0aWxpemFjaW9uLCBjYWNhbyRyZW5kaW1pZW50bykifQ==
+</script>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Correlación no es causalidad.</strong> Una correlación alta indica asociación lineal, no que una variable cause a la otra. Pueden existir variables confusoras que expliquen la relación observada.</p>
+</div>
+</div>
+</section>
+<section id="matriz-de-correlaciones" class="level3" data-number="7.4.6">
+<h3 data-number="7.4.6" class="anchored" data-anchor-id="matriz-de-correlaciones"><span class="header-section-number">7.4.6</span> Matriz de correlaciones</h3>
+<p>Cuando tenemos varias variables numéricas, es útil obtener la <strong>matriz de correlaciones</strong>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>cacao <span class="sc">|&gt;</span></span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(fertilizacion, precipitacion, rendimiento, humedad_rel) <span class="sc">|&gt;</span></span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">cor</span>() <span class="sc">|&gt;</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">round</span>(<span class="dv">3</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>              fertilizacion precipitacion rendimiento humedad_rel
+fertilizacion         1.000         0.108       0.934       0.008
+precipitacion         0.108         1.000       0.228      -0.026
+rendimiento           0.934         0.228       1.000      -0.011
+humedad_rel           0.008        -0.026      -0.011       1.000</code></pre>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-4" class="exercise-cell">
+
+</div>
+<script type="webr-4-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBNYXRyaXogZGUgY29ycmVsYWNpb25lc1xuY29yKGNhY2FvWywgYyhcImZlcnRpbGl6YWNpb25cIiwgXCJwcmVjaXBpdGFjaW9uXCIsIFwicmVuZGltaWVudG9cIiwgXCJodW1lZGFkX3JlbFwiKV0pIn0=
+</script>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-regresion" class="level2" data-number="7.5">
+<h2 data-number="7.5" class="anchored" data-anchor-id="sec-regresion"><span class="header-section-number">7.5</span> Regresión</h2>
+<p>La correlación nos dice si existe una asociación lineal y qué tan fuerte es, pero no nos permite:</p>
+<ul>
+<li>Cuantificar <strong>cuánto cambia <span class="math inline">\(Y\)</span> por cada unidad de cambio en <span class="math inline">\(X\)</span></strong></li>
+<li><strong>Predecir</strong> el valor de <span class="math inline">\(Y\)</span> para un valor dado de <span class="math inline">\(X\)</span></li>
+<li>Controlar el efecto de <strong>múltiples variables</strong> simultáneamente</li>
+</ul>
+<p>Para responder estas preguntas usamos la <strong>regresión</strong>.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pregunta</th>
+<th style="text-align: center;">Correlación</th>
+<th style="text-align: center;">Regresión</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">¿Existe relación lineal?</td>
+<td style="text-align: center;">Sí</td>
+<td style="text-align: center;">Sí</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">¿Cuál es la dirección?</td>
+<td style="text-align: center;">Sí</td>
+<td style="text-align: center;">Sí</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">¿Cuánto cambia <span class="math inline">\(Y\)</span> cuando cambia <span class="math inline">\(X\)</span>?</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;"><strong>Sí</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">¿Permite predecir <span class="math inline">\(Y\)</span>?</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;"><strong>Sí</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">¿Permite controlar covariables?</td>
+<td style="text-align: center;">No</td>
+<td style="text-align: center;"><strong>Sí</strong></td>
+</tr>
+</tbody>
+</table>
+<section id="sec-regsimple" class="level3" data-number="7.5.1">
+<h3 data-number="7.5.1" class="anchored" data-anchor-id="sec-regsimple"><span class="header-section-number">7.5.1</span> Regresión lineal simple</h3>
+<section id="el-modelo" class="level4" data-number="7.5.1.1">
+<h4 data-number="7.5.1.1" class="anchored" data-anchor-id="el-modelo"><span class="header-section-number">7.5.1.1</span> El modelo</h4>
+<p>La <strong>regresión lineal simple</strong> modela la relación entre una variable explicativa <span class="math inline">\(X\)</span> y una variable respuesta <span class="math inline">\(Y\)</span> mediante:</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i\]</span></p>
+<p>donde:</p>
+<ul>
+<li><span class="math inline">\(\hat{Y}_i = \beta_0 + \beta_1 X_i\)</span> es el <strong>valor predicho</strong> (la recta de regresión)</li>
+<li><span class="math inline">\(\beta_0\)</span> es el <strong>intercepto</strong>: el valor de <span class="math inline">\(Y\)</span> cuando <span class="math inline">\(X = 0\)</span></li>
+<li><span class="math inline">\(\beta_1\)</span> es la <strong>pendiente</strong>: el cambio promedio en <span class="math inline">\(Y\)</span> por cada unidad de aumento en <span class="math inline">\(X\)</span></li>
+<li><span class="math inline">\(\varepsilon_i = Y_i - \hat{Y}_i\)</span> es el <strong>error o residuo</strong>: la diferencia entre el valor real y el predicho</li>
+</ul>
+</section>
+<section id="mínimos-cuadrados-ordinarios-mco" class="level4" data-number="7.5.1.2">
+<h4 data-number="7.5.1.2" class="anchored" data-anchor-id="mínimos-cuadrados-ordinarios-mco"><span class="header-section-number">7.5.1.2</span> Mínimos Cuadrados Ordinarios (MCO)</h4>
+<p>La recta de mejor ajuste se determina encontrando los valores <span class="math inline">\(\beta_0\)</span> y <span class="math inline">\(\beta_1\)</span> que <strong>minimizan la suma de los cuadrados de los residuos</strong>:</p>
+<p><span class="math display">\[\min_{\beta_0,\, \beta_1} \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(Y_i - \beta_0 - \beta_1 X_i)^2\]</span></p>
+<p>La razón de elevar al cuadrado (en lugar de sumar los errores directamente) es que <span class="math inline">\(\sum_{i=1}^n e_i = 0\)</span> siempre, por lo que la suma simple no distingue entre modelos buenos y malos. Las soluciones analíticas del método MCO son:</p>
+<p><span class="math display">\[\hat{\beta}_1 = \dfrac{n\displaystyle\sum_{i=1}^{n} X_i Y_i - \displaystyle\sum_{i=1}^{n} X_i \displaystyle\sum_{i=1}^{n} Y_i}{n\displaystyle\sum_{i=1}^{n} X_i^2 - \left(\displaystyle\sum_{i=1}^{n} X_i\right)^2} = \dfrac{S_{xy}}{S_x^2}\]</span></p>
+<p><span class="math display">\[\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{X}\]</span></p>
+<div class="cell" data-layout-align="center">
+<div class="cell-output cell-output-stderr">
+<pre><code>`geom_smooth()` using formula = 'y ~ x'</code></pre>
+</div>
+<div class="cell-output-display">
+<div id="fig-regresion-residuos" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-regresion-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-regresion_files/figure-html/fig-regresion-residuos-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-regresion-residuos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.4: Recta de regresión y residuos: cada segmento vertical representa un error <span class="math inline">\(e_i = Y_i - \hat{Y}_i\)</span>
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</section>
+<section id="ajuste-del-modelo-en-r" class="level4" data-number="7.5.1.3">
+<h4 data-number="7.5.1.3" class="anchored" data-anchor-id="ajuste-del-modelo-en-r"><span class="header-section-number">7.5.1.3</span> Ajuste del modelo en R</h4>
+<p>En R la regresión lineal se ajusta con la función <code>lm()</code>. La sintaxis es <code>lm(Y ~ X, data = datos)</code>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>modelo1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rendimiento <span class="sc">~</span> fertilizacion, <span class="at">data =</span> cacao)</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo1)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rendimiento ~ fertilizacion, data = cacao)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-86.155 -26.115  -1.187  22.641  94.719 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   372.00184   13.39207   27.78   &lt;2e-16 ***
+fertilizacion   1.90362    0.09591   19.85   &lt;2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 35.41 on 58 degrees of freedom
+Multiple R-squared:  0.8717,    Adjusted R-squared:  0.8695 
+F-statistic:   394 on 1 and 58 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-5" class="exercise-cell">
+
+</div>
+<script type="webr-5-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBBanVzdGEgZWwgbW9kZWxvIGRlIHJlZ3Jlc2nDs24gbGluZWFsIHNpbXBsZVxubW9kZWxvMSA8LSBsbShyZW5kaW1pZW50byB+IGZlcnRpbGl6YWNpb24sIGRhdGEgPSBjYWNhbylcbnN1bW1hcnkobW9kZWxvMSkifQ==
+</script>
+</div>
+</div>
+</section>
+<section id="interpretación-de-los-coeficientes" class="level4" data-number="7.5.1.4">
+<h4 data-number="7.5.1.4" class="anchored" data-anchor-id="interpretación-de-los-coeficientes"><span class="header-section-number">7.5.1.4</span> Interpretación de los coeficientes</h4>
+<p>A partir de la salida del modelo podemos escribir la ecuación estimada:</p>
+<p><span class="math display">\[\widehat{\text{Rendimiento}} = \hat{\beta}_0 + \hat{\beta}_1 \times \text{Fertilización}\]</span></p>
+<ul>
+<li><strong><span class="math inline">\(\hat{\beta}_1\)</span></strong> se interpreta como: <em>por cada kg adicional de nitrógeno por hectárea aplicado, el rendimiento de cacao aumenta, en promedio, <span class="math inline">\(\hat{\beta}_1\)</span> kg/ha</em>, manteniendo lo demás constante.</li>
+<li><strong><span class="math inline">\(\hat{\beta}_0\)</span></strong> se interpreta como: <em>el rendimiento esperado cuando la fertilización es cero</em>. Este valor solo tiene interpretación práctica si <span class="math inline">\(X = 0\)</span> es un valor plausible en el contexto del estudio.</li>
+</ul>
+</section>
+<section id="predicción" class="level4" data-number="7.5.1.5">
+<h4 data-number="7.5.1.5" class="anchored" data-anchor-id="predicción"><span class="header-section-number">7.5.1.5</span> Predicción</h4>
+<p>La función <code>predict()</code> permite obtener predicciones para nuevos valores de <span class="math inline">\(X\)</span>:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>nuevos <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">fertilizacion =</span> <span class="fu">c</span>(<span class="dv">80</span>, <span class="dv">120</span>, <span class="dv">160</span>))</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="fu">predict</span>(modelo1, <span class="at">newdata =</span> nuevos, <span class="at">interval =</span> <span class="st">"confidence"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>       fit      lwr      upr
+1 524.2913 510.8550 537.7275
+2 600.4360 591.0342 609.8378
+3 676.5807 665.8946 687.2668</code></pre>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-6" class="exercise-cell">
+
+</div>
+<script type="webr-6-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBQcmVkaWNjacOzbiBwYXJhIG51ZXZhcyBkb3NpcyBkZSBmZXJ0aWxpemFjacOzblxubnVldm9zIDwtIGRhdGEuZnJhbWUoZmVydGlsaXphY2lvbiA9IGMoODAsIDEyMCwgMTYwKSlcbnByZWRpY3QobW9kZWxvMSwgbmV3ZGF0YSA9IG51ZXZvcywgaW50ZXJ2YWwgPSBcImNvbmZpZGVuY2VcIikifQ==
+</script>
+</div>
+</div>
+</section>
+<section id="bondad-de-ajuste-r2" class="level4" data-number="7.5.1.6">
+<h4 data-number="7.5.1.6" class="anchored" data-anchor-id="bondad-de-ajuste-r2"><span class="header-section-number">7.5.1.6</span> Bondad de ajuste: <span class="math inline">\(R^2\)</span></h4>
+<p>Para medir qué tan bien se ajusta el modelo, comparamos la <strong>variabilidad total</strong> de <span class="math inline">\(Y\)</span> con la <strong>variabilidad no explicada</strong> por el modelo:</p>
+<ul>
+<li><strong>STC</strong> (Suma Total de Cuadrados): <span class="math inline">\(\displaystyle\sum_{i=1}^n (Y_i - \bar{Y})^2\)</span> — variabilidad total de <span class="math inline">\(Y\)</span></li>
+<li><strong>SCE</strong> (Suma de Cuadrados del Error): <span class="math inline">\(\displaystyle\sum_{i=1}^n (Y_i - \hat{Y}_i)^2\)</span> — variabilidad no explicada</li>
+<li><strong>SCR</strong> (Suma de Cuadrados de la Regresión): <span class="math inline">\(\text{STC} - \text{SCE}\)</span> — variabilidad explicada</li>
+</ul>
+<p>El coeficiente de determinación <span class="math inline">\(R^2\)</span> se define como:</p>
+<p><span class="math display">\[R^2 = \dfrac{\text{STC} - \text{SCE}}{\text{STC}} = 1 - \dfrac{\text{SCE}}{\text{STC}}\]</span></p>
+<p>Se interpreta como <strong>la proporción de la variabilidad total de <span class="math inline">\(Y\)</span> que es explicada por el modelo</strong>. Toma valores entre 0 y 1; valores cercanos a 1 indican mejor ajuste.</p>
+<div class="callout callout-style-default callout-tip callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Tip
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En regresión lineal simple, <span class="math inline">\(R^2 = r^2\)</span>, donde <span class="math inline">\(r\)</span> es el coeficiente de correlación de Pearson.</p>
+</div>
+</div>
+</section>
+<section id="pruebas-de-hipótesis-sobre-los-coeficientes" class="level4" data-number="7.5.1.7">
+<h4 data-number="7.5.1.7" class="anchored" data-anchor-id="pruebas-de-hipótesis-sobre-los-coeficientes"><span class="header-section-number">7.5.1.7</span> Pruebas de hipótesis sobre los coeficientes</h4>
+<p>La salida de <code>summary(modelo)</code> incluye pruebas <span class="math inline">\(t\)</span> individuales para cada coeficiente:</p>
+<ul>
+<li><span class="math inline">\(H_0: \beta_1 = 0\)</span> (la variable <span class="math inline">\(X\)</span> no tiene efecto lineal sobre <span class="math inline">\(Y\)</span>)</li>
+<li><span class="math inline">\(H_1: \beta_1 \neq 0\)</span> (la variable <span class="math inline">\(X\)</span> tiene efecto lineal sobre <span class="math inline">\(Y\)</span>)</li>
+</ul>
+<p>El estadístico <span class="math inline">\(F\)</span> al final del resumen evalúa la significancia global del modelo.</p>
+</section>
+<section id="diagnósticos-del-modelo" class="level4" data-number="7.5.1.8">
+<h4 data-number="7.5.1.8" class="anchored" data-anchor-id="diagnósticos-del-modelo"><span class="header-section-number">7.5.1.8</span> Diagnósticos del modelo</h4>
+<p>Los supuestos del modelo de regresión lineal son: <strong>linealidad, normalidad de los residuos, homocedasticidad</strong> (varianza constante) e <strong>independencia</strong> de los errores. En R estos se evalúan visualmente con <code>plot(modelo)</code>:</p>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(modelo1)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">1</span>, <span class="dv">1</span>))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-diagnosticos" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-diagnosticos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-regresion_files/figure-html/fig-diagnosticos-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:90.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-diagnosticos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.5: Gráficos de diagnóstico del modelo de regresión lineal simple
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<p>Los cuatro gráficos de diagnóstico son:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Gráfico</th>
+<th style="text-align: left;">Qué evalúa</th>
+<th style="text-align: left;">Patrón deseado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Residuals vs Fitted</strong></td>
+<td style="text-align: left;">Linealidad y homocedasticidad</td>
+<td style="text-align: left;">Puntos dispersos aleatoriamente alrededor de cero</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Normal Q-Q</strong></td>
+<td style="text-align: left;">Normalidad de residuos</td>
+<td style="text-align: left;">Puntos sobre la línea diagonal</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Scale-Location</strong></td>
+<td style="text-align: left;">Homocedasticidad</td>
+<td style="text-align: left;">Banda horizontal sin pendiente</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Residuals vs Leverage</strong></td>
+<td style="text-align: left;">Valores influyentes</td>
+<td style="text-align: left;">Sin puntos fuera de la distancia de Cook</td>
+</tr>
+</tbody>
+</table>
+<div class="cell">
+<div>
+<div id="webr-7" class="exercise-cell">
+
+</div>
+<script type="webr-7-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBEaWFnbsOzc3RpY29zIGRlbCBtb2RlbG9cbnBhcihtZnJvdyA9IGMoMiwyKSlcbnBsb3QobW9kZWxvMSlcbnBhcihtZnJvdyA9IGMoMSwxKSkifQ==
+</script>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-regmultiple" class="level3" data-number="7.5.2">
+<h3 data-number="7.5.2" class="anchored" data-anchor-id="sec-regmultiple"><span class="header-section-number">7.5.2</span> Regresión lineal múltiple</h3>
+<p>En la práctica, una variable respuesta raramente depende de una sola variable explicativa. El rendimiento de cacao, por ejemplo, puede depender tanto de la fertilización como de la precipitación. La <strong>regresión lineal múltiple</strong> extiende el modelo simple a <span class="math inline">\(k\)</span> variables explicativas:</p>
+<p><span class="math display">\[Y_i = \beta_0 + \beta_1 X_{1,i} + \beta_2 X_{2,i} + \cdots + \beta_k X_{k,i} + \varepsilon_i\]</span></p>
+<p>Los principios de estimación (MCO) son los mismos que en regresión simple. En notación matricial, si definimos:</p>
+<p><span class="math display">\[\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}\]</span></p>
+<p>donde <span class="math inline">\(\mathbf{X}\)</span> es la <strong>matriz de diseño</strong> (una columna de unos más las columnas de variables explicativas), el estimador MCO es:</p>
+<p><span class="math display">\[\hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}\]</span></p>
+<section id="ajuste-en-r" class="level4" data-number="7.5.2.1">
+<h4 data-number="7.5.2.1" class="anchored" data-anchor-id="ajuste-en-r"><span class="header-section-number">7.5.2.1</span> Ajuste en R</h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb17"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>modelo2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(rendimiento <span class="sc">~</span> fertilizacion <span class="sc">+</span> precipitacion, <span class="at">data =</span> cacao)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo2)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+lm(formula = rendimiento ~ fertilizacion + precipitacion, data = cacao)
+
+Residuals:
+    Min      1Q  Median      3Q     Max 
+-60.106 -20.114  -3.428  12.394  95.485 
+
+Coefficients:
+               Estimate Std. Error t value Pr(&gt;|t|)    
+(Intercept)   248.78149   44.46122   5.595 6.55e-07 ***
+fertilizacion   1.87538    0.09088  20.636  &lt; 2e-16 ***
+precipitacion   0.04516    0.01563   2.890  0.00544 ** 
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+Residual standard error: 33.36 on 57 degrees of freedom
+Multiple R-squared:  0.8881,    Adjusted R-squared:  0.8841 
+F-statistic: 226.1 on 2 and 57 DF,  p-value: &lt; 2.2e-16</code></pre>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-8" class="exercise-cell">
+
+</div>
+<script type="webr-8-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBSZWdyZXNpw7NuIGxpbmVhbCBtw7psdGlwbGVcbm1vZGVsbzIgPC0gbG0ocmVuZGltaWVudG8gfiBmZXJ0aWxpemFjaW9uICsgcHJlY2lwaXRhY2lvbiwgZGF0YSA9IGNhY2FvKVxuc3VtbWFyeShtb2RlbG8yKSJ9
+</script>
+</div>
+</div>
+</section>
+<section id="r2-ajustado" class="level4" data-number="7.5.2.2">
+<h4 data-number="7.5.2.2" class="anchored" data-anchor-id="r2-ajustado"><span class="header-section-number">7.5.2.2</span> <span class="math inline">\(R^2\)</span> ajustado</h4>
+<p>Al añadir variables al modelo, el <span class="math inline">\(R^2\)</span> <strong>siempre aumenta</strong> aunque la nueva variable no sea útil. Para corregir este comportamiento, se utiliza el <strong><span class="math inline">\(R^2\)</span> ajustado</strong> que penaliza por el número de predictores <span class="math inline">\(k\)</span>:</p>
+<p><span class="math display">\[R^2_{\text{adj}} = 1 - \dfrac{n-1}{n-k-1} \cdot \dfrac{\text{SCE}}{\text{STC}}\]</span></p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Para comparar modelos con diferente número de variables, siempre usa el <strong><span class="math inline">\(R^2\)</span> ajustado</strong>, no el <span class="math inline">\(R^2\)</span> ordinario. El <span class="math inline">\(R^2\)</span> ajustado puede disminuir si se añade una variable que no aporta información real al modelo.</p>
+</div>
+</div>
+</section>
+<section id="interpretación-en-regresión-múltiple" class="level4" data-number="7.5.2.3">
+<h4 data-number="7.5.2.3" class="anchored" data-anchor-id="interpretación-en-regresión-múltiple"><span class="header-section-number">7.5.2.3</span> Interpretación en regresión múltiple</h4>
+<p>En regresión múltiple, cada coeficiente <span class="math inline">\(\hat{\beta}_j\)</span> se interpreta como: <em>el cambio promedio en <span class="math inline">\(Y\)</span> por cada unidad de aumento en <span class="math inline">\(X_j\)</span>, <strong>manteniendo constantes todas las demás variables explicativas del modelo</strong></em>.</p>
+<div class="cell">
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<caption>Coeficientes del modelo de regresión múltiple</caption>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Término</th>
+<th style="text-align: right;">Estimado</th>
+<th style="text-align: right;">Error_std</th>
+<th style="text-align: right;">Estadístico</th>
+<th style="text-align: right;">Valor p</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">(Intercept)</td>
+<td style="text-align: right;">248.7815</td>
+<td style="text-align: right;">44.4612</td>
+<td style="text-align: right;">5.5955</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">fertilizacion</td>
+<td style="text-align: right;">1.8754</td>
+<td style="text-align: right;">0.0909</td>
+<td style="text-align: right;">20.6365</td>
+<td style="text-align: right;">0.0000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">precipitacion</td>
+<td style="text-align: right;">0.0452</td>
+<td style="text-align: right;">0.0156</td>
+<td style="text-align: right;">2.8902</td>
+<td style="text-align: right;">0.0054</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="sec-reglogistica" class="level3" data-number="7.5.3">
+<h3 data-number="7.5.3" class="anchored" data-anchor-id="sec-reglogistica"><span class="header-section-number">7.5.3</span> Regresión logística</h3>
+<p>Hasta ahora hemos modelado variables respuesta <strong>continuas</strong> (rendimiento en kg/ha). ¿Qué hacemos cuando la variable respuesta es <strong>binaria</strong> (sí/no, presencia/ausencia, éxito/fracaso)?</p>
+<p>En el caso de nuestros datos de cacao, nos interesa modelar la <strong>presencia de monilia</strong> (0 = ausente, 1 = presente) en función de la humedad relativa.</p>
+<section id="el-problema-con-la-regresión-lineal" class="level4" data-number="7.5.3.1">
+<h4 data-number="7.5.3.1" class="anchored" data-anchor-id="el-problema-con-la-regresión-lineal"><span class="header-section-number">7.5.3.1</span> El problema con la regresión lineal</h4>
+<p>Si aplicáramos regresión lineal a una variable respuesta binaria, obtendríamos predicciones fuera del rango <span class="math inline">\([0, 1]\)</span>, lo que carece de interpretación probabilística.</p>
+</section>
+<section id="el-modelo-logístico" class="level4" data-number="7.5.3.2">
+<h4 data-number="7.5.3.2" class="anchored" data-anchor-id="el-modelo-logístico"><span class="header-section-number">7.5.3.2</span> El modelo logístico</h4>
+<p>La <strong>regresión logística</strong> modela directamente la <strong>probabilidad</strong> de que <span class="math inline">\(Y = 1\)</span>:</p>
+<p><span class="math display">\[P(Y = 1 \mid X) = \pi(X) = \dfrac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}} = \text{logístico}(\beta_0 + \beta_1 X)\]</span></p>
+<p>La función logística garantiza que la probabilidad esté siempre entre 0 y 1. El modelo se linealiza mediante la transformación <strong>logit</strong>:</p>
+<p><span class="math display">\[\log\left(\dfrac{\pi}{1-\pi}\right) = \beta_0 + \beta_1 X\]</span></p>
+<p>El cociente <span class="math inline">\(\dfrac{\pi}{1-\pi}\)</span> se llama <strong>odds</strong> (razón de probabilidades). Su logaritmo es el logit.</p>
+</section>
+<section id="ajuste-en-r-con-glm" class="level4" data-number="7.5.3.3">
+<h4 data-number="7.5.3.3" class="anchored" data-anchor-id="ajuste-en-r-con-glm"><span class="header-section-number">7.5.3.3</span> Ajuste en R con <code>glm()</code></h4>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb19"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>modelo_log <span class="ot">&lt;-</span> <span class="fu">glm</span>(monilia <span class="sc">~</span> humedad_rel,</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>                  <span class="at">data   =</span> cacao,</span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>                  <span class="at">family =</span> <span class="fu">binomial</span>(<span class="at">link =</span> <span class="st">"logit"</span>))</span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a><span class="fu">summary</span>(modelo_log)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+Call:
+glm(formula = monilia ~ humedad_rel, family = binomial(link = "logit"), 
+    data = cacao)
+
+Coefficients:
+            Estimate Std. Error z value Pr(&gt;|z|)  
+(Intercept) -9.31685    4.43830  -2.099   0.0358 *
+humedad_rel  0.10412    0.05361   1.942   0.0521 .
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+
+(Dispersion parameter for binomial family taken to be 1)
+
+    Null deviance: 74.920  on 59  degrees of freedom
+Residual deviance: 70.798  on 58  degrees of freedom
+AIC: 74.798
+
+Number of Fisher Scoring iterations: 4</code></pre>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-9" class="exercise-cell">
+
+</div>
+<script type="webr-9-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBSZWdyZXNpw7NuIGxvZ8Otc3RpY2E6IHByZXNlbmNpYSBkZSBtb25pbGlhIH4gaHVtZWRhZCByZWxhdGl2YVxubW9kZWxvX2xvZyA8LSBnbG0obW9uaWxpYSB+IGh1bWVkYWRfcmVsLFxuICAgICAgICAgICAgICAgICAgZGF0YSAgID0gY2FjYW8sXG4gICAgICAgICAgICAgICAgICBmYW1pbHkgPSBiaW5vbWlhbChsaW5rID0gXCJsb2dpdFwiKSlcbnN1bW1hcnkobW9kZWxvX2xvZykifQ==
+</script>
+</div>
+</div>
+</section>
+<section id="interpretación-odds-ratio" class="level4" data-number="7.5.3.4">
+<h4 data-number="7.5.3.4" class="anchored" data-anchor-id="interpretación-odds-ratio"><span class="header-section-number">7.5.3.4</span> Interpretación: odds ratio</h4>
+<p>Los coeficientes de regresión logística se interpretan más fácilmente en términos del <strong>odds ratio (OR)</strong>. Para obtenerlo, se exponencia el coeficiente:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">coef</span>(modelo_log))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> (Intercept)  humedad_rel 
+8.989646e-05 1.109729e+00 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a><span class="fu">exp</span>(<span class="fu">confint</span>(modelo_log))</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Waiting for profiling to be done...</code></pre>
+</div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                   2.5 %    97.5 %
+(Intercept) 7.588182e-09 0.3547013
+humedad_rel 1.003511e+00 1.2421755</code></pre>
+</div>
+</div>
+<p>Un odds ratio de <span class="math inline">\(e^{\hat{\beta}_1}\)</span> significa: <em>por cada unidad de aumento en <span class="math inline">\(X\)</span>, los odds de que <span class="math inline">\(Y=1\)</span> se multiplican por <span class="math inline">\(e^{\hat{\beta}_1}\)</span></em>.</p>
+<ul>
+<li>OR <span class="math inline">\(&gt; 1\)</span>: la variable <span class="math inline">\(X\)</span> aumenta la probabilidad del evento</li>
+<li>OR <span class="math inline">\(&lt; 1\)</span>: la variable <span class="math inline">\(X\)</span> disminuye la probabilidad del evento</li>
+<li>OR <span class="math inline">\(= 1\)</span>: la variable <span class="math inline">\(X\)</span> no tiene efecto</li>
+</ul>
+</section>
+<section id="visualización-de-la-curva-logística" class="level4" data-number="7.5.3.5">
+<h4 data-number="7.5.3.5" class="anchored" data-anchor-id="visualización-de-la-curva-logística"><span class="header-section-number">7.5.3.5</span> Visualización de la curva logística</h4>
+<div class="cell" data-layout-align="center">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb26"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>cacao <span class="sc">|&gt;</span></span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">prob_est =</span> <span class="fu">fitted</span>(modelo_log)) <span class="sc">|&gt;</span></span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> humedad_rel)) <span class="sc">+</span></span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="fu">aes</span>(<span class="at">y =</span> monilia), <span class="at">alpha =</span> <span class="fl">0.4</span>, <span class="at">color =</span> <span class="st">"#964219"</span>) <span class="sc">+</span></span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="fu">aes</span>(<span class="at">y =</span> prob_est), <span class="at">color =</span> <span class="st">"#01696f"</span>, <span class="at">linewidth =</span> <span class="fl">1.3</span>) <span class="sc">+</span></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"Humedad relativa (%)"</span>,</span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>       <span class="at">y =</span> <span class="st">"P(Presencia de monilia)"</span>) <span class="sc">+</span></span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_light</span>(<span class="at">base_size =</span> <span class="dv">13</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div id="fig-logistica" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-logistica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="06-regresion_files/figure-html/fig-logistica-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:70.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-logistica-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;7.6: Probabilidad estimada de presencia de monilia según la humedad relativa
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="cell">
+<div>
+<div id="webr-10" class="exercise-cell">
+
+</div>
+<script type="webr-10-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBWaXN1YWxpemEgbGEgY3VydmEgbG9nw61zdGljYVxucHJvYl9lc3QgPC0gZml0dGVkKG1vZGVsb19sb2cpXG5wbG90KGNhY2FvJGh1bWVkYWRfcmVsLCBjYWNhbyRtb25pbGlhLFxuICAgICB4bGFiID0gXCJIdW1lZGFkIHJlbGF0aXZhICglKVwiLCB5bGFiID0gXCJQKG1vbmlsaWEpXCIsXG4gICAgIHBjaCA9IDE5LCBjb2wgPSBcIiM5NjQyMTlcIiwgYWxwaGEgPSAwLjMpXG5saW5lcyhzb3J0KGNhY2FvJGh1bWVkYWRfcmVsKSwgcHJvYl9lc3Rbb3JkZXIoY2FjYW8kaHVtZWRhZF9yZWwpXSxcbiAgICAgIGNvbCA9IFwiIzAxNjk2ZlwiLCBsd2QgPSAyKSJ9
+</script>
+</div>
+</div>
+<hr>
+</section>
+</section>
+</section>
+<section id="resumen-de-funciones-r-del-capítulo" class="level2" data-number="7.6">
+<h2 data-number="7.6" class="anchored" data-anchor-id="resumen-de-funciones-r-del-capítulo"><span class="header-section-number">7.6</span> Resumen de funciones R del capítulo</h2>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Función</th>
+<th style="text-align: left;">Descripción</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>plot(x, y)</code> / <code>ggplot() + geom_point()</code></td>
+<td style="text-align: left;">Diagrama de dispersión</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cov(x, y)</code></td>
+<td style="text-align: left;">Covarianza muestral</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>cor(x, y)</code></td>
+<td style="text-align: left;">Correlación de Pearson</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>cor.test(x, y)</code></td>
+<td style="text-align: left;">Prueba de hipótesis para la correlación</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>lm(Y ~ X, data)</code></td>
+<td style="text-align: left;">Regresión lineal (simple o múltiple)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>summary(modelo)</code></td>
+<td style="text-align: left;">Resumen del modelo: coeficientes, <span class="math inline">\(R^2\)</span>, <span class="math inline">\(F\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>fitted(modelo)</code></td>
+<td style="text-align: left;">Valores ajustados <span class="math inline">\(\hat{Y}_i\)</span></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>residuals(modelo)</code></td>
+<td style="text-align: left;">Residuos <span class="math inline">\(e_i\)</span></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>predict(modelo, newdata)</code></td>
+<td style="text-align: left;">Predicciones para nuevos datos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>plot(modelo)</code></td>
+<td style="text-align: left;">Gráficos de diagnóstico (4 paneles)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>glm(Y ~ X, family = binomial)</code></td>
+<td style="text-align: left;">Regresión logística</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>exp(coef(modelo))</code></td>
+<td style="text-align: left;">Odds ratios en regresión logística</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="ejercicios" class="level2 unnumbered">
+<h2 class="unnumbered anchored" data-anchor-id="ejercicios">Ejercicios</h2>
+<div id="exr-dispersion" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7.1</strong></span> <strong>Interpretación del diagrama de dispersión</strong></p>
+<div class="webex-check webex-box">
+Al observar un diagrama de dispersión, si los puntos siguen de cerca una línea con pendiente negativa, la relación es:
+<div id="radio_OXXVVXFFSJ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_OXXVVXFFSJ" value=""> <span>Positiva y fuerte</span></label><label><input type="radio" autocomplete="off" name="radio_OXXVVXFFSJ" value="answer"> <span>Negativa y fuerte</span></label><label><input type="radio" autocomplete="off" name="radio_OXXVVXFFSJ" value=""> <span>Negativa y débil</span></label><label><input type="radio" autocomplete="off" name="radio_OXXVVXFFSJ" value=""> <span>Nula</span></label>
+</div>
+Si un diagrama de dispersión muestra una nube de puntos con forma de U invertida (parabólica), lo más apropiado es concluir que:
+<div id="radio_KKQXSOEWUW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KKQXSOEWUW" value=""> <span>No existe relación entre las variables</span></label><label><input type="radio" autocomplete="off" name="radio_KKQXSOEWUW" value=""> <span>La correlación de Pearson será cercana a 1</span></label><label><input type="radio" autocomplete="off" name="radio_KKQXSOEWUW" value="answer"> <span>Puede existir una relación, pero no es lineal</span></label><label><input type="radio" autocomplete="off" name="radio_KKQXSOEWUW" value=""> <span>La covarianza será negativa</span></label>
+</div>
+</div>
+</div>
+<div id="exr-correlacion" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7.2</strong></span> <strong>Correlación de Pearson</strong></p>
+<div class="webex-check webex-box">
+¿Cuál es la principal ventaja del coeficiente de correlación de Pearson frente a la covarianza?
+<div id="radio_IHCUJWEKPG" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IHCUJWEKPG" value=""> <span>Siempre implica causalidad entre las variables</span></label><label><input type="radio" autocomplete="off" name="radio_IHCUJWEKPG" value="answer"> <span>No depende de las unidades de medida</span></label><label><input type="radio" autocomplete="off" name="radio_IHCUJWEKPG" value=""> <span>Solo se aplica a relaciones no lineales</span></label><label><input type="radio" autocomplete="off" name="radio_IHCUJWEKPG" value=""> <span>Puede tomar cualquier valor real</span></label>
+</div>
+Un investigador obtiene r = -0.85 entre temperatura nocturna y rendimiento de banano. ¿Cuál afirmación es correcta?
+<div id="radio_AZBLZCJWPD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_AZBLZCJWPD" value=""> <span>Las bajas temperaturas causan mayor rendimiento</span></label><label><input type="radio" autocomplete="off" name="radio_AZBLZCJWPD" value=""> <span>La relación es positiva y fuerte</span></label><label><input type="radio" autocomplete="off" name="radio_AZBLZCJWPD" value="answer"> <span>Existe una relación negativa fuerte, pero la correlación sola no establece causalidad</span></label><label><input type="radio" autocomplete="off" name="radio_AZBLZCJWPD" value=""> <span>La covarianza es necesariamente cero</span></label>
+</div>
+</div>
+</div>
+<div id="exr-regsimple" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7.3</strong></span> <strong>Regresión lineal simple</strong></p>
+<div class="webex-check webex-box">
+En la ecuación de regresión lineal simple Ŷ = β₀ + β₁X, el parámetro β₁ representa:
+<div id="radio_EZDYXPJMGV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_EZDYXPJMGV" value=""> <span>El valor de Y cuando X = 0</span></label><label><input type="radio" autocomplete="off" name="radio_EZDYXPJMGV" value=""> <span>La correlación entre X y Y</span></label><label><input type="radio" autocomplete="off" name="radio_EZDYXPJMGV" value="answer"> <span>El cambio promedio en Y por cada unidad de cambio en X</span></label><label><input type="radio" autocomplete="off" name="radio_EZDYXPJMGV" value=""> <span>El error del modelo</span></label>
+</div>
+¿Por qué en MCO se minimiza la suma de cuadrados de los errores y no la suma de los errores?
+<div id="radio_ZMXMRDKTYO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZMXMRDKTYO" value=""> <span>Porque los errores son siempre positivos</span></label><label><input type="radio" autocomplete="off" name="radio_ZMXMRDKTYO" value=""> <span>Porque la suma de cuadrados es más fácil de calcular</span></label><label><input type="radio" autocomplete="off" name="radio_ZMXMRDKTYO" value="answer"> <span>Porque la suma de los errores siempre es igual a cero, por lo que no sirve para discriminar entre modelos</span></label><label><input type="radio" autocomplete="off" name="radio_ZMXMRDKTYO" value=""> <span>Porque los cuadrados son siempre menores que los errores originales</span></label>
+</div>
+</div>
+</div>
+<div id="exr-r2" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7.4</strong></span> <strong>Bondad de ajuste</strong></p>
+<div class="webex-check webex-box">
+Un modelo de regresión simple tiene R² = 0.72. ¿Cuál es la interpretación correcta?
+<div id="radio_PYVWQJGTLB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PYVWQJGTLB" value=""> <span>El 72% de las observaciones están sobre la recta de regresión</span></label><label><input type="radio" autocomplete="off" name="radio_PYVWQJGTLB" value=""> <span>La correlación entre X y Y es 0.72</span></label><label><input type="radio" autocomplete="off" name="radio_PYVWQJGTLB" value="answer"> <span>El 72% de la variabilidad de Y es explicada por el modelo</span></label><label><input type="radio" autocomplete="off" name="radio_PYVWQJGTLB" value=""> <span>El modelo predice correctamente el 72% de los casos</span></label>
+</div>
+¿Por qué se prefiere el R² ajustado sobre el R² ordinario al comparar modelos con diferente número de variables?
+<div id="radio_SWQTKWIWFD" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_SWQTKWIWFD" value=""> <span>Porque el R² ajustado siempre es mayor</span></label><label><input type="radio" autocomplete="off" name="radio_SWQTKWIWFD" value=""> <span>Porque el R² ordinario no puede calcularse en regresión múltiple</span></label><label><input type="radio" autocomplete="off" name="radio_SWQTKWIWFD" value="answer"> <span>Porque el R² ordinario siempre aumenta al añadir variables, incluso si no son útiles</span></label><label><input type="radio" autocomplete="off" name="radio_SWQTKWIWFD" value=""> <span>Porque el R² ajustado es más fácil de calcular</span></label>
+</div>
+</div>
+</div>
+<div id="exr-logistica" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7.5</strong></span> <strong>Regresión logística</strong></p>
+<div class="webex-check webex-box">
+¿Por qué no es apropiado usar regresión lineal ordinaria cuando la variable respuesta es binaria (0/1)?
+<div id="radio_GAUJZPMJCL" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_GAUJZPMJCL" value=""> <span>Porque lm() no acepta datos binarios</span></label><label><input type="radio" autocomplete="off" name="radio_GAUJZPMJCL" value=""> <span>Porque la correlación entre variables binarias siempre es cero</span></label><label><input type="radio" autocomplete="off" name="radio_GAUJZPMJCL" value="answer"> <span>Porque la regresión lineal puede producir predicciones fuera del rango [0,1], que no tienen interpretación como probabilidades</span></label><label><input type="radio" autocomplete="off" name="radio_GAUJZPMJCL" value=""> <span>Porque los residuos de una variable binaria siempre son normales</span></label>
+</div>
+En regresión logística, un odds ratio de 1.15 para la humedad relativa significa:
+<div id="radio_BDWMUAHBKQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BDWMUAHBKQ" value=""> <span>La probabilidad de monilia aumenta en 15 puntos porcentuales por cada % de humedad</span></label><label><input type="radio" autocomplete="off" name="radio_BDWMUAHBKQ" value="answer"> <span>Por cada punto porcentual de aumento en humedad relativa, los odds de presencia de monilia se multiplican por 1.15</span></label><label><input type="radio" autocomplete="off" name="radio_BDWMUAHBKQ" value=""> <span>La correlación entre humedad y monilia es 0.15</span></label><label><input type="radio" autocomplete="off" name="radio_BDWMUAHBKQ" value=""> <span>La humedad reduce la probabilidad de monilia en un 15%</span></label>
+</div>
+</div>
+</div>
+<div id="exr-libre" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 7.6</strong></span> <strong>Análisis libre en R</strong></p>
+<p>Usando el conjunto de datos <code>cacao</code> del capítulo:</p>
+<ol type="1">
+<li>Construye el diagrama de dispersión de <code>precipitacion</code> vs <code>rendimiento</code> e interpreta la relación.</li>
+<li>Calcula la correlación entre <code>precipitacion</code> y <code>rendimiento</code> y realiza la prueba de hipótesis.</li>
+<li>Ajusta un modelo de regresión simple con <code>precipitacion</code> como predictor.</li>
+<li>Compara el <span class="math inline">\(R^2\)</span> del modelo simple (<code>fertilizacion</code>) con el modelo múltiple (<code>fertilizacion + precipitacion</code>). ¿Mejoró el ajuste?</li>
+<li>Genera los gráficos de diagnóstico del modelo múltiple e identifica si se cumplen los supuestos.</li>
+</ol>
+<div class="cell">
+<div>
+<div id="webr-11" class="exercise-cell">
+
+</div>
+<script type="webr-11-contents">
+eyJhdHRyIjp7ImVkaXQiOnRydWUsImV2YWwiOnRydWV9LCJjb2RlIjoiIyBUdSBhbsOhbGlzaXMgYXF1w60ifQ==
+</script>
+</div>
+</div>
+</div>
 
 
 
 <script type="webr-data">
-eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC40LjEvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
+eyJvcHRpb25zIjp7ImJhc2VVcmwiOiJodHRwczovL3dlYnIuci13YXNtLm9yZy92MC41LjgvIn0sInBhY2thZ2VzIjp7InBrZ3MiOlsiZXZhbHVhdGUiLCJrbml0ciIsImh0bWx0b29scyJdLCJyZXBvcyI6W119LCJyZW5kZXJfZGYiOiJkZWZhdWx0In0=
 </script>
 <script type="ojs-module-contents">
-eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8xO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0xLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8xLCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici1wcmVsdWRlIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoid2ViUk9qcyA9IHtcbiAgY29uc3QgeyBXZWJSIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lLldlYlI7XG4gIGNvbnN0IHtcbiAgICBXZWJSRXZhbHVhdG9yLFxuICAgIFdlYlJFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBSLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGhcbiAgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc3RhdHVzQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLXN0YXR1c1wiKTtcbiAgY29uc3QgaW5kaWNhdG9yQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaW5kaWNhdG9yQ29udGFpbmVyLmNsYXNzTGlzdC5yZW1vdmUoXCJkLW5vbmVcIik7XG5cbiAgbGV0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpXG4gIHN0YXR1c1RleHQuY2xhc3NMaXN0ID0gXCJleGVyY2lzZS1sb2FkaW5nLWRldGFpbHNcIjtcbiAgc3RhdHVzVGV4dCA9IHN0YXR1c0NvbnRhaW5lci5hcHBlbmRDaGlsZChzdGF0dXNUZXh0KTtcbiAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbml0aWFsaXNlYDtcblxuICAvLyBIb2lzdCBpbmRpY2F0b3Igb3V0IGZyb20gZmluYWwgc2xpZGUgd2hlbiBydW5uaW5nIHVuZGVyIHJldmVhbFxuICBjb25zdCByZXZlYWxTdGF0dXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCAuZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGlmIChyZXZlYWxTdGF0dXMpIHtcbiAgICByZXZlYWxTdGF0dXMucmVtb3ZlKCk7XG4gICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgPiAuc2xpZGVzXCIpLmFwcGVuZENoaWxkKHJldmVhbFN0YXR1cyk7XG4gIH1cblxuICAvLyBNYWtlIGFueSByZXZlYWwgc2xpZGVzIHdpdGggbGl2ZSBjZWxscyBzY3JvbGxhYmxlXG4gIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoXCIucmV2ZWFsIC5leGVyY2lzZS1jZWxsXCIpLmZvckVhY2goKGVsKSA9PiB7XG4gICAgZWwuY2xvc2VzdCgnc2VjdGlvbi5zbGlkZScpLmNsYXNzTGlzdC5hZGQoXCJzY3JvbGxhYmxlXCIpO1xuICB9KVxuXG4gIC8vIHdlYlIgc3VwcGxlbWVudGFsIGRhdGEgYW5kIG9wdGlvbnNcbiAgY29uc3QgZGF0YUNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici1kYXRhXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZGF0YSA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGRhdGFDb250ZW50KSk7XG5cbiAgLy8gR3JhYiBsaXN0IG9mIHJlc291cmNlcyB0byBiZSBkb3dubG9hZGVkXG4gIGNvbnN0IGZpbGVzQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ2ZnMtZmlsZVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGZpbGVzID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZmlsZXNDb250ZW50KSk7XG5cbiAgLy8gSW5pdGlhbGlzZSB3ZWJSIGFuZCBzZXR1cCBmb3IgUiBjb2RlIGV2YWx1YXRpb25cbiAgbGV0IHdlYlJQcm9taXNlID0gKGFzeW5jICh3ZWJSKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyB3ZWJSYDtcbiAgICBhd2FpdCB3ZWJSLmluaXQoKTtcblxuICAgIC8vIEluc3RhbGwgcHJvdmlkZWQgbGlzdCBvZiBwYWNrYWdlc1xuICAgIC8vIEVuc3VyZSB3ZWJSIGRlZmF1bHQgcmVwbyBpcyBpbmNsdWRlZFxuICAgIGRhdGEucGFja2FnZXMucmVwb3MucHVzaChcImh0dHBzOi8vcmVwby5yLXdhc20ub3JnXCIpXG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gd2ViUi5ldmFsUlZvaWQoYFxuICAgICAgICB3ZWJyOjppbnN0YWxsKHBrZywgcmVwb3MgPSByZXBvcylcbiAgICAgICAgbGlicmFyeShwa2csIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICAgIGAsIHsgZW52OiB7XG4gICAgICAgIHBrZzogcGtnLFxuICAgICAgICByZXBvczogZGF0YS5wYWNrYWdlcy5yZXBvcyxcbiAgICAgIH19KTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICB0cnkge1xuICAgICAgICAgIGF3YWl0IHdlYlIuRlMubWtkaXIocGF0aCk7XG4gICAgICAgIH0gY2F0Y2ggKGUpIHtcbiAgICAgICAgICBpZiAoIWUubWVzc2FnZS5pbmNsdWRlcyhcIkZTIGVycm9yXCIpKSB7XG4gICAgICAgICAgICB0aHJvdyBlO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgcmV0dXJuIGF3YWl0IHdlYlIuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5zdGFsbGluZyB3ZWJSIHNoaW1zYDtcbiAgICBhd2FpdCB3ZWJSLmV2YWxSVm9pZChgd2Vicjo6c2hpbV9pbnN0YWxsKClgKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgV2ViUiBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBSKHdlYlIsIGRhdGEpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHdlYlI7XG4gIH0pKG5ldyBXZWJSKGRhdGEub3B0aW9ucykpO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCB3ZWJSID0gYXdhaXQgd2ViUlByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFdlYlJFdmFsdWF0b3Iod2ViUiwgY29udGV4dClcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBwcm9jZXNzLFxuICAgIHdlYlJQcm9taXNlLFxuICAgIHJlbmRlcmVkT2pzLFxuICB9O1xufVxuIn1dfQ==
+eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzExID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMTA7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xMCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzEwID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMTAtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xMC1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8xMCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMTAsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC05IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV85O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItOSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzkgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici05LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItOS1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV85ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl85LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtOCIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfODtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTgiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl84ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItOC1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTgtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfOCA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfOCwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTciLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzc7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici03IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNyA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTctY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici03LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzcgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzcsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC02IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV82O1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItNiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzYgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici02LWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItNi1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV82ID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl82LCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtNSIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfNTtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl81ID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItNS1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTUtY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfNSA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfNSwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTQiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzQ7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici00IiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfNCA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTQtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici00LWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzQgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzQsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0zIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldFF1aWV0Iiwic291cmNlIjoie1xuICAvLyBXYWl0IGZvciBvdXRwdXQgdG8gYmUgd3JpdHRlbiB0byB0aGUgRE9NLCB0aGVuIHRyaWdnZXIgd2lkZ2V0IHJlbmRlcmluZ1xuICBhd2FpdCBfd2Vicl92YWx1ZV8zO1xuICBpZiAod2luZG93LkhUTUxXaWRnZXRzKSB7XG4gICAgd2luZG93LkhUTUxXaWRnZXRzLnN0YXRpY1JlbmRlcigpO1xuICB9XG4gIGlmICh3aW5kb3cuUGFnZWRUYWJsZURvYykge1xuICAgIHdpbmRvdy5QYWdlZFRhYmxlRG9jLmluaXRBbGwoKTtcbiAgfVxufVxuIn0seyJjZWxsTmFtZSI6IndlYnItMyIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXQiLCJzb3VyY2UiOiJ2aWV3b2YgX3dlYnJfZWRpdG9yXzMgPSB7XG4gIGNvbnN0IHsgV2ViUkV4ZXJjaXNlRWRpdG9yLCBiNjREZWNvZGUgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG4gIGNvbnN0IHNjcmlwdENvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici0zLWNvbnRlbnRzXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgYmxvY2sgPSBKU09OLnBhcnNlKGI2NERlY29kZShzY3JpcHRDb250ZW50KSk7XG5cbiAgY29uc3Qgb3B0aW9ucyA9IE9iamVjdC5hc3NpZ24oeyBpZDogYHdlYnItMy1jb250ZW50c2AgfSwgYmxvY2suYXR0cik7XG4gIGNvbnN0IGVkaXRvciA9IG5ldyBXZWJSRXhlcmNpc2VFZGl0b3Iod2ViUk9qcy53ZWJSUHJvbWlzZSwgYmxvY2suY29kZSwgb3B0aW9ucyk7XG5cbiAgcmV0dXJuIGVkaXRvci5jb250YWluZXI7XG59XG5fd2Vicl92YWx1ZV8zID0gd2ViUk9qcy5wcm9jZXNzKF93ZWJyX2VkaXRvcl8zLCB7fSk7XG4ifSx7ImNlbGxOYW1lIjoid2Vici13aWRnZXQtMiIsImlubGluZSI6ZmFsc2UsIm1ldGhvZE5hbWUiOiJpbnRlcnByZXRRdWlldCIsInNvdXJjZSI6IntcbiAgLy8gV2FpdCBmb3Igb3V0cHV0IHRvIGJlIHdyaXR0ZW4gdG8gdGhlIERPTSwgdGhlbiB0cmlnZ2VyIHdpZGdldCByZW5kZXJpbmdcbiAgYXdhaXQgX3dlYnJfdmFsdWVfMjtcbiAgaWYgKHdpbmRvdy5IVE1MV2lkZ2V0cykge1xuICAgIHdpbmRvdy5IVE1MV2lkZ2V0cy5zdGF0aWNSZW5kZXIoKTtcbiAgfVxuICBpZiAod2luZG93LlBhZ2VkVGFibGVEb2MpIHtcbiAgICB3aW5kb3cuUGFnZWRUYWJsZURvYy5pbml0QWxsKCk7XG4gIH1cbn1cbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLTIiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0Iiwic291cmNlIjoidmlld29mIF93ZWJyX2VkaXRvcl8yID0ge1xuICBjb25zdCB7IFdlYlJFeGVyY2lzZUVkaXRvciwgYjY0RGVjb2RlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lO1xuICBjb25zdCBzY3JpcHRDb250ZW50ID0gZG9jdW1lbnQucXVlcnlTZWxlY3Rvcihgc2NyaXB0W3R5cGU9XFxcIndlYnItMi1jb250ZW50c1xcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGJsb2NrID0gSlNPTi5wYXJzZShiNjREZWNvZGUoc2NyaXB0Q29udGVudCkpO1xuXG4gIGNvbnN0IG9wdGlvbnMgPSBPYmplY3QuYXNzaWduKHsgaWQ6IGB3ZWJyLTItY29udGVudHNgIH0sIGJsb2NrLmF0dHIpO1xuICBjb25zdCBlZGl0b3IgPSBuZXcgV2ViUkV4ZXJjaXNlRWRpdG9yKHdlYlJPanMud2ViUlByb21pc2UsIGJsb2NrLmNvZGUsIG9wdGlvbnMpO1xuXG4gIHJldHVybiBlZGl0b3IuY29udGFpbmVyO1xufVxuX3dlYnJfdmFsdWVfMiA9IHdlYlJPanMucHJvY2Vzcyhfd2Vicl9lZGl0b3JfMiwge30pO1xuIn0seyJjZWxsTmFtZSI6IndlYnItd2lkZ2V0LTEiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ7XG4gIC8vIFdhaXQgZm9yIG91dHB1dCB0byBiZSB3cml0dGVuIHRvIHRoZSBET00sIHRoZW4gdHJpZ2dlciB3aWRnZXQgcmVuZGVyaW5nXG4gIGF3YWl0IF93ZWJyX3ZhbHVlXzE7XG4gIGlmICh3aW5kb3cuSFRNTFdpZGdldHMpIHtcbiAgICB3aW5kb3cuSFRNTFdpZGdldHMuc3RhdGljUmVuZGVyKCk7XG4gIH1cbiAgaWYgKHdpbmRvdy5QYWdlZFRhYmxlRG9jKSB7XG4gICAgd2luZG93LlBhZ2VkVGFibGVEb2MuaW5pdEFsbCgpO1xuICB9XG59XG4ifSx7ImNlbGxOYW1lIjoid2Vici0xIiwiaW5saW5lIjpmYWxzZSwibWV0aG9kTmFtZSI6ImludGVycHJldCIsInNvdXJjZSI6InZpZXdvZiBfd2Vicl9lZGl0b3JfMSA9IHtcbiAgY29uc3QgeyBXZWJSRXhlcmNpc2VFZGl0b3IsIGI2NERlY29kZSB9ID0gd2luZG93Ll9leGVyY2lzZV9vanNfcnVudGltZTtcbiAgY29uc3Qgc2NyaXB0Q29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ3ZWJyLTEtY29udGVudHNcXFwiXWApLnRleHRDb250ZW50O1xuICBjb25zdCBibG9jayA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKHNjcmlwdENvbnRlbnQpKTtcblxuICBjb25zdCBvcHRpb25zID0gT2JqZWN0LmFzc2lnbih7IGlkOiBgd2Vici0xLWNvbnRlbnRzYCB9LCBibG9jay5hdHRyKTtcbiAgY29uc3QgZWRpdG9yID0gbmV3IFdlYlJFeGVyY2lzZUVkaXRvcih3ZWJST2pzLndlYlJQcm9taXNlLCBibG9jay5jb2RlLCBvcHRpb25zKTtcblxuICByZXR1cm4gZWRpdG9yLmNvbnRhaW5lcjtcbn1cbl93ZWJyX3ZhbHVlXzEgPSB3ZWJST2pzLnByb2Nlc3MoX3dlYnJfZWRpdG9yXzEsIHt9KTtcbiJ9LHsiY2VsbE5hbWUiOiJ3ZWJyLXByZWx1ZGUiLCJpbmxpbmUiOmZhbHNlLCJtZXRob2ROYW1lIjoiaW50ZXJwcmV0UXVpZXQiLCJzb3VyY2UiOiJ3ZWJST2pzID0ge1xuICBjb25zdCB7IFdlYlIsIENoYW5uZWxUeXBlIH0gPSB3aW5kb3cuX2V4ZXJjaXNlX29qc19ydW50aW1lLldlYlI7XG4gIGNvbnN0IHtcbiAgICBXZWJSRXZhbHVhdG9yLFxuICAgIFdlYlJFbnZpcm9ubWVudE1hbmFnZXIsXG4gICAgc2V0dXBSLFxuICAgIGI2NERlY29kZSxcbiAgICBjb2xsYXBzZVBhdGhcbiAgfSA9IHdpbmRvdy5fZXhlcmNpc2Vfb2pzX3J1bnRpbWU7XG5cbiAgY29uc3Qgc3RhdHVzQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLXN0YXR1c1wiKTtcbiAgY29uc3QgaW5kaWNhdG9yQ29udGFpbmVyID0gZG9jdW1lbnQuZ2V0RWxlbWVudEJ5SWQoXCJleGVyY2lzZS1sb2FkaW5nLWluZGljYXRvclwiKTtcbiAgaW5kaWNhdG9yQ29udGFpbmVyLmNsYXNzTGlzdC5yZW1vdmUoXCJkLW5vbmVcIik7XG5cbiAgbGV0IHN0YXR1c1RleHQgPSBkb2N1bWVudC5jcmVhdGVFbGVtZW50KFwiZGl2XCIpXG4gIHN0YXR1c1RleHQuY2xhc3NMaXN0ID0gXCJleGVyY2lzZS1sb2FkaW5nLWRldGFpbHNcIjtcbiAgc3RhdHVzVGV4dCA9IHN0YXR1c0NvbnRhaW5lci5hcHBlbmRDaGlsZChzdGF0dXNUZXh0KTtcbiAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBJbml0aWFsaXNlYDtcblxuICAvLyBIb2lzdCBpbmRpY2F0b3Igb3V0IGZyb20gZmluYWwgc2xpZGUgd2hlbiBydW5uaW5nIHVuZGVyIHJldmVhbFxuICBjb25zdCByZXZlYWxTdGF0dXMgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKFwiLnJldmVhbCAuZXhlcmNpc2UtbG9hZGluZy1pbmRpY2F0b3JcIik7XG4gIGlmIChyZXZlYWxTdGF0dXMpIHtcbiAgICByZXZlYWxTdGF0dXMucmVtb3ZlKCk7XG4gICAgZG9jdW1lbnQucXVlcnlTZWxlY3RvcihcIi5yZXZlYWwgPiAuc2xpZGVzXCIpLmFwcGVuZENoaWxkKHJldmVhbFN0YXR1cyk7XG4gIH1cblxuICAvLyBNYWtlIGFueSByZXZlYWwgc2xpZGVzIHdpdGggbGl2ZSBjZWxscyBzY3JvbGxhYmxlXG4gIGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3JBbGwoXCIucmV2ZWFsIC5leGVyY2lzZS1jZWxsXCIpLmZvckVhY2goKGVsKSA9PiB7XG4gICAgZWwuY2xvc2VzdCgnc2VjdGlvbi5zbGlkZScpLmNsYXNzTGlzdC5hZGQoXCJzY3JvbGxhYmxlXCIpO1xuICB9KVxuXG4gIC8vIHdlYlIgc3VwcGxlbWVudGFsIGRhdGEgYW5kIG9wdGlvbnNcbiAgY29uc3QgZGF0YUNvbnRlbnQgPSBkb2N1bWVudC5xdWVyeVNlbGVjdG9yKGBzY3JpcHRbdHlwZT1cXFwid2Vici1kYXRhXFxcIl1gKS50ZXh0Q29udGVudDtcbiAgY29uc3QgZGF0YSA9IEpTT04ucGFyc2UoYjY0RGVjb2RlKGRhdGFDb250ZW50KSk7XG5cbiAgLy8gR3JhYiBsaXN0IG9mIHJlc291cmNlcyB0byBiZSBkb3dubG9hZGVkXG4gIGNvbnN0IGZpbGVzQ29udGVudCA9IGRvY3VtZW50LnF1ZXJ5U2VsZWN0b3IoYHNjcmlwdFt0eXBlPVxcXCJ2ZnMtZmlsZVxcXCJdYCkudGV4dENvbnRlbnQ7XG4gIGNvbnN0IGZpbGVzID0gSlNPTi5wYXJzZShiNjREZWNvZGUoZmlsZXNDb250ZW50KSk7XG5cbiAgLy8gSW5pdGlhbGlzZSB3ZWJSIGFuZCBzZXR1cCBmb3IgUiBjb2RlIGV2YWx1YXRpb25cbiAgbGV0IHdlYlJQcm9taXNlID0gKGFzeW5jICh3ZWJSKSA9PiB7XG4gICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyB3ZWJSYDtcbiAgICBhd2FpdCB3ZWJSLmluaXQoKTtcblxuICAgIC8vIEluc3RhbGwgcHJvdmlkZWQgbGlzdCBvZiBwYWNrYWdlc1xuICAgIC8vIEVuc3VyZSB3ZWJSIGRlZmF1bHQgcmVwbyBpcyBpbmNsdWRlZFxuICAgIGRhdGEucGFja2FnZXMucmVwb3MucHVzaChcImh0dHBzOi8vcmVwby5yLXdhc20ub3JnXCIpXG4gICAgYXdhaXQgZGF0YS5wYWNrYWdlcy5wa2dzLm1hcCgocGtnKSA9PiAoKSA9PiB7XG4gICAgICBzdGF0dXNUZXh0LnRleHRDb250ZW50ID0gYERvd25sb2FkaW5nIHBhY2thZ2U6ICR7cGtnfWA7XG4gICAgICByZXR1cm4gd2ViUi5ldmFsUlZvaWQoYFxuICAgICAgICB3ZWJyOjppbnN0YWxsKHBrZywgcmVwb3MgPSByZXBvcylcbiAgICAgICAgbGlicmFyeShwa2csIGNoYXJhY3Rlci5vbmx5ID0gVFJVRSlcbiAgICAgIGAsIHsgZW52OiB7XG4gICAgICAgIHBrZzogcGtnLFxuICAgICAgICByZXBvczogZGF0YS5wYWNrYWdlcy5yZXBvcyxcbiAgICAgIH19KTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIC8vIERvd25sb2FkIGFuZCBpbnN0YWxsIHJlc291cmNlc1xuICAgIGF3YWl0IGZpbGVzLm1hcCgoZmlsZSkgPT4gYXN5bmMgKCkgPT4ge1xuICAgICAgY29uc3QgbmFtZSA9IGZpbGUuc3Vic3RyaW5nKGZpbGUubGFzdEluZGV4T2YoJy8nKSArIDEpO1xuICAgICAgc3RhdHVzVGV4dC50ZXh0Q29udGVudCA9IGBEb3dubG9hZGluZyByZXNvdXJjZTogJHtuYW1lfWA7XG4gICAgICBjb25zdCByZXNwb25zZSA9IGF3YWl0IGZldGNoKGZpbGUpO1xuICAgICAgaWYgKCFyZXNwb25zZS5vaykge1xuICAgICAgICB0aHJvdyBuZXcgRXJyb3IoYENhbid0IGRvd25sb2FkIFxcYCR7ZmlsZX1cXGAuIEVycm9yICR7cmVzcG9uc2Uuc3RhdHVzfTogXCIke3Jlc3BvbnNlLnN0YXR1c1RleHR9XCIuYCk7XG4gICAgICB9XG4gICAgICBjb25zdCBkYXRhID0gYXdhaXQgcmVzcG9uc2UuYXJyYXlCdWZmZXIoKTtcblxuICAgICAgLy8gU3RvcmUgVVJMcyBpbiB0aGUgY3dkIHdpdGhvdXQgYW55IHN1YmRpcmVjdG9yeSBzdHJ1Y3R1cmVcbiAgICAgIGlmIChmaWxlLmluY2x1ZGVzKFwiOi8vXCIpKSB7XG4gICAgICAgIGZpbGUgPSBuYW1lO1xuICAgICAgfVxuXG4gICAgICAvLyBDb2xsYXBzZSBoaWdoZXIgZGlyZWN0b3J5IHN0cnVjdHVyZVxuICAgICAgZmlsZSA9IGNvbGxhcHNlUGF0aChmaWxlKTtcblxuICAgICAgLy8gQ3JlYXRlIGRpcmVjdG9yeSB0cmVlLCBpZ25vcmluZyBcImRpcmVjdG9yeSBleGlzdHNcIiBWRlMgZXJyb3JzXG4gICAgICBjb25zdCBwYXJ0cyA9IGZpbGUuc3BsaXQoJy8nKS5zbGljZSgwLCAtMSk7XG4gICAgICBsZXQgcGF0aCA9ICcnO1xuICAgICAgd2hpbGUgKHBhcnRzLmxlbmd0aCA+IDApIHtcbiAgICAgICAgcGF0aCArPSBwYXJ0cy5zaGlmdCgpICsgJy8nO1xuICAgICAgICBjb25zdCBhbmFseXNpcyA9IGF3YWl0IHdlYlIuRlMuYW5hbHl6ZVBhdGgocGF0aCk7XG4gICAgICAgIGlmICghYW5hbHlzaXMuZXhpc3RzKSB7XG4gICAgICAgICAgdHJ5IHtcbiAgICAgICAgICAgIGF3YWl0IHdlYlIuRlMubWtkaXIocGF0aCk7XG4gICAgICAgICAgfSBjYXRjaCAoZSkge1xuICAgICAgICAgICAgdGhyb3cgbmV3IEVycm9yKGBGaWxlc3lzdGVtIEVycm9yOiBcIiR7ZS5tZXNzYWdlfVwiLmApO1xuICAgICAgICAgIH1cbiAgICAgICAgfVxuICAgICAgfVxuXG4gICAgICAvLyBXcml0ZSB0aGlzIGZpbGUgdG8gdGhlIFZGU1xuICAgICAgcmV0dXJuIGF3YWl0IHdlYlIuRlMud3JpdGVGaWxlKGZpbGUsIG5ldyBVaW50OEFycmF5KGRhdGEpKTtcbiAgICB9KS5yZWR1Y2UoKGN1ciwgbmV4dCkgPT4gY3VyLnRoZW4obmV4dCksIFByb21pc2UucmVzb2x2ZSgpKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgSW5zdGFsbGluZyB3ZWJSIHNoaW1zYDtcbiAgICBhd2FpdCB3ZWJSLmV2YWxSVm9pZChgd2Vicjo6c2hpbV9pbnN0YWxsKClgKTtcblxuICAgIHN0YXR1c1RleHQudGV4dENvbnRlbnQgPSBgV2ViUiBlbnZpcm9ubWVudCBzZXR1cGA7XG4gICAgYXdhaXQgc2V0dXBSKHdlYlIsIGRhdGEpO1xuXG4gICAgc3RhdHVzVGV4dC5yZW1vdmUoKTtcbiAgICBpZiAoc3RhdHVzQ29udGFpbmVyLmNoaWxkcmVuLmxlbmd0aCA9PSAwKSB7XG4gICAgICBzdGF0dXNDb250YWluZXIucGFyZW50Tm9kZS5yZW1vdmUoKTtcbiAgICB9XG4gICAgcmV0dXJuIHdlYlI7XG4gIH0pKG5ldyBXZWJSKGRhdGEub3B0aW9ucykpO1xuXG4gIC8vIEtlZXAgdHJhY2sgb2YgaW5pdGlhbCBPSlMgYmxvY2sgcmVuZGVyXG4gIGNvbnN0IHJlbmRlcmVkT2pzID0ge307XG5cbiAgY29uc3QgcHJvY2VzcyA9IGFzeW5jIChjb250ZXh0LCBpbnB1dHMpID0+IHtcbiAgICBjb25zdCB3ZWJSID0gYXdhaXQgd2ViUlByb21pc2U7XG4gICAgY29uc3QgZXZhbHVhdG9yID0gbmV3IFdlYlJFdmFsdWF0b3Iod2ViUiwgY29udGV4dClcbiAgICBhd2FpdCBldmFsdWF0b3IucHJvY2VzcyhpbnB1dHMpO1xuICAgIHJldHVybiBldmFsdWF0b3IuY29udGFpbmVyO1xuICB9XG5cbiAgcmV0dXJuIHtcbiAgICBwcm9jZXNzLFxuICAgIHdlYlJQcm9taXNlLFxuICAgIHJlbmRlcmVkT2pzLFxuICB9O1xufVxuIn1dfQ==
 </script>
 <div id="exercise-loading-indicator" class="exercise-loading-indicator d-none d-flex align-items-center gap-2">
 <div id="exercise-loading-status" class="d-flex gap-2">
@@ -291,7 +1568,6 @@ eyJjb250ZW50cyI6W3siY2VsbE5hbWUiOiJ3ZWJyLXdpZGdldC0xIiwiaW5saW5lIjpmYWxzZSwibWV0
 <script type="vfs-file">
 W10=
 </script>
-</section>
 </section>
 
 </main> <!-- /main -->

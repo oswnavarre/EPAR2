@@ -1,0 +1,101 @@
+
+## Ejercicios {.unnumbered}
+
+::: {#exr-doe1}
+Con los datos y el proyecto del @exr-seis. Resuelva las siguientes cuestiones.
+:::
+
+a. ¿Existen diferencias significativas para la altura por variedad en la primera medición?
+b. ¿Existen diferencias significativas para la altura por variedad en la segunda medición?
+c. ¿Existen diferencias significativas para el diámetro por variedad en la tercera medición?
+d. ¿Existen diferencias significativas para el diámetro por variedad en la cosecha?
+e. Crear un conjunto llamado _basetotal_ que contenga los datos previos a la cosecha y de la cosecha. Para lograr esto siga los siguientes pasos:
+   - Cree el conjunto _datosmaiz2_ a partir de _datosmaiz_, renombrando las variables _Medicion_ y _Diametro_ como _Medición_ y _Diámetro_ respectivamente. Cree la variable _DDS_ (15, 30 ó 45 según la medición) y remueva la variable _Fecha_.
+   - Cree el conjunto _cosecha2_ a partir de _cosecha_ con _Medición_ = 4 y _DDS_ = 91.
+   - Una _datosmaiz2_ y _cosecha2_ para crear _basetotal_.
+f. Verifique la existencia de diferencias significativas en las alturas por variedad para todas las mediciones. Guarde los resultados en _valorespalt_.
+g. Verifique la existencia de diferencias significativas en los diámetros por variedad para todas las mediciones. Guarde los resultados en _valorespdiam_.
+h. Guarde _valorespalt_ y _valorespdiam_ en _anova_alt_diam.xlsx_ (hojas: _altura_ y _diametro_).
+
+::: {#exr-doe2}
+Con los datos y el proyecto del @exr-quin3, resolver las siguientes cuestiones.
+:::
+
+a. Crear un archivo llamado _reporte_GAGS.qmd_.
+b. Cargar los paquetes _agricolae_, _tidyverse_, _writexl_, _readxl_ y _jtools_.
+c. Cargar los datos en _data23035_. 
+d. Crear la variable __Diámetro__ como promedio del diámetro horizontal y vertical.
+e. Seleccione los datos hasta la semana 8.
+f. Para evitar el efecto borde, incluya solo las plantas 6, 7, 10 y 11.
+g. Crear una sección **_Análisis de la variable Altura_** (nivel 2).
+h. Crear una subsección **_Análisis descriptivo_** (nivel 3).
+i. Crear la tabla _stats_alt_ con media, desviación, valor crítico $t$ al 95%, error estándar e intervalos de confianza, agrupando por semana y tratamiento.
+j. Graficar la evolución de la altura con barras de error. Guardar en _graficos/evol_alt.png_. Interpretar.
+k. Crear subsección **_Análisis inferencial_** (nivel 3).
+l. En la semana 1: ¿existen diferencias significativas en la altura promedio por tratamiento?
+m. Para las 8 semanas: construir y presentar la tabla de valores $p$ unida con _stats_alt2_, según la @tbl-doe2_1.
+n. Guardar la tabla en _resultados/altura.xlsx_.
+o. Escribir conclusiones.
+
+::: {#exr-doe3}
+Con los datos del @exr-doe1, resuelva lo siguiente.
+:::
+
+a. Usando las pruebas de Fisher, Tukey, Bonferroni y Scheffé, determine las diferencias en alturas en la primera medición.
+b. Repita el literal anterior para la segunda medición.
+c. Cree el objeto _grpsaltm2_ con columnas _Variedad_, _Medición_ y _Grupos_ a partir de la prueba de Fisher para la segunda medición.
+d. Usando Fisher, realice las comparaciones múltiples de medias de altura por variedad para cada medición.
+e. Para la medición 2, grafique un diagrama de caja con grupos de Fisher en la parte superior.
+f. Para todas las mediciones, grafique diagramas de caja con grupos de Fisher. Guarde como _boxaltM1.png_ a _boxaltM4.png_.
+
+::: {#exr-doe4}
+Con los datos del @exr-doe2, resolver las siguientes cuestiones.
+:::
+
+a-i. *(Comparaciones para semanas específicas con Fisher, Tukey y Bonferroni — ver enunciados en la versión original.)*
+j. Usando Tukey, determine las diferencias de la semana 1 a la 8. Presente en tabla adecuada.
+
+::: {#exr-doe5}
+El proyecto de Mark Norman y Daniel Kasawa evaluó un herbicida preemergente combinando biochar y pendimetalina en 6 tratamientos con 4 repeticiones y 2 bloques. Datos en la hoja _biomass_ del archivo _data_MN_DK.xlsx_.
+:::
+
+a. Crear proyecto _Pg_MN_DK_.
+b. Cargar datos de _biomass_ y _dict_biomass_.
+c. Calcular el promedio de las 3 mediciones por repetición con `summarise_at`.
+d. Eliminar los datos del tratamiento 3, repetición 2, bloque B.
+e. Crear la variable **Measurement** a partir de **Date**.
+f. Transformar a formato largo con `pivot_longer` para Height y Diameter. Crear la variable **Week** = 2 × número de medición.
+g. Crear las tablas _stats_all_long_trt_bl_ y _stats_all_long_trt_ con estadísticas descriptivas.
+h. Realizar ANOVA (incluyendo bloque) y prueba de Bonferroni por medición. Almacenar grupos en `groups_trt` y unir con `stats_all_long_trt`.
+i. Guardar gráficos en _graficos/biomass/_.
+j. Crear y guardar la tabla _stats_biomass.xlsx_ según la @tbl-mod2dkmn.
+
+::: {#exr-doe6}
+El proyecto de Adnise Christophe y Meriche Toussaint evaluó el valor nutricional de la fruta pan (*Artocarpus altilis*) en un diseño factorial 4×2 (Componente × Madurez). Datos en _nutricional_24017.xlsx_.
+:::
+
+Analice el efecto del grado de madurez, del componente y de su interacción sobre las variables MS, PC, FDN, FDA, MM, MO y CHOs.
+
+::: {#exr-doe7}
+**Diseño en parcelas divididas.** En un experimento de cacao (*Theobroma cacao* L.) se evaluó el efecto de la densidad de siembra (Factor A: 3 niveles, asignada a parcelas principales) y la variedad (Factor B: 4 variedades, asignadas a subparcelas), en un DBCA con 3 bloques. La variable respuesta fue el rendimiento de cacao seco (kg/ha).
+:::
+
+a. Genere el diseño con `design.split()` de `agricolae`.
+b. Con los datos del archivo _cacao_dpd.xlsx_, realice el análisis del DPD con `sp.plot()`.
+c. Interprete la tabla ANOVA: ¿es significativa la interacción Densidad × Variedad?
+d. Si la interacción es significativa, compare las variedades dentro de cada nivel de densidad usando Tukey.
+e. Elabore un gráfico de barras con barras de error que muestre la interacción Densidad × Variedad.
+f. Escriba las conclusiones del experimento.
+
+::: {#exr-doe9}
+El proyecto de Achieng Akuak y Melissa Moyo utilizó hidroponía DWC para comparar 4 tratamientos (soluciones nutritivas) sobre el crecimiento de lechuga. Datos en la hoja **data** del archivo **data25002.xlsx**.
+:::
+
+a. Crear un proyecto con las carpetas necesarias.
+b. Crear un script y un archivo _.qmd_.
+c. Cargar los datos.
+d. Calcular estadísticas descriptivas para peso húmedo y seco de raíces y brotes, y altura.
+e. Realizar ANOVA y comparaciones múltiples para las variables solicitadas.
+f. Guardar los valores $p$.
+g. Crear visualizaciones apropiadas e interpretarlas.
+

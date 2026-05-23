@@ -1,3 +1,17 @@
+```{r paquetes, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(tidyverse)
+library(agricolae)
+library(jtools)
+library(writexl)
+library(readxl)
+library(DescTools)
+library(cowplot)
+library(formatdown)
+```
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
 # Diseño de experimentos {#doe}
 
 ## Objetivos del capítulo
@@ -7,27 +21,26 @@ Al finalizar este capítulo, el estudiante será capaz de:
 1. Explicar la importancia del diseño experimental en la investigación agrícola y su papel en el control de la variabilidad.
 2. Identificar y diferenciar los conceptos de unidad experimental, tratamiento, repetición, unidad de muestreo y error experimental.
 3. Describir los principios fundamentales del diseño experimental: aleatorización, repetición y bloqueo.
-4. Reconocer y comparar las características de los principales diseños experimentales utilizados en agricultura: diseño completamente al azar, diseño de bloques completos al azar y cuadrado latino.
-5. Aplicar el análisis de varianza (ANOVA) en R para evaluar diferencias entre tratamientos.
-6. Interpretar los resultados del ANOVA y de las pruebas de comparaciones múltiples de medias
+4. Reconocer y comparar las características del diseño completamente al azar (DCA), el diseño de bloques completos al azar (DBCA), el cuadrado latino (CL) y el diseño en parcelas divididas (DPD).
+5. Aplicar el análisis de varianza (ANOVA) en R para evaluar diferencias entre tratamientos en los diseños mencionados.
+6. Verificar los supuestos del ANOVA y aplicar transformaciones o pruebas no paramétricas cuando corresponda.
+7. Interpretar y comparar los resultados de las principales pruebas de comparaciones múltiples de medias.
+8. Implementar diseños factoriales y en parcelas divididas en R usando `aov()` y el paquete `agricolae`.
 
-## Introducción 
+---
+
+## Introducción
 
 En investigación agrícola, las diferencias observadas entre tratamientos no siempre se deben exclusivamente al tratamiento que se desea evaluar. En un experimento de campo, variables como la fertilidad del suelo, la humedad, la sombra, la presencia de malezas, la presión de plagas o pequeñas variaciones en el manejo agronómico pueden influir sobre la respuesta observada. Por esta razón, para obtener conclusiones válidas no basta con aplicar tratamientos y comparar resultados: es necesario planificar cuidadosamente cómo se asignarán los tratamientos a las unidades experimentales y cómo se controlará la variabilidad natural del ambiente.
 
-Supongamos que se desea comparar dos variedades de maíz: una variedad estándar ya conocida, a la que llamaremos V1, y una variedad nueva, a la que llamaremos V2. Una posibilidad aparentemente sencilla sería sembrar la mitad de un campo con V1 y la otra mitad con V2, manejar ambas zonas de la misma manera durante todo el ciclo y, al final, comparar el rendimiento obtenido. Si la variedad nueva produce un 20% más que la variedad estándar, podría pensarse que V2 es superior. Sin embargo, esta conclusión no sería necesariamente correcta. La diferencia observada podría deberse, total o parcialmente, a otras causas, por ejemplo:
+Supongamos que se desea comparar dos variedades de maíz: una variedad estándar ya conocida, a la que llamaremos V1, y una variedad nueva, a la que llamaremos V2. Una posibilidad aparentemente sencilla sería sembrar la mitad de un campo con V1 y la otra mitad con V2, manejar ambas zonas de la misma manera durante todo el ciclo y, al final, comparar el rendimiento obtenido. Si la variedad nueva produce un 20 % más que la variedad estándar, podría pensarse que V2 es superior. Sin embargo, esta conclusión no sería necesariamente correcta. La diferencia observada podría deberse, total o parcialmente, a otras causas:
 
 - V2 pudo haberse sembrado en la parte del terreno con mejor fertilidad.
-
 - Un extremo del campo pudo haber retenido más humedad que el otro.
-
 - Las diferencias de textura del suelo pudieron afectar la disponibilidad de agua.
-
 - Una parte del terreno pudo recibir sombra en ciertas horas del día.
-
-La presencia de malezas pudo haber sido mayor en una mitad del campo.
-
-La cercanía a bosques o áreas silvestres pudo favorecer una mayor incidencia de plagas o enfermedades en uno de los extremos.
+- La presencia de malezas pudo haber sido mayor en una mitad del campo.
+- La cercanía a bosques o áreas silvestres pudo favorecer una mayor incidencia de plagas o enfermedades en uno de los extremos.
 
 En este caso, el experimento no fue preparado para controlar la variabilidad del campo, por lo que no es posible saber con certeza si la diferencia en rendimiento se debe realmente a la variedad o a diferencias en las condiciones de cultivo. Además, al no existir repeticiones adecuadas, tampoco sería posible estimar el error experimental ni aplicar correctamente una prueba estadística.
 
@@ -37,51 +50,44 @@ Aunque el diseño de experimentos tuvo su desarrollo formal en la agricultura, e
 
 En la @sec-tipest se presentaron los tipos de estudio. En este capítulo se desarrollan los principios básicos del diseño experimental y los principales diseños utilizados en agricultura, así como su relación con el análisis de varianza y la comparación de tratamientos.
 
+---
+
 ## Conceptos básicos
 
 Antes de estudiar los distintos diseños experimentales, es necesario definir algunos conceptos fundamentales que aparecen con frecuencia en la planificación y análisis de experimentos agrícolas.
 
-1. **Unidad experimental**: La unidad experimental es el objeto o espacio al cual se aplica un tratamiento de manera independiente y sobre el cual se evalúa la respuesta del experimento. Dependiendo del tipo de estudio, la unidad experimental puede ser un animal, un árbol, una planta individual o una parcela de terreno.
+**1. Unidad experimental**
 
-En experimentos de campo es común que la unidad experimental sea una parcela. En estos casos puede presentarse el efecto borde, el cual debe considerarse al momento de definir el tamaño y la forma de las parcelas.
+La unidad experimental es el objeto o espacio al cual se aplica un tratamiento de manera independiente y sobre el cual se evalúa la respuesta del experimento. Dependiendo del tipo de estudio, la unidad experimental puede ser un animal, un árbol, una planta individual o una parcela de terreno. En experimentos de campo es común que la unidad experimental sea una parcela.
 
 ::: {.callout-note}
 ### Efecto borde
-El efecto borde se refiere a las diferencias en crecimiento o producción que pueden presentar las plantas ubicadas en los bordes de una parcela en comparación con las plantas ubicadas en el interior. Este fenómeno puede ocurrir por diversas razones, entre ellas:
+
+El efecto borde se refiere a las diferencias en crecimiento o producción que pueden presentar las plantas ubicadas en los bordes de una parcela en comparación con las plantas ubicadas en el interior. Este fenómeno puede ocurrir por:
 
 - Menor competencia por luz, agua o nutrientes en los bordes de la parcela.
 - Influencia de parcelas vecinas con tratamientos distintos.
 - Influencia de áreas no cultivadas adyacentes.
 
-Para reducir este efecto, es común excluir las plantas del perímetro al momento de realizar las mediciones o definir áreas útiles dentro de la parcela
+Para reducir este efecto, es común excluir las plantas del perímetro al momento de realizar las mediciones o definir áreas útiles dentro de la parcela.
 :::
 
-2. **Factor**: Un factor es una variable controlada o de interés en un experimento cuyos niveles se comparan para evaluar su efecto sobre una variable respuesta. Los niveles de un factor determinan los tratamientos cuando se considera un solo factor. En experimentos con varios factores, los tratamientos corresponden a las combinaciones de los niveles de dichos factores.
+**2. Factor**
 
-  + Si el factor es “Fertilizante”, sus niveles podrían ser: 0, 50 y 100 kg/ha.
-  + Si el factor es “Variedad”, sus niveles podrían ser: A, B y C.
+Un factor es una variable controlada o de interés en un experimento cuyos niveles se comparan para evaluar su efecto sobre una variable respuesta. Los niveles de un factor determinan los tratamientos cuando se considera un solo factor.
 
-3. **Tratamiento**: Un tratamiento es la condición o intervención cuyo efecto se desea evaluar en un experimento. Los tratamientos representan los diferentes niveles del factor o factores de interés. Cuando un experimento incluye varios factores, un tratamiento corresponde a una combinación específica de niveles de esos factores
+- Si el factor es "Fertilizante", sus niveles podrían ser: 0, 50 y 100 kg/ha.
+- Si el factor es "Variedad", sus niveles podrían ser: A, B y C.
 
-Ejemplos de tratamientos en experimentos agrícolas incluyen:
+**3. Tratamiento**
 
-  + Variedades de cultivos,
-  + Dosis de fertilizante,
-  + Programas de riego,
-  + Diferentes herbicidas o fungicidas,
-  + Combinaciones de temperatura y humedad.
+Un tratamiento es la condición o intervención cuyo efecto se desea evaluar en un experimento. Cuando un experimento incluye varios factores, un tratamiento corresponde a una combinación específica de niveles de esos factores. Ejemplos: variedades de cultivos, dosis de fertilizante, programas de riego, diferentes herbicidas o fungicidas.
 
-El objetivo del experimento es comparar las respuestas obtenidas bajo cada tratamiento para determinar si existen diferencias significativas entre ellos.
+**4. Unidad de muestreo**
 
-4. **Unidad de muestreo**: La unidad de muestreo es la entidad específica sobre la cual se realiza la medición de la variable de interés. En algunos casos la unidad de muestreo coincide con la unidad experimental, pero en otros casos corresponde a una fracción de esta.
+La unidad de muestreo es la entidad específica sobre la cual se realiza la medición de la variable de interés. En algunos casos coincide con la unidad experimental, pero en otros corresponde a una fracción de esta.
 
-Por ejemplo:
-
-  - Si el tratamiento se aplica a una parcela, pero la medición se realiza en 10 plantas dentro de la parcela, la parcela es la unidad experimental y cada planta medida es una unidad de muestreo.
-
-  - Si el tratamiento se aplica a un animal y la medición se realiza sobre ese mismo animal, la unidad experimental y la unidad de muestreo coinciden.
-
-Distinguir correctamente entre unidad experimental y unidad de muestreo es fundamental para evitar errores en el análisis estadístico. Confundir la unidad de muestreo con la unidad experimental puede conducir a errores en el análisis estadístico, como la pseudorreplicación.
+Por ejemplo: si el tratamiento se aplica a una parcela, pero la medición se realiza en 10 plantas dentro de la parcela, la parcela es la unidad experimental y cada planta medida es una unidad de muestreo.
 
 ::: {.callout-warning}
 ### Pseudorreplicación
@@ -89,13 +95,13 @@ Distinguir correctamente entre unidad experimental y unidad de muestreo es funda
 La pseudorreplicación ocurre cuando varias mediciones tomadas dentro de una misma unidad experimental se analizan como si fueran repeticiones independientes del tratamiento. Esto puede inflar artificialmente el tamaño de muestra y conducir a conclusiones incorrectas.
 :::
 
-5. **Variable respuesta**: La variable respuesta es la medición observada en cada unidad experimental y representa el resultado que se desea explicar o predecir a partir de los factores estudiados. Es “lo que queremos explicar” o “lo que cambia” según el tratamiento. Puede ser cuantitativa (rendimiento, altura, peso) o cualitativa (sí/no, presencia/ausencia, categoría).
+**5. Variable respuesta**
 
-  + Ejemplo: si el factor es fertilizante y el objetivo es ver si aumenta la producción, la variable respuesta puede ser el rendimiento (kg/ha).
+La variable respuesta es la medición observada en cada unidad experimental y representa el resultado que se desea explicar o predecir a partir de los factores estudiados. Puede ser cuantitativa (rendimiento, altura, peso) o cualitativa (sí/no, presencia/ausencia, categoría).
 
-6. **Error experimental**: El error experimental es la variabilidad observada entre unidades experimentales que reciben el mismo tratamiento. Representa la variabilidad de la variable respuesta que no puede ser explicada por los tratamientos incluidos en el experimento.
+**6. Error experimental**
 
-El error experimental puede originarse en diferentes fuentes, entre ellas:
+El error experimental es la variabilidad observada entre unidades experimentales que reciben el mismo tratamiento. Representa la variabilidad de la variable respuesta que no puede ser explicada por los tratamientos incluidos en el experimento.
 
 ::: {.callout-tip}
 ### Fuentes de la variación
@@ -104,11 +110,9 @@ El error experimental puede originarse en diferentes fuentes, entre ellas:
 - Variación en la ejecución del experimento, como pequeñas diferencias en la aplicación de tratamientos o en las mediciones realizadas.
 :::
 
-Una estimación adecuada del error experimental es esencial para poder realizar pruebas estadísticas confiables.
+**7. Repeticiones**
 
-7. **Repeticiones**: Las repeticiones (o replicaciones) corresponden al número de unidades experimentales que reciben el mismo tratamiento dentro de un experimento.
-
-La inclusión de repeticiones cumple varias funciones importantes:
+Las repeticiones (o replicaciones) corresponden al número de unidades experimentales que reciben el mismo tratamiento dentro de un experimento.
 
 ::: {.callout-tip}
 ### Funciones de las repeticiones
@@ -118,23 +122,19 @@ La inclusión de repeticiones cumple varias funciones importantes:
 - Ampliar el alcance de la inferencia cuando las unidades experimentales representan una población más amplia.
 :::
 
-En general, aumentar el número de repeticiones mejora la precisión de los resultados, siempre que las repeticiones sean verdaderamente independientes. Sin embargo, el número adecuado de repeticiones depende de factores como la variabilidad esperada de los datos, el tamaño del efecto que se desea detectar, los recursos disponibles y la complejidad del experimento.
-
 En muchos experimentos agrícolas se utilizan al menos tres o cuatro repeticiones por tratamiento, aunque en algunos casos pueden requerirse más.
 
-Una vez definidos estos conceptos fundamentales, es posible comprender los principios que guían la planificación de los experimentos: aleatorización, repetición y bloqueo, los cuales permiten controlar la variabilidad y mejorar la validez de las conclusiones.
+---
 
-## Principios básicos
+## Principios básicos del diseño experimental {#sec-principios}
 
-En el diseño de experimentos, el __control del error experimental__ consiste en reducir, en la mayor medida posible, la variabilidad de la respuesta que no se debe a los tratamientos estudiados. Para lograrlo, el diseño experimental se apoya en tres principios fundamentales: **aleatorización, repetición y bloqueo**. Estos principios permiten disminuir el sesgo, mejorar la precisión de las estimaciones y separar el efecto real de los tratamientos de otras fuentes de variación presentes en el experimento.
+En el diseño de experimentos, el **control del error experimental** consiste en reducir, en la mayor medida posible, la variabilidad de la respuesta que no se debe a los tratamientos estudiados. Para lograrlo, el diseño experimental se apoya en tres principios fundamentales: **aleatorización, repetición y bloqueo**.
 
-### Aleatorización 
+### Aleatorización
 
 La aleatorización consiste en asignar los tratamientos al azar a las unidades experimentales. Su propósito principal es evitar sesgos sistemáticos y distribuir, de la forma más equilibrada posible, las fuentes desconocidas de variación entre los tratamientos.
 
-En términos prácticos, aleatorizar significa que cada unidad experimental tiene la misma probabilidad de recibir cualquiera de los tratamientos considerados en el estudio. De esta manera, factores no controlados como pequeñas diferencias en el suelo, humedad, sombra o manejo quedan repartidos entre los tratamientos y no favorecen sistemáticamente a uno de ellos.
-
-En R, una asignación aleatoria simple puede realizarse con la función `sample()`. Por ejemplo, si se desea asignar tres tratamientos a tres parcelas dentro de un bloque, se puede escribir:
+En R, una asignación aleatoria simple puede realizarse con la función `sample()`:
 
 ```{r}
 #| echo: true
@@ -142,99 +142,172 @@ tratamientos <- c("A", "B", "C")
 sample(tratamientos)
 ```
 
-:::[.callout-tip]
+::: {.callout-tip}
 #### ¿Por qué es importante la aleatorización?
-+ Reduce el sesgo en la asignación de tratamientos.
-+ Ayuda a balancear fuentes desconocidas de variación.
-+ Justifica el uso de pruebas estadísticas basadas en el azar.
+- Reduce el sesgo en la asignación de tratamientos.
+- Ayuda a balancear fuentes desconocidas de variación.
+- Justifica el uso de pruebas estadísticas basadas en el azar.
 :::
 
-**Ejemplo:** si se comparan tres fertilizantes en un lote, no conviene asignarlos siempre en el mismo orden espacial, porque una parte del terreno podría tener mejores condiciones que otra. La asignación aleatoria reduce este riesgo.
+**Ejemplo:** si se comparan tres fertilizantes en un lote, no conviene asignarlos siempre en el mismo orden espacial, porque una parte del terreno podría tener mejores condiciones que otra.
 
-### Repetición 
+#### Demo interactiva: aleatorización de tratamientos {.unnumbered}
+
+La siguiente herramienta permite visualizar cómo se distribuyen los tratamientos en un DCA o en un DBCA según el número de tratamientos y repeticiones. Haz clic en **Nueva aleatorización** para generar un nuevo arreglo al azar.
+
+```{ojs}
+//| echo: false
+viewof tipoDiseno = Inputs.radio(["DCA", "DBCA"], {label: "Diseño:", value: "DCA"})
+viewof nTrat = Inputs.range([2, 6], {step: 1, value: 4, label: "Número de tratamientos (k):"})
+viewof nRep  = Inputs.range([2, 6], {step: 1, value: 3, label: "Repeticiones / bloques (r):"})
+viewof semilla = Inputs.button("🔀 Nueva aleatorización")
+```
+
+```{ojs}
+//| echo: false
+{
+  semilla;
+  const k = nTrat, r = nRep;
+  const colores = ["#01696f","#964219","#437a22","#006494","#7a39bb","#a12c7b"];
+  const trts = Array.from({length: k}, (_, i) => `T${i+1}`);
+
+  function shuffle(arr) {
+    let a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  const w = 52, h = 52, gap = 6, pad = 44;
+  const cols = tipoDiseno === "DCA" ? Math.ceil(Math.sqrt(k * r)) : k;
+  const rows = tipoDiseno === "DCA" ? Math.ceil((k * r) / cols) : r;
+  const svgW = cols * (w + gap) + pad * 2;
+  const svgH = rows * (h + gap) + pad * 2 + 30;
+
+  let celdas = [];
+  if (tipoDiseno === "DCA") {
+    const todas = [];
+    for (let i = 0; i < r; i++) trts.forEach(t => todas.push(t));
+    shuffle(todas).forEach((t, idx) => {
+      celdas.push({t, col: idx % cols, row: Math.floor(idx / cols)});
+    });
+  } else {
+    for (let b = 0; b < r; b++)
+      shuffle(trts).forEach((t, ci) => celdas.push({t, col: ci, row: b}));
+  }
+
+  const svg = d3.create("svg")
+    .attr("viewBox", `0 0 ${svgW} ${svgH}`)
+    .attr("width", "100%")
+    .style("max-width", `${svgW}px`)
+    .style("font-family", "sans-serif");
+
+  if (tipoDiseno === "DBCA") {
+    for (let b = 0; b < r; b++) {
+      svg.append("rect")
+        .attr("x", pad - 4).attr("y", pad + b * (h + gap) - 4)
+        .attr("width", cols * (w + gap) + 2).attr("height", h + 8)
+        .attr("rx", 6).attr("fill", b % 2 === 0 ? "#f3f0ec" : "#e6e4df")
+        .attr("stroke", "#dcd9d5").attr("stroke-width", 1);
+      svg.append("text")
+        .attr("x", pad - 8).attr("y", pad + b * (h + gap) + h / 2 + 5)
+        .attr("text-anchor", "end").attr("font-size", 11).attr("fill", "#7a7974")
+        .text(`B${b+1}`);
+    }
+  }
+
+  celdas.forEach(({t, col, row}) => {
+    const x = pad + col * (w + gap), y = pad + row * (h + gap);
+    const ci = trts.indexOf(t);
+    svg.append("rect").attr("x", x).attr("y", y).attr("width", w).attr("height", h)
+      .attr("rx", 7).attr("fill", colores[ci] + "22")
+      .attr("stroke", colores[ci]).attr("stroke-width", 2);
+    svg.append("text").attr("x", x + w/2).attr("y", y + h/2 + 5)
+      .attr("text-anchor", "middle").attr("font-size", 14).attr("font-weight", "600")
+      .attr("fill", colores[ci]).text(t);
+  });
+
+  const lyY = svgH - 12;
+  trts.forEach((t, i) => {
+    const lx = pad + i * 70;
+    svg.append("rect").attr("x", lx).attr("y", lyY - 10)
+      .attr("width", 14).attr("height", 14).attr("rx", 3)
+      .attr("fill", colores[i] + "33").attr("stroke", colores[i]).attr("stroke-width", 1.5);
+    svg.append("text").attr("x", lx + 18).attr("y", lyY + 1)
+      .attr("font-size", 12).attr("fill", "#28251d").text(t);
+  });
+
+  return svg.node();
+}
+```
+
+
+### Repetición
 
 La repetición consiste en aplicar cada tratamiento a varias unidades experimentales independientes. Gracias a la repetición es posible estimar el error experimental y aumentar la precisión de las comparaciones entre tratamientos.
 
-Cuando un tratamiento se aplica una sola vez, cualquier diferencia observada podría deberse tanto al tratamiento como al azar. En cambio, al repetir cada tratamiento en varias unidades experimentales, se obtiene una mejor idea de la variabilidad natural presente en el experimento y se puede evaluar si las diferencias observadas entre tratamientos son suficientemente grandes como para considerarlas reales.
-
-Es importante que las repeticiones sean verdaderamente independientes. Si varias observaciones provienen de la misma unidad experimental, no deben considerarse como repeticiones del tratamiento.
-
-:::{.callout-tip}
+::: {.callout-tip}
 #### ¿Por qué es importante la repetición?
-
-+ Permite estimar el error experimental.
-+ Mejora la precisión de las medias de tratamiento.
-+ Aumenta la capacidad para detectar diferencias reales.
-+ Hace más robustas las conclusiones del experimento.
+- Permite estimar el error experimental.
+- Mejora la precisión de las medias de tratamiento.
+- Aumenta la capacidad para detectar diferencias reales.
+- Hace más robustas las conclusiones del experimento.
 :::
 
-**Ejemplo**: si se desea comparar cuatro variedades de maíz, no es suficiente sembrar una sola parcela por variedad. Se necesitan varias parcelas para cada variedad, de modo que sea posible separar el efecto de la variedad de la variabilidad del ambiente.
+**Ejemplo:** si se desea comparar cuatro variedades de maíz, no es suficiente sembrar una sola parcela por variedad. Se necesitan varias parcelas para cada variedad.
 
 ### Bloqueo
 
-El bloqueo o control local consiste en agrupar unidades experimentales similares en bloques y asignar los tratamientos dentro de cada bloque. Su objetivo es controlar fuentes conocidas de variación que podrían afectar la respuesta del experimento.
+El bloqueo o control local consiste en agrupar unidades experimentales similares en bloques y asignar los tratamientos dentro de cada bloque. Su objetivo es controlar fuentes **conocidas** de variación que podrían afectar la respuesta del experimento.
 
-El bloqueo se utiliza cuando el investigador reconoce que existe una fuente de variación importante en el terreno o en el material experimental, por ejemplo un gradiente de fertilidad, humedad, pendiente, sombra o tamaño inicial de las plantas. En lugar de ignorar esta variabilidad, el diseño la incorpora formando bloques lo más homogéneos posible.
-
-Dentro de cada bloque, los tratamientos se comparan en condiciones más parecidas. Esto hace que la comparación entre tratamientos sea más justa y que el error experimental se reduzca.
-
-:::{.callout-tip}
+::: {.callout-tip}
 #### ¿Por qué es importante el bloqueo?
-
-+ Controla fuentes conocidas de variación.
-+ Reduce el error experimental.
-+ Mejora la precisión de las comparaciones.
-+ Hace más eficiente el experimento cuando el material no es completamente homogéneo.
+- Controla fuentes conocidas de variación.
+- Reduce el error experimental.
+- Mejora la precisión de las comparaciones.
+- Hace más eficiente el experimento cuando el material no es completamente homogéneo.
 :::
 
-**Ejemplo**: si un lote presenta un gradiente de fertilidad de un extremo al otro, puede dividirse en bloques perpendiculares a ese gradiente. Luego, dentro de cada bloque, se asignan aleatoriamente los tratamientos. Así, el efecto del suelo queda parcialmente controlado y la comparación entre tratamientos es más precisa.
+**Ejemplo:** si un lote presenta un gradiente de fertilidad de un extremo al otro, puede dividirse en bloques perpendiculares a ese gradiente. Luego, dentro de cada bloque, se asignan aleatoriamente los tratamientos.
 
-En la práctica, estos tres principios no actúan de manera aislada, sino de forma complementaria. Un experimento bien diseñado combina aleatorización, repetición y, cuando es necesario, bloqueo, con el fin de obtener conclusiones válidas y precisas.
 
-## Diseño completo al azar
+
+---
+
+## Diseño completamente al azar (DCA) {#sec-dca}
 
 El diseño completamente al azar (DCA) es el diseño experimental más simple. En este diseño, los tratamientos se asignan aleatoriamente a las unidades experimentales, de manera que cada unidad tenga la misma probabilidad de recibir cualquiera de los tratamientos.
 
-El DCA funciona mejor cuando las unidades experimentales son relativamente homogéneas, es decir, cuando no se espera que existan diferencias importantes entre ellas debidas a factores externos como gradientes de fertilidad, humedad, sombra o pendiente. Por esta razón, este diseño suele utilizarse en condiciones muy controladas, por ejemplo:
+El DCA funciona mejor cuando las unidades experimentales son relativamente homogéneas. Por esta razón, suele utilizarse en condiciones muy controladas: ensayos en invernadero, cámaras de crecimiento, laboratorios, o experimentos de campo realizados en áreas muy uniformes.
 
-- ensayos en invernadero,
-- cámaras de crecimiento,
-- laboratorios,
-- o experimentos de campo realizados en áreas muy uniformes.
+### Ventajas y limitaciones
 
-Cuando existe una heterogeneidad importante en el terreno, el DCA puede perder eficiencia, ya que toda la variabilidad no explicada por los tratamientos queda incorporada en el error experimental.
-
-### Ventajas del diseño completamente al azar
-
-- Es el diseño más sencillo de implementar.
-- Permite gran flexibilidad en el número de tratamientos y repeticiones.
-- Su análisis estadístico es relativamente simple.
-- Es adecuado cuando las unidades experimentales son homogéneas.
-
-### Limitaciones del diseño completamente al azar
-
-- No controla fuentes conocidas de variación.
-- Puede ser poco eficiente en experimentos de campo heterogéneos.
-- Si existe un gradiente importante en el ambiente, el error experimental puede aumentar.
+| Aspecto | Descripción |
+|---------|-------------|
+| ✅ Ventaja | Es el diseño más sencillo de implementar |
+| ✅ Ventaja | Permite gran flexibilidad en el número de tratamientos y repeticiones |
+| ✅ Ventaja | Su análisis estadístico es relativamente simple |
+| ❌ Limitación | No controla fuentes conocidas de variación |
+| ❌ Limitación | Puede ser poco eficiente en experimentos de campo heterogéneos |
 
 ### Modelo matemático
 
-El modelo matemático para los datos provenientes de un diseño completo al azar, con un número diferente de repeticiones para cada nivel del factor puede ser escrito como;
+El modelo matemático del DCA es:
 
 $$
-y_{ij} = \mu +\alpha_i + \epsilon_{ij}
-$$
+y_{ij} = \mu + \alpha_i + \epsilon_{ij}
+$$ {#eq-dca}
 
 donde:
 
 - $y_{ij}$ es la respuesta observada en la $j$-ésima repetición del tratamiento $i$,
 - $\mu$ es la media general,
 - $\alpha_i$ es el efecto del tratamiento $i$,
-- $\epsilon_{ij}$ es el error aleatorio asociado a la observación.
+- $\epsilon_{ij}$ es el error aleatorio, con $\epsilon_{ij} \sim N(0, \sigma^2)$.
 
 ### Generación del diseño en R con `agricolae`
-
-En R, el paquete `agricolae` permite generar fácilmente la distribución aleatoria de un diseño completamente al azar. Supongamos que se desea trabajar con 4 tratamientos y 3 repeticiones por tratamiento.
 
 ```{r}
 library(agricolae)
@@ -251,28 +324,25 @@ dca <- design.crd(
 dca$book
 ```
 
-La tabla generada muestra la distribución aleatoria de los tratamientos en las unidades experimentales. Esta salida puede usarse como guía para establecer físicamente el experimento o para construir una base de datos inicial.
+```{webr}
+library(agricolae)
+tratamientos <- c("T1", "T2", "T3", "T4")
+dca <- design.crd(trt = tratamientos, r = 3, seed = 123, serie = 2)
+dca$book
+```
 
-#### Interpretación del diseño
+La tabla generada muestra la distribución aleatoria de los tratamientos en las unidades experimentales. En este ejemplo hay 4 tratamientos × 3 repeticiones = 12 unidades experimentales en total.
 
-En este ejemplo:
+---
 
-- hay 4 tratamientos,
-- cada tratamiento aparece 3 veces,
-- por lo tanto, hay 12 unidades experimentales en total.
+## Análisis de Varianza (ANOVA, ANDEVA) {#sec-anova}
 
-La función `design.crd()` asigna los tratamientos aleatoriamente a las unidades experimentales, respetando el número de repeticiones definido.
+El **An**álisis **De** **Va**rianza o prueba ANOVA es una técnica utilizada para comparar las medias de más de dos grupos o tratamientos. Su lógica consiste en descomponer la variabilidad total observada en los datos en componentes atribuibles a distintas fuentes:
 
-Una vez establecido el diseño y recolectados los datos, el siguiente paso es analizar si las diferencias observadas entre tratamientos son mayores de lo que cabría esperar por variación aleatoria. Para ello se utiliza el análisis de varianza (ANOVA).
+- la variabilidad **entre tratamientos**, y
+- la variabilidad **dentro de tratamientos** o **error experimental**.
 
-## Análisis de Varianza (ANOVA, ANDEVA)
-
-El **An**álisis **De** **Va**rianza o prueba ANOVA (abreviatura de **An**alysis **o**f **Va**riance) es una técnica utilizada para comparar las medias de más de dos grupos o tratamientos. Su lógica consiste en descomponer la variabilidad total observada en los datos en componentes atribuibles a distintas fuentes, principalmente:
-
-- la variabilidad **entre tratamientos** y
-- la variabilidad **dentro de tratamientos** o **error experimental**
-
-Como toda prueba de hipótesis tiene una hipótesis nula ($H_0$), en este caso, para los $k$ grupos o poblaciones la hipótesis nula es que todas las medias poblacionales son iguales; mientras que la hipótesis alternativa es que al menos una de ellas difiere de las demás:
+Las hipótesis del ANOVA son:
 
 $$
 \begin{cases}
@@ -285,93 +355,307 @@ El ANOVA no indica directamente entre cuáles tratamientos existen diferencias, 
 
 ### Modelos para el análisis de varianza
 
-Supongamos que deseamos comparar $k$ tratamientos o niveles para un _único factor_, cada tratamiento o nivel tiene $r$ repeticiones. La respuesta observada es una variable aleatoria. Los datos pueden representarse como se muestra en la @tbl-datosanova:
+Los datos de un experimento de un factor único con $k$ tratamientos y $r$ repeticiones se representan como en la @tbl-datosanova:
 
-| Trat.-Nivel | Repetición 1	| Repetición 2| $\ldots$ 	| Repetición $r$ |
-|------------:|--------------:|------------:|----------:|---------------:|
-| 1           | $y_{11}$     	| $y_{12}$ 	  | $\ldots$ 	| $y_{1r}$ 	     |
-| 2           | $y_{21}$     	| $y_{22}$ 	  | $\ldots$ 	| $y_{2r}$ 	     |
-| $\vdots$    | $\vdots$     	| $\vdots$ 	  | $\ldots$ 	| $\vdots$ 	     |
-| $k$         | $y_{k1}$     	| $y_{k2}$ 	  | $\ldots$ 	| $y_{kr}$ 	     |
+| Trat.-Nivel | Rep. 1 | Rep. 2 | $\ldots$ | Rep. $r$ |
+|------------:|-------:|-------:|---------:|---------:|
+| 1 | $y_{11}$ | $y_{12}$ | $\ldots$ | $y_{1r}$ |
+| 2 | $y_{21}$ | $y_{22}$ | $\ldots$ | $y_{2r}$ |
+| $\vdots$ | $\vdots$ | $\vdots$ | $\ldots$ | $\vdots$ |
+| $k$ | $y_{k1}$ | $y_{k2}$ | $\ldots$ | $y_{kr}$ |
 
 : Datos de un experimento de un factor único {#tbl-datosanova}
 
-El modelo matemático correspondiente puede ser escrito como:
+El **modelo de efectos** es:
 
 $$
-y_{ij} = \mu_i + \epsilon_{ij} \quad \forall \; i,j
-$$ {#eq-modmed}
-
-donde $y_{ij}$ corresponde a la $j-ésima$ repetición para el $i-ésimo$ nivel o tratamiento, $\mu_i$ es la media del $i-ésimo$ nivel o tratamiento y $\epsilon_{ij}$ es un componente de error aleatorio que incorpora las otras fuentes de variabilidad en el experimento. Se supone además que los errores tienen media 0. La @eq-modmed recibe el nombre de **modelo de medias**.
-
-Si definimos $\mu_i=\mu+\alpha_i$, la @eq-modmed queda escrita de la forma:
-
-$$
-y_{ij} = \mu + \alpha_i +  \epsilon_{ij} \quad \forall \; i,j
+y_{ij} = \mu + \alpha_i + \epsilon_{ij} \quad \forall \; i,j
 $$ {#eq-modeff}
 
-En la @eq-modeff llamada comúnmente el **modelo de efectos**, el término $\mu$ es un parámetro para todos los tratamientos y se conoce como la **media general** y $\alpha_i$ es el efecto del tratamiento (nivel) $i$. 
+donde $\mu$ es la media general y $\alpha_i$ es el efecto del tratamiento $i$.
 
 ::: {.callout-important}
 ### ¿Efectos fijos o aleatorios?
-La @eq-modeff tiene dos posibilidades.
- 
-- Los $k$ tratamientos fueron escogidos por el experimentador.
-- Los $k$ tratamientos fueron tomados de una muestra aleatoria de muchos tratamientos.
 
-En el primer caso, se puede probar la hipótesis sobre las medias de los tratamientos, y las conclusiones solo aplicarán a los niveles o tratamientos escogidos en el análisis.  No se puede extender las conclusiones a tratamientos parecidos. Además es posible calcular los parámetros $\mu$, $\alpha_i$ y $\sigma^2$. Este modelo se llama **modelo de efectos fijos**.
-
-En el segundo caso las conclusiones que se basan en la muestra de tratamientos, se pueden extender a todos los tratamientos. En este caso los $\alpha_i$ son variables aleatorias. Por lo que conocer sus valores exactos no es necesariamente importante. Por otro lado, se pueden verificar hipótesis sobre la variabilidad de $\alpha_i$ y estimar el valor de esta variabilidad. Este modelo se llama **modelo de efectos aleatorios** o **modelo de componentes de la varianza**.
+- **Modelo de efectos fijos**: los $k$ tratamientos fueron elegidos deliberadamente por el investigador. Las conclusiones aplican solo a esos tratamientos.
+- **Modelo de efectos aleatorios**: los $k$ tratamientos son una muestra aleatoria de una población más amplia. Las conclusiones se pueden generalizar a todos los posibles tratamientos.
 :::
 
 ### Tabla ANOVA
 
-Sea $\bar{y}$ la media general, o media de todos los  datos, y $\bar{y_i}$ la media por el grupo $i-ésimo$. La suma cuadrática total está dada por
+La variabilidad total se descompone como:
 
 $$
-SCT = \sum_i{\sum_j{(y_{ij}-\bar{y})}^2}
-$$ {#eq-SCT}
-
-Esto mide la variación con respecto al centro de todos los datos. Un análisis de varianza divide $SCT$ en dos términos:
-
-$$
-SCT = \sum_i{\sum_j{(y_{ij}-\bar{y}_i)}^2} + \sum_i{n_i\left(\bar{y}_i-\bar{y}\right)^2}
-$$ {#eq-SCT2}
-
-El primer término es la suma de los cuadrados del error (SCE). La suma  $\sum_j{(y_{ij}-\bar{y}_I)}^2$, mide la variación dentro del i-ésimo grupo. La suma de los cuadrados del error es entonces una medida de la variabilidad dentro de los grupos. El segundo término en la @eq-SCT2 es llamada la suma cuadrática de los tratamientos (SCTr). La SCTr compara la media para cada grupo, $\bar{y}_i$, con la media general. Esta mide la variabilidad entre las medias de las muestras. La @eq-SCT2 se puede reescribir como
-
-$$
-SCT = SCE + SCTr
+SCT = SCTr + SCE
 $$ {#eq-sct3}
 
-Si los datos provienen de una media común, esperaríamos que SCE y SCT sean aproximadamente iguales. Por otro lado si SCE y SCT son muy distintas, tendríamos evidencia contra la hipótesis nula. ¿Cómo podríamos decir si las diferencias se deben a que la hipótesis nula es falsa o unicámente a la variación muestral? El estadístico usado en este caso es:
+donde $SCTr$ es la suma de cuadrados de tratamientos y $SCE$ es la suma de cuadrados del error.
 
-$$ 
-F = \dfrac{\frac{SCTr}{k-1}}{\frac{SCE}{n-k}}
-$$ {#eq-fstat} 
-
-Para obtener una escala adecuada, cada término se divide por sus respectivos grados de libertad, obteniendo la suma media de los cuadrado de los tratamientos o los errores (MCTr o MCE).
-$$
-MCTr=\frac{SCTr}{k-1}
-$$
+El estadístico de prueba es:
 
 $$
-MCE = \frac{SCE}{n-k}
-$$
+F = \frac{MCTr}{MCE} = \frac{SCTr / (k-1)}{SCE / (n-k)}
+$$ {#eq-fstat}
 
-Los grados de libertad para SCT son $n-1$, para $SCE$ los grados de libertad son $n-k$. Usando @eq-sct3 para los grados de libertad: $gl(Total)=gl(Error)+gl(Tratamiento)$ y reemplazando los grados de libertad totales y del error se obtiene que los grados de libertad de los tratamientos son $k-1$. El procedimiento de la prueba se resume en la **Tabla ANOVA** que se muestra en la  @tbl-anova
+La @tbl-anova resume el procedimiento:
 
-| Fuente de Variación                	| Grados de Libertad 	| Suma de Cuadrados 	| Media Cuadrática 	| $F$ 	|
-|------------------------------------	|--------------------	|-------------------	|------------------	|---	|
-| Entre tratamientos                 	| $k-1$              	| $SCTr = \sum_i{n_i\left(\bar{y}_i-\bar{y}\right)^2}$                  	| $MCTr=\frac{SCTr}{k-1}$                 	| $F=\frac{MCTr}{MCE}$  	|
-| Error (dentro de los tratamientos) 	| $n-k$               | $SCE = \sum_i{\sum_j{(y_{ij}-\bar{y}_i)}^2}$                  	| $MCE = \frac{SCE}{n-k}$                 	|   	|
-| Total                              	| $n-1$               | $SCT = \sum_i{\sum_j{(y_{ij}-\bar{y})}^2}$                  	|                  	|   	|
+| Fuente | GL | SC | MC | $F$ |
+|--------|----|----|-----|-----|
+| Tratamientos | $k-1$ | $SCTr = \sum_i n_i (\bar{y}_i - \bar{y})^2$ | $MCTr = SCTr/(k-1)$ | $F = MCTr/MCE$ |
+| Error | $n-k$ | $SCE = \sum_i\sum_j (y_{ij}-\bar{y}_i)^2$ | $MCE = SCE/(n-k)$ | |
+| Total | $n-1$ | $SCT$ | | |
 
-: Tabla del Análisis de Varianza para el modelo de un único factor {#tbl-anova}
+: Tabla del Análisis de Varianza para un factor único {#tbl-anova}
+
+#### Demo interactiva: descomposición de la varianza {.unnumbered}
+
+Ajusta los sliders para ver cómo cambia la partición de la varianza total en componentes "entre tratamientos" (SCTr) y "dentro de tratamientos" (SCE), y cómo eso afecta el estadístico F y el valor $p$.
+
+```{ojs}
+//| echo: false
+viewof mu1 = Inputs.range([1, 10], {step: 0.5, value: 4, label: "Media T1 (μ₁):"})
+viewof mu2 = Inputs.range([1, 10], {step: 0.5, value: 5, label: "Media T2 (μ₂):"})
+viewof mu3 = Inputs.range([1, 10], {step: 0.5, value: 6, label: "Media T3 (μ₃):"})
+viewof sigma_e = Inputs.range([0.5, 4], {step: 0.5, value: 1.5, label: "Desviación intra-grupo (σ):"})
+viewof nr = Inputs.range([3, 10], {step: 1, value: 4, label: "Repeticiones por tratamiento (r):"})
+```
+
+```{ojs}
+//| echo: false
+{
+  const k = 3, r = nr;
+  const medias = [mu1, mu2, mu3];
+  const grand = medias.reduce((a, b) => a + b, 0) / k;
+  const SCTr = medias.reduce((s, m) => s + r * (m - grand)**2, 0);
+  const SCE  = k * r * sigma_e**2 * (r - 1) / r;
+  const SCT  = SCTr + SCE;
+  const MCTr = SCTr / (k - 1);
+  const MCE  = SCE  / (k * (r - 1));
+  const F    = MCTr / MCE;
+
+  function lgamma(z) {
+    const c = [76.18009172947146,-86.50532032941677,24.01409824083091,
+               -1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+    let y = z, tmp = z + 5.5, ser = 1.000000000190015;
+    tmp -= (z + 0.5) * Math.log(tmp);
+    for (let j = 0; j < 6; j++) ser += c[j] / ++y;
+    return -tmp + Math.log(2.5066282746310005 * ser / z);
+  }
+  function fDen(x, a, b) {
+    if (x <= 0) return 0;
+    const ln = lgamma((a+b)/2) + (a/2)*Math.log(a/b) + (a/2-1)*Math.log(x)
+               - ((a+b)/2)*Math.log(1+a*x/b) - lgamma(a/2) - lgamma(b/2);
+    return Math.exp(ln);
+  }
+  function cdfF(x, a, b) {
+    const n=600, dx=x/n; let s=0;
+    for(let i=0;i<n;i++) s+=fDen((i+0.5)*dx,a,b)*dx;
+    return Math.min(1, s);
+  }
+
+  const d1 = k-1, d2 = k*(r-1);
+  const pval = Math.max(0, 1 - cdfF(F, d1, d2));
+  const sig = pval < 0.05 ? "✅ Significativo (p < 0.05)" : "❌ No significativo (p ≥ 0.05)";
+
+  const barW=260, barH=36, padL=148, padR=160, padT=20, padB=20;
+  const svgW = barW + padL + padR;
+  const svgH = 3*(barH+14) + padT + padB + 64;
+
+  const datos = [
+    {label: "SCT  (Total)",              val: SCT,  pct: 1,         color: "#bab9b4"},
+    {label: "SCTr (Tratamientos)",        val: SCTr, pct: SCTr/SCT, color: "#01696f"},
+    {label: "SCE  (Error experimental)", val: SCE,  pct: SCE/SCT,  color: "#964219"},
+  ];
+
+  const svg = d3.create("svg").attr("viewBox", `0 0 ${svgW} ${svgH}`)
+    .attr("width","100%").style("max-width",`${svgW}px`).style("font-family","sans-serif");
+
+  datos.forEach(({label, val, pct, color}, i) => {
+    const y = padT + i*(barH+14);
+    svg.append("text").attr("x",padL-8).attr("y",y+barH/2+5)
+      .attr("text-anchor","end").attr("font-size",12).attr("fill","#28251d").text(label);
+    svg.append("rect").attr("x",padL).attr("y",y).attr("width",barW).attr("height",barH)
+      .attr("rx",4).attr("fill","#f3f0ec");
+    svg.append("rect").attr("x",padL).attr("y",y).attr("width",barW*pct).attr("height",barH)
+      .attr("rx",4).attr("fill",color+"cc");
+    svg.append("text").attr("x",padL+barW*pct+6).attr("y",y+barH/2+5)
+      .attr("font-size",11).attr("fill",color)
+      .text(`${val.toFixed(2)} (${(pct*100).toFixed(1)}%)`);
+  });
+
+  const ty = padT + 3*(barH+14) + 16;
+  [
+    `F = MCTr / MCE = ${MCTr.toFixed(2)} / ${MCE.toFixed(2)} = ${F.toFixed(3)}`,
+    `GL tratamientos = ${d1},   GL error = ${d2}`,
+    `Valor p ≈ ${pval.toFixed(4)}   ${sig}`
+  ].forEach((txt, i) => {
+    svg.append("text").attr("x",padL).attr("y",ty+i*20)
+      .attr("font-size",12)
+      .attr("fill", i===2 ? (pval<0.05?"#01696f":"#964219") : "#28251d")
+      .attr("font-weight", i===2?"600":"400").text(txt);
+  });
+
+  return svg.node();
+}
+```
+
+::: {.callout-tip}
+**¿Qué observar?** Cuando las medias de los tratamientos están muy separadas, el SCTr crece y F aumenta. Cuando σ es grande, el SCE domina y F disminuye. El valor p cae por debajo de 0.05 cuando la señal entre grupos supera claramente el ruido dentro de los grupos.
+:::
+
+---
+
+### Supuestos del ANOVA {#sec-supuestos-anova}
+
+Para que las conclusiones del ANOVA sean válidas, deben cumplirse los siguientes supuestos sobre los errores $\epsilon_{ij}$:
+
+1. **Independencia**: las observaciones son independientes entre sí.
+2. **Normalidad**: los errores siguen una distribución normal.
+3. **Homocedasticidad**: las varianzas son iguales en todos los grupos.
+
+En R, estos supuestos pueden verificarse con los gráficos de diagnóstico del modelo:
+
+```{r}
+#| eval: false
+par(mfrow = c(2, 2))
+plot(mod)   # donde mod es el objeto aov()
+```
+
+::: {.callout-tip}
+### Verificación de supuestos en R
+
+| Supuesto | Función en R | Prueba |
+|----------|-------------|--------|
+| Normalidad de residuos | `shapiro.test(residuals(mod))` | Shapiro-Wilk |
+| Homocedasticidad | `bartlett.test(y ~ trt, data)` | Bartlett |
+| Homocedasticidad (alternativa) | `leveneTest(y ~ trt, data)` del paquete `car` | Levene |
+| Homocedasticidad (robusta) | `fligner.test(y ~ trt, data)` | Fligner-Killeen |
+
+La prueba de Levene es más robusta que Bartlett cuando los datos se desvían de la normalidad. Maxwell, Delaney y Kelley (2018) recomiendan usar una prueba alternativa cuando se cumple:
+
+$$\frac{n_{max}}{n_{min}} \times \frac{s^2_{min}}{s^2_{max}} > 4$$
+:::
+
+### Robustez del ANOVA
+
+La prueba ANOVA es bastante robusta a la violación del supuesto de normalidad cuando los tamaños de los grupos son idénticos y los grados de libertad del error son mayores a 20. Sin embargo, la heterogeneidad de varianzas es un problema importante cuando los tamaños de los grupos son distintos y los grupos son pequeños.
+
+#### Demo interactiva: distribución F y región de rechazo {.unnumbered}
+
+Ajusta los grados de libertad y el nivel de significancia. Mueve el slider de **F observado** para ver si tu valor cae en la zona de rechazo (área roja).
+
+```{ojs}
+//| echo: false
+viewof df1 = Inputs.range([1, 10], {step: 1, value: 3, label: "GL tratamientos (k−1):"})
+viewof df2 = Inputs.range([5, 60], {step: 1, value: 12, label: "GL error (n−k):"})
+viewof alpha_f = Inputs.select([0.10, 0.05, 0.01], {label: "Nivel α:", value: 0.05,
+  format: x => `α = ${x}`})
+viewof f_obs = Inputs.range([0, 15], {step: 0.1, value: 3.5, label: "F observado:"})
+```
+
+```{ojs}
+//| echo: false
+{
+  function lgamma2(z) {
+    const c=[76.18009172947146,-86.50532032941677,24.01409824083091,
+             -1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+    let y=z,tmp=z+5.5,ser=1.000000000190015;
+    tmp-=(z+0.5)*Math.log(tmp);
+    for(let j=0;j<6;j++) ser+=c[j]/++y;
+    return -tmp+Math.log(2.5066282746310005*ser/z);
+  }
+  function fDensity2(x, d1, d2) {
+    if (x<=0) return 0;
+    const ln=lgamma2((d1+d2)/2)+(d1/2)*Math.log(d1/d2)+(d1/2-1)*Math.log(x)
+             -((d1+d2)/2)*Math.log(1+d1*x/d2)-lgamma2(d1/2)-lgamma2(d2/2);
+    return Math.exp(ln);
+  }
+  function cdfF2(x, d1, d2) {
+    const n=600,dx=x/n; let s=0;
+    for(let i=0;i<n;i++) s+=fDensity2((i+0.5)*dx,d1,d2)*dx;
+    return Math.min(1,s);
+  }
+  function qfBisect(p, d1, d2) {
+    let lo=0,hi=50,mid=1;
+    for(let i=0;i<80;i++){mid=(lo+hi)/2; cdfF2(mid,d1,d2)<p?lo=mid:hi=mid;}
+    return mid;
+  }
+
+  const xmax = Math.max(8, f_obs*1.5);
+  const pts = Array.from({length:300}, (_,i) => {
+    const x=(i+0.5)*xmax/300;
+    return {x, y: fDensity2(x, df1, df2)};
+  });
+  const fcrit = qfBisect(1-alpha_f, df1, df2);
+  const pval_obs = Math.max(0, 1-cdfF2(f_obs, df1, df2));
+
+  const w=560,h=260,marg={t:20,r:20,b:54,l:50};
+  const W=w-marg.l-marg.r, H=h-marg.t-marg.b;
+  const ymax=d3.max(pts,d=>d.y)*1.15;
+
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${w} ${h}`)
+    .attr("width","100%").style("max-width",`${w}px`).style("font-family","sans-serif");
+  const g=svg.append("g").attr("transform",`translate(${marg.l},${marg.t})`);
+  const xS=d3.scaleLinear().domain([0,xmax]).range([0,W]);
+  const yS=d3.scaleLinear().domain([0,ymax]).range([H,0]);
+
+  const ptsRej=pts.filter(p=>p.x>=fcrit);
+  if(ptsRej.length>0){
+    const area=d3.area().x(d=>xS(d.x)).y0(H).y1(d=>yS(d.y));
+    g.append("path").datum([{x:fcrit,y:0},...ptsRej,{x:xmax,y:0}])
+      .attr("fill","#964219").attr("fill-opacity",0.25).attr("d",area);
+  }
+  const line=d3.line().x(d=>xS(d.x)).y(d=>yS(d.y)).curve(d3.curveBasis);
+  g.append("path").datum(pts).attr("fill","none").attr("stroke","#01696f")
+    .attr("stroke-width",2.5).attr("d",line);
+  g.append("line").attr("x1",xS(fcrit)).attr("x2",xS(fcrit)).attr("y1",0).attr("y2",H)
+    .attr("stroke","#964219").attr("stroke-width",1.5).attr("stroke-dasharray","5,3");
+  g.append("text").attr("x",xS(fcrit)+4).attr("y",22).attr("font-size",11)
+    .attr("fill","#964219").text(`Fc=${fcrit.toFixed(2)}`);
+  g.append("line").attr("x1",xS(f_obs)).attr("x2",xS(f_obs)).attr("y1",0).attr("y2",H)
+    .attr("stroke","#006494").attr("stroke-width",2);
+  g.append("text").attr("x",xS(f_obs)+4).attr("y",40).attr("font-size",11)
+    .attr("fill","#006494").text(`F=${f_obs}`);
+  g.append("g").attr("transform",`translate(0,${H})`).call(d3.axisBottom(xS).ticks(8))
+    .selectAll("text").attr("font-size",11);
+  g.append("g").call(d3.axisLeft(yS).ticks(5)).selectAll("text").attr("font-size",11);
+  g.append("text").attr("x",W/2).attr("y",H+36).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill","#28251d").text("Valor de F");
+  g.append("text").attr("x",W/2).attr("y",H+50).attr("text-anchor","middle")
+    .attr("font-size",12).attr("font-weight","600")
+    .attr("fill",pval_obs<alpha_f?"#01696f":"#964219")
+    .text(pval_obs<alpha_f
+      ? `p ≈ ${pval_obs.toFixed(4)}  →  Rechazar H₀ (F > Fc)`
+      : `p ≈ ${pval_obs.toFixed(4)}  →  No rechazar H₀ (F ≤ Fc)`);
+
+  return svg.node();
+}
+```
+
+---
+
+### Transformaciones de datos {#sec-transf}
+
+Cuando los supuestos no se cumplen, una alternativa previa a las pruebas no paramétricas es transformar los datos. La @tbl-transf resume las transformaciones más utilizadas.
+
+| Transformación | Fórmula | Uso recomendado |
+|----------------|---------|-----------------|
+| Logarítmica | $\log(y)$ o $\log(y + C)$ | Sesgo marcado; desviaciones proporcionales a las medias; efecto multiplicativo de los factores |
+| Raíz cuadrada | $\sqrt{y}$ o $\sqrt{y + C}$ | Varianzas proporcionales a las medias; conteos |
+| Inversa | $1/y$ o $1/(y + C)$ | Elevada variabilidad; varianzas proporcionales a la media elevada a 4 |
+| Arcoseno | $\arcsin(\sqrt{p})$ | Proporciones y porcentajes |
+
+: Transformaciones recomendadas según el tipo de datos {#tbl-transf}
+
+::: {.callout-tip}
+En todos los casos donde se usan constantes $C$, se agregan cuando los datos contienen ceros o valores muy pequeños. En R las transformaciones se aplican directamente en la fórmula: `aov(log(y) ~ trt, data)` o `aov(sqrt(y) ~ trt, data)`.
+:::
+
+---
 
 ## Ejemplo de DCA desarrollado en R
 
-En el @exr-siete, se presentó el proyecto de graduación de Alfredo Aguilar y José C. Flores, a modo de ejemplo vamos a analizar los datos correspondientes a la última medición para verificar la existencia de diferencias significativas para la altura entre los tratamientos. Para esto inicialmente se va a crear la variable DDS que era una de las actividades que se debía realizar en el ejercicio mencionado, posteriormente se filtrarán los datos para quedarnos unicámente con las observaciones donde la variable DDS sea igual a 56. 
+A modo de ejemplo vamos a analizar los datos correspondientes a la última medición del proyecto de Alfredo Aguilar y José C. Flores para verificar la existencia de diferencias significativas en la altura entre los tratamientos.
 
 ```{r}
 library(tidyverse)
@@ -382,15 +666,11 @@ datos24004 <- read_excel("datos/datos24004.xlsx", sheet = "datos")
 datos24004 <- datos24004 |>
   mutate(
     DDS = as.numeric(Fecha - Siembra)
-  ) 
+  )
 
 dds56 <- datos24004 |>
-  filter(
-    DDS == 56
-  )
+  filter(DDS == 56)
 ```
-
-Finalmente vamos a hacer la prueba ANOVA con la función `aov()`, la forma de usar la función es: `aov(formula, data)`. El resultado lo guardamos en una variable y para ver los resultados se usa la función `summary()`. 
 
 ```{r}
 mod1 <- aov(Altura ~ Tratamiento, data = dds56)
@@ -403,30 +683,18 @@ summary(mod1)
 #| message: false
 
 tbl_anova1 <- anova(mod1)
-valp_anova1 <- tbl_anova1[1,5]
+valp_anova1 <- tbl_anova1[1, 5]
 ```
 
-Se observa que $SCTr \; (3965) < SCE \; (51518)$, esto sugiere que **la mayor parte de la variabilidad en la altura no se explica por los tratamientos**. El valor $p$ de la prueba ANOVA es `r round(valp_anova1,4)` que es mayor a la siginificancia de $0.05$. 
+Se observa que $SCTr < SCE$, lo que sugiere que **la mayor parte de la variabilidad en la altura no se explica por los tratamientos**. El valor $p$ de la prueba ANOVA es `r round(valp_anova1, 4)`, mayor a $\alpha = 0.05$.
 
 ::: {.callout-important}
-Comparamos el valor $p$ contra la $\alpha = 0.05$ por convención y porque funciona muy bien como equilibrio. Siempre es recomendable preguntarse:
+Comparamos el valor $p$ contra $\alpha = 0.05$ por convención y porque funciona muy bien como equilibrio entre los errores tipo I y tipo II. Como dato histórico, Ronald Fisher propuso este umbral práctico. Siempre es recomendable preguntarse:
 
 **¿Qué es más grave en este contexto: rechazar una hipótesis verdadera o no detectar una diferencia real?**
-
-Como dato histórico. Ronald Fisher, uno de los padres de la estadística moderna, propuso $0.05$ como un umbral práctico.
 :::
 
-De acuerdo con el valor $p$, se concluye que no hay evidencia suficiente para afirmar que los tratamientos afectan signficativamente la altura. Las diferencias observadas entre tratamientos podrían explicarse por variabilidad aleatoria.
-
-Ahora vamos a trabajar con datos del mismo proyecto, pero del rendimiento en toneladas por hectárea de cada tratamiento. En la hoja `rendimiento_ha` del archivo `rend_24004.xlsx` se encuentran los datos, las variables presentes en el archivo son:
-
-- **Tratamiento**: tratamiento al que se sometió la parcela.
-- **Parcela**: número de parcela
-- **peso_promedio**: peso de las mazorcas en gramos.
-- **plantas_hectarea**: número de plantas estimadas por hectárea.
-- **Rendimiento_ha**: rendimiento en toneladas por hectárea (t/ha)
-
-Primero, cargamos los datos. Se resumen los datos, este resumen se presenta en la @tbl-rendaj. Además se crea un diagrama de cajas, dicho diagrama se presenta en la @fig-rendaj. De acuerdo a lo que se observa en la tabla y en la figura, el tratamiento T2 tiene el mayor rendimiento promedio mientras que T6 y T7 tienen medias menores al resto de los tratamientos.
+Ahora trabajamos con los datos del rendimiento en toneladas por hectárea:
 
 ```{r}
 rend24004 <- read_excel("datos/rend_24004.xlsx", sheet = "rendimiento_ha")
@@ -457,110 +725,1520 @@ knitr::kable(resu_rend)
 #| label: fig-rendaj
 
 ggplot(rend24004, aes(x = Tratamiento, y = Rendimiento_ha)) +
-  geom_boxplot() +
+  geom_boxplot(fill = "#cedcd8", color = "#01696f") +
   jtools::theme_apa() +
   labs(y = "Rendimiento (t/ha)")
 ```
-
-Ahora procedemos a hacer la prueba ANOVA.
 
 ```{r}
 mod2 <- aov(Rendimiento_ha ~ Tratamiento, data = rend24004)
 summary(mod2)
 ```
 
-Podemos apreciar que $SCTr$ es muy similar a $SCE$, lo que nos sugiere que los tratamientos están explicando una parte importante de la variabilidad del rendimiento.  El valor $p$ es muy bajo, inclusive menor que $0.001$. Hay suficiente evidencia estadística para rechazar la hipótesis nula. Se concluye que, los tratamientos tienen un efecto significativo sobre el rendimiento. Dicho de otra forma, al menos uno de los tratamientos presenta una media significativamente distinta respecto a los demás.
+El valor $p$ es muy bajo, inclusive menor que $0.001$. Hay suficiente evidencia estadística para rechazar $H_0$. Se concluye que los tratamientos tienen un efecto significativo sobre el rendimiento: al menos uno de los tratamientos presenta una media significativamente distinta respecto a los demás.
 
-¿Qué ocurre cuando la prueba ANOVA es significativa? ¿Cómo averigüar dónde se encuentran las diferencias significativas?
+---
 
+## Pruebas de comparaciones múltiples de medias {#sec-pcm}
 
-## Pruebas de comparaciones múltiples para la media.
-
-Cuando la prueba ANOVA es estadísticamente significativa, el paso posterior consiste en buscar entre qué grupos, poblaciones o tratamientos existen diferencias. En algunos casos el investigador podría tener comparaciones planificadas que desea hacer; en otras situaciones podría no tener idea de que comparaciones debe hacer.  En el primer caso se habla de **contrastes planificados o _a priori_**, en el segundo caso nos referimos a **contrastes múltiples o _a posteriori_**.
+Cuando la prueba ANOVA es estadísticamente significativa, el paso posterior consiste en buscar entre qué grupos existen diferencias. En algunos casos el investigador podría tener comparaciones planificadas (**contrastes _a priori_**); en otros podría no tener hipótesis predefinidas (**contrastes _a posteriori_**).
 
 ### Contrastes _a priori_
 
-Los **contrastes** son combinaciones lineales de medias que permiten evaluar hipótesis específicas sobre los tratamientos o grupos. Los **contrastes planificados** se definen antes de observar los datos, con base en hipótesis sustentadas teóricamente.
+Los **contrastes planificados** se definen antes de observar los datos, con base en hipótesis sustentadas teóricamente.
+
+#### Comparaciones con un control (Dunnett)
+
+Cuando se desea comparar un conjunto de medias, una a una, contra un único tratamiento control, se utiliza el **test de Dunnett**. Es la prueba más potente para este propósito específico. El valor crítico se establece para que la tasa de error experimental sea $\alpha$:
+
+$$
+C = d_{(\alpha_e, \, a-1, \, \gamma)} \times S_{\bar{D}}
+$$
+
+donde $S_{\bar{D}}$ es el error estándar de la diferencia entre dos medias, $d$ es el estadístico de Dunnett con $\gamma$ grados de libertad del error y $a$ medias.
+
+#### Comparaciones con el mejor (Hsu)
+
+El test de Hsu se usa cuando, en lugar de comparar con la media del control, se busca el mejor tratamiento (mayor o menor media). Es un método conservador, pero al reducir el número de comparaciones, aumenta la protección contra el error tipo II.
 
 #### Contrastes ortogonales
 
-Los contrastes son **ortogonales** cuando son **independientes entre sí** es decir, no existe superposición en la información que aportan. Desde el punto de vista matemático, dos contrastes $C_1$ y $C_2$, con coeficientes $c_{1i}$ y $c_{2i}$, son ortogonales si se cumple:
+Dos contrastes $C_1$ y $C_2$ con coeficientes $c_{1i}$ y $c_{2i}$ son **ortogonales** (independientes) si:
 
 $$
 \sum_{i=1}^k c_{1i} \cdot c_{2i} = 0
 $$
 
-donde $k$ es un número de grupos. Esto garantiza que cada contraste evalúe un aspecto distinto de las diferencias entre grupos, sin redundancia.
+**Reglas para definir contrastes ortogonales:**
 
-##### Reglas para definir contrastes ortogonales.
-
-1. Los coeficientes de cada contraste deben sumar cero:
-
-$$
-\sum c_i = 0
-$$
-
-2. Los productos cruzados de coeficientes entre pares de contrastes deben sumar cero:
-
-$$
-\sum c_{1i} \cdot c_{2i} = 0
-$$ 
-
-3. Se pueden definir máximo $k-1$ contrastes ortogonales si hay $k$ grupos. 
+1. Los coeficientes de cada contraste deben sumar cero: $\sum c_i = 0$.
+2. Los productos cruzados entre pares de contrastes deben sumar cero.
+3. Se pueden definir máximo $k-1$ contrastes ortogonales si hay $k$ grupos.
 
 #### Contrastes polinomiales
 
-Los **contrastes polinomiales** son un caso especial de contrastes ortogonales que se utilizan cuando los **niveles del factor están ordenados cuantitativamente** (por ejemplo, dosis de un fertilizante, niveles de estrés, tiempo de exposición, etc.). Sirven para detectar tendencias como efectos lineales, cuadráticos o cúbicos en los datos.
-
-Los contrastes polinomiales son una técnica utilizada en el contexto del análisis de varianza (ANOVA) cuando los tratamientos o niveles del factor tienen un **orden natural** y están **espaciados regularmente** (por ejemplo, 0, 1, 2, 3 unidades). Su objetivo es identificar si la relación entre los niveles del factor y la media de respuesta sigue una tendencia lineal, cuadrática, cúbica, etc.
-
-Los contrastes polinomiales son muy comunes en estudios de:
-
-
-
-Son contrastes ortogonales construidos a partir de funciones polinomiales. Cada constante representa una tendencia específica:
+Los **contrastes polinomiales** se utilizan cuando los niveles del factor están ordenados cuantitativamente (por ejemplo, dosis de un fertilizante). Sirven para detectar tendencias lineales, cuadráticas o cúbicas.
 
 - **Lineal**: verifica si hay un aumento o disminución constante.
-- **Cuadrático**: sirve para detectar curvaturas.
+- **Cuadrático**: detecta curvaturas o puntos de inflexión.
 - **Cúbico**: detecta cambios más complejos en la pendiente.
-- El polinomio puede tener máximo grado $k-1$, donde $k$ es el número de niveles del factor.
 
-Para construir contrastes polinomiales, el factor debe ser **cuantitativo** u **ordinal** con niveles **equiespaciados**, además debe haber el mismo número de observaciones por tratamiento o grupo. Los contrastes polinomiales cumplen con la ortogonalidad entre ellos. 
+En R los contrastes polinomiales pueden obtenerse con `contr.poly(k)`:
 
+```{r}
+# Contrastes polinomiales para 4 niveles (dosis: 0, 50, 100, 150 kg/ha)
+contr.poly(4)
+```
+
+```{webr}
+# Prueba aquí los contrastes polinomiales para distintos valores de k
+contr.poly(4)
+contr.poly(5)
+```
 
 ### Contrastes _a posteriori_
 
-#### Clasificación de Pruebas de Comparación Múltiple de Medias
+Los contrastes _a posteriori_ (también llamados *post hoc*) son comparaciones que se realizan después del ANOVA, cuando no se tenían hipótesis predefinidas. Se pueden clasificar en dos grandes categorías:
 
-| **Criterio**                    | **Tipo de Prueba**                              | **Ejemplos**                                                  | **Características principales**                                                                 |
-|--------------------------------|--------------------------------------------------|---------------------------------------------------------------|--------------------------------------------------------------------------------------------------|
-| **Propósito**                  | Pruebas a priori (planeadas)                     | Contrastes ortogonales, polinomiales                          | Se planifican antes del análisis. Mayor potencia estadística.                                  |
-|                                | Pruebas a posteriori (no planeadas)              | Tukey HSD, Bonferroni, Duncan, LSD, Scheffé                   | Se aplican tras ANOVA significativa. Controlan error tipo I por comparaciones múltiples.        |
-| **Control del Error Tipo I**   | Estricto                                         | Bonferroni, Holm                                              | Muy conservadoras. Reducen el riesgo de falsos positivos.                                       |
-|                                | Moderado                                         | Tukey HSD, Scheffé                                            | Buen equilibrio entre control de error y potencia.                                              |
-|                                | Laxo                                             | Fisher LSD, Duncan                                            | Mayor riesgo de error tipo I. Más potentes pero menos conservadoras.                            |
-| **Número de Comparaciones**    | Comparaciones por pares                          | Tukey HSD, LSD, Duncan                                        | Comparan todas las medias de dos en dos.                                                        |
-|                                | Comparaciones con un control o grupo de referencia | Dunnett, contrastes planeados                                 | Comparan grupos experimentales con un grupo base.                                               |
-| **Supuestos estadísticos**     | Igualdad de varianzas (homocedasticidad)         | Tukey HSD, Bonferroni, Scheffé                                | Requieren homogeneidad de varianzas (revisar con pruebas como Levene).                         |
-|                                | Sin igualdad de varianzas (heterocedasticidad)   | Games-Howell, Tamhane's T2                                    | Usadas cuando no se cumple la homocedasticidad.                                                 |
-| **Tipo de contraste**          | Paramétricas                                     | Tukey, Bonferroni, Scheffé, LSD                               | Requieren normalidad y homocedasticidad.                                                        |
-|                                | No paramétricas                                  | Pruebas de Dunn, Nemenyi, Conover                             | Se aplican cuando no se cumplen los supuestos paramétricos.                                     |
+- **Liberales**: mayor protección contra errores de tipo II (mayor potencia), menor protección contra errores de tipo I. Ejemplos: Fisher LSD, Walker-Duncan-Bayes.
+- **Conservadores**: mayor protección contra errores de tipo I, menor potencia. Ejemplos: Tukey, Bonferroni, Scheffé, Sidak.
+
+El orden de protección frente al error de tipo I, de menor a mayor, es:
+
+$$\text{LSD} \leq \text{BLSD} < \text{Duncan} < \text{SNK} < \text{Tukey} < \text{Sidak} < \text{Bonferroni} < \text{Scheffé}$$
+
+#### Estrategia general
+
+Para todos los métodos _a posteriori_:
+
+1. Se establece un valor crítico $C$.
+2. Si $|\bar{X}_i - \bar{X}_j| > C$ se declara que las medias difieren significativamente.
+3. El nivel de significancia del valor crítico es generalmente $\alpha = 0.05$.
+4. Los intervalos de confianza se calculan como $\bar{X}_1 - \bar{X}_2 \pm C$.
+
+#### Mínima Diferencia Significativa de Fisher (LSD)
+
+Es el valor crítico más bajo; el método menos conservador. Se calcula como:
+
+$$
+\text{MDS} = t_{(\alpha, \, \gamma)} \sqrt{MCE \left(\frac{1}{r_1} + \frac{1}{r_2}\right)} = t\sqrt{\frac{2 \cdot MCE}{r}}
+$$
+
+donde $t$ es el valor de la distribución $t$ de Student con nivel de significancia $\alpha$ y $\gamma$ grados de libertad del error, $MCE$ es la media cuadrática del error, y $r$ es el número de repeticiones (cuando $r_1 = r_2$).
+
+::: {.callout-warning}
+### Limitaciones del LSD
+El error de tipo I aumenta a medida que aumenta el número de comparaciones. Se recomienda usarlo principalmente en contrastes *a priori* o cuando el número de comparaciones es pequeño.
+:::
+
+#### Tukey HSD (Honestly Significant Difference)
+
+Hace uso del estadístico $q$ (rango estudentizado):
+
+$$
+Q = \frac{\bar{X}_i - \bar{X}_k}{\sqrt{MCE / n}}
+$$
+
+El valor crítico se calcula tomando en cuenta el número de tratamientos, lo que lo hace más conservador que el LSD. Es aplicable a comparaciones por pares de medias y puede dar diferencias significativas aunque el valor $F$ en el ANOVA no sea significativo. Requiere el mismo número de observaciones en las medias; la variante **Tukey-Kramer** resuelve el caso de muestras desiguales.
+
+#### Bonferroni y Sidak
+
+Estos métodos penalizan el valor de significancia $p$ para controlar el error de tipo I por comparaciones múltiples:
+
+- **Bonferroni**: $p^* = \dfrac{\alpha}{m}$, donde $m$ es el número de comparaciones.
+- **Sidak**: $p^* = 1 - (1-\alpha)^{1/m}$
+
+Bonferroni es más conservador que Sidak. Ambos son útiles para un número bajo de comparaciones. El valor crítico se calcula como en el LSD, pero usando $p^*$: $t_{(p^*, \gamma)} \sqrt{\dfrac{2 \cdot MCE}{n}}$.
+
+#### Procedimiento de Scheffé
+
+Es el método más conservador (valor crítico más elevado). Depende del valor $F$ de la ANOVA:
+
+$$
+C = \sqrt{(k-1) \cdot F_{0.05}} \cdot \sqrt{\left(\frac{1}{n_1}+\frac{1}{n_2}\right) MCE}
+$$
+
+Se recomienda cuando:
+- Cometer un error de tipo I tiene consecuencias graves.
+- Se desea comparar contrastes sugeridos por los datos.
+- El número de comparaciones es grande.
+
+#### Resumen comparativo de métodos
+
+La @tbl-mcm resume las principales características de cada método:
+
+| Método | Datos normales | Fortaleza principal | Con control | En parejas | Nivel de confianza |
+|--------|:-:|---|:-:|:-:|:-:|
+| **Fisher LSD** | Sí | Mayor potencia; sin protección simultánea | No | Sí | Individual |
+| **Tukey HSD** | Sí | El más potente para comparaciones en parejas únicamente | No | Sí | Simultáneo |
+| **Dunnett** | Sí | El más potente cuando se compara con un control | Sí | No | Simultáneo |
+| **Hsu MCB** | Sí | El más potente para comparar con el mejor | No | Sí | Simultáneo |
+| **Bonferroni** | Sí | El más conservador; pocas comparaciones | Ambos | Ambos | Simultáneo |
+| **Sidak** | Sí | Similar a Bonferroni; levemente menos conservador | Ambos | Ambos | Simultáneo |
+| **Scheffé** | Sí | Cualquier contraste; el más conservador | Ambos | Ambos | Simultáneo |
+| **Duncan** | Sí | Menos conservador que Tukey | No | Sí | Individual |
+| **Scott-Knott** | Sí | Agrupa sin solapamiento; basado en clúster | No | Sí | Simultáneo |
+
+: Resumen de los principales métodos de comparaciones múltiples {#tbl-mcm}
+
+::: {.callout-tip}
+### ¿Cuál método escoger?
+
+No existe un método único. La elección depende del experimento:
+
+- Si se planifican las comparaciones **antes del experimento**: usar contrastes ortogonales, Dunnett (si hay control) o Hsu (si se busca el mejor).
+- Si no se puede planificar _a priori_ y el número de comparaciones es **pequeño**: Bonferroni o Sidak.
+- Si se desea realizar **todas las comparaciones por pares**: Tukey HSD es la opción más recomendada en experimentos agrícolas estándar.
+- Si se quiere **máxima potencia** con conocimiento previo de que el ANOVA es significativo: Fisher LSD (con cautela).
+- Si se requiere **máxima protección** contra error tipo I: Scheffé.
+:::
+
+### Comparaciones múltiples en R con `agricolae`
+
+Las pruebas de comparaciones múltiples en R se pueden realizar con las funciones del paquete `agricolae`:
+
+| Función | Prueba |
+|---------|--------|
+| `LSD.test(mod, "trt")` | Fisher LSD |
+| `HSD.test(mod, "trt")` | Tukey HSD |
+| `scheffe.test(mod, "trt")` | Scheffé |
+| `duncan.test(mod, "trt")` | Duncan |
+| `SNK.test(mod, "trt")` | Student-Newman-Keuls |
+
+A continuación se muestra cómo aplicar la prueba de Tukey al modelo de rendimiento:
+
+```{r}
+comp_tukey <- HSD.test(mod2, "Tratamiento", group = TRUE)
+comp_tukey$groups
+```
+
+```{r}
+#| fig-cap: "Comparación de medias por prueba de Tukey — Rendimiento (t/ha)"
+#| label: fig-tukey
+
+grupos <- comp_tukey$groups |>
+  rownames_to_column("Tratamiento")
+
+ggplot(grupos, aes(x = reorder(Tratamiento, Rendimiento_ha),
+                    y = Rendimiento_ha,
+                    fill = groups)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label = groups), vjust = -0.5, size = 4) +
+  scale_fill_brewer(palette = "Set2") +
+  jtools::theme_apa() +
+  labs(x = "Tratamiento", y = "Rendimiento promedio (t/ha)",
+       title = "Comparación de medias — Prueba de Tukey")
+```
+
+```{webr}
+# Compara los resultados entre diferentes pruebas
+# library(agricolae)
+# comp_lsd    <- LSD.test(mod2, "Tratamiento", group = TRUE)
+# comp_tukey  <- HSD.test(mod2, "Tratamiento", group = TRUE)
+# comp_duncan <- duncan.test(mod2, "Tratamiento", group = TRUE)
+# comp_lsd$groups
+# comp_tukey$groups
+# comp_duncan$groups
+```
+
+### Coeficiente de variación (CV)
+
+El coeficiente de variación es una medida de precisión del experimento. Se calcula como:
+
+$$
+CV = \frac{\sqrt{MCE}}{\bar{y}_{..}} \times 100
+$$
+
+donde $MCE$ es la media cuadrática del error y $\bar{y}_{..}$ es la media general del experimento. El paquete `agricolae` lo reporta automáticamente en las funciones de comparaciones múltiples.
+
+::: {.callout-tip}
+### ¿Qué indica el CV?
+
+Un CV alto indica que el error experimental es grande en relación con la media. Como referencia orientativa en experimentos agrícolas de campo:
+
+- CV < 10%: excelente precisión.
+- CV entre 10% y 20%: buena precisión, aceptable.
+- CV entre 20% y 30%: precisión moderada.
+- CV > 30%: baja precisión; conviene revisar el diseño o el manejo del experimento.
+:::
+
+### Demo interactiva: potencia del ANOVA y tamaño de muestra {.unnumbered}
+
+La **potencia** es la probabilidad de rechazar $H_0$ cuando realmente es falsa (detectar diferencias reales). Ajusta los parámetros para ver cuántas repeticiones necesitas.
+
+```{ojs}
+//| echo: false
+viewof k_pot    = Inputs.range([2, 6],   {step: 1,    value: 3,    label: "Número de tratamientos (k):"})
+viewof r_pot    = Inputs.range([2, 20],  {step: 1,    value: 5,    label: "Repeticiones por tratamiento (r):"})
+viewof delta    = Inputs.range([0.25, 5],{step: 0.25, value: 2,    label: "Diferencia mínima detectable (δ):"})
+viewof sigma_p  = Inputs.range([0.25, 4],{step: 0.25, value: 1.5,  label: "Desviación estándar del error (σ):"})
+viewof alpha_p  = Inputs.select([0.10, 0.05, 0.01], {label: "Nivel α:", value: 0.05,
+  format: x => `α = ${x}`})
+```
+
+```{ojs}
+//| echo: false
+{
+  // ── Función gamma logarítmica (Lanczos) ─────────────────────────────────
+  function lgam(z) {
+    const c = [76.18009172947146,-86.50532032941677,24.01409824083091,
+               -1.231739572450155,1.208650973866179e-3,-5.395239384953e-6];
+    let x = z, t = z + 5.5, s = 1.000000000190015;
+    t -= (z + 0.5) * Math.log(t);
+    for (let j = 0; j < 6; j++) s += c[j] / ++x;
+    return -t + Math.log(2.5066282746310005 * s / z);
+  }
+
+  // ── Fracción continua de Lentz para I_x(a,b) ────────────────────────────
+  function betacf(a, b, x) {
+    const MAXIT = 200, EPS = 3e-7, FPMIN = 1e-30;
+    const qab = a + b, qap = a + 1, qam = a - 1;
+    let c = 1, d = 1 - qab * x / qap;
+    if (Math.abs(d) < FPMIN) d = FPMIN;
+    d = 1 / d; let h = d;
+    for (let m = 1; m <= MAXIT; m++) {
+      const m2 = 2 * m;
+      let aa = m * (b - m) * x / ((qam + m2) * (a + m2));
+      d = 1 + aa * d; if (Math.abs(d) < FPMIN) d = FPMIN;
+      c = 1 + aa / c; if (Math.abs(c) < FPMIN) c = FPMIN;
+      d = 1 / d; h *= d * c;
+      aa = -(a + m) * (qab + m) * x / ((a + m2) * (qap + m2));
+      d = 1 + aa * d; if (Math.abs(d) < FPMIN) d = FPMIN;
+      c = 1 + aa / c; if (Math.abs(c) < FPMIN) c = FPMIN;
+      d = 1 / d; const del = d * c; h *= del;
+      if (Math.abs(del - 1) < EPS) break;
+    }
+    return h;
+  }
+
+  // ── Beta incompleta regularizada I_x(a,b) ───────────────────────────────
+  function betainc(a, b, x) {
+    if (x <= 0) return 0; if (x >= 1) return 1;
+    const lbeta = lgam(a) + lgam(b) - lgam(a + b);
+    const front = Math.exp(Math.log(x)*a + Math.log(1-x)*b - lbeta) / a;
+    if (x < (a + 1) / (a + b + 2))
+      return front * betacf(a, b, x);
+    return 1 - Math.exp(Math.log(1-x)*b + Math.log(x)*a - lbeta) / b * betacf(b, a, 1-x);
+  }
+
+  // ── CDF de F central: P(F(d1,d2) < f) = I_x(d1/2, d2/2) ────────────────
+  function cdfF(f, d1, d2) {
+    if (f <= 0) return 0;
+    return betainc(d1/2, d2/2, d1*f / (d1*f + d2));
+  }
+
+  // ── Cuantil de F central (bisección) ────────────────────────────────────
+  function qf(p, d1, d2) {
+    let lo = 0, hi = 500;
+    for (let i = 0; i < 120; i++) {
+      const mid = (lo + hi) / 2;
+      cdfF(mid, d1, d2) < p ? lo = mid : hi = mid;
+    }
+    return (lo + hi) / 2;
+  }
+
+  // ── Potencia usando la serie de Poisson CORRECTA ─────────────────────────
+  // P(F_nc(d1,d2,λ) > Fcrit) = 1 − Σ_j w_j · I_x(d1/2+j, d2/2)
+  // con x = Fcrit·d1 / (Fcrit·d1 + d2)  ← FIJO para todos los j
+  // w_j = exp(−λ/2)·(λ/2)^j / j!
+  function powerANOVA(k, r, delta, sigma, alpha) {
+    const d1 = k - 1, d2 = k * (r - 1);
+    if (d2 <= 0) return 0.05;
+    const lam     = r * delta * delta / (sigma * sigma);
+    const fcrit   = qf(1 - alpha, d1, d2);
+    const xFixed  = fcrit * d1 / (fcrit * d1 + d2);   // ← fijo
+    const halfLam = lam / 2;
+    let logW = -halfLam, cdfNC = 0;
+    for (let j = 0; j < 80; j++) {
+      if (j > 0) logW += Math.log(halfLam) - Math.log(j);
+      const wj = Math.exp(logW);
+      if (wj < 1e-14) break;
+      cdfNC += wj * betainc(d1/2 + j, d2/2, xFixed);
+    }
+    return Math.min(0.9999, Math.max(0.0001, 1 - cdfNC));
+  }
+
+  // ── Datos de la curva ────────────────────────────────────────────────────
+  const rVals = Array.from({length: 19}, (_, i) => i + 2);
+  const curve = rVals.map(rv => ({r: rv, pot: powerANOVA(k_pot, rv, delta, sigma_p, alpha_p)}));
+  const potAct = powerANOVA(k_pot, r_pot, delta, sigma_p, alpha_p);
+  const rMin80 = rVals.find(rv => powerANOVA(k_pot, rv, delta, sigma_p, alpha_p) >= 0.80) ?? ">20";
+
+  // ── SVG ──────────────────────────────────────────────────────────────────
+  const w = 500, h = 260, mg = {t: 20, r: 60, b: 56, l: 60};
+  const W = w - mg.l - mg.r, H = h - mg.t - mg.b;
+  const xS = d3.scaleLinear().domain([2, 20]).range([0, W]);
+  const yS = d3.scaleLinear().domain([0, 1]).range([H, 0]);
+
+  const svg = d3.create("svg")
+    .attr("viewBox", `0 0 ${w} ${h}`).attr("width","100%")
+    .style("max-width",`${w}px`).style("font-family","sans-serif");
+  const g = svg.append("g").attr("transform",`translate(${mg.l},${mg.t})`);
+
+  // Banda 80 %
+  g.append("line").attr("x1",0).attr("x2",W).attr("y1",yS(0.8)).attr("y2",yS(0.8))
+    .attr("stroke","#bab9b4").attr("stroke-dasharray","4,3").attr("stroke-width",1);
+  g.append("text").attr("x",W+4).attr("y",yS(0.8)+4).attr("font-size",10).attr("fill","#7a7974").text("80%");
+
+  // Área rellena
+  g.append("path").datum(curve)
+    .attr("fill","#01696f").attr("fill-opacity",0.10)
+    .attr("d", d3.area().x(d=>xS(d.r)).y0(H).y1(d=>yS(d.pot)).curve(d3.curveCatmullRom));
+
+  // Línea de potencia
+  g.append("path").datum(curve)
+    .attr("fill","none").attr("stroke","#01696f").attr("stroke-width",2.5)
+    .attr("d", d3.line().x(d=>xS(d.r)).y(d=>yS(d.pot)).curve(d3.curveCatmullRom));
+
+  // Punto actual
+  g.append("circle").attr("cx",xS(r_pot)).attr("cy",yS(potAct)).attr("r",7)
+    .attr("fill","#01696f").attr("stroke","white").attr("stroke-width",2);
+  const labelX = r_pot > 14 ? xS(r_pot) - 10 : xS(r_pot) + 10;
+  const anchor = r_pot > 14 ? "end" : "start";
+  g.append("text").attr("x",labelX).attr("y",yS(potAct)-8)
+    .attr("text-anchor",anchor).attr("font-size",12).attr("font-weight","600")
+    .attr("fill","#01696f").text(`${(potAct*100).toFixed(1)}%`);
+
+  // Ejes
+  g.append("g").attr("transform",`translate(0,${H})`).call(d3.axisBottom(xS).ticks(9))
+    .selectAll("text").attr("font-size",11);
+  g.append("g").call(d3.axisLeft(yS).ticks(5).tickFormat(d3.format(".0%")))
+    .selectAll("text").attr("font-size",11);
+
+  // Etiquetas
+  g.append("text").attr("x",W/2).attr("y",H+36).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill","#28251d").text("Repeticiones por tratamiento (r)");
+  g.append("text").attr("transform","rotate(-90)").attr("x",-H/2).attr("y",-46)
+    .attr("text-anchor","middle").attr("font-size",12).attr("fill","#28251d").text("Potencia (1 − β)");
+
+  // r mínimo para 80%
+  g.append("text").attr("x",W/2).attr("y",H+50).attr("text-anchor","middle")
+    .attr("font-size",11).attr("fill","#964219")
+    .text(`r mínimo para potencia ≥ 80 %: ${rMin80} repeticiones`);
+
+  return svg.node();
+}
+```
+
+::: {.callout-tip}
+**Regla práctica:** en experimentación agrícola se recomienda una potencia mínima del **80 %** (línea punteada). Si la potencia actual es baja, aumenta el número de repeticiones o mejora el control ambiental del experimento (por ejemplo, usando DBCA en lugar de DCA para reducir σ).
+:::
 
 
+---
 
-## Diseño de bloques completos al azar
+## Diseño de bloques completos al azar (DBCA) {#sec-dbca}
+
+El diseño de bloques completos al azar (DBCA) incorpora el principio de **bloqueo** para controlar una fuente de variación conocida. Este diseño es el más utilizado en experimentación agrícola de campo cuando existe heterogeneidad en el terreno.
+
+### ¿Cuándo usar el DBCA?
+
+Se usa el DBCA cuando:
+
+- Existe un **gradiente** de fertilidad, humedad, pendiente o sombra en el terreno.
+- Las unidades experimentales tienen **características heterogéneas** (por ejemplo, diferente tamaño inicial de plantas).
+- Se desea controlar el efecto de una variable que no es de interés (el bloque).
+
+### Estructura del diseño
+
+En el DBCA, el campo experimental se divide en **bloques** lo más homogéneos posible. Dentro de cada bloque, todos los tratamientos aparecen exactamente una vez, asignados de manera **aleatoria**.
+
+```
+Bloque 1: [T3] [T1] [T4] [T2]
+Bloque 2: [T2] [T4] [T1] [T3]
+Bloque 3: [T1] [T3] [T2] [T4]
+Bloque 4: [T4] [T2] [T3] [T1]
+```
+
+### Modelo matemático
+
+$$
+y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}
+$$ {#eq-dbca}
+
+donde:
+
+- $y_{ij}$ es la respuesta del tratamiento $i$ en el bloque $j$,
+- $\mu$ es la media general,
+- $\alpha_i$ es el efecto del tratamiento $i$,
+- $\beta_j$ es el efecto del bloque $j$,
+- $\epsilon_{ij}$ es el error aleatorio.
+
+### Tabla ANOVA para el DBCA
+
+| Fuente | GL | SC | MC | $F$ |
+|--------|----|----|-----|-----|
+| Bloques | $b-1$ | $SCB = I\sum_{j=1}^b(\bar{y}_{.j}-\bar{y}_{..})^2$ | $MCB$ | $MCB/MCE$ |
+| Tratamientos | $k-1$ | $SCTr = b\sum_{i=1}^k(\bar{y}_{i.}-\bar{y}_{..})^2$ | $MCTr$ | $MCTr/MCE$ |
+| Error | $(b-1)(k-1)$ | $SCE$ | $MCE$ | |
+| Total | $bk-1$ | $SCT$ | | |
+
+: Tabla ANOVA para el DBCA {#tbl-anova-dbca}
+
+donde $b$ es el número de bloques y $k$ el número de tratamientos.
+
+### Eficiencia relativa del DBCA respecto al DCA
+
+Cuando se aplica un DBCA, es útil calcular la **eficiencia relativa** (ER) para cuantificar cuánto más preciso es el DBCA respecto al DCA. Si la ER > 1, el bloqueo fue beneficioso.
+
+$$
+ER = \frac{(b-1) \cdot MCB + b(k-1) \cdot MCE}{(bk-1) \cdot MCE_{DCA}}
+$$
+
+donde $MCE_{DCA}$ es la media cuadrática del error estimada como si el experimento hubiera sido un DCA:
+
+$$
+MCE_{DCA} = \frac{(b-1) \cdot MCB + b(k-1) \cdot MCE}{bk - 1}
+$$
+
+La función `summary()` del paquete `agricolae` al aplicar diseños con bloques reporta esta eficiencia.
+
+::: {.callout-tip}
+Un $ER = 1.40$ significa que se necesitarían un 40% más de repeticiones en el DCA para lograr la misma precisión que con el DBCA. Esto justifica el uso del bloqueo cuando existe heterogeneidad conocida en el material experimental.
+:::
+
+### Generación del diseño y análisis en R
+
+```{r}
+library(agricolae)
+
+tratamientos <- c("T1", "T2", "T3", "T4")
+
+dbca <- design.rcbd(
+  trt = tratamientos,
+  r = 4,          # número de bloques
+  seed = 456,
+  serie = 2
+)
+
+dbca$book
+```
+
+```{webr}
+library(agricolae)
+tratamientos <- c("T1", "T2", "T3", "T4")
+dbca <- design.rcbd(trt = tratamientos, r = 4, seed = 456, serie = 2)
+dbca$book
+```
+
+Para el análisis estadístico con `aov()`, el bloque se incluye como factor adicional en la fórmula:
+
+```{r}
+#| eval: false
+# Estructura del modelo para DBCA
+mod_dbca <- aov(Rendimiento ~ Tratamiento + Bloque, data = datos_dbca)
+summary(mod_dbca)
+```
+
+::: {.callout-important}
+### DCA vs. DBCA: ¿cuál elegir?
+
+| Situación | Diseño recomendado |
+|-----------|-------------------|
+| Material experimental muy uniforme (laboratorio, invernadero) | DCA |
+| Existe un gradiente o fuente de variación conocida en el campo | DBCA |
+| Se desea aumentar la precisión controlando la heterogeneidad | DBCA |
+| La variación ambiental es impredecible o pequeña | DCA |
+
+En general, **el DBCA es más eficiente que el DCA en condiciones de campo**, ya que separa la variabilidad debida a los bloques del error experimental, reduciendo el error residual.
+:::
+
+### Ejemplo: análisis de rendimiento con bloques
+
+Supongamos un experimento con 4 variedades de arroz evaluadas en 3 bloques definidos por la disponibilidad de agua en el lote:
+
+```{r}
+#| eval: false
+datos_arroz <- read_excel("datos/arroz_dbca.xlsx")
+
+mod_arroz <- aov(Rendimiento ~ Variedad + Bloque, data = datos_arroz)
+summary(mod_arroz)
+
+# Comparaciones múltiples (Tukey)
+comp_arroz <- HSD.test(mod_arroz, "Variedad", group = TRUE)
+comp_arroz$groups
+```
+
+```{webr}
+# Simula un DBCA con datos de ejemplo
+set.seed(42)
+datos_sim <- data.frame(
+  Variedad = rep(paste0("V", 1:4), times = 3),
+  Bloque   = rep(paste0("B", 1:3), each = 4),
+  Rend     = c(4.2, 5.1, 3.8, 4.9,
+               4.5, 5.3, 4.0, 5.1,
+               4.1, 4.8, 3.6, 4.7)
+)
+
+mod_sim <- aov(Rend ~ Variedad + Bloque, data = datos_sim)
+summary(mod_sim)
+```
+
+---
+
+## Diseño de cuadrado latino (CL) {#sec-cl}
+
+El diseño de cuadrado latino permite controlar simultáneamente **dos fuentes de variación conocidas**, organizadas en filas y columnas. Es especialmente útil cuando existen dos gradientes perpendiculares en el terreno (por ejemplo, fertilidad en dirección norte-sur y humedad en dirección este-oeste).
+
+### Estructura del diseño
+
+En un cuadrado latino con $k$ tratamientos:
+
+- Hay $k$ filas y $k$ columnas.
+- Cada tratamiento aparece exactamente **una vez** en cada fila y **una vez** en cada columna.
+- El número de tratamientos es igual al número de filas y columnas.
+
+**Ejemplo: cuadrado latino 4×4**
+
+```
+       Col 1  Col 2  Col 3  Col 4
+Fila 1   A      B      C      D
+Fila 2   B      C      D      A
+Fila 3   C      D      A      B
+Fila 4   D      A      B      C
+```
+
+### Modelo matemático
+
+$$
+y_{ijk} = \mu + \alpha_i + \beta_j + \gamma_k + \epsilon_{ijk}
+$$ {#eq-cl}
+
+donde $\alpha_i$ es el efecto del tratamiento $i$, $\beta_j$ es el efecto de la fila $j$, $\gamma_k$ es el efecto de la columna $k$.
+
+### Tabla ANOVA para el cuadrado latino
+
+| Fuente | GL | SC | MC | $F$ |
+|--------|----|----|-----|-----|
+| Filas | $k-1$ | $SCF = k\sum_{i=1}^k(\bar{y}_{i.}-\bar{y}_{..})^2$ | $MCF$ | $MCF/MCE$ |
+| Columnas | $k-1$ | $SCC = k\sum_{j=1}^k(\bar{y}_{.j}-\bar{y}_{..})^2$ | $MCC$ | $MCC/MCE$ |
+| Tratamientos | $k-1$ | $SCTr = k\sum_{l=1}^k(\bar{y}_l-\bar{y}_{..})^2$ | $MCTr$ | $MCTr/MCE$ |
+| Error | $(k-1)(k-2)$ | $SCE$ | $MCE$ | |
+| Total | $k^2-1$ | $SCT$ | | |
+
+### Generación en R con `agricolae`
+
+```{r}
+cl <- design.lsd(
+  trt = c("A", "B", "C", "D"),
+  seed = 789,
+  serie = 2
+)
+
+cl$book
+```
+
+```{webr}
+library(agricolae)
+cl <- design.lsd(trt = c("A", "B", "C", "D"), seed = 789, serie = 2)
+cl$book
+```
+
+::: {.callout-warning}
+### Limitaciones del cuadrado latino
+- Solo es aplicable cuando el número de tratamientos es igual al número de filas y columnas.
+- Para más de 8-10 tratamientos, el diseño se vuelve impráctico.
+- Si los efectos de fila y columna son pequeños, el DBCA puede ser más eficiente.
+:::
+
+### Demo interactiva: distribución de tratamientos según diseño {.unnumbered}
+
+Cambia el tipo de diseño para ver cómo se organizan las unidades experimentales y comprender la diferencia entre DCA, DBCA y Cuadrado Latino.
+
+```{ojs}
+//| echo: false
+viewof diseno2 = Inputs.radio(["DCA","DBCA","Cuadrado Latino"],
+  {label: "Diseño:", value: "DBCA"})
+viewof k2 = Inputs.range([3, 6], {step: 1, value: 4, label: "Tratamientos (k):"})
+viewof r2 = Inputs.range([2, 5], {step: 1, value: 3, label: "Repeticiones / bloques (r):"})
+viewof semilla2 = Inputs.button("🔀 Nueva aleatorización")
+```
+
+```{ojs}
+//| echo: false
+{
+  semilla2;
+  const colores=["#01696f","#964219","#437a22","#006494","#7a39bb","#a12c7b"];
+  const k=k2, r=diseno2==="Cuadrado Latino"?k2:r2;
+  const trts=Array.from({length:k},(_,i)=>`T${i+1}`);
+
+  function shuffle(a){
+    let b=[...a];
+    for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
+    return b;
+  }
+
+  let celdas=[];
+  if(diseno2==="DCA"){
+    const todas=[];
+    for(let i=0;i<r;i++) trts.forEach(t=>todas.push(t));
+    shuffle(todas).forEach((t,idx)=>celdas.push({t,col:idx%k,row:Math.floor(idx/k)}));
+  } else if(diseno2==="DBCA"){
+    for(let b=0;b<r;b++) shuffle(trts).forEach((t,ci)=>celdas.push({t,col:ci,row:b}));
+  } else {
+    for(let row=0;row<k;row++)
+      for(let col=0;col<k;col++)
+        celdas.push({t:trts[(row+col)%k],col,row});
+  }
+
+  const w=50,h=50,gap=5,padL=44,padT=28,padR=12,padB=40;
+  const svgW=k*(w+gap)+padL+padR, svgH=r*(h+gap)+padT+padB+28;
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${svgW} ${svgH}`)
+    .attr("width","100%").style("max-width",`${svgW}px`).style("font-family","sans-serif");
+
+  Array.from({length:k},(_,c)=>{
+    svg.append("text").attr("x",padL+c*(w+gap)+w/2).attr("y",18)
+      .attr("text-anchor","middle").attr("font-size",11).attr("fill","#7a7974")
+      .text(diseno2==="Cuadrado Latino"?`Col${c+1}`:`T${c+1}`);
+  });
+  Array.from({length:r},(_,rr)=>{
+    svg.append("text").attr("x",padL-6).attr("y",padT+rr*(h+gap)+h/2+5)
+      .attr("text-anchor","end").attr("font-size",11).attr("fill","#7a7974")
+      .text(diseno2==="DCA"?`U${rr+1}`:`B${rr+1}`);
+  });
+  celdas.forEach(({t,col,row})=>{
+    const x=padL+col*(w+gap),y=padT+row*(h+gap),ci=trts.indexOf(t);
+    svg.append("rect").attr("x",x).attr("y",y).attr("width",w).attr("height",h)
+      .attr("rx",6).attr("fill",colores[ci]+"22").attr("stroke",colores[ci]).attr("stroke-width",2);
+    svg.append("text").attr("x",x+w/2).attr("y",y+h/2+5)
+      .attr("text-anchor","middle").attr("font-size",13).attr("font-weight","600")
+      .attr("fill",colores[ci]).text(t);
+  });
+  const lyY=svgH-10;
+  trts.forEach((t,i)=>{
+    const lx=padL+i*62;
+    svg.append("rect").attr("x",lx).attr("y",lyY-12).attr("width",12).attr("height",12)
+      .attr("rx",3).attr("fill",colores[i]+"44").attr("stroke",colores[i]).attr("stroke-width",1.5);
+    svg.append("text").attr("x",lx+16).attr("y",lyY).attr("font-size",11)
+      .attr("fill","#28251d").text(t);
+  });
+  return svg.node();
+}
+```
+
+::: {.callout-tip}
+En el **DBCA** cada tratamiento aparece exactamente una vez por bloque (fila). En el **Cuadrado Latino** cada tratamiento aparece una sola vez en cada fila **y** cada columna — controlando dos fuentes de variación simultáneamente.
+:::
 
 
+---
 
-## Diseño de cuadro latino
+## Diseño factorial {#sec-factorial}
 
+El diseño factorial evalúa simultáneamente el efecto de **dos o más factores** y, lo que es más importante, permite estudiar la **interacción** entre ellos. La interacción ocurre cuando el efecto de un factor depende del nivel del otro factor.
 
+### Notación y estructura
 
-## Pruebas no paramétricas equivalentes al análisis de varianza
+Un diseño factorial $a \times b$ tiene:
 
-## Pruebas de comparaciones múltiples no paramétricas
+- Factor A con $a$ niveles,
+- Factor B con $b$ niveles,
+- $a \times b$ combinaciones de tratamientos,
+- $r$ repeticiones por combinación.
 
-## Diseño factorial
+**Ejemplo**: un experimento factorial $3 \times 2$ con el factor Variedad (V1, V2, V3) y el factor Riego (R0, R1) produce $3 \times 2 = 6$ combinaciones de tratamientos.
+
+### Modelo matemático
+
+$$
+y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk}
+$$ {#eq-factorial}
+
+donde $(\alpha\beta)_{ij}$ es el término de interacción entre los factores A y B.
+
+Para **tres factores** (A, B, C), el modelo se extiende a:
+
+$$
+y_{ijlk} = \mu + \alpha_i + \beta_j + \tau_l + (\alpha\beta)_{ij} + (\alpha\tau)_{il} + (\beta\tau)_{jl} + (\alpha\beta\tau)_{ijl} + \epsilon_{ijlk}
+$$ {#eq-factorial3}
+
+donde se incluyen todas las posibles interacciones de dos y tres factores.
+
+### Tabla ANOVA para el factorial
+
+| Fuente | GL |
+|--------|-----|
+| Factor A | $a - 1$ |
+| Factor B | $b - 1$ |
+| Interacción A×B | $(a-1)(b-1)$ |
+| Error | $ab(r-1)$ |
+| Total | $abr - 1$ |
+
+### Análisis factorial en R
+
+En R, el diseño factorial se especifica con el operador `*` (efectos principales + interacción) o `:` (solo interacción):
+
+```{r}
+#| eval: false
+# Factorial: efectos principales de Variedad y Riego + su interacción
+mod_fact <- aov(Rendimiento ~ Variedad * Riego, data = datos)
+
+# Equivalente explícito:
+mod_fact <- aov(Rendimiento ~ Variedad + Riego + Variedad:Riego, data = datos)
+
+summary(mod_fact)
+```
+
+```{r}
+# Ejemplo con datos simulados de un factorial 3x2
+set.seed(101)
+datos_fact <- expand.grid(
+  Variedad = c("V1", "V2", "V3"),
+  Riego    = c("R0", "R1"),
+  Rep      = 1:4
+)
+datos_fact$Rendimiento <- c(
+  rnorm(4, 3.5, 0.3), rnorm(4, 4.2, 0.3), rnorm(4, 3.8, 0.3),
+  rnorm(4, 4.8, 0.3), rnorm(4, 5.5, 0.3), rnorm(4, 4.2, 0.3)
+)
+
+mod_fact <- aov(Rendimiento ~ Variedad * Riego, data = datos_fact)
+summary(mod_fact)
+```
+
+```{webr}
+set.seed(101)
+datos_fact <- expand.grid(
+  Variedad = c("V1", "V2", "V3"),
+  Riego    = c("R0", "R1"),
+  Rep      = 1:4
+)
+datos_fact$Rendimiento <- c(
+  rnorm(4, 3.5, 0.3), rnorm(4, 4.2, 0.3), rnorm(4, 3.8, 0.3),
+  rnorm(4, 4.8, 0.3), rnorm(4, 5.5, 0.3), rnorm(4, 4.2, 0.3)
+)
+mod_fact <- aov(Rendimiento ~ Variedad * Riego, data = datos_fact)
+summary(mod_fact)
+```
+
+### Gráfico de interacción
+
+El gráfico de interacción es fundamental para interpretar el efecto conjunto de dos factores:
+
+```{r}
+#| fig-cap: "Gráfico de interacción Variedad × Riego"
+#| label: fig-interact
+
+medias_fact <- datos_fact |>
+  group_by(Variedad, Riego) |>
+  summarise(Media = mean(Rendimiento), .groups = "drop")
+
+ggplot(medias_fact, aes(x = Variedad, y = Media,
+                         color = Riego, group = Riego)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("#01696f", "#964219")) +
+  jtools::theme_apa() +
+  labs(y = "Rendimiento promedio (t/ha)",
+       title = "Interacción Variedad × Riego")
+```
+
+::: {.callout-tip}
+### ¿Cómo interpretar el gráfico de interacción?
+
+- Si las líneas son **paralelas**: no hay interacción. El efecto de un factor es el mismo en todos los niveles del otro.
+- Si las líneas se **cruzan** o **divergen**: existe interacción. El efecto de un factor depende del nivel del otro.
+
+Cuando la interacción es significativa, las comparaciones de los efectos principales deben interpretarse con cautela.
+:::
+
+```{webr}
+# Modifica los valores para ver cómo cambia el gráfico de interacción
+medias <- data.frame(
+  Variedad = rep(c("V1","V2","V3"), 2),
+  Riego    = rep(c("R0","R1"), each = 3),
+  Media    = c(3.5, 4.2, 3.8,   # Sin riego
+               4.8, 4.4, 5.2)   # Con riego (cambia estos valores)
+)
+
+library(ggplot2)
+ggplot(medias, aes(x = Variedad, y = Media, color = Riego, group = Riego)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 3) +
+  labs(y = "Rendimiento (t/ha)")
+```
+
+---
+
+## Diseño en parcelas divididas (DPD) {#sec-dpd}
+
+El diseño en parcelas divididas (DPD), conocido en inglés como *Split-Plot Design*, es uno de los diseños más utilizados en investigación agrícola cuando uno de los factores es difícil de aleatorizar a nivel de unidad experimental pequeña, o cuando las unidades experimentales para los dos factores tienen tamaños distintos.
+
+### Motivación: ¿por qué parcelas divididas?
+
+Considere un experimento con dos factores:
+
+- **Factor A**: Sistema de labranza (labranza cero vs. labranza convencional). Este factor requiere maquinaria pesada y es difícil de aplicar en parcelas pequeñas.
+- **Factor B**: Variedad de maíz (V1, V2, V3). Este factor puede aplicarse fácilmente en parcelas pequeñas.
+
+En este caso, resulta práctico asignar los niveles del **Factor A** a parcelas grandes (parcelas principales), y dentro de cada parcela principal subdividirla para asignar los niveles del **Factor B** a parcelas más pequeñas (subparcelas). Esto es exactamente la lógica del DPD.
+
+::: {.callout-note}
+![Estructura Jerárquica del DPD](imagenes/DPD.jpg){#fig-popsample fig-align="center"}
+
+Los niveles del **Factor A** se asignan aleatoriamente a las parcelas principales dentro de cada bloque. Los niveles del **Factor B** se asignan aleatoriamente dentro de cada parcela principal (subparcelas).
+:::
+
+### Terminología del DPD
+
+| Término | Significado |
+|---------|-------------|
+| **Parcela principal** | Unidad experimental grande; recibe los niveles del Factor A |
+| **Subparcela** | Unidad experimental pequeña dentro de la parcela principal; recibe los niveles del Factor B |
+| **Error (a)** | Error de las parcelas principales (variabilidad entre parcelas grandes) |
+| **Error (b)** | Error de las subparcelas (variabilidad dentro de las parcelas grandes) |
+
+### Modelo matemático
+
+$$
+y_{ijk} = \mu + \rho_k + \alpha_i + \delta_{ik} + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk}
+$$ {#eq-dpd}
+
+donde:
+
+- $\mu$ es la media general,
+- $\rho_k$ es el efecto del bloque $k$,
+- $\alpha_i$ es el efecto del Factor A (parcela principal),
+- $\delta_{ik}$ es el error de parcela principal (Error a),
+- $\beta_j$ es el efecto del Factor B (subparcela),
+- $(\alpha\beta)_{ij}$ es la interacción A×B,
+- $\epsilon_{ijk}$ es el error de subparcela (Error b).
+
+### Tabla ANOVA para el DPD
+
+| Fuente | GL |
+|--------|-----|
+| Bloques | $r - 1$ |
+| **Parcelas principales (Factor A)** | $a - 1$ |
+| Error (a) | $(r-1)(a-1)$ |
+| **Subparcelas (Factor B)** | $b - 1$ |
+| **Interacción A×B** | $(a-1)(b-1)$ |
+| Error (b) | $a(r-1)(b-1)$ |
+| **Total** | $rab - 1$ |
+
+: Tabla ANOVA para el diseño en parcelas divididas {#tbl-anova-dpd}
+
+::: {.callout-important}
+### Dos errores distintos
+
+Una característica fundamental del DPD es que tiene **dos errores experimentales**:
+
+- **Error (a)**: error de las parcelas principales, generalmente más grande. Se usa para probar el Factor A.
+- **Error (b)**: error de las subparcelas, generalmente más pequeño y con más grados de libertad. Se usa para probar el Factor B y la interacción A×B.
+
+Consecuencia: **el Factor B y la interacción A×B se prueban con mayor precisión que el Factor A**. Por eso se suele asignar al Factor B el factor que más nos interesa comparar con precisión.
+:::
+
+### Generación del diseño con `agricolae`
+
+```{r}
+library(agricolae)
+
+# Factor A: sistema de labranza (parcela principal)
+factorA <- c("Cero", "Convencional")
+
+# Factor B: variedad (subparcela)
+factorB <- c("V1", "V2", "V3")
+
+dpd <- design.split(
+  trt1 = factorA,
+  trt2 = factorB,
+  r = 3,           # número de bloques/repeticiones
+  seed = 333,
+  serie = 2,
+  design = "rcbd"  # DPD con bloques completos al azar
+)
+
+dpd$book
+```
+
+```{webr}
+library(agricolae)
+factorA <- c("Cero", "Convencional")
+factorB <- c("V1", "V2", "V3")
+dpd <- design.split(
+  trt1 = factorA,
+  trt2 = factorB,
+  r = 3,
+  seed = 333,
+  serie = 2,
+  design = "rcbd"
+)
+dpd$book
+```
+
+### Análisis del DPD en R
+
+El análisis del DPD en R se puede realizar con la función `sp.plot()` de `agricolae`, que produce directamente la tabla ANOVA correcta con los dos errores separados:
+
+```{r}
+# Ejemplo con datos simulados de un DPD
+set.seed(202)
+
+# Crear estructura del experimento
+n_bloques   <- 3
+niveles_A   <- c("Cero", "Convencional")
+niveles_B   <- c("V1", "V2", "V3")
+
+datos_dpd <- expand.grid(
+  Bloque   = paste0("B", 1:n_bloques),
+  Labranza = niveles_A,
+  Variedad = niveles_B
+)
+
+efecto_A <- c(Cero = 0, Convencional = 0.8)
+efecto_B <- c(V1 = 0, V2 = 1.2, V3 = 0.5)
+interacc  <- matrix(c(0, 0.3, -0.2, 0, -0.2, 0.4), nrow = 2,
+                     dimnames = list(niveles_A, niveles_B))
+
+datos_dpd <- datos_dpd |>
+  mutate(
+    Rendimiento = 4.0 +
+      efecto_A[Labranza] +
+      efecto_B[Variedad] +
+      interacc[cbind(Labranza, Variedad)] +
+      rnorm(n(), 0, 0.25)
+  )
+
+head(datos_dpd, 10)
+```
+
+```{r}
+# Análisis con sp.plot() de agricolae
+with(datos_dpd,
+  sp.plot(
+    block     = Bloque,
+    pplot     = Labranza,
+    splot     = Variedad,
+    Y         = Rendimiento
+  )
+)
+```
+
+```{webr}
+library(agricolae)
+set.seed(202)
+datos_dpd <- expand.grid(
+  Bloque   = paste0("B", 1:3),
+  Labranza = c("Cero", "Convencional"),
+  Variedad = c("V1", "V2", "V3")
+)
+datos_dpd$Rendimiento <- c(
+  rnorm(3, 4.0, 0.25), rnorm(3, 4.5, 0.25), rnorm(3, 4.2, 0.25),
+  rnorm(3, 4.8, 0.25), rnorm(3, 6.3, 0.25), rnorm(3, 4.9, 0.25)
+)
+with(datos_dpd,
+  sp.plot(block = Bloque, pplot = Labranza, splot = Variedad, Y = Rendimiento)
+)
+```
+
+### Interpretación de la tabla ANOVA del DPD
+
+Al ejecutar `sp.plot()`, la salida muestra tres bloques de pruebas F:
+
+1. **Prueba para el Factor A** (Labranza): usa el Error (a). Si $p < 0.05$, los sistemas de labranza difieren en promedio.
+2. **Prueba para el Factor B** (Variedad): usa el Error (b). Si $p < 0.05$, las variedades difieren en promedio.
+3. **Prueba para la interacción A×B**: usa el Error (b). Si $p < 0.05$, el efecto de la variedad **depende** del sistema de labranza.
+
+::: {.callout-important}
+### Regla de interpretación del DPD
+
+- Si la interacción **es significativa**: analice el efecto de B dentro de cada nivel de A por separado. No interprete los efectos principales de forma aislada.
+- Si la interacción **no es significativa**: interprete los efectos principales normalmente.
+:::
+
+### Comparaciones múltiples en el DPD
+
+```{r}
+#| eval: false
+
+# Ajuste alternativo con aov() para mayor flexibilidad
+mod_dpd <- aov(
+  Rendimiento ~ Labranza * Variedad + Error(Bloque/Labranza),
+  data = datos_dpd
+)
+
+summary(mod_dpd)
+
+# Comparaciones de Variedad dentro de cada nivel de Labranza
+library(emmeans)
+emm <- emmeans(mod_dpd, ~ Variedad | Labranza)
+pairs(emm, adjust = "tukey")
+```
+
+```{webr}
+# Usando aov() con el término de error correcto
+mod_dpd2 <- aov(
+  Rendimiento ~ Labranza * Variedad + Error(Bloque/Labranza),
+  data = datos_dpd
+)
+summary(mod_dpd2)
+```
+
+### Visualización del DPD
+
+```{r}
+#| fig-cap: "Rendimiento por sistema de labranza y variedad (DPD)"
+#| label: fig-dpd
+
+medias_dpd <- datos_dpd |>
+  group_by(Labranza, Variedad) |>
+  summarise(
+    Media = mean(Rendimiento),
+    SE    = sd(Rendimiento) / sqrt(n()),
+    .groups = "drop"
+  )
+
+ggplot(medias_dpd,
+       aes(x = Variedad, y = Media, fill = Labranza)) +
+  geom_col(position = position_dodge(0.7), width = 0.6) +
+  geom_errorbar(
+    aes(ymin = Media - SE, ymax = Media + SE),
+    position = position_dodge(0.7), width = 0.2
+  ) +
+  scale_fill_manual(values = c("#01696f", "#964219")) +
+  jtools::theme_apa() +
+  labs(
+    x     = "Variedad",
+    y     = "Rendimiento promedio (t/ha)",
+    fill  = "Labranza",
+    title = "DPD: Labranza (parcela principal) × Variedad (subparcela)"
+  )
+```
+
+### Ventajas y limitaciones del DPD
+
+| Aspecto | Descripción |
+|---------|-------------|
+| ✅ Ventaja | Permite estudiar factores difíciles de aleatorizar (labranza, riego por gravedad) |
+| ✅ Ventaja | Mayor precisión para el Factor B y la interacción |
+| ✅ Ventaja | Reduce el número de parcelas grandes necesarias |
+| ❌ Limitación | El análisis es más complejo que el DBCA o el factorial simple |
+| ❌ Limitación | El Factor A se estima con menor precisión (Error a más grande) |
+| ❌ Limitación | Si se pierde una parcela principal, se pierde toda su información |
+
+---
+
+## Supuestos del ANOVA: verificación y alternativas {#sec-verificacion}
+
+Antes de interpretar los resultados del ANOVA, es necesario verificar que los supuestos se cumplen. Este flujo de trabajo resume el proceso recomendado:
+
+```
+1. Ajustar el modelo con aov()
+2. Verificar normalidad de residuos: shapiro.test(residuals(mod))
+3. Verificar homocedasticidad: bartlett.test() o leveneTest()
+4. Si los supuestos se cumplen → interpretar ANOVA normalmente
+5. Si los supuestos NO se cumplen:
+   a. Intentar transformar los datos (log, sqrt, arcsen)
+   b. Si la transformación no resuelve → usar pruebas no paramétricas
+```
+
+```{r}
+#| eval: false
+
+# Flujo de verificación de supuestos
+mod <- aov(Rendimiento ~ Tratamiento, data = datos)
+
+# 1. Normalidad de residuos
+shapiro.test(residuals(mod))
+
+# 2. Homocedasticidad
+bartlett.test(Rendimiento ~ Tratamiento, data = datos)
+
+# 3. Gráficos de diagnóstico
+par(mfrow = c(2, 2))
+plot(mod)
+```
+
+```{webr}
+# Simula datos y verifica los supuestos
+set.seed(7)
+datos_ex <- data.frame(
+  Tratamiento = rep(paste0("T", 1:4), each = 5),
+  Respuesta   = c(rnorm(5, 10, 2), rnorm(5, 12, 2),
+                  rnorm(5, 9,  2), rnorm(5, 14, 2))
+)
+
+mod_ex <- aov(Respuesta ~ Tratamiento, data = datos_ex)
+shapiro.test(residuals(mod_ex))
+bartlett.test(Respuesta ~ Tratamiento, data = datos_ex)
+```
+
+---
+
+## Pruebas no paramétricas equivalentes al ANOVA {#sec-nonpar}
+
+Cuando los supuestos del ANOVA (normalidad y homocedasticidad) no se cumplen y las transformaciones no resultan suficientes, se utilizan pruebas no paramétricas. Estas pruebas se basan en rangos y no requieren supuestos distribucionales estrictos.
+
+### ¿Cuándo usar pruebas no paramétricas?
+
+::: {.callout-tip}
+Se recomienda optar por pruebas no paramétricas cuando:
+
+- $n$ es pequeño (menos de 5-6 observaciones por grupo) y los datos presentan asimetría marcada.
+- La prueba de Shapiro-Wilk rechaza la normalidad y la transformación de datos no resuelve el problema.
+- Existen valores atípicos influyentes que no pueden eliminarse.
+
+**Importante**: las pruebas no paramétricas son menos potentes que las paramétricas cuando los supuestos del ANOVA sí se cumplen.
+:::
+
+### Equivalencias paramétricas y no paramétricas
+
+| Diseño | Prueba paramétrica | Alternativa no paramétrica | Función en R |
+|--------|-------------------|---------------------------|-------------|
+| DCA (1 factor) | ANOVA | Kruskal-Wallis | `kruskal.test()` |
+| DBCA (bloques) | ANOVA con bloques | Friedman | `friedman.test()` |
+
+### Prueba de Kruskal-Wallis
+
+La prueba de Kruskal-Wallis es el equivalente no paramétrico del ANOVA de una vía. Se aplica cuando existen $k$ muestras independientes y el supuesto de normalidad no se cumple. La prueba se basa en la asignación de rangos a todos los datos conjuntamente y se calcula el estadístico:
+
+$$
+H = \frac{12}{n(n+1)} \sum_{i=1}^{k} \frac{R_i^2}{n_i} - 3(n+1)
+$$ {#eq-kw}
+
+donde:
+
+- $n_i$ es el número de observaciones del $i$-ésimo tratamiento,
+- $n = \sum n_i$ es el total de observaciones,
+- $R_i$ es la suma de rangos del $i$-ésimo tratamiento.
+
+Bajo $H_0$, el estadístico $H$ sigue una distribución $\chi^2_{k-1}$.
+
+**Corrección por empates:** cuando existen muchos datos coincidentes (empates), se corrige $H$ dividiendo por:
+
+$$
+1 - \frac{\sum (T^3 - T)}{n^3 - n}
+$$
+
+donde $T$ es el número de empates en cada grupo de observaciones coincidentes.
+
+```{r}
+#| eval: false
+# Kruskal-Wallis: alternativa no paramétrica al ANOVA del DCA
+kruskal.test(Rendimiento ~ Tratamiento, data = datos)
+```
+
+```{webr}
+# Ejemplo con datos no normales
+set.seed(42)
+datos_np <- data.frame(
+  Tratamiento = rep(paste0("T", 1:4), each = 5),
+  Respuesta   = c(rexp(5, 0.3), rexp(5, 0.2),
+                  rexp(5, 0.4), rexp(5, 0.15))
+)
+
+# Prueba de Kruskal-Wallis
+kruskal.test(Respuesta ~ Tratamiento, data = datos_np)
+```
+
+### Prueba de Friedman
+
+La prueba de Friedman es el equivalente no paramétrico del ANOVA de dos vías con bloques (DBCA). Se basa en asignar rangos a los datos dentro de cada bloque:
+
+$$
+\chi^2_R = \frac{12}{bt(t+1)} \sum_{i=1}^{t} R_{i.}^2 - 3b(t+1)
+$$ {#eq-friedman}
+
+donde:
+
+- $t$ es el número de tratamientos,
+- $b$ es el número de bloques,
+- $R_{i.}$ es la suma de rangos para el $i$-ésimo tratamiento.
+
+**Corrección por empates:** si hay empates dentro de los bloques, se divide $\chi^2_R$ por:
+
+$$
+1 - \frac{\sum_{i=1}^b T_i}{bt(t^2-1)}
+$$
+
+donde $T_i = \sum_h (t_{ih}^3 - t_{ih})$ y $t_{ih}$ es el número de observaciones coincidentes en la categoría $h$ del bloque $i$.
+
+```{r}
+#| eval: false
+# Friedman: alternativa no paramétrica al ANOVA del DBCA
+friedman.test(Rendimiento ~ Tratamiento | Bloque, data = datos)
+```
+
+```{webr}
+# Ejemplo con estructura de bloques
+set.seed(99)
+datos_fried <- data.frame(
+  Tratamiento = rep(paste0("T", 1:4), times = 3),
+  Bloque      = rep(paste0("B", 1:3), each  = 4),
+  Respuesta   = c(8, 11, 6, 14,
+                  9, 12, 7, 15,
+                  7, 10, 5, 13)
+)
+
+friedman.test(Respuesta ~ Tratamiento | Bloque, data = datos_fried)
+```
+
+### Pruebas post hoc no paramétricas {#sec-posthoc-np}
+
+Si la prueba de Kruskal-Wallis resulta significativa, el paso siguiente es determinar entre qué grupos existen diferencias. Las opciones más comunes son:
+
+| Prueba | Descripción | Función en R |
+|--------|-------------|-------------|
+| Wilcoxon por parejas | Comparaciones de a dos grupos; equivalente al test de Mann-Whitney | `pairwise.wilcox.test()` |
+| Dunn | Basada en rangos del Kruskal-Wallis; varios ajustes de p disponibles | `dunnTest()` (paquete `FSA`) |
+| Conover-Iman | Mayor potencia que Dunn; recomendada en la mayoría de casos | `conover.test()` (paquete `conover.test`) |
+| Anderson-Darling | Basada en la distancia entre distribuciones empíricas | Paquete `kSamples` |
+| Baumgartner-Weiß-Schindler | Alternativa sensible a diferencias en la forma y escala | Paquete `BWStest` |
+
+#### Prueba de Dunn
+
+La prueba de Dunn es la más utilizada como post hoc al Kruskal-Wallis. Permite ajustar el valor $p$ por múltiples comparaciones usando los métodos de Bonferroni, Holm, Benjamini-Hochberg, entre otros.
+
+```{r}
+#| eval: false
+library(FSA)
+dunnTest(Rendimiento ~ Tratamiento, data = datos, method = "bonferroni")
+# method puede ser: "bonferroni", "holm", "bh" (Benjamini-Hochberg)
+```
+
+```{webr}
+# Si tiene el paquete FSA disponible:
+# library(FSA)
+# dunnTest(Respuesta ~ Tratamiento, data = datos_np, method = "bonferroni")
+
+# Alternativa con pairwise.wilcox.test (base R):
+pairwise.wilcox.test(
+  datos_np$Respuesta,
+  datos_np$Tratamiento,
+  p.adjust.method = "bonferroni"
+)
+```
+
+::: {.callout-tip}
+### ¿Cuál prueba post hoc no paramétrica usar?
+
+- **Dunn con Bonferroni o Holm**: la opción más conservadora y ampliamente citada en publicaciones agrícolas.
+- **Conover-Iman**: mayor potencia que Dunn; preferida cuando se desea detectar más diferencias.
+- **Wilcoxon por parejas**: fácil de implementar con R base; disponible sin paquetes adicionales.
+
+Para la prueba de Friedman, el equivalente post hoc es el **test de Wilcoxon por pares con corrección de Bonferroni** aplicado dentro de los bloques.
+:::
+
+---
+
+## Resumen comparativo de diseños {#sec-resumen-doe}
+
+La @tbl-resumen-doe resume las características principales de los diseños vistos en este capítulo.
+
+| Diseño | Control de variación | Factores | Cuándo usarlo |
+|--------|---------------------|----------|---------------|
+| **DCA** | Ninguno | 1 | Material homogéneo, laboratorio |
+| **DBCA** | 1 fuente (bloques) | 1 | 1 gradiente en el campo |
+| **CL** | 2 fuentes (filas y columnas) | 1 | 2 gradientes perpendiculares |
+| **Factorial** | Según diseño base | 2 o más | Estudiar interacciones entre factores |
+| **DPD** | Bloques + jerarquía | 2 | Un factor difícil de aleatorizar |
+
+: Comparación de los principales diseños experimentales {#tbl-resumen-doe}
+
+El flujo de decisión para el análisis estadístico se resume en:
+
+### Demo interactiva: árbol de decisión estadística {.unnumbered}
+
+Responde las preguntas para obtener la recomendación según tu diseño. Las preguntas
+aparecen de forma progresiva conforme se necesitan.
+
+```{ojs}
+//| echo: false
+// ── Pregunta 1: siempre visible ─────────────────────────────────────────────
+viewof p1 = Inputs.radio(
+  ["Sí — ANOVA es significativo (p < α)",
+   "No — ANOVA no es significativo"],
+  {label: "① ¿El ANOVA es significativo?",
+   value: "Sí — ANOVA es significativo (p < α)"}
+)
+```
+
+```{ojs}
+//| echo: false
+// ── Pregunta 2: solo si ANOVA fue significativo ──────────────────────────────
+viewof p2 = {
+  const anovaSig = p1.startsWith("Sí");
+  const widget = Inputs.radio(
+    ["Sí — pasan Shapiro-Wilk y Levene/Bartlett",
+     "No — algún supuesto no se cumple"],
+    {label: "② ¿Se cumplen los supuestos del ANOVA?",
+     value: "Sí — pasan Shapiro-Wilk y Levene/Bartlett"}
+  );
+  const div = document.createElement("div");
+  div.style.cssText = `
+    overflow: hidden;
+    max-height: ${anovaSig ? "200px" : "0px"};
+    opacity:    ${anovaSig ? "1"     : "0"};
+    transition: max-height 0.4s ease, opacity 0.35s ease;
+    margin-top: ${anovaSig ? "0.5rem" : "0"};
+  `;
+  div.appendChild(widget);
+  // Exponer el valor del widget al grafo reactivo de OJS
+  div.value = widget.value;
+  widget.addEventListener("input", () => { div.value = widget.value; div.dispatchEvent(new Event("input")); });
+  return div;
+}
+```
+
+```{ojs}
+//| echo: false
+// ── Pregunta 3: solo si supuestos NO se cumplen ──────────────────────────────
+viewof p3 = {
+  const anovaSig = p1.startsWith("Sí");
+  const supFail  = anovaSig && p2.startsWith("No");
+  const widget = Inputs.radio(
+    ["Sí — la transformación resuelve el problema",
+     "No — los supuestos persisten"],
+    {label: "③ ¿La transformación de datos corrige el incumplimiento?",
+     value: "No — los supuestos persisten"}
+  );
+  const div = document.createElement("div");
+  div.style.cssText = `
+    overflow: hidden;
+    max-height: ${supFail ? "200px" : "0px"};
+    opacity:    ${supFail ? "1"     : "0"};
+    transition: max-height 0.4s ease, opacity 0.35s ease;
+    margin-top: ${supFail ? "0.5rem" : "0"};
+  `;
+  div.appendChild(widget);
+  div.value = widget.value;
+  widget.addEventListener("input", () => { div.value = widget.value; div.dispatchEvent(new Event("input")); });
+  return div;
+}
+```
+
+```{ojs}
+//| echo: false
+// ── Pregunta 4: solo si supuestos persisten tras transformación ───────────────
+viewof p4 = {
+  const anovaSig  = p1.startsWith("Sí");
+  const supFail   = anovaSig && p2.startsWith("No");
+  const noTransf  = supFail  && p3.startsWith("No");
+  const widget = Inputs.radio(
+    ["DCA — un factor sin bloques",
+     "DBCA — un factor con bloques"],
+    {label: "④ ¿Cuál es el diseño del experimento?",
+     value: "DCA — un factor sin bloques"}
+  );
+  const div = document.createElement("div");
+  div.style.cssText = `
+    overflow: hidden;
+    max-height: ${noTransf ? "200px" : "0px"};
+    opacity:    ${noTransf ? "1"     : "0"};
+    transition: max-height 0.4s ease, opacity 0.35s ease;
+    margin-top: ${noTransf ? "0.5rem" : "0"};
+  `;
+  div.appendChild(widget);
+  div.value = widget.value;
+  widget.addEventListener("input", () => { div.value = widget.value; div.dispatchEvent(new Event("input")); });
+  return div;
+}
+```
+
+```{ojs}
+//| echo: false
+// ── Panel de resultado ───────────────────────────────────────────────────────
+{
+  const anovaSig  = p1.startsWith("Sí");
+  const supOk     = anovaSig  && p2.startsWith("Sí");
+  const supFail   = anovaSig  && p2.startsWith("No");
+  const transfOk  = supFail   && p3.startsWith("Sí");
+  const noTransf  = supFail   && p3.startsWith("No");
+  const esDCA     = noTransf  && p4.startsWith("DCA");
+  const esDBCA    = noTransf  && p4.startsWith("DBCA");
+
+  // Determinar rama activa
+  let recs = [], color = "#7a7974", icon = "📊";
+
+  if (!anovaSig) {
+    icon  = "📊"; color = "#7a7974";
+    recs  = [
+      "El ANOVA no es significativo (p ≥ α).",
+      "→ No hay evidencia de diferencias entre tratamientos.",
+      "→ No se aplican pruebas de comparación múltiple.",
+      "→ Concluye que los tratamientos no difieren significativamente."
+    ];
+  } else if (supOk) {
+    icon  = "✅"; color = "#01696f";
+    recs  = [
+      "Supuestos verificados — aplica comparaciones múltiples paramétricas.",
+      "→ Tukey HSD       — comparaciones por pares (uso general recomendado).",
+      "→ Fisher LSD      — máxima potencia (requiere ANOVA significativo).",
+      "→ Bonferroni/Holm — control estricto del error tipo I.",
+      "→ Dunnett         — comparaciones contra un control.",
+      "→ Scheffé         — contrastes complejos a posteriori."
+    ];
+  } else if (transfOk) {
+    icon  = "🔄"; color = "#964219";
+    recs  = [
+      "Transformación exitosa — repite el flujo completo de análisis.",
+      "→ Ajusta el modelo ANOVA con los datos transformados.",
+      "→ Verifica supuestos nuevamente (Shapiro-Wilk + Levene).",
+      "→ Si se cumplen, aplica pruebas post hoc paramétricas.",
+      "→ Reporta la transformación usada: log(y), √y, arcsin(√y), 1/y…"
+    ];
+  } else if (esDCA) {
+    icon  = "🔁"; color = "#006494";
+    recs  = [
+      "Supuestos no se cumplen — DCA → Kruskal-Wallis.",
+      "→ kruskal.test(y ~ trt, data = datos)",
+      "→ Post hoc (si KW es significativo):",
+      "   • Dunn + Bonferroni:  dunnTest()       [paquete FSA]",
+      "   • Conover-Iman:       conover.test()   [paquete conover.test]",
+      "   • Wilcoxon por pares: wilcox.test() + p.adjust(method = 'holm')",
+      "→ Las pruebas operan sobre rangos, no sobre valores originales."
+    ];
+  } else if (esDBCA) {
+    icon  = "🔁"; color = "#006494";
+    recs  = [
+      "Supuestos no se cumplen — DBCA → Friedman.",
+      "→ friedman.test(rendimiento ~ trt | bloque, data = datos)",
+      "→ Post hoc (si Friedman es significativo):",
+      "   • Dunn + Bonferroni:  dunnTest()              [paquete FSA]",
+      "   • Nemenyi:            frdAllPairsNemenyi()    [paquete PMCMRplus]",
+      "→ El bloque se mantiene como factor de agrupación en Friedman."
+    ];
+  } else {
+    // Estado intermedio: aún faltan respuestas
+    return html`<div style="
+      padding: 0.75rem 1rem;
+      border-radius: 8px;
+      border: 1.5px dashed #dcd9d5;
+      color: #7a7974;
+      font-size: 0.875rem;
+      font-style: italic;
+    ">Responde las preguntas anteriores para ver la recomendación.</div>`;
+  }
+
+  // Construir el panel de resultado
+  const panel = html`<div style="
+    padding: 1rem 1.2rem;
+    border-radius: 8px;
+    border: 1.5px solid ${color};
+    background: ${color}11;
+    font-family: sans-serif;
+    margin-top: 0.75rem;
+    animation: fadeIn 0.35s ease;
+  ">
+    <style>@keyframes fadeIn{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}</style>
+    <p style="margin:0 0 0.5rem; font-weight:700; font-size:0.9rem; color:${color}">
+      ${icon} ${recs[0]}
+    </p>
+    ${recs.slice(1).map(r => html`<p style="margin:0.2rem 0; font-size:0.85rem;
+      color:#28251d; font-family:monospace">${r}</p>`)}
+  </div>`;
+
+  return panel;
+}
+```
+
+::: {.callout-note}
+El árbol sigue la lógica: ANOVA significativo → supuestos → transformación → prueba no paramétrica según diseño.
+:::
+
+---   
+
 
 ## Ejercicios {.unnumbered} 
 
@@ -744,6 +2422,18 @@ En la hoja _nutriconal_ del archivo _nutricional_24017.xlsx_ se encuentran los d
 :::
 
 Se pide, analizar el efecto del grado de madurez y del componente junto con la interacción entre la madurez y el componente sobre las variables respuesta. 
+
+::: {#exr-doe7}
+**Diseño en parcelas divididas.** En un experimento de cacao (*Theobroma cacao* L.) se evaluó el efecto de la densidad de siembra (Factor A: 3 niveles, asignada a parcelas principales) y la variedad (Factor B: 4 variedades, asignadas a subparcelas), en un DBCA con 3 bloques. La variable respuesta fue el rendimiento de cacao seco (kg/ha).
+:::
+
+a. Genere el diseño con `design.split()` de `agricolae`.
+b. Con los datos del archivo _cacao_dpd.xlsx_, realice el análisis del DPD con `sp.plot()`.
+c. Interprete la tabla ANOVA: ¿es significativa la interacción Densidad × Variedad?
+d. Si la interacción es significativa, compare las variedades dentro de cada nivel de densidad usando Tukey.
+e. Elabore un gráfico de barras con barras de error que muestre la interacción Densidad × Variedad.
+f. Escriba las conclusiones del experimento.
+
 
 ::: {#exr-doe9}
 El crecimiento de cultivos durante todo el año es posible gracias a la producción hidropónica de plantas, una técnica de cultivo sostenible sin suelo que se distingue por el uso eficaz del agua y los nutrientes. La investigación de Achieng Akuak y Melissa Moyo utiliza la hidroponía Deep Water Culture (DWC) para comparar los efectos de varias soluciones nutritivas en la producción de lechuga (Lactuca sativa). Se probaron cuatro tratamientos: dos mezclas suplementadas con efluente de biodigestor, una formulación institucional de la Universidad EARTH y un fertilizante comercial (Ever Green). Durante 21 días, se midieron parámetros de crecimiento de las plantas como altura, número de hojas, biomasa de raíces y brotes, absorción de nutrientes, pH y fluctuaciones de conductividad eléctrica (CE). Este estudio proporciona información sobre opciones de fertilización a largo plazo y de bajo costo para la agricultura hidropónica, lo cual es especialmente importante en zonas con tierras agrícolas limitadas. En la hoja **data** del archivo **data25002.xlsx**, se encuentran los datos recolectados por Melissa y Achieng para 3 de los 4 tratamientos. En la hoja **labels** se encuentran las etiquetas. El documento completo del proyecto de graduación se encuentra en este [enlace](https://bsi.earth.ac.cr/ProyectosDeGraduacion/pdf/2025/25002.pdf) Se pide analizar las variables:

@@ -2,13 +2,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
 <title>2&nbsp; Estadística. Conceptos Básicos. – Análisis de Datos en Agricultura con R y RStudio</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -19,6 +22,41 @@ ul.task-list li input[type="checkbox"] {
   width: 0.8em;
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
 /* CSS for citations */
 div.csl-bib-body { }
@@ -54,15 +92,14 @@ div.csl-indent {
 <link href="./intro.html" rel="prev">
 <script src="site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="site_libs/quarto-html/popper.min.js"></script>
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap-874a94cc35be0778ec714a6aca2fed85.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="site_libs/bootstrap/bootstrap-1344c1620ed4191602f8ad0091617ec7.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <script src="site_libs/quarto-contrib/live-runtime/live-runtime.js" type="module"></script>
 <link href="site_libs/quarto-contrib/live-runtime/live-runtime.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -96,7 +133,7 @@ div.csl-indent {
 <link href="site_libs/quarto-ojs/quarto-ojs.css" rel="stylesheet">
 
   <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+  <script defer="" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <script type="text/javascript">
 const typesetMath = (el) => {
@@ -235,12 +272,20 @@ window.Quarto = {
   <li><a href="#objetivos-del-capítulo" id="toc-objetivos-del-capítulo" class="nav-link active" data-scroll-target="#objetivos-del-capítulo"><span class="header-section-number">2.1</span> Objetivos del capítulo</a></li>
   <li><a href="#qué-es-la-estadística-origen-y-sentido-actual" id="toc-qué-es-la-estadística-origen-y-sentido-actual" class="nav-link" data-scroll-target="#qué-es-la-estadística-origen-y-sentido-actual"><span class="header-section-number">2.2</span> ¿Qué es la estadística? Origen y sentido actual</a></li>
   <li><a href="#etapas-del-proceso-estadístico" id="toc-etapas-del-proceso-estadístico" class="nav-link" data-scroll-target="#etapas-del-proceso-estadístico"><span class="header-section-number">2.3</span> Etapas del proceso estadístico</a></li>
-  <li><a href="#definiciones-importantes" id="toc-definiciones-importantes" class="nav-link" data-scroll-target="#definiciones-importantes"><span class="header-section-number">2.4</span> Definiciones importantes</a></li>
+  <li><a href="#definiciones-importantes" id="toc-definiciones-importantes" class="nav-link" data-scroll-target="#definiciones-importantes"><span class="header-section-number">2.4</span> Definiciones importantes</a>
+  <ul>
+  <li><a href="#sec-unidades" id="toc-sec-unidades" class="nav-link" data-scroll-target="#sec-unidades"><span class="header-section-number">2.4.1</span> Unidad experimental y unidad de observación</a></li>
+  </ul></li>
   <li><a href="#sec-estypes" id="toc-sec-estypes" class="nav-link" data-scroll-target="#sec-estypes"><span class="header-section-number">2.5</span> Clasificación de la estadística</a></li>
-  <li><a href="#sec-tipest" id="toc-sec-tipest" class="nav-link" data-scroll-target="#sec-tipest"><span class="header-section-number">2.6</span> Tipos de estudio</a></li>
+  <li><a href="#sec-tipest" id="toc-sec-tipest" class="nav-link" data-scroll-target="#sec-tipest"><span class="header-section-number">2.6</span> Tipos de estudio</a>
+  <ul>
+  <li><a href="#sec-obs" id="toc-sec-obs" class="nav-link" data-scroll-target="#sec-obs"><span class="header-section-number">2.6.1</span> Estudios observacionales: descriptivo vs analítico</a></li>
+  </ul></li>
   <li><a href="#variables-clasificación-y-niveles-de-medición" id="toc-variables-clasificación-y-niveles-de-medición" class="nav-link" data-scroll-target="#variables-clasificación-y-niveles-de-medición"><span class="header-section-number">2.7</span> Variables, clasificación y niveles de medición</a>
   <ul>
   <li><a href="#niveles-de-medición" id="toc-niveles-de-medición" class="nav-link" data-scroll-target="#niveles-de-medición"><span class="header-section-number">2.7.1</span> Niveles de medición</a></li>
+  <li><a href="#sec-resnivm" id="toc-sec-resnivm" class="nav-link" data-scroll-target="#sec-resnivm"><span class="header-section-number">2.7.2</span> Resumen: niveles de medición y operaciones permitidas</a></li>
+  <li><a href="#sec-varR" id="toc-sec-varR" class="nav-link" data-scroll-target="#sec-varR"><span class="header-section-number">2.7.3</span> Variables en R: tipos de datos y su relación con los niveles de medición</a></li>
   </ul></li>
   <li><a href="#ejercicios" id="toc-ejercicios" class="nav-link" data-scroll-target="#ejercicios">Ejercicios</a></li>
   </ul>
@@ -278,6 +323,7 @@ window.Quarto = {
 <li>Diferenciar <strong>estadística descriptiva</strong> e <strong>inferencial</strong></li>
 <li>Reconocer <strong>tipos de estudio</strong> (retrospectivo, observacional, experimental)</li>
 <li>Identificar <strong>tipos de variables</strong> y sus <strong>niveles de medición</strong></li>
+<li>Reconocer la <strong>unidad experimental</strong> y la <strong>unidad de observación</strong> en un estudio</li>
 </ul>
 <hr>
 </section>
@@ -356,7 +402,29 @@ Importante
 <p><strong>Idea clave</strong>: un <strong>parámetro</strong> es “de la población” y suele ser desconocido; un <strong>estadístico</strong> es “de la muestra” y se calcula con los datos disponibles.</p>
 </div>
 </div>
+<section id="sec-unidades" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="sec-unidades"><span class="header-section-number">2.4.1</span> Unidad experimental y unidad de observación</h3>
+<p>En estudios agronómicos es fundamental distinguir entre dos conceptos que frecuentemente se confunden:</p>
+<ul>
+<li><p><strong>Unidad experimental (UE)</strong>: es la unidad mínima a la que se asigna un tratamiento de forma independiente. Puede ser una parcela, una maceta, un animal, un microsilo, etc.</p></li>
+<li><p><strong>Unidad de observación (UO)</strong>: es la unidad sobre la que se toman las mediciones. Puede coincidir con la UE, o puede ser más pequeña (por ejemplo, una planta dentro de una parcela).</p></li>
+</ul>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>La distinción entre UE y UO es crítica para el análisis estadístico. Cuando la UO es más pequeña que la UE, tomar múltiples mediciones dentro de la misma UE no equivale a tener más repeticiones independientes. Confundir esto lleva a análisis incorrectos conocidos como <strong>pseudorreplicación</strong>.</p>
+</div>
+</div>
+<p><strong>Ejemplo</strong>: En un experimento con cuatro tratamientos de fertilización aplicados a parcelas de 10 m², donde se miden 5 plantas por parcela: - <strong>UE</strong>: la parcela (la unidad que recibe el tratamiento). - <strong>UO</strong>: cada planta (donde se toma la medición). - Las 5 plantas por parcela son <em>subunidades</em>, no repeticiones independientes.</p>
 <hr>
+</section>
 </section>
 <section id="sec-estypes" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="sec-estypes"><span class="header-section-number">2.5</span> Clasificación de la estadística</h2>
@@ -387,7 +455,7 @@ Importante
 <p><strong>Estadística inferencial</strong>: métodos para sacar conclusiones, hacer predicciones o tomar decisiones sobre una población basándose en datos de una muestra.</p>
 </div>
 </div>
-<p>En la <a href="#fig-popsample" class="quarto-xref">Figura&nbsp;<span>2.1</span></a> se muestra la relación entre algunos conceptos revisados. Supongamos que en una finca lechera se desea estudiar el efecto de una dieta en la producción de leche de una raza. El conjunto de todas las vacas es la <strong>población</strong>. El rendimiento promedio de toda la población es un <strong>parámetro</strong>. Debido a limitaciones prácticas, se selecciona una <strong>muestra</strong> mediante técnicas de <strong>muestreo</strong>. Con <strong>estadística descriptiva</strong> se obtiene el rendimiento promedio de la muestra (un <strong>estadístico</strong>), y con <strong>estadística inferencial</strong> se estima el parámetro poblacional y se evalúa la evidencia sobre el efecto de la dieta.</p>
+<p>En la <a href="07-DOE.html#fig-popsample" class="quarto-xref">Figura&nbsp;<span>8.4</span></a> se muestra la relación entre algunos conceptos revisados. Supongamos que en una finca lechera se desea estudiar el efecto de una dieta en la producción de leche de una raza. El conjunto de todas las vacas es la <strong>población</strong>. El rendimiento promedio de toda la población es un <strong>parámetro</strong>. Debido a limitaciones prácticas, se selecciona una <strong>muestra</strong> mediante técnicas de <strong>muestreo</strong>. Con <strong>estadística descriptiva</strong> se obtiene el rendimiento promedio de la muestra (un <strong>estadístico</strong>), y con <strong>estadística inferencial</strong> se estima el parámetro poblacional y se evalúa la evidencia sobre el efecto de la dieta.</p>
 <div id="fig-popsample" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-popsample-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -457,7 +525,60 @@ Tip
 <p>En términos prácticos: en un <strong>observacional</strong> “miramos lo que pasa”; en un <strong>experimental</strong> “provocamos cambios controlados” para aprender sobre causas y efectos.</p>
 </div>
 </div>
+<section id="sec-obs" class="level3" data-number="2.6.1">
+<h3 data-number="2.6.1" class="anchored" data-anchor-id="sec-obs"><span class="header-section-number">2.6.1</span> Estudios observacionales: descriptivo vs analítico</h3>
+<p>Los estudios observacionales se subdividen según su objetivo:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 17%">
+<col style="width: 40%">
+<col style="width: 41%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Tipo</th>
+<th>Objetivo principal</th>
+<th>Ejemplo agrícola</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Descriptivo</strong></td>
+<td>Describir características de una población o fenómeno</td>
+<td>Encuesta sobre uso de agroquímicos en fincas de la región</td>
+</tr>
+<tr class="even">
+<td><strong>Analítico (correlacional)</strong></td>
+<td>Explorar asociaciones entre variables sin asignar tratamientos</td>
+<td>Relación entre precipitación y rendimiento en datos históricos</td>
+</tr>
+<tr class="odd">
+<td><strong>Cohorte / prospectivo</strong></td>
+<td>Seguir grupos a lo largo del tiempo</td>
+<td>Seguimiento de parcelas con y sin cobertura vegetal por 3 años</td>
+</tr>
+<tr class="even">
+<td><strong>Caso-control</strong></td>
+<td>Comparar casos con un resultado con controles sin él</td>
+<td>Comparar fincas con alta y baja incidencia de un patógeno</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Diferencia clave</strong>: en un estudio observacional se detectan <strong>asociaciones</strong>; en un estudio experimental se pueden establecer <strong>relaciones causales</strong>, porque el investigador controla quién recibe cada tratamiento.</p>
+</div>
+</div>
 <hr>
+</section>
 </section>
 <section id="variables-clasificación-y-niveles-de-medición" class="level2" data-number="2.7">
 <h2 data-number="2.7" class="anchored" data-anchor-id="variables-clasificación-y-niveles-de-medición"><span class="header-section-number">2.7</span> Variables, clasificación y niveles de medición</h2>
@@ -569,6 +690,69 @@ Figura&nbsp;2.2: Clasificación de las variables
 </div>
 </div>
 </div>
+</section>
+<section id="sec-resnivm" class="level3" data-number="2.7.2">
+<h3 data-number="2.7.2" class="anchored" data-anchor-id="sec-resnivm"><span class="header-section-number">2.7.2</span> Resumen: niveles de medición y operaciones permitidas</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 11%">
+<col style="width: 13%">
+<col style="width: 8%">
+<col style="width: 12%">
+<col style="width: 8%">
+<col style="width: 14%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Nivel</th>
+<th>Tipo</th>
+<th style="text-align: center;">Ordenar</th>
+<th style="text-align: center;">Diferencias</th>
+<th style="text-align: center;">Razones</th>
+<th style="text-align: center;">Cero absoluto</th>
+<th>Ejemplo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Nominal</td>
+<td>Cualitativa</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td>Variedad, color, región</td>
+</tr>
+<tr class="even">
+<td>Ordinal</td>
+<td>Cualitativa</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td>Escala vigor 1–5, nivel daño</td>
+</tr>
+<tr class="odd">
+<td>Intervalo</td>
+<td>Cuantitativa</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✗</td>
+<td style="text-align: center;">✗</td>
+<td>Temperatura en °C</td>
+</tr>
+<tr class="even">
+<td>Razón</td>
+<td>Cuantitativa</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td style="text-align: center;">✓</td>
+<td>Altura, peso, rendimiento</td>
+</tr>
+</tbody>
+</table>
 <div class="callout callout-style-default callout-tip callout-titled">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -580,9 +764,54 @@ Tip
 </div>
 <div class="callout-body-container callout-body">
 <p><strong>Puente hacia R y tidyverse</strong></p>
-<p>En capítulos posteriores: - una <strong>variable</strong> corresponderá a una columna de un <em>data frame</em> - una <strong>observación</strong> corresponderá a una fila - una <strong>muestra</strong> será un subconjunto de filas - un <strong>estadístico</strong> se calculará con funciones como <code>mean()</code>, <code>sd()</code> o <code>summarise()</code></p>
+<p>En capítulos posteriores: - una <strong>variable</strong> corresponderá a una columna de un <em>data frame</em> - una <strong>observación</strong> corresponderá a una fila - una <strong>muestra</strong> será un subconjunto de filas - un <strong>estadístico</strong> se calculará con funciones como <code>mean()</code>, <code>sd()</code> o <code>summarise()</code> - las variables <strong>nominales</strong> y <strong>ordinales</strong> se representan como <code>factor</code> en R</p>
 </div>
 </div>
+</section>
+<section id="sec-varR" class="level3" data-number="2.7.3">
+<h3 data-number="2.7.3" class="anchored" data-anchor-id="sec-varR"><span class="header-section-number">2.7.3</span> Variables en R: tipos de datos y su relación con los niveles de medición</h3>
+<p>En R, el tipo de datos de una columna en un <em>data frame</em> debe coincidir con el nivel de medición de la variable:</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(dplyr)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>experimento <span class="ot">&lt;-</span> <span class="fu">tibble</span>(</span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">variedad    =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Almonte"</span>, <span class="st">"Ariadna"</span>, <span class="st">"Candela"</span>)),  <span class="co"># Nominal</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">calidad     =</span> <span class="fu">factor</span>(<span class="fu">c</span>(<span class="st">"Alta"</span>, <span class="st">"Media"</span>, <span class="st">"Baja"</span>),           <span class="co"># Ordinal</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>                       <span class="at">levels =</span> <span class="fu">c</span>(<span class="st">"Baja"</span>, <span class="st">"Media"</span>, <span class="st">"Alta"</span>),</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>                       <span class="at">ordered =</span> <span class="cn">TRUE</span>),</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="at">altura_cm   =</span> <span class="fu">c</span>(<span class="fl">85.3</span>, <span class="fl">72.1</span>, <span class="fl">90.8</span>),                        <span class="co"># Razón</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">temp_c      =</span> <span class="fu">c</span>(<span class="fl">28.5</span>, <span class="fl">27.1</span>, <span class="fl">29.3</span>)                         <span class="co"># Intervalo</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(experimento)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 3
+Columns: 4
+$ variedad  &lt;fct&gt; Almonte, Ariadna, Candela
+$ calidad   &lt;ord&gt; Alta, Media, Baja
+$ altura_cm &lt;dbl&gt; 85.3, 72.1, 90.8
+$ temp_c    &lt;dbl&gt; 28.5, 27.1, 29.3</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">levels</span>(experimento<span class="sc">$</span>calidad)    <span class="co"># orden de niveles en la variable ordinal</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "Baja"  "Media" "Alta" </code></pre>
+</div>
+</div>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Importante
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En R, la diferencia entre un <code>factor</code> ordenado y uno no ordenado es importante: - <code>factor()</code> sin <code>ordered = TRUE</code> → <strong>nominal</strong> - <code>factor()</code> con <code>ordered = TRUE</code> → <strong>ordinal</strong></p>
+<p>Usar el tipo correcto garantiza que funciones como <code>summary()</code>, <code>ggplot2</code> y los modelos estadísticos se comporten correctamente.</p>
+</div>
+</div>
+<hr>
 </section>
 </section>
 <section id="ejercicios" class="level2 unnumbered">
@@ -591,12 +820,12 @@ Tip
 <p><span class="theorem-title"><strong>Ejercicio 2.1</strong></span> <strong>Identifique la afirmación correcta</strong></p>
 <div class="webex-check webex-box">
 ¿Cuál de las siguientes afirmaciones es correcta?
-<div id="radio_YCVMRPNVQI" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YCVMRPNVQI" value=""> <span>Un estadístico describe una población completa</span></label><label><input type="radio" autocomplete="off" name="radio_YCVMRPNVQI" value="answer"> <span>Un parámetro describe una población</span></label><label><input type="radio" autocomplete="off" name="radio_YCVMRPNVQI" value=""> <span>Un parámetro se calcula a partir de una muestra</span></label><label><input type="radio" autocomplete="off" name="radio_YCVMRPNVQI" value=""> <span>Un estadístico siempre es desconocido</span></label>
+<div id="radio_ZZGYUEULYQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZZGYUEULYQ" value=""> <span>Un estadístico describe una población completa</span></label><label><input type="radio" autocomplete="off" name="radio_ZZGYUEULYQ" value="answer"> <span>Un parámetro describe una población</span></label><label><input type="radio" autocomplete="off" name="radio_ZZGYUEULYQ" value=""> <span>Un parámetro se calcula a partir de una muestra</span></label><label><input type="radio" autocomplete="off" name="radio_ZZGYUEULYQ" value=""> <span>Un estadístico siempre es desconocido</span></label>
 </div>
 Seleccione la afirmación correcta sobre estadística descriptiva e inferencial
-<div id="radio_UGVWHHBPPT" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_UGVWHHBPPT" value=""> <span>La estadística descriptiva permite generalizar a la población</span></label><label><input type="radio" autocomplete="off" name="radio_UGVWHHBPPT" value="answer"> <span>La estadística inferencial permite hacer conclusiones sobre una población a partir de una muestra</span></label><label><input type="radio" autocomplete="off" name="radio_UGVWHHBPPT" value=""> <span>La estadística inferencial solo se usa con censos</span></label><label><input type="radio" autocomplete="off" name="radio_UGVWHHBPPT" value=""> <span>Ambas significan lo mismo</span></label>
+<div id="radio_XSCCTCHSVW" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_XSCCTCHSVW" value=""> <span>La estadística descriptiva permite generalizar a la población</span></label><label><input type="radio" autocomplete="off" name="radio_XSCCTCHSVW" value="answer"> <span>La estadística inferencial permite hacer conclusiones sobre una población a partir de una muestra</span></label><label><input type="radio" autocomplete="off" name="radio_XSCCTCHSVW" value=""> <span>La estadística inferencial solo se usa con censos</span></label><label><input type="radio" autocomplete="off" name="radio_XSCCTCHSVW" value=""> <span>Ambas significan lo mismo</span></label>
 </div>
 </div>
 </div>
@@ -604,8 +833,8 @@ Seleccione la afirmación correcta sobre estadística descriptiva e inferencial
 <p><span class="theorem-title"><strong>Ejercicio 2.2</strong></span> <strong>Seleccione la secuencia correcta del proceso estadístico</strong></p>
 <div class="webex-check webex-box">
 ¿Cuál es el orden correcto de las etapas del proceso estadístico?
-<div id="radio_PKUBXWUMXG" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_PKUBXWUMXG" value=""> <span>Recolección → Análisis → Problema → Comunicación</span></label><label><input type="radio" autocomplete="off" name="radio_PKUBXWUMXG" value="answer"> <span>Problema → Planificación → Recolección → Revisión → Análisis → Inferencia → Comunicación</span></label><label><input type="radio" autocomplete="off" name="radio_PKUBXWUMXG" value=""> <span>Planificación → Comunicación → Recolección → Inferencia</span></label><label><input type="radio" autocomplete="off" name="radio_PKUBXWUMXG" value=""> <span>Problema → Recolección → Publicación</span></label>
+<div id="radio_ZHYFLTHTTB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_ZHYFLTHTTB" value=""> <span>Recolección → Análisis → Problema → Comunicación</span></label><label><input type="radio" autocomplete="off" name="radio_ZHYFLTHTTB" value="answer"> <span>Problema → Planificación → Recolección → Revisión → Análisis → Inferencia → Comunicación</span></label><label><input type="radio" autocomplete="off" name="radio_ZHYFLTHTTB" value=""> <span>Planificación → Comunicación → Recolección → Inferencia</span></label><label><input type="radio" autocomplete="off" name="radio_ZHYFLTHTTB" value=""> <span>Problema → Recolección → Publicación</span></label>
 </div>
 </div>
 </div>
@@ -613,17 +842,34 @@ Seleccione la afirmación correcta sobre estadística descriptiva e inferencial
 <p><span class="theorem-title"><strong>Ejercicio 2.3</strong></span> <strong>Identifique el tipo de estudio</strong></p>
 <div class="webex-check webex-box">
 Un investigador compara el rendimiento de maíz usando tres dosis de fertilizante asignadas al azar. ¿Qué tipo de estudio es?
-<div id="radio_MTQKDHRJHZ" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_MTQKDHRJHZ" value=""> <span>Observacional</span></label><label><input type="radio" autocomplete="off" name="radio_MTQKDHRJHZ" value=""> <span>Retrospectivo</span></label><label><input type="radio" autocomplete="off" name="radio_MTQKDHRJHZ" value="answer"> <span>Experimental</span></label><label><input type="radio" autocomplete="off" name="radio_MTQKDHRJHZ" value=""> <span>Descriptivo</span></label>
+<div id="radio_CCAVDFGFJQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_CCAVDFGFJQ" value=""> <span>Observacional</span></label><label><input type="radio" autocomplete="off" name="radio_CCAVDFGFJQ" value=""> <span>Retrospectivo</span></label><label><input type="radio" autocomplete="off" name="radio_CCAVDFGFJQ" value="answer"> <span>Experimental</span></label><label><input type="radio" autocomplete="off" name="radio_CCAVDFGFJQ" value=""> <span>Descriptivo</span></label>
 </div>
 Un análisis de datos históricos de precipitación de los últimos 30 años obtenidos de una base climática nacional es un estudio:
-<div id="radio_RDNCFVPSLX" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_RDNCFVPSLX" value=""> <span>Experimental</span></label><label><input type="radio" autocomplete="off" name="radio_RDNCFVPSLX" value="answer"> <span>Retrospectivo</span></label><label><input type="radio" autocomplete="off" name="radio_RDNCFVPSLX" value=""> <span>Intervencionista</span></label><label><input type="radio" autocomplete="off" name="radio_RDNCFVPSLX" value=""> <span>De laboratorio</span></label>
+<div id="radio_VHOCARCLIT" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_VHOCARCLIT" value=""> <span>Experimental</span></label><label><input type="radio" autocomplete="off" name="radio_VHOCARCLIT" value="answer"> <span>Retrospectivo</span></label><label><input type="radio" autocomplete="off" name="radio_VHOCARCLIT" value=""> <span>Intervencionista</span></label><label><input type="radio" autocomplete="off" name="radio_VHOCARCLIT" value=""> <span>De laboratorio</span></label>
+</div>
+Un investigador aplica una encuesta a productores de piña para conocer sus prácticas de manejo sin cambiar nada. ¿Qué tipo de estudio es?
+<div id="radio_KSUHOPJRCA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_KSUHOPJRCA" value=""> <span>Experimental</span></label><label><input type="radio" autocomplete="off" name="radio_KSUHOPJRCA" value=""> <span>Retrospectivo</span></label><label><input type="radio" autocomplete="off" name="radio_KSUHOPJRCA" value="answer"> <span>Observacional descriptivo</span></label><label><input type="radio" autocomplete="off" name="radio_KSUHOPJRCA" value=""> <span>Longitudinal experimental</span></label>
+</div>
+</div>
+</div>
+<div id="exr-ue-uo" class="theorem exercise">
+<p><span class="theorem-title"><strong>Ejercicio 2.4</strong></span> <strong>Unidad experimental vs unidad de observación</strong></p>
+<div class="webex-check webex-box">
+En un experimento de riego con 3 tratamientos aplicados a parcelas de 20 m², donde se miden 10 plantas por parcela, la unidad experimental es:
+<div id="radio_MZAGHODUYO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MZAGHODUYO" value=""> <span>Cada planta</span></label><label><input type="radio" autocomplete="off" name="radio_MZAGHODUYO" value="answer"> <span>Cada parcela de 20 m²</span></label><label><input type="radio" autocomplete="off" name="radio_MZAGHODUYO" value=""> <span>Cada tratamiento</span></label><label><input type="radio" autocomplete="off" name="radio_MZAGHODUYO" value=""> <span>El conjunto de 30 plantas</span></label>
+</div>
+Medir 10 plantas dentro de la misma parcela equivale a tener:
+<div id="radio_UMAESHPMCH" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_UMAESHPMCH" value=""> <span>10 repeticiones independientes</span></label><label><input type="radio" autocomplete="off" name="radio_UMAESHPMCH" value="answer"> <span>Subunidades o pseudorréplicas, no repeticiones independientes</span></label><label><input type="radio" autocomplete="off" name="radio_UMAESHPMCH" value=""> <span>10 bloques</span></label><label><input type="radio" autocomplete="off" name="radio_UMAESHPMCH" value=""> <span>10 tratamientos</span></label>
 </div>
 </div>
 </div>
 <div id="exr-first" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.4</strong></span> <strong>Complete el siguiente cuadro</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.5</strong></span> <strong>Complete el siguiente cuadro</strong></p>
 <div class="webex-check webex-box">
 <table class="caption-top table">
 <colgroup>
@@ -672,7 +918,7 @@ Un análisis de datos históricos de precipitación de los últimos 30 años obt
 <td><select class="webex-select"><option value="blank"></option><option value="answer">Nominal</option><option value="">Ordinal</option><option value="">Intervalo</option><option value="">Razón</option></select></td>
 </tr>
 <tr class="even">
-<td>Variedad de semillas usadas en un cultivo de banano.</td>
+<td>Variedad de semillas usadas en un cultivo de tomate.</td>
 <td><select class="webex-select"><option value="blank"></option><option value="">Cuantitativa</option><option value="answer">Cualitativa</option></select></td>
 <td><select class="webex-select"><option value="blank"></option><option value="">Continua</option><option value="">Discreta</option><option value="answer">No Aplica</option></select></td>
 <td><select class="webex-select"><option value="blank"></option><option value="answer">Nominal</option><option value="">Ordinal</option><option value="">Intervalo</option><option value="">Razón</option></select></td>
@@ -719,52 +965,68 @@ Un análisis de datos históricos de precipitación de los últimos 30 años obt
 <td><select class="webex-select"><option value="blank"></option><option value="answer">Continua</option><option value="">Discreta</option><option value="">No Aplica</option></select></td>
 <td><select class="webex-select"><option value="blank"></option><option value="">Nominal</option><option value="">Ordinal</option><option value="">Intervalo</option><option value="answer">Razón</option></select></td>
 </tr>
+<tr class="even">
+<td>Nivel de daño foliar (sin daño / leve / moderado / severo)</td>
+<td><select class="webex-select"><option value="blank"></option><option value="">Cuantitativa</option><option value="answer">Cualitativa</option></select></td>
+<td><select class="webex-select"><option value="blank"></option><option value="">Continua</option><option value="">Discreta</option><option value="answer">No Aplica</option></select></td>
+<td><select class="webex-select"><option value="blank"></option><option value="">Nominal</option><option value="answer">Ordinal</option><option value="">Intervalo</option><option value="">Razón</option></select></td>
+</tr>
+<tr class="odd">
+<td>Número de frutos por planta de tomate</td>
+<td><select class="webex-select"><option value="blank"></option><option value="answer">Cuantitativa</option><option value="">Cualitativa</option></select></td>
+<td><select class="webex-select"><option value="blank"></option><option value="">Continua</option><option value="answer">Discreta</option><option value="">No Aplica</option></select></td>
+<td><select class="webex-select"><option value="blank"></option><option value="">Nominal</option><option value="">Ordinal</option><option value="">Intervalo</option><option value="answer">Razón</option></select></td>
+</tr>
 </tbody>
 </table>
 </div>
 </div>
 <div id="exr-fourth" class="theorem exercise">
-<p><span class="theorem-title"><strong>Ejercicio 2.5</strong></span> <strong>Seleccione la respuesta correcta</strong></p>
+<p><span class="theorem-title"><strong>Ejercicio 2.6</strong></span> <strong>Seleccione la respuesta correcta</strong></p>
 <div class="webex-check webex-box">
 ¿Cuál es el origen etimológico de la palabra ‘estadística’?
-<div id="radio_VIPNSNGCGE" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_VIPNSNGCGE" value=""> <span>Del griego 'statikos'</span></label><label><input type="radio" autocomplete="off" name="radio_VIPNSNGCGE" value=""> <span>Del latín 'statisticus'</span></label><label><input type="radio" autocomplete="off" name="radio_VIPNSNGCGE" value="answer"> <span>Del alemán 'statistik'</span></label>
+<div id="radio_TCLYLVUCGU" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_TCLYLVUCGU" value=""> <span>Del griego 'statikos'</span></label><label><input type="radio" autocomplete="off" name="radio_TCLYLVUCGU" value=""> <span>Del latín 'statisticus'</span></label><label><input type="radio" autocomplete="off" name="radio_TCLYLVUCGU" value="answer"> <span>Del alemán 'statistik'</span></label>
 </div>
 ¿Quién acuñó el término ‘statistik’?
-<div id="radio_ZPVRYHAACW" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_ZPVRYHAACW" value=""> <span>Karl Pearson</span></label><label><input type="radio" autocomplete="off" name="radio_ZPVRYHAACW" value=""> <span>Ronald Fisher</span></label><label><input type="radio" autocomplete="off" name="radio_ZPVRYHAACW" value="answer"> <span>Gottfried Achenwall</span></label>
+<div id="radio_IDPBBAVFNB" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_IDPBBAVFNB" value=""> <span>Karl Pearson</span></label><label><input type="radio" autocomplete="off" name="radio_IDPBBAVFNB" value=""> <span>Ronald Fisher</span></label><label><input type="radio" autocomplete="off" name="radio_IDPBBAVFNB" value="answer"> <span>Gottfried Achenwall</span></label>
 </div>
 ¿Qué estudia la estadística?
-<div id="radio_FSEQYPXLLC" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_FSEQYPXLLC" value=""> <span>La recolección de datos únicamente</span></label><label><input type="radio" autocomplete="off" name="radio_FSEQYPXLLC" value=""> <span>La organización y presentación de datos únicamente</span></label><label><input type="radio" autocomplete="off" name="radio_FSEQYPXLLC" value="answer"> <span>La recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica</span></label><label><input type="radio" autocomplete="off" name="radio_FSEQYPXLLC" value=""> <span>La interpretación de datos únicamente</span></label>
+<div id="radio_MCPTBVKVVO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_MCPTBVKVVO" value=""> <span>La recolección de datos únicamente</span></label><label><input type="radio" autocomplete="off" name="radio_MCPTBVKVVO" value=""> <span>La organización y presentación de datos únicamente</span></label><label><input type="radio" autocomplete="off" name="radio_MCPTBVKVVO" value="answer"> <span>La recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica</span></label><label><input type="radio" autocomplete="off" name="radio_MCPTBVKVVO" value=""> <span>La interpretación de datos únicamente</span></label>
 </div>
 ¿Cuál de las siguientes NO es una etapa del proceso estadístico?
-<div id="radio_YYRWHFXDXS" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_YYRWHFXDXS" value=""> <span>Identificación y delimitación del problema</span></label><label><input type="radio" autocomplete="off" name="radio_YYRWHFXDXS" value=""> <span>Planificación</span></label><label><input type="radio" autocomplete="off" name="radio_YYRWHFXDXS" value=""> <span>Recolección de datos</span></label><label><input type="radio" autocomplete="off" name="radio_YYRWHFXDXS" value="answer"> <span>Publicación de resultados</span></label>
+<div id="radio_PRHSNXWZTA" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_PRHSNXWZTA" value=""> <span>Identificación y delimitación del problema</span></label><label><input type="radio" autocomplete="off" name="radio_PRHSNXWZTA" value=""> <span>Planificación</span></label><label><input type="radio" autocomplete="off" name="radio_PRHSNXWZTA" value=""> <span>Recolección de datos</span></label><label><input type="radio" autocomplete="off" name="radio_PRHSNXWZTA" value="answer"> <span>Publicación de resultados</span></label>
 </div>
 ¿Qué implica la delimitación del problema en estadística?
-<div id="radio_DIUSUKQQKH" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_DIUSUKQQKH" value=""> <span>Definir los objetivos del estudio</span></label><label><input type="radio" autocomplete="off" name="radio_DIUSUKQQKH" value="answer"> <span>Recortar el tema dentro de los límites de espacio, tiempo y área de estudio</span></label><label><input type="radio" autocomplete="off" name="radio_DIUSUKQQKH" value=""> <span>Identificar las fuentes de datos</span></label><label><input type="radio" autocomplete="off" name="radio_DIUSUKQQKH" value=""> <span>Analizar los datos recolectados</span></label>
+<div id="radio_BSMGSBSKEQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_BSMGSBSKEQ" value=""> <span>Definir los objetivos del estudio</span></label><label><input type="radio" autocomplete="off" name="radio_BSMGSBSKEQ" value="answer"> <span>Recortar el tema dentro de los límites de espacio, tiempo y área de estudio</span></label><label><input type="radio" autocomplete="off" name="radio_BSMGSBSKEQ" value=""> <span>Identificar las fuentes de datos</span></label><label><input type="radio" autocomplete="off" name="radio_BSMGSBSKEQ" value=""> <span>Analizar los datos recolectados</span></label>
 </div>
 ¿Qué se debe hacer después de recolectar los datos en el proceso estadístico?
-<div id="radio_XKGTANNUMO" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_XKGTANNUMO" value=""> <span>Publicar los datos inmediatamente</span></label><label><input type="radio" autocomplete="off" name="radio_XKGTANNUMO" value="answer"> <span>Revisar los datos para verificar inconsistencias o problemas potenciales</span></label><label><input type="radio" autocomplete="off" name="radio_XKGTANNUMO" value=""> <span>Analizar los datos sin revisión previa</span></label><label><input type="radio" autocomplete="off" name="radio_XKGTANNUMO" value=""> <span>Almacenar los datos sin analizarlos</span></label>
+<div id="radio_RBXCUBUGYO" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_RBXCUBUGYO" value=""> <span>Publicar los datos inmediatamente</span></label><label><input type="radio" autocomplete="off" name="radio_RBXCUBUGYO" value="answer"> <span>Revisar los datos para verificar inconsistencias o problemas potenciales</span></label><label><input type="radio" autocomplete="off" name="radio_RBXCUBUGYO" value=""> <span>Analizar los datos sin revisión previa</span></label><label><input type="radio" autocomplete="off" name="radio_RBXCUBUGYO" value=""> <span>Almacenar los datos sin analizarlos</span></label>
 </div>
 ¿Qué es una variable en estadística?
-<div id="radio_NRNSDTPWGM" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_NRNSDTPWGM" value=""> <span>Un conjunto de datos sin relación</span></label><label><input type="radio" autocomplete="off" name="radio_NRNSDTPWGM" value="answer"> <span>Una característica de los elementos u objetos que se estudian</span></label><label><input type="radio" autocomplete="off" name="radio_NRNSDTPWGM" value=""> <span>Un valor constante en un estudio</span></label><label><input type="radio" autocomplete="off" name="radio_NRNSDTPWGM" value=""> <span>Un método de recolección de datos</span></label>
+<div id="radio_FWCZLYIHCV" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FWCZLYIHCV" value=""> <span>Un conjunto de datos sin relación</span></label><label><input type="radio" autocomplete="off" name="radio_FWCZLYIHCV" value="answer"> <span>Una característica de los elementos u objetos que se estudian</span></label><label><input type="radio" autocomplete="off" name="radio_FWCZLYIHCV" value=""> <span>Un valor constante en un estudio</span></label><label><input type="radio" autocomplete="off" name="radio_FWCZLYIHCV" value=""> <span>Un método de recolección de datos</span></label>
 </div>
 ¿Qué tipo de datos representan etiquetas o nominaciones que identifican atributos?
-<div id="radio_WIRLVHRSFY" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_WIRLVHRSFY" value=""> <span>Datos cuantitativos</span></label><label><input type="radio" autocomplete="off" name="radio_WIRLVHRSFY" value="answer"> <span>Datos cualitativos</span></label><label><input type="radio" autocomplete="off" name="radio_WIRLVHRSFY" value=""> <span>Datos continuos</span></label><label><input type="radio" autocomplete="off" name="radio_WIRLVHRSFY" value=""> <span>Datos discretos</span></label>
+<div id="radio_FETFKRQNGY" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_FETFKRQNGY" value=""> <span>Datos cuantitativos</span></label><label><input type="radio" autocomplete="off" name="radio_FETFKRQNGY" value="answer"> <span>Datos cualitativos</span></label><label><input type="radio" autocomplete="off" name="radio_FETFKRQNGY" value=""> <span>Datos continuos</span></label><label><input type="radio" autocomplete="off" name="radio_FETFKRQNGY" value=""> <span>Datos discretos</span></label>
 </div>
 ¿Qué tipo de datos son aquellos que pueden ser contados y no admiten valores intermedios?
-<div id="radio_NMSJFBIPML" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_NMSJFBIPML" value=""> <span>Datos cualitativos</span></label><label><input type="radio" autocomplete="off" name="radio_NMSJFBIPML" value=""> <span>Datos continuos</span></label><label><input type="radio" autocomplete="off" name="radio_NMSJFBIPML" value="answer"> <span>Datos discretos</span></label><label><input type="radio" autocomplete="off" name="radio_NMSJFBIPML" value=""> <span>Datos nominales</span></label>
+<div id="radio_AAGGXVLPJS" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_AAGGXVLPJS" value=""> <span>Datos cualitativos</span></label><label><input type="radio" autocomplete="off" name="radio_AAGGXVLPJS" value=""> <span>Datos continuos</span></label><label><input type="radio" autocomplete="off" name="radio_AAGGXVLPJS" value="answer"> <span>Datos discretos</span></label><label><input type="radio" autocomplete="off" name="radio_AAGGXVLPJS" value=""> <span>Datos nominales</span></label>
 </div>
 ¿Qué tipo de variable es el ‘número de hijos en una familia’?
-<div id="radio_CILACNUBBV" class="webex-radiogroup">
-<label><input type="radio" autocomplete="off" name="radio_CILACNUBBV" value=""> <span>Variable cualitativa</span></label><label><input type="radio" autocomplete="off" name="radio_CILACNUBBV" value=""> <span>Variable cuantitativa continua</span></label><label><input type="radio" autocomplete="off" name="radio_CILACNUBBV" value="answer"> <span>Variable cuantitativa discreta</span></label><label><input type="radio" autocomplete="off" name="radio_CILACNUBBV" value=""> <span>Variable ordinal</span></label>
+<div id="radio_WUECGWJHTQ" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_WUECGWJHTQ" value=""> <span>Variable cualitativa</span></label><label><input type="radio" autocomplete="off" name="radio_WUECGWJHTQ" value=""> <span>Variable cuantitativa continua</span></label><label><input type="radio" autocomplete="off" name="radio_WUECGWJHTQ" value="answer"> <span>Variable cuantitativa discreta</span></label><label><input type="radio" autocomplete="off" name="radio_WUECGWJHTQ" value=""> <span>Variable ordinal</span></label>
+</div>
+En un ensayo con 4 tratamientos de riego aplicados a parcelas de 15 m², y 8 plantas medidas por parcela, ¿cuántas repeticiones reales tiene cada tratamiento si hay 3 parcelas por tratamiento?
+<div id="radio_JBCDUPTVER" class="webex-radiogroup">
+<label><input type="radio" autocomplete="off" name="radio_JBCDUPTVER" value=""> <span>24 (8 plantas × 3 parcelas)</span></label><label><input type="radio" autocomplete="off" name="radio_JBCDUPTVER" value="answer"> <span>3 (una por parcela)</span></label><label><input type="radio" autocomplete="off" name="radio_JBCDUPTVER" value=""> <span>1 (todo el experimento)</span></label><label><input type="radio" autocomplete="off" name="radio_JBCDUPTVER" value=""> <span>8 (las plantas de una parcela)</span></label>
 </div>
 </div>
 </div>
@@ -787,10 +1049,10 @@ W10=
 </script>
 <div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" data-line-spacing="2" role="list" style="display: none">
 <div id="ref-agresti2023" class="csl-entry" role="listitem">
-Agresti, A., Franklin, C., y Klingenberg, B. (2023). <em>Statistics. The Art and Science of Learning from Data</em> (5a. ed.). Pearson.
+Agresti, A., Franklin, C., y Klingenberg, B. (2023). <em>Statistics. The Art and Science of Learning from Data</em> (5a.). Pearson.
 </div>
 <div id="ref-cleff2013" class="csl-entry" role="listitem">
-Cleff, T. (2013). <em>Exploratory Data Analysis in Business and Economics</em> (1a. ed.). Springer. <a href="https://link.springer.com/book/10.1007/978-3-319-01517-0">https://link.springer.com/book/10.1007/978-3-319-01517-0</a>
+Cleff, T. (2013). <em>Exploratory Data Analysis in Business and Economics</em> (1a.). Springer. <a href="https://link.springer.com/book/10.1007/978-3-319-01517-0">https://link.springer.com/book/10.1007/978-3-319-01517-0</a>
 </div>
 </div>
 </section>

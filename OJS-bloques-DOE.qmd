@@ -1,0 +1,604 @@
+---
+# Bloques OJS para integrar en 07-DOE.qmd
+# Instrucciones de inserción al final del documento
+---
+
+<!-- ================================================================
+     BLOQUE OJS 1: Aleatorización DCA/DBCA
+     INSERTAR: justo ANTES de "## Diseño completamente al azar (DCA)"
+     ================================================================ -->
+
+### Demo interactiva: aleatorización de tratamientos {.unnumbered}
+
+La siguiente herramienta permite visualizar cómo se distribuyen los tratamientos en un DCA o en un DBCA según el número de tratamientos y repeticiones. Haz clic en **Nueva aleatorización** para generar un nuevo arreglo al azar.
+
+```{ojs}
+//| echo: false
+viewof tipoDiseno = Inputs.radio(["DCA", "DBCA"], {label: "Diseño:", value: "DCA"})
+viewof nTrat = Inputs.range([2, 6], {step: 1, value: 4, label: "Número de tratamientos (k):"})
+viewof nRep  = Inputs.range([2, 6], {step: 1, value: 3, label: "Repeticiones / bloques (r):"})
+viewof semilla = Inputs.button("🔀 Nueva aleatorización")
+```
+
+```{ojs}
+//| echo: false
+{
+  semilla;
+  const k = nTrat, r = nRep;
+  const colores = ["#01696f","#964219","#437a22","#006494","#7a39bb","#a12c7b"];
+  const trts = Array.from({length: k}, (_, i) => `T${i+1}`);
+
+  function shuffle(arr) {
+    let a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  const w = 52, h = 52, gap = 6, pad = 44;
+  const cols = tipoDiseno === "DCA" ? Math.ceil(Math.sqrt(k * r)) : k;
+  const rows = tipoDiseno === "DCA" ? Math.ceil((k * r) / cols) : r;
+  const svgW = cols * (w + gap) + pad * 2;
+  const svgH = rows * (h + gap) + pad * 2 + 30;
+
+  let celdas = [];
+  if (tipoDiseno === "DCA") {
+    const todas = [];
+    for (let i = 0; i < r; i++) trts.forEach(t => todas.push(t));
+    shuffle(todas).forEach((t, idx) => {
+      celdas.push({t, col: idx % cols, row: Math.floor(idx / cols)});
+    });
+  } else {
+    for (let b = 0; b < r; b++)
+      shuffle(trts).forEach((t, ci) => celdas.push({t, col: ci, row: b}));
+  }
+
+  const svg = d3.create("svg")
+    .attr("viewBox", `0 0 ${svgW} ${svgH}`)
+    .attr("width", "100%")
+    .style("max-width", `${svgW}px`)
+    .style("font-family", "sans-serif");
+
+  if (tipoDiseno === "DBCA") {
+    for (let b = 0; b < r; b++) {
+      svg.append("rect")
+        .attr("x", pad - 4).attr("y", pad + b * (h + gap) - 4)
+        .attr("width", cols * (w + gap) + 2).attr("height", h + 8)
+        .attr("rx", 6).attr("fill", b % 2 === 0 ? "#f3f0ec" : "#e6e4df")
+        .attr("stroke", "#dcd9d5").attr("stroke-width", 1);
+      svg.append("text")
+        .attr("x", pad - 8).attr("y", pad + b * (h + gap) + h / 2 + 5)
+        .attr("text-anchor", "end").attr("font-size", 11).attr("fill", "#7a7974")
+        .text(`B${b+1}`);
+    }
+  }
+
+  celdas.forEach(({t, col, row}) => {
+    const x = pad + col * (w + gap), y = pad + row * (h + gap);
+    const ci = trts.indexOf(t);
+    svg.append("rect").attr("x", x).attr("y", y).attr("width", w).attr("height", h)
+      .attr("rx", 7).attr("fill", colores[ci] + "22")
+      .attr("stroke", colores[ci]).attr("stroke-width", 2);
+    svg.append("text").attr("x", x + w/2).attr("y", y + h/2 + 5)
+      .attr("text-anchor", "middle").attr("font-size", 14).attr("font-weight", "600")
+      .attr("fill", colores[ci]).text(t);
+  });
+
+  const lyY = svgH - 12;
+  trts.forEach((t, i) => {
+    const lx = pad + i * 70;
+    svg.append("rect").attr("x", lx).attr("y", lyY - 10)
+      .attr("width", 14).attr("height", 14).attr("rx", 3)
+      .attr("fill", colores[i] + "33").attr("stroke", colores[i]).attr("stroke-width", 1.5);
+    svg.append("text").attr("x", lx + 18).attr("y", lyY + 1)
+      .attr("font-size", 12).attr("fill", "#28251d").text(t);
+  });
+
+  return svg.node();
+}
+```
+
+---
+
+<!-- ================================================================
+     BLOQUE OJS 2: Descomposición SCT = SCTr + SCE
+     INSERTAR: justo ANTES de "### Supuestos del ANOVA {#sec-supuestos-anova}"
+     ================================================================ -->
+
+### Demo interactiva: descomposición de la varianza {.unnumbered}
+
+Ajusta los sliders para ver cómo cambia la partición de la varianza total en componentes "entre tratamientos" (SCTr) y "dentro de tratamientos" (SCE), y cómo eso afecta el estadístico F y el valor $p$.
+
+```{ojs}
+//| echo: false
+viewof mu1 = Inputs.range([1, 10], {step: 0.5, value: 4, label: "Media T1 (μ₁):"})
+viewof mu2 = Inputs.range([1, 10], {step: 0.5, value: 5, label: "Media T2 (μ₂):"})
+viewof mu3 = Inputs.range([1, 10], {step: 0.5, value: 6, label: "Media T3 (μ₃):"})
+viewof sigma_e = Inputs.range([0.5, 4], {step: 0.5, value: 1.5, label: "Desviación intra-grupo (σ):"})
+viewof nr = Inputs.range([3, 10], {step: 1, value: 4, label: "Repeticiones por tratamiento (r):"})
+```
+
+```{ojs}
+//| echo: false
+{
+  const k = 3, r = nr;
+  const medias = [mu1, mu2, mu3];
+  const grand = medias.reduce((a, b) => a + b, 0) / k;
+  const SCTr = medias.reduce((s, m) => s + r * (m - grand)**2, 0);
+  const SCE  = k * r * sigma_e**2 * (r - 1) / r;
+  const SCT  = SCTr + SCE;
+  const MCTr = SCTr / (k - 1);
+  const MCE  = SCE  / (k * (r - 1));
+  const F    = MCTr / MCE;
+
+  function lgamma(z) {
+    const c = [76.18009172947146,-86.50532032941677,24.01409824083091,
+               -1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+    let y = z, tmp = z + 5.5, ser = 1.000000000190015;
+    tmp -= (z + 0.5) * Math.log(tmp);
+    for (let j = 0; j < 6; j++) ser += c[j] / ++y;
+    return -tmp + Math.log(2.5066282746310005 * ser / z);
+  }
+  function fDen(x, a, b) {
+    if (x <= 0) return 0;
+    const ln = lgamma((a+b)/2) + (a/2)*Math.log(a/b) + (a/2-1)*Math.log(x)
+               - ((a+b)/2)*Math.log(1+a*x/b) - lgamma(a/2) - lgamma(b/2);
+    return Math.exp(ln);
+  }
+  function cdfF(x, a, b) {
+    const n=600, dx=x/n; let s=0;
+    for(let i=0;i<n;i++) s+=fDen((i+0.5)*dx,a,b)*dx;
+    return Math.min(1, s);
+  }
+
+  const d1 = k-1, d2 = k*(r-1);
+  const pval = Math.max(0, 1 - cdfF(F, d1, d2));
+  const sig = pval < 0.05 ? "✅ Significativo (p < 0.05)" : "❌ No significativo (p ≥ 0.05)";
+
+  const barW=260, barH=36, padL=148, padR=160, padT=20, padB=20;
+  const svgW = barW + padL + padR;
+  const svgH = 3*(barH+14) + padT + padB + 64;
+
+  const datos = [
+    {label: "SCT  (Total)",              val: SCT,  pct: 1,         color: "#bab9b4"},
+    {label: "SCTr (Tratamientos)",        val: SCTr, pct: SCTr/SCT, color: "#01696f"},
+    {label: "SCE  (Error experimental)", val: SCE,  pct: SCE/SCT,  color: "#964219"},
+  ];
+
+  const svg = d3.create("svg").attr("viewBox", `0 0 ${svgW} ${svgH}`)
+    .attr("width","100%").style("max-width",`${svgW}px`).style("font-family","sans-serif");
+
+  datos.forEach(({label, val, pct, color}, i) => {
+    const y = padT + i*(barH+14);
+    svg.append("text").attr("x",padL-8).attr("y",y+barH/2+5)
+      .attr("text-anchor","end").attr("font-size",12).attr("fill","#28251d").text(label);
+    svg.append("rect").attr("x",padL).attr("y",y).attr("width",barW).attr("height",barH)
+      .attr("rx",4).attr("fill","#f3f0ec");
+    svg.append("rect").attr("x",padL).attr("y",y).attr("width",barW*pct).attr("height",barH)
+      .attr("rx",4).attr("fill",color+"cc");
+    svg.append("text").attr("x",padL+barW*pct+6).attr("y",y+barH/2+5)
+      .attr("font-size",11).attr("fill",color)
+      .text(`${val.toFixed(2)} (${(pct*100).toFixed(1)}%)`);
+  });
+
+  const ty = padT + 3*(barH+14) + 16;
+  [
+    `F = MCTr / MCE = ${MCTr.toFixed(2)} / ${MCE.toFixed(2)} = ${F.toFixed(3)}`,
+    `GL tratamientos = ${d1},   GL error = ${d2}`,
+    `Valor p ≈ ${pval.toFixed(4)}   ${sig}`
+  ].forEach((txt, i) => {
+    svg.append("text").attr("x",padL).attr("y",ty+i*20)
+      .attr("font-size",12)
+      .attr("fill", i===2 ? (pval<0.05?"#01696f":"#964219") : "#28251d")
+      .attr("font-weight", i===2?"600":"400").text(txt);
+  });
+
+  return svg.node();
+}
+```
+
+::: {.callout-tip}
+**¿Qué observar?** Cuando las medias de los tratamientos están muy separadas, el SCTr crece y F aumenta. Cuando σ es grande, el SCE domina y F disminuye. El valor p cae por debajo de 0.05 cuando la señal entre grupos supera claramente el ruido dentro de los grupos.
+:::
+
+---
+
+<!-- ================================================================
+     BLOQUE OJS 3: Distribución F interactiva
+     INSERTAR: justo ANTES de "### Transformaciones de datos {#sec-transf}"
+     ================================================================ -->
+
+### Demo interactiva: distribución F y región de rechazo {.unnumbered}
+
+Ajusta los grados de libertad y el nivel de significancia. Mueve el slider de **F observado** para ver si tu valor cae en la zona de rechazo (área roja).
+
+```{ojs}
+//| echo: false
+viewof df1 = Inputs.range([1, 10], {step: 1, value: 3, label: "GL tratamientos (k−1):"})
+viewof df2 = Inputs.range([5, 60], {step: 1, value: 12, label: "GL error (n−k):"})
+viewof alpha_f = Inputs.select([0.10, 0.05, 0.01], {label: "Nivel α:", value: 0.05,
+  format: x => `α = ${x}`})
+viewof f_obs = Inputs.range([0, 15], {step: 0.1, value: 3.5, label: "F observado:"})
+```
+
+```{ojs}
+//| echo: false
+{
+  function lgamma2(z) {
+    const c=[76.18009172947146,-86.50532032941677,24.01409824083091,
+             -1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+    let y=z,tmp=z+5.5,ser=1.000000000190015;
+    tmp-=(z+0.5)*Math.log(tmp);
+    for(let j=0;j<6;j++) ser+=c[j]/++y;
+    return -tmp+Math.log(2.5066282746310005*ser/z);
+  }
+  function fDensity2(x, d1, d2) {
+    if (x<=0) return 0;
+    const ln=lgamma2((d1+d2)/2)+(d1/2)*Math.log(d1/d2)+(d1/2-1)*Math.log(x)
+             -((d1+d2)/2)*Math.log(1+d1*x/d2)-lgamma2(d1/2)-lgamma2(d2/2);
+    return Math.exp(ln);
+  }
+  function cdfF2(x, d1, d2) {
+    const n=600,dx=x/n; let s=0;
+    for(let i=0;i<n;i++) s+=fDensity2((i+0.5)*dx,d1,d2)*dx;
+    return Math.min(1,s);
+  }
+  function qfBisect(p, d1, d2) {
+    let lo=0,hi=50,mid=1;
+    for(let i=0;i<80;i++){mid=(lo+hi)/2; cdfF2(mid,d1,d2)<p?lo=mid:hi=mid;}
+    return mid;
+  }
+
+  const xmax = Math.max(8, f_obs*1.5);
+  const pts = Array.from({length:300}, (_,i) => {
+    const x=(i+0.5)*xmax/300;
+    return {x, y: fDensity2(x, df1, df2)};
+  });
+  const fcrit = qfBisect(1-alpha_f, df1, df2);
+  const pval_obs = Math.max(0, 1-cdfF2(f_obs, df1, df2));
+
+  const w=560,h=260,marg={t:20,r:20,b:54,l:50};
+  const W=w-marg.l-marg.r, H=h-marg.t-marg.b;
+  const ymax=d3.max(pts,d=>d.y)*1.15;
+
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${w} ${h}`)
+    .attr("width","100%").style("max-width",`${w}px`).style("font-family","sans-serif");
+  const g=svg.append("g").attr("transform",`translate(${marg.l},${marg.t})`);
+  const xS=d3.scaleLinear().domain([0,xmax]).range([0,W]);
+  const yS=d3.scaleLinear().domain([0,ymax]).range([H,0]);
+
+  const ptsRej=pts.filter(p=>p.x>=fcrit);
+  if(ptsRej.length>0){
+    const area=d3.area().x(d=>xS(d.x)).y0(H).y1(d=>yS(d.y));
+    g.append("path").datum([{x:fcrit,y:0},...ptsRej,{x:xmax,y:0}])
+      .attr("fill","#964219").attr("fill-opacity",0.25).attr("d",area);
+  }
+  const line=d3.line().x(d=>xS(d.x)).y(d=>yS(d.y)).curve(d3.curveBasis);
+  g.append("path").datum(pts).attr("fill","none").attr("stroke","#01696f")
+    .attr("stroke-width",2.5).attr("d",line);
+  g.append("line").attr("x1",xS(fcrit)).attr("x2",xS(fcrit)).attr("y1",0).attr("y2",H)
+    .attr("stroke","#964219").attr("stroke-width",1.5).attr("stroke-dasharray","5,3");
+  g.append("text").attr("x",xS(fcrit)+4).attr("y",22).attr("font-size",11)
+    .attr("fill","#964219").text(`Fc=${fcrit.toFixed(2)}`);
+  g.append("line").attr("x1",xS(f_obs)).attr("x2",xS(f_obs)).attr("y1",0).attr("y2",H)
+    .attr("stroke","#006494").attr("stroke-width",2);
+  g.append("text").attr("x",xS(f_obs)+4).attr("y",40).attr("font-size",11)
+    .attr("fill","#006494").text(`F=${f_obs}`);
+  g.append("g").attr("transform",`translate(0,${H})`).call(d3.axisBottom(xS).ticks(8))
+    .selectAll("text").attr("font-size",11);
+  g.append("g").call(d3.axisLeft(yS).ticks(5)).selectAll("text").attr("font-size",11);
+  g.append("text").attr("x",W/2).attr("y",H+36).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill","#28251d").text("Valor de F");
+  g.append("text").attr("x",W/2).attr("y",H+50).attr("text-anchor","middle")
+    .attr("font-size",12).attr("font-weight","600")
+    .attr("fill",pval_obs<alpha_f?"#01696f":"#964219")
+    .text(pval_obs<alpha_f
+      ? `p ≈ ${pval_obs.toFixed(4)}  →  Rechazar H₀ (F > Fc)`
+      : `p ≈ ${pval_obs.toFixed(4)}  →  No rechazar H₀ (F ≤ Fc)`);
+
+  return svg.node();
+}
+```
+
+---
+
+<!-- ================================================================
+     BLOQUE OJS 4: Visualizador comparativo de diseños DCA/DBCA/CL
+     INSERTAR: justo ANTES de "### Ejemplo: análisis de rendimiento con bloques"
+     ================================================================ -->
+
+### Demo interactiva: distribución de tratamientos según diseño {.unnumbered}
+
+Cambia el tipo de diseño para ver cómo se organizan las unidades experimentales y comprender la diferencia entre DCA, DBCA y Cuadrado Latino.
+
+```{ojs}
+//| echo: false
+viewof diseno2 = Inputs.radio(["DCA","DBCA","Cuadrado Latino"],
+  {label: "Diseño:", value: "DBCA"})
+viewof k2 = Inputs.range([3, 6], {step: 1, value: 4, label: "Tratamientos (k):"})
+viewof r2 = Inputs.range([2, 5], {step: 1, value: 3, label: "Repeticiones / bloques (r):"})
+viewof semilla2 = Inputs.button("🔀 Nueva aleatorización")
+```
+
+```{ojs}
+//| echo: false
+{
+  semilla2;
+  const colores=["#01696f","#964219","#437a22","#006494","#7a39bb","#a12c7b"];
+  const k=k2, r=diseno2==="Cuadrado Latino"?k2:r2;
+  const trts=Array.from({length:k},(_,i)=>`T${i+1}`);
+
+  function shuffle(a){
+    let b=[...a];
+    for(let i=b.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[b[i],b[j]]=[b[j],b[i]];}
+    return b;
+  }
+
+  let celdas=[];
+  if(diseno2==="DCA"){
+    const todas=[];
+    for(let i=0;i<r;i++) trts.forEach(t=>todas.push(t));
+    shuffle(todas).forEach((t,idx)=>celdas.push({t,col:idx%k,row:Math.floor(idx/k)}));
+  } else if(diseno2==="DBCA"){
+    for(let b=0;b<r;b++) shuffle(trts).forEach((t,ci)=>celdas.push({t,col:ci,row:b}));
+  } else {
+    for(let row=0;row<k;row++)
+      for(let col=0;col<k;col++)
+        celdas.push({t:trts[(row+col)%k],col,row});
+  }
+
+  const w=50,h=50,gap=5,padL=44,padT=28,padR=12,padB=40;
+  const svgW=k*(w+gap)+padL+padR, svgH=r*(h+gap)+padT+padB+28;
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${svgW} ${svgH}`)
+    .attr("width","100%").style("max-width",`${svgW}px`).style("font-family","sans-serif");
+
+  Array.from({length:k},(_,c)=>{
+    svg.append("text").attr("x",padL+c*(w+gap)+w/2).attr("y",18)
+      .attr("text-anchor","middle").attr("font-size",11).attr("fill","#7a7974")
+      .text(diseno2==="Cuadrado Latino"?`Col${c+1}`:`T${c+1}`);
+  });
+  Array.from({length:r},(_,rr)=>{
+    svg.append("text").attr("x",padL-6).attr("y",padT+rr*(h+gap)+h/2+5)
+      .attr("text-anchor","end").attr("font-size",11).attr("fill","#7a7974")
+      .text(diseno2==="DCA"?`U${rr+1}`:`B${rr+1}`);
+  });
+  celdas.forEach(({t,col,row})=>{
+    const x=padL+col*(w+gap),y=padT+row*(h+gap),ci=trts.indexOf(t);
+    svg.append("rect").attr("x",x).attr("y",y).attr("width",w).attr("height",h)
+      .attr("rx",6).attr("fill",colores[ci]+"22").attr("stroke",colores[ci]).attr("stroke-width",2);
+    svg.append("text").attr("x",x+w/2).attr("y",y+h/2+5)
+      .attr("text-anchor","middle").attr("font-size",13).attr("font-weight","600")
+      .attr("fill",colores[ci]).text(t);
+  });
+  const lyY=svgH-10;
+  trts.forEach((t,i)=>{
+    const lx=padL+i*62;
+    svg.append("rect").attr("x",lx).attr("y",lyY-12).attr("width",12).attr("height",12)
+      .attr("rx",3).attr("fill",colores[i]+"44").attr("stroke",colores[i]).attr("stroke-width",1.5);
+    svg.append("text").attr("x",lx+16).attr("y",lyY).attr("font-size",11)
+      .attr("fill","#28251d").text(t);
+  });
+  return svg.node();
+}
+```
+
+::: {.callout-tip}
+En el **DBCA** cada tratamiento aparece exactamente una vez por bloque (fila). En el **Cuadrado Latino** cada tratamiento aparece una sola vez en cada fila **y** cada columna — controlando dos fuentes de variación simultáneamente.
+:::
+
+---
+
+<!-- ================================================================
+     BLOQUE OJS 5: Potencia del ANOVA y tamaño de muestra
+     INSERTAR: justo ANTES de "## Diseño de bloques completos al azar (DBCA)"
+     ================================================================ -->
+
+### Demo interactiva: potencia del ANOVA y tamaño de muestra {.unnumbered}
+
+La **potencia** es la probabilidad de rechazar $H_0$ cuando realmente es falsa (detectar diferencias reales). Ajusta los parámetros para ver cuántas repeticiones necesitas.
+
+```{ojs}
+//| echo: false
+viewof k_pot = Inputs.range([2, 6], {step: 1, value: 3, label: "Número de tratamientos (k):"})
+viewof r_pot = Inputs.range([2, 20], {step: 1, value: 5, label: "Repeticiones por tratamiento (r):"})
+viewof delta = Inputs.range([0.5, 5], {step: 0.25, value: 2, label: "Diferencia mínima detectable (δ):"})
+viewof sigma_pot = Inputs.range([0.5, 4], {step: 0.25, value: 1.5, label: "Desviación estándar (σ):"})
+viewof alpha_pot = Inputs.select([0.10, 0.05, 0.01], {label: "Nivel α:", value: 0.05,
+  format: x => `α = ${x}`})
+```
+
+```{ojs}
+//| echo: false
+{
+  function lgamma3(z) {
+    const c=[76.18009172947146,-86.50532032941677,24.01409824083091,
+             -1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];
+    let y=z,tmp=z+5.5,ser=1.000000000190015;
+    tmp-=(z+0.5)*Math.log(tmp);
+    for(let j=0;j<6;j++) ser+=c[j]/++y;
+    return -tmp+Math.log(2.5066282746310005*ser/z);
+  }
+  function fDen3(x,a,b){
+    if(x<=0)return 0;
+    const ln=lgamma3((a+b)/2)+(a/2)*Math.log(a/b)+(a/2-1)*Math.log(x)
+             -((a+b)/2)*Math.log(1+a*x/b)-lgamma3(a/2)-lgamma3(b/2);
+    return Math.exp(ln);
+  }
+  function cdfF3(x,a,b){
+    const n=600,dx=x/n;let s=0;
+    for(let i=0;i<n;i++) s+=fDen3((i+0.5)*dx,a,b)*dx;
+    return Math.min(1,s);
+  }
+  function qf3(p,a,b){
+    let lo=0,hi=50,mid=1;
+    for(let i=0;i<80;i++){mid=(lo+hi)/2;cdfF3(mid,a,b)<p?lo=mid:hi=mid;}
+    return mid;
+  }
+  function fDenNC(x,d1,d2,lam){
+    const c=lam/(d1+lam),d1a=d1*(1+c)**2/(1+2*c);
+    return fDen3(x,d1a,d2);
+  }
+  function powerFn(k,r,delta,sigma,alpha){
+    const d1=k-1,d2=k*(r-1),lambda=r*delta**2/sigma**2;
+    const fcrit=qf3(1-alpha,d1,d2);
+    const xmax=fcrit*4+20,ns=800,dxs=xmax/ns;
+    let pot=0;
+    for(let i=0;i<ns;i++){const xi=(i+0.5)*dxs;if(xi>fcrit)pot+=fDenNC(xi,d1,d2,lambda)*dxs;}
+    return Math.min(0.9999,Math.max(0.0001,pot));
+  }
+
+  const rVals=Array.from({length:19},(_,i)=>i+2);
+  const curve=rVals.map(rv=>({r:rv,pot:powerFn(k_pot,rv,delta,sigma_pot,alpha_pot)}));
+  const potAct=powerFn(k_pot,r_pot,delta,sigma_pot,alpha_pot);
+  const rMin80=rVals.find(rv=>powerFn(k_pot,rv,delta,sigma_pot,alpha_pot)>=0.80)||">20";
+
+  const w=480,h=240,marg={t:20,r:20,b:50,l:55};
+  const W=w-marg.l-marg.r,H=h-marg.t-marg.b;
+  const xS=d3.scaleLinear().domain([2,20]).range([0,W]);
+  const yS=d3.scaleLinear().domain([0,1]).range([H,0]);
+
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${w} ${h}`)
+    .attr("width","100%").style("max-width",`${w}px`).style("font-family","sans-serif");
+  const g=svg.append("g").attr("transform",`translate(${marg.l},${marg.t})`);
+
+  g.append("line").attr("x1",0).attr("x2",W).attr("y1",yS(0.8)).attr("y2",yS(0.8))
+    .attr("stroke","#bab9b4").attr("stroke-dasharray","4,3").attr("stroke-width",1);
+  g.append("text").attr("x",W+3).attr("y",yS(0.8)+4).attr("font-size",10)
+    .attr("fill","#7a7974").text("80%");
+
+  const areaFn=d3.area().x(d=>xS(d.r)).y0(H).y1(d=>yS(d.pot)).curve(d3.curveCatmullRom);
+  g.append("path").datum(curve).attr("fill","#01696f").attr("fill-opacity",0.12).attr("d",areaFn);
+  const lineFn=d3.line().x(d=>xS(d.r)).y(d=>yS(d.pot)).curve(d3.curveCatmullRom);
+  g.append("path").datum(curve).attr("fill","none").attr("stroke","#01696f")
+    .attr("stroke-width",2.5).attr("d",lineFn);
+
+  g.append("circle").attr("cx",xS(r_pot)).attr("cy",yS(potAct)).attr("r",6)
+    .attr("fill","#01696f").attr("stroke","white").attr("stroke-width",2);
+  g.append("text").attr("x",xS(r_pot)+8).attr("y",yS(potAct)-6)
+    .attr("font-size",12).attr("font-weight","600").attr("fill","#01696f")
+    .text(`Potencia = ${(potAct*100).toFixed(1)}%`);
+
+  g.append("g").attr("transform",`translate(0,${H})`).call(d3.axisBottom(xS).ticks(9))
+    .selectAll("text").attr("font-size",11);
+  g.append("g").call(d3.axisLeft(yS).ticks(5).tickFormat(d3.format(".0%")))
+    .selectAll("text").attr("font-size",11);
+  g.append("text").attr("x",W/2).attr("y",H+38).attr("text-anchor","middle")
+    .attr("font-size",12).attr("fill","#28251d").text("Repeticiones por tratamiento (r)");
+  g.append("text").attr("transform","rotate(-90)").attr("x",-H/2).attr("y",-42)
+    .attr("text-anchor","middle").attr("font-size",12).attr("fill","#28251d").text("Potencia (1 − β)");
+  g.append("text").attr("x",W/2).attr("y",H+50).attr("text-anchor","middle")
+    .attr("font-size",11).attr("fill","#964219")
+    .text(`r mínimo para potencia ≥ 80%: ${rMin80} repeticiones`);
+
+  return svg.node();
+}
+```
+
+::: {.callout-tip}
+**Regla práctica:** en experimentación agrícola se recomienda una potencia mínima del **80 %** (línea punteada). Si la potencia actual es baja, aumenta el número de repeticiones o mejora el control ambiental del experimento (por ejemplo, usando DBCA en lugar de DCA para reducir σ).
+:::
+
+---
+
+<!-- ================================================================
+     BLOQUE OJS 6: Árbol de decisión estadística
+     INSERTAR: justo DESPUÉS del encabezado
+     "## Pruebas no paramétricas equivalentes al ANOVA {#sec-nonpar}"
+     ================================================================ -->
+
+### Demo interactiva: árbol de decisión estadística {.unnumbered}
+
+Responde las preguntas para obtener la recomendación de análisis más apropiada según tu diseño y el cumplimiento de supuestos.
+
+```{ojs}
+//| echo: false
+viewof paso1 = Inputs.radio(
+  ["Sí — ANOVA es significativo (p < α)", "No — ANOVA no es significativo"],
+  {label: "¿El ANOVA es significativo?", value: "Sí — ANOVA es significativo (p < α)"}
+)
+viewof paso2 = Inputs.radio(
+  ["Sí — pasan Shapiro-Wilk y Levene/Bartlett", "No — algún supuesto no se cumple"],
+  {label: "¿Se cumplen los supuestos del ANOVA?",
+   value: "Sí — pasan Shapiro-Wilk y Levene/Bartlett"}
+)
+viewof paso3 = Inputs.radio(
+  ["Sí — la transformación resuelve el problema", "No — los supuestos persisten"],
+  {label: "¿La transformación de datos soluciona el incumplimiento?",
+   value: "No — los supuestos persisten"}
+)
+viewof paso4 = Inputs.radio(
+  ["DCA — un factor sin bloques", "DBCA — un factor con bloques"],
+  {label: "¿Cuál es el diseño del experimento?",
+   value: "DCA — un factor sin bloques"}
+)
+```
+
+```{ojs}
+//| echo: false
+{
+  const noSig    = paso1.startsWith("No");
+  const supOk    = paso2.startsWith("Sí");
+  const transfOk = paso3.startsWith("Sí");
+  const esDCA    = paso4.startsWith("DCA");
+
+  let recs=[], color="#01696f";
+
+  if(noSig){
+    recs=["📊 El ANOVA no es significativo.",
+          "→ No hay evidencia de diferencias entre tratamientos (p ≥ α).",
+          "→ No se aplican pruebas post hoc.",
+          "→ Conclusión: no se encontraron diferencias significativas entre los tratamientos."];
+    color="#7a7974";
+  } else if(supOk){
+    recs=["✅ Supuestos verificados — usa pruebas de comparación múltiple paramétricas.",
+          "→ Tukey HSD         — comparaciones por pares (uso general recomendado).",
+          "→ Fisher LSD        — máxima potencia (ANOVA debe ser significativo).",
+          "→ Bonferroni / Holm — control estricto del error tipo I.",
+          "→ Dunnett           — comparaciones contra un grupo control.",
+          "→ Scheffé           — contrastes complejos a posteriori."];
+    color="#01696f";
+  } else if(transfOk){
+    recs=["🔄 Transformación aplicada con éxito — repite el flujo de análisis.",
+          "→ Ejecuta de nuevo el ANOVA con los datos transformados.",
+          "→ Verifica nuevamente los supuestos (Shapiro-Wilk + Levene).",
+          "→ Si se cumplen, aplica pruebas post hoc paramétricas.",
+          "→ Reporta siempre la transformación usada (log, sqrt, arcsin, 1/y...)."];
+    color="#964219";
+  } else if(esDCA){
+    recs=["🔁 Supuestos no se cumplen — DCA → Kruskal-Wallis.",
+          "→ kruskal.test(y ~ trt, data = datos)",
+          "→ Post hoc si KW es significativo:",
+          "   • Dunn + Bonferroni: dunnTest()  [paquete FSA]",
+          "   • Conover-Iman:      conover.test()  [paquete conover.test]",
+          "   • Wilcoxon por pares: wilcox.test() + p.adjust()",
+          "→ Las pruebas operan sobre rangos, no sobre valores originales."];
+    color="#006494";
+  } else {
+    recs=["🔁 Supuestos no se cumplen — DBCA → Friedman.",
+          "→ friedman.test(y ~ trt | bloque, data = datos)",
+          "→ Post hoc si Friedman es significativo:",
+          "   • Dunn + Bonferroni: dunnTest()  [paquete FSA]",
+          "   • Nemenyi: frdAllPairsNemenyi()  [paquete PMCMRplus]",
+          "→ El bloque sigue considerándose en el análisis de Friedman."];
+    color="#006494";
+  }
+
+  const lineH=22,padL=14,padT=14;
+  const svgW=620,svgH=recs.length*lineH+padT*2+8;
+
+  const svg=d3.create("svg").attr("viewBox",`0 0 ${svgW} ${svgH}`)
+    .attr("width","100%").style("max-width",`${svgW}px`).style("font-family","sans-serif");
+  svg.append("rect").attr("width",svgW).attr("height",svgH).attr("rx",8)
+    .attr("fill",color+"11").attr("stroke",color).attr("stroke-width",1.5);
+  recs.forEach((txt,i)=>{
+    svg.append("text").attr("x",padL).attr("y",padT+(i+1)*lineH-4)
+      .attr("font-size",13).attr("font-weight",i===0?"700":"400")
+      .attr("fill",i===0?color:"#28251d").text(txt);
+  });
+
+  return svg.node();
+}
+```
+

@@ -8,6 +8,8 @@ library(readxl)
 library(webexercises)
 ```
 
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
 # Estadística. Conceptos Básicos. {#intro}
 
 ## Objetivos del capítulo
@@ -20,6 +22,7 @@ Al finalizar este capítulo, el lector será capaz de:
 - Diferenciar **estadística descriptiva** e **inferencial**
 - Reconocer **tipos de estudio** (retrospectivo, observacional, experimental)
 - Identificar **tipos de variables** y sus **niveles de medición**
+- Reconocer la **unidad experimental** y la **unidad de observación** en un estudio
 
 ---
 
@@ -65,7 +68,7 @@ De manera general, las etapas del proceso estadístico son:
 8.  **Comunicación**: los resultados deben comunicarse según el público objetivo (artículo científico, informe técnico, *dashboard*, sitio web, folleto). La comunicación efectiva es parte esencial del proceso.
 
 ::: callout-tip
-Un buen análisis no se mide solo por “cuántos métodos” se aplican, sino por **si responde la pregunta original** y si la conclusión es **comprensible y accionable**.
+Un buen análisis no se mide solo por "cuántos métodos" se aplican, sino por **si responde la pregunta original** y si la conclusión es **comprensible y accionable**.
 :::
 
 ---
@@ -81,8 +84,25 @@ Un buen análisis no se mide solo por “cuántos métodos” se aplican, sino p
 - **Estadístico**: cantidad numérica que caracteriza a una muestra (por ejemplo, media muestral, desviación estándar muestral, proporción muestral).
 
 ::: callout-important
-**Idea clave**: un **parámetro** es “de la población” y suele ser desconocido; un **estadístico** es “de la muestra” y se calcula con los datos disponibles.
+**Idea clave**: un **parámetro** es "de la población" y suele ser desconocido; un **estadístico** es "de la muestra" y se calcula con los datos disponibles.
 :::
+
+### Unidad experimental y unidad de observación {#sec-unidades}
+
+En estudios agronómicos es fundamental distinguir entre dos conceptos que frecuentemente se confunden:
+
+- **Unidad experimental (UE)**: es la unidad mínima a la que se asigna un tratamiento de forma independiente. Puede ser una parcela, una maceta, un animal, un microsilo, etc.
+
+- **Unidad de observación (UO)**: es la unidad sobre la que se toman las mediciones. Puede coincidir con la UE, o puede ser más pequeña (por ejemplo, una planta dentro de una parcela).
+
+::: callout-important
+La distinción entre UE y UO es crítica para el análisis estadístico. Cuando la UO es más pequeña que la UE, tomar múltiples mediciones dentro de la misma UE no equivale a tener más repeticiones independientes. Confundir esto lleva a análisis incorrectos conocidos como **pseudorreplicación**.
+:::
+
+**Ejemplo**: En un experimento con cuatro tratamientos de fertilización aplicados a parcelas de 10 m², donde se miden 5 plantas por parcela:
+- **UE**: la parcela (la unidad que recibe el tratamiento).
+- **UO**: cada planta (donde se toma la medición).
+- Las 5 plantas por parcela son *subunidades*, no repeticiones independientes.
 
 ---
 
@@ -125,7 +145,22 @@ Ahora imaginemos que se desea evaluar parámetros nutricionales y fermentativos 
 :::
 
 ::: callout-tip
-En términos prácticos: en un **observacional** “miramos lo que pasa”; en un **experimental** “provocamos cambios controlados” para aprender sobre causas y efectos.
+En términos prácticos: en un **observacional** "miramos lo que pasa"; en un **experimental** "provocamos cambios controlados" para aprender sobre causas y efectos.
+:::
+
+### Estudios observacionales: descriptivo vs analítico {#sec-obs}
+
+Los estudios observacionales se subdividen según su objetivo:
+
+| Tipo                    | Objetivo principal                                       | Ejemplo agrícola                                           |
+|-------------------------|----------------------------------------------------------|------------------------------------------------------------|
+| **Descriptivo**         | Describir características de una población o fenómeno   | Encuesta sobre uso de agroquímicos en fincas de la región  |
+| **Analítico (correlacional)** | Explorar asociaciones entre variables sin asignar tratamientos | Relación entre precipitación y rendimiento en datos históricos |
+| **Cohorte / prospectivo** | Seguir grupos a lo largo del tiempo                   | Seguimiento de parcelas con y sin cobertura vegetal por 3 años |
+| **Caso-control**        | Comparar casos con un resultado con controles sin él     | Comparar fincas con alta y baja incidencia de un patógeno  |
+
+::: callout-important
+**Diferencia clave**: en un estudio observacional se detectan **asociaciones**; en un estudio experimental se pueden establecer **relaciones causales**, porque el investigador controla quién recibe cada tratamiento.
 :::
 
 ---
@@ -161,10 +196,10 @@ Las variables además presentan **niveles de medición**. Los cuatro niveles cl�
 
 :::{.callout-important title="Características (Ordinal)"} 
 - Muestra la clasificación relativa (orden).
-- Describe magnitud en términos de “más/menos”, pero sin distancias numéricas interpretables.
+- Describe magnitud en términos de "más/menos", pero sin distancias numéricas interpretables.
 :::
 
-3. **Intervalo**: diferencias significativas entre valores; el cero no representa ausencia de la característica (por ejemplo, temperatura en °C o °F, calificación si el “cero” no implica ausencia del atributo).
+3. **Intervalo**: diferencias significativas entre valores; el cero no representa ausencia de la característica (por ejemplo, temperatura en °C o °F, calificación si el "cero" no implica ausencia del atributo).
 
 :::{.callout-important title="Características (Intervalo)"} 
 - Es cuantitativa y permite comparar diferencias.
@@ -197,11 +232,19 @@ child { node[concept] {Continuas} }
 }  
 child[concept color=blue] {
 node[concept] {Cualitativas}
+[clockwise from=0]
 };
 \end{tikzpicture}
 ```
 
+### Resumen: niveles de medición y operaciones permitidas {#sec-resnivm}
 
+| Nivel      | Tipo         | Ordenar | Diferencias | Razones | Cero absoluto | Ejemplo                      |
+|------------|--------------|:-------:|:-----------:|:-------:|:-------------:|------------------------------|
+| Nominal    | Cualitativa  | ✗       | ✗           | ✗       | ✗             | Variedad, color, región       |
+| Ordinal    | Cualitativa  | ✓       | ✗           | ✗       | ✗             | Escala vigor 1–5, nivel daño  |
+| Intervalo  | Cuantitativa | ✓       | ✓           | ✗       | ✗             | Temperatura en °C             |
+| Razón      | Cuantitativa | ✓       | ✓           | ✓       | ✓             | Altura, peso, rendimiento     |
 
 ::: callout-tip
 **Puente hacia R y tidyverse**
@@ -211,10 +254,38 @@ En capítulos posteriores:
 - una **observación** corresponderá a una fila
 - una **muestra** será un subconjunto de filas
 - un **estadístico** se calculará con funciones como `mean()`, `sd()` o `summarise()`
+- las variables **nominales** y **ordinales** se representan como `factor` en R
 :::
 
+### Variables en R: tipos de datos y su relación con los niveles de medición {#sec-varR}
 
+En R, el tipo de datos de una columna en un *data frame* debe coincidir con el nivel de medición de la variable:
 
+```{r}
+library(dplyr)
+
+experimento <- tibble(
+  variedad    = factor(c("Almonte", "Ariadna", "Candela")),  # Nominal
+  calidad     = factor(c("Alta", "Media", "Baja"),           # Ordinal
+                       levels = c("Baja", "Media", "Alta"),
+                       ordered = TRUE),
+  altura_cm   = c(85.3, 72.1, 90.8),                        # Razón
+  temp_c      = c(28.5, 27.1, 29.3)                         # Intervalo
+)
+
+glimpse(experimento)
+levels(experimento$calidad)    # orden de niveles en la variable ordinal
+```
+
+::: callout-important
+En R, la diferencia entre un `factor` ordenado y uno no ordenado es importante:
+- `factor()` sin `ordered = TRUE` → **nominal**
+- `factor()` con `ordered = TRUE` → **ordinal**
+
+Usar el tipo correcto garantiza que funciones como `summary()`, `ggplot2` y los modelos estadísticos se comporten correctamente.
+:::
+
+---
 
 ## Ejercicios {.unnumbered}
 
@@ -303,9 +374,53 @@ q_ctx2_choices <- c(
   "De laboratorio"
 )
 
+q_ctx3 <- "Un investigador aplica una encuesta a productores de piña para conocer sus prácticas de manejo sin cambiar nada. ¿Qué tipo de estudio es?"
+q_ctx3_choices <- c(
+  "Experimental",
+  "Retrospectivo",
+  answer = "Observacional descriptivo",
+  "Longitudinal experimental"
+)
+
 cat(
   q_ctx1, longmcq(q_ctx1_choices), "\n\n",
-  q_ctx2, longmcq(q_ctx2_choices)
+  q_ctx2, longmcq(q_ctx2_choices), "\n\n",
+  q_ctx3, longmcq(q_ctx3_choices)
+)
+```
+
+:::
+:::
+
+::: {#exr-ue-uo}
+
+**Unidad experimental vs unidad de observación**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q_ue1 <- "En un experimento de riego con 3 tratamientos aplicados a parcelas de 20 m², donde se miden 10 plantas por parcela, la unidad experimental es:"
+q_ue1_choices <- c(
+  "Cada planta",
+  answer = "Cada parcela de 20 m²",
+  "Cada tratamiento",
+  "El conjunto de 30 plantas"
+)
+
+q_ue2 <- "Medir 10 plantas dentro de la misma parcela equivale a tener:"
+q_ue2_choices <- c(
+  "10 repeticiones independientes",
+  answer = "Subunidades o pseudorréplicas, no repeticiones independientes",
+  "10 bloques",
+  "10 tratamientos"
+)
+
+cat(
+  q_ue1, longmcq(q_ue1_choices), "\n\n",
+  q_ue2, longmcq(q_ue2_choices)
 )
 ```
 
@@ -324,7 +439,7 @@ cat(
 | Altura de una planta de tomate.                               	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
 | Perímetro toráxico de un bovino                               	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
 | Razas de ganado existentes en una finca lechera.              	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c(answer = "Nominal", "Ordinal", "Intervalo", "Razón")) `  	|
-| Variedad de semillas usadas en un cultivo de banano.          	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c(answer = "Nominal", "Ordinal", "Intervalo", "Razón")) `  	|
+| Variedad de semillas usadas en un cultivo de tomate.          	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c(answer = "Nominal", "Ordinal", "Intervalo", "Razón")) `  	|
 | Cantidad de fertilizante utilizado en una plantación.         	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
 | Cajas de banano vendidas por semana.                          	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c( "Continua", answer = "Discreta","No Aplica"))`  	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
 | Precipitación en milímetros de una región por año.            	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
@@ -332,10 +447,11 @@ cat(
 | Fila en la que se encuentra una planta dentro de una parcela. 	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c( "Nominal", answer = "Ordinal", "Intervalo", "Razón")) ` 	|
 | Temperatura medida en grados Celsius                          	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", answer = "Intervalo", "Razón"))`  	|
 | Temperatura medida en grados Kelvin                           	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c(answer = "Continua","Discreta","No Aplica"))`    	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
+| Nivel de daño foliar (sin daño / leve / moderado / severo)    	| `r mcq(c("Cuantitativa", answer = "Cualitativa"))` 	| `r mcq(c( "Continua", "Discreta", answer = "No Aplica"))` 	| `r mcq(c( "Nominal", answer = "Ordinal", "Intervalo", "Razón")) ` 	|
+| Número de frutos por planta de tomate                         	| `r mcq(c(answer = "Cuantitativa", "Cualitativa"))` 	| `r mcq(c( "Continua", answer = "Discreta","No Aplica"))`  	| `r mcq(c( "Nominal", "Ordinal", "Intervalo", answer ="Razón"))`   	|
 
 :::
 :::
-
 
 ::: {#exr-fourth}
 
@@ -347,86 +463,82 @@ cat(
 #| echo: false
 #| results: asis
 
-# Pregunta 1
 q1 <- "¿Cuál es el origen etimológico de la palabra 'estadística'?"
 q1_choices <- c("Del griego 'statikos'", 
                 "Del latín 'statisticus'", 
                 answer = "Del alemán 'statistik'")
 
-# Pregunta 2
 q2 <- "¿Quién acuñó el término 'statistik'?"
 q2_choices <- c("Karl Pearson", 
                 "Ronald Fisher", 
                 answer = "Gottfried Achenwall")
 
-# Pregunta 3
 q3 <- "¿Qué estudia la estadística?"
 q3_choices <- c("La recolección de datos únicamente", 
                 "La organización y presentación de datos únicamente", 
                 answer = "La recolección, clasificación, resumen, organización, presentación, análisis e interpretación de información numérica", 
                 "La interpretación de datos únicamente")
 
-# Pregunta 4
 q4 <- "¿Cuál de las siguientes NO es una etapa del proceso estadístico?"
 q4_choices <- c("Identificación y delimitación del problema", 
                 "Planificación", 
                 "Recolección de datos", 
                 answer = "Publicación de resultados")
 
-# Pregunta 5
 q5 <- "¿Qué implica la delimitación del problema en estadística?"
 q5_choices <- c("Definir los objetivos del estudio", 
                 answer = "Recortar el tema dentro de los límites de espacio, tiempo y área de estudio", 
                 "Identificar las fuentes de datos", 
                 "Analizar los datos recolectados")
 
-# Pregunta 6
 q6 <- "¿Qué se debe hacer después de recolectar los datos en el proceso estadístico?"
 q6_choices <- c("Publicar los datos inmediatamente", 
                 answer = "Revisar los datos para verificar inconsistencias o problemas potenciales", 
                 "Analizar los datos sin revisión previa", 
                 "Almacenar los datos sin analizarlos")
 
-# Pregunta 7
 q7 <- "¿Qué es una variable en estadística?"
 q7_choices <- c("Un conjunto de datos sin relación", 
                 answer = "Una característica de los elementos u objetos que se estudian", 
                 "Un valor constante en un estudio", 
                 "Un método de recolección de datos")
 
-# Pregunta 8
 q8 <- "¿Qué tipo de datos representan etiquetas o nominaciones que identifican atributos?"
 q8_choices <- c("Datos cuantitativos", 
                 answer = "Datos cualitativos", 
                 "Datos continuos", 
                 "Datos discretos")
 
-# Pregunta 9
 q9 <- "¿Qué tipo de datos son aquellos que pueden ser contados y no admiten valores intermedios?"
 q9_choices <- c("Datos cualitativos", 
                 "Datos continuos", 
                 answer = "Datos discretos", 
                 "Datos nominales")
 
-# Pregunta 10
 q10 <- "¿Qué tipo de variable es el 'número de hijos en una familia'?"
 q10_choices <- c("Variable cualitativa", 
                  "Variable cuantitativa continua", 
                  answer = "Variable cuantitativa discreta", 
                  "Variable ordinal")
 
-# Mostrar todas las preguntas
+q11 <- "En un ensayo con 4 tratamientos de riego aplicados a parcelas de 15 m², y 8 plantas medidas por parcela, ¿cuántas repeticiones reales tiene cada tratamiento si hay 3 parcelas por tratamiento?"
+q11_choices <- c("24 (8 plantas × 3 parcelas)", 
+                 answer = "3 (una por parcela)", 
+                 "1 (todo el experimento)",
+                 "8 (las plantas de una parcela)")
+
 preguntas <- list(
-  list(pregunta = q1, opciones = q1_choices),
-  list(pregunta = q2, opciones = q2_choices),
-  list(pregunta = q3, opciones = q3_choices),
-  list(pregunta = q4, opciones = q4_choices),
-  list(pregunta = q5, opciones = q5_choices),
-  list(pregunta = q6, opciones = q6_choices),
-  list(pregunta = q7, opciones = q7_choices),
-  list(pregunta = q8, opciones = q8_choices),
-  list(pregunta = q9, opciones = q9_choices),
-  list(pregunta = q10, opciones = q10_choices)
+  list(pregunta = q1,  opciones = q1_choices),
+  list(pregunta = q2,  opciones = q2_choices),
+  list(pregunta = q3,  opciones = q3_choices),
+  list(pregunta = q4,  opciones = q4_choices),
+  list(pregunta = q5,  opciones = q5_choices),
+  list(pregunta = q6,  opciones = q6_choices),
+  list(pregunta = q7,  opciones = q7_choices),
+  list(pregunta = q8,  opciones = q8_choices),
+  list(pregunta = q9,  opciones = q9_choices),
+  list(pregunta = q10, opciones = q10_choices),
+  list(pregunta = q11, opciones = q11_choices)
 )
 
 for (p in preguntas) {

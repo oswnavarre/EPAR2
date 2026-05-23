@@ -1,0 +1,762 @@
+```{r paquetes, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(tidyverse)
+library(agricolae)
+library(jtools)
+library(writexl)
+library(readxl)
+library(DescTools)
+library(cowplot)
+library(formatdown)
+library(latex2exp)
+```
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+# Distribuciones de probabilidad {#distr}
+
+## Objetivos del capítulo
+
+Al finalizar este capítulo, el lector será capaz de:
+
+- Definir los conceptos de experimento, espacio muestral, evento y probabilidad
+- Aplicar las operaciones de conjuntos (unión, intersección, complemento) a eventos
+- Distinguir entre variables aleatorias discretas y continuas
+- Comprender el concepto de función de densidad de probabilidad
+- Describir las propiedades de la distribución Normal y calcular probabilidades con R
+- Describir las propiedades de la distribución $t$ de Student y reconocer su relación con la distribución Normal
+- Calcular probabilidades usando las funciones `pnorm()`, `qnorm()`, `pt()` y `qt()` en R
+
+---
+
+## Conceptos fundamentales de probabilidad
+
+En muchas situaciones cotidianas se utiliza con frecuencia el término *probabilidad*, para expresar la posibilidad de obtener un resultado. Para sucesos aleatorios, la probabilidad se define como la proporción (frecuencia relativa) de veces que se obtiene el resultado en una extensa secuencia de observaciones. Aunque es un número entre $0$ y $1$, es común representarla como porcentaje. Por ejemplo, cuando se reporta que la probabilidad de lluvia es del $70\%$, se interpreta que en muchos días pasados con condiciones similares, en el $70\%$ de ellos hubo precipitaciones.
+
+::: {#def-exper}
+Un **experimento** es un procedimiento o proceso cuyos resultados son conocidos pero no predecibles.
+:::
+
+::: {#def-espmue}
+El **espacio muestral** es el conjunto de todos los posibles resultados de un experimento. Se representa con la letra griega $\Omega$.
+:::
+
+::: {#def-event}
+Cualquier subconjunto del espacio muestral se denomina **evento**.
+:::
+
+::: {.callout-tip title="Ejemplo agrícola"}
+Consideremos el experimento de seleccionar una planta de maíz de una parcela y observar si presenta síntomas de plaga. El espacio muestral es $\Omega = \{\text{con plaga}, \text{sin plaga}\}$. El evento $E = \{\text{con plaga}\}$ es un subconjunto de $\Omega$.
+:::
+
+## Operaciones de conjuntos
+
+Supongamos los eventos $E_1$, $E_2$, $\ldots$, $E_n$ que son subconjuntos del espacio muestral $\Omega$.
+
+::: {#def-union}
+El evento $E_1 \cup E_2$ (**unión**) consiste de todos los resultados presentes en $E_1$ **o** $E_2$ (o ambos).
+:::
+
+::: {#def-inter}
+El evento $E_1 \cap E_2$ (**intersección**) consiste de todos los resultados presentes en $E_1$ **y** $E_2$ simultáneamente.
+:::
+
+::: {#def-vacio}
+El **conjunto vacío** $\emptyset$ es el conjunto que no contiene elementos: $n(\emptyset) = 0$.
+:::
+
+::: {#def-mutex}
+Dos eventos $E_1$ y $E_2$ son **mutuamente excluyentes** si $E_1 \cap E_2 = \emptyset$.
+:::
+
+::: {#def-colex}
+Los eventos $E_1$, $E_2$, $\ldots$, $E_k$ son **colectivamente exhaustivos** si $E_1 \cup E_2 \cup \ldots \cup E_k = \Omega$.
+:::
+
+::: {#def-compl}
+El **complemento** del evento $E_1$, denotado $\overline{E_1}$ o $E_1^C$, consiste de todos los resultados de $\Omega$ que **no** pertenecen a $E_1$.
+:::
+
+::: {.callout-note icon=false}
+## 🎛️ Demo interactiva: Operaciones de conjuntos
+
+Selecciona los eventos para visualizar la operación de conjuntos correspondiente.
+:::
+
+```{ojs}
+//| echo: false
+viewof op_conj = Inputs.radio(
+  ["Unión E₁ ∪ E₂", "Intersección E₁ ∩ E₂", "Complemento E₁ᶜ", "Mutuamente excluyentes"],
+  { label: "Operación", value: "Unión E₁ ∪ E₂" }
+)
+```
+
+```{ojs}
+//| echo: false
+{
+  const w = 500, h = 260;
+  const svg = d3.create("svg").attr("width", w).attr("height", h);
+
+  const cx1 = 170, cx2 = 280, cy = 130, r = 90;
+  const bg = "#f7f6f2";
+
+  // Fondo = Omega
+  svg.append("rect").attr("x", 20).attr("y", 20).attr("width", w - 40).attr("height", h - 40)
+    .attr("fill", bg).attr("stroke", "#28251d").attr("stroke-width", 2).attr("rx", 8);
+
+  svg.append("text").attr("x", 35).attr("y", 45).text("Ω").attr("font-size", 18).attr("fill", "#28251d");
+
+  const defs = svg.append("defs");
+
+  // Clip E1
+  defs.append("clipPath").attr("id", "clip-e1")
+    .append("circle").attr("cx", cx1).attr("cy", cy).attr("r", r);
+  // Clip E2
+  defs.append("clipPath").attr("id", "clip-e2")
+    .append("circle").attr("cx", cx2).attr("cy", cy).attr("r", r);
+
+  const accentTeal = "#01696f", accentOrange = "#da7101", accentPurple = "#a12c7b", neutral = "#cedcd8";
+
+  if (op_conj === "Unión E₁ ∪ E₂") {
+    svg.append("circle").attr("cx", cx1).attr("cy", cy).attr("r", r)
+      .attr("fill", accentTeal).attr("fill-opacity", 0.5).attr("stroke", accentTeal).attr("stroke-width", 2);
+    svg.append("circle").attr("cx", cx2).attr("cy", cy).attr("r", r)
+      .attr("fill", accentTeal).attr("fill-opacity", 0.5).attr("stroke", accentTeal).attr("stroke-width", 2);
+    svg.append("text").attr("x", w/2).attr("y", h - 15).attr("text-anchor", "middle")
+      .text("E₁ ∪ E₂: todo lo que está en E₁ o en E₂").attr("font-size", 13).attr("fill", "#28251d");
+  } else if (op_conj === "Intersección E₁ ∩ E₂") {
+    svg.append("circle").attr("cx", cx1).attr("cy", cy).attr("r", r)
+      .attr("fill", neutral).attr("fill-opacity", 0.7).attr("stroke", accentTeal).attr("stroke-width", 2);
+    svg.append("circle").attr("cx", cx2).attr("cy", cy).attr("r", r)
+      .attr("fill", neutral).attr("fill-opacity", 0.7).attr("stroke", accentTeal).attr("stroke-width", 2);
+    // Intersección
+    svg.append("circle").attr("cx", cx2).attr("cy", cy).attr("r", r)
+      .attr("clip-path", "url(#clip-e1)")
+      .attr("fill", accentOrange).attr("fill-opacity", 0.8).attr("stroke", "none");
+    svg.append("text").attr("x", w/2).attr("y", h - 15).attr("text-anchor", "middle")
+      .text("E₁ ∩ E₂: solo lo que está en ambos eventos").attr("font-size", 13).attr("fill", "#28251d");
+  } else if (op_conj === "Complemento E₁ᶜ") {
+    svg.append("rect").attr("x", 25).attr("y", 25).attr("width", w - 50).attr("height", h - 50)
+      .attr("fill", accentPurple).attr("fill-opacity", 0.3).attr("rx", 6);
+    svg.append("circle").attr("cx", cx1).attr("cy", cy).attr("r", r)
+      .attr("fill", bg).attr("stroke", accentTeal).attr("stroke-width", 2);
+    svg.append("circle").attr("cx", cx2).attr("cy", cy).attr("r", r)
+      .attr("fill", "none").attr("stroke", accentTeal).attr("stroke-width", 1.5).attr("stroke-dasharray", "5,3");
+    svg.append("text").attr("x", w/2).attr("y", h - 15).attr("text-anchor", "middle")
+      .text("E₁ᶜ: todo lo que NO está en E₁").attr("font-size", 13).attr("fill", "#28251d");
+  } else {
+    // Mutuamente excluyentes: sin superposición
+    svg.append("circle").attr("cx", 140).attr("cy", cy).attr("r", 75)
+      .attr("fill", accentTeal).attr("fill-opacity", 0.45).attr("stroke", accentTeal).attr("stroke-width", 2);
+    svg.append("circle").attr("cx", 330).attr("cy", cy).attr("r", 75)
+      .attr("fill", accentOrange).attr("fill-opacity", 0.45).attr("stroke", accentOrange).attr("stroke-width", 2);
+    svg.append("text").attr("x", w/2).attr("y", h - 15).attr("text-anchor", "middle")
+      .text("E₁ ∩ E₂ = ∅: no comparten resultados").attr("font-size", 13).attr("fill", "#28251d");
+  }
+
+  // Etiquetas
+  svg.append("text").attr("x", cx1 - 20).attr("cy", cy - 60).attr("y", cy - 60)
+    .text("E₁").attr("font-size", 15).attr("font-weight", "bold").attr("fill", "#28251d");
+  if (op_conj !== "Mutuamente excluyentes") {
+    svg.append("text").attr("x", cx2 + 20).attr("y", cy - 60)
+      .text("E₂").attr("font-size", 15).attr("font-weight", "bold").attr("fill", "#28251d");
+  } else {
+    svg.append("text").attr("x", 200).attr("y", cy - 60)
+      .text("E₁").attr("font-size", 15).attr("font-weight", "bold").attr("fill", "#28251d");
+    svg.append("text").attr("x", 310).attr("y", cy - 60)
+      .text("E₂").attr("font-size", 15).attr("font-weight", "bold").attr("fill", "#28251d");
+  }
+
+  return svg.node();
+}
+```
+
+## Definición de probabilidad
+
+::: {#def-prob}
+Si un experimento tiene $n(\Omega)$ resultados posibles y un evento $E$ tiene $n(E)$ resultados, la probabilidad de $E$, denotada $P(E)$, se define como:
+
+$$P(E) = \dfrac{n(E)}{n(\Omega)} = \dfrac{\text{número de resultados en } E}{\text{número de resultados en } \Omega}$$
+:::
+
+:::{.callout-important title="Axiomas de la Probabilidad"}
+1. $P(\Omega) = 1$
+2. Para cualquier evento $E$: $0 \leq P(E) \leq 1$
+3. Para cualquier evento $E$: $P(E^C) = 1 - P(E)$
+:::
+
+:::{.callout-important title="Propiedades de la Probabilidad"}
+1. Para dos eventos cualesquiera: $P(E_1 \cup E_2) = P(E_1) + P(E_2) - P(E_1 \cap E_2)$
+2. Para eventos mutuamente excluyentes: $P(E_1 \cup E_2) = P(E_1) + P(E_2)$
+3. Para eventos colectivamente exhaustivos: $P(E_1 \cup E_2 \cup \ldots \cup E_k) = 1$
+:::
+
+::: {.callout-tip title="Ejemplo: muestreo de frutos"}
+En un lote de 50 frutos de cacao, 12 presentan daño por monilia y 8 por mazorca negra. Si se selecciona un fruto al azar:
+
+- $P(\text{monilia}) = 12/50 = 0.24$
+- $P(\text{mazorca negra}) = 8/50 = 0.16$
+- $P(\text{monilia o mazorca negra}) = (12 + 8)/50 = 0.40$ *(son mutuamente excluyentes)*
+- $P(\text{sin daño}) = 1 - 0.40 = 0.60$
+:::
+
+```{webr}
+# Calcule la probabilidad de seleccionar un fruto con monilia
+# de un lote de 50 frutos donde 12 tienen monilia
+n_monilia <- 12
+n_total   <- 50
+prob_monilia <- n_monilia / n_total
+prob_monilia
+```
+
+---
+
+## Distribuciones de probabilidad
+
+### Variable aleatoria
+
+::: {#def-var-aleatoria}
+Una **variable aleatoria** es una función que asigna un número a cada resultado de un experimento.
+:::
+
+Existen dos tipos:
+
+- **Discretas**: valores contables (número de plantas enfermas, número de semillas germinadas)
+- **Continuas**: valores incontables en un intervalo (peso de frutos, altura de plantas, tiempo de cosecha)
+
+::: {.callout-tip title="Ejemplo con monedas"}
+En el lanzamiento de tres monedas, si $X =$ número de sellos, los valores posibles son $\{0, 1, 2, 3\}$ con probabilidades:
+
+| $x$ | 0 | 1 | 2 | 3 |
+|-----|---|---|---|---|
+| $P(X=x)$ | 1/8 | 3/8 | 3/8 | 1/8 |
+
+```{r echo=TRUE}
+x    <- 0:3
+prob <- dbinom(x, size = 3, prob = 0.5)
+data.frame(x = x, `P(X=x)` = prob) |> knitr::kable(digits = 4)
+```
+:::
+
+```{webr}
+# Distribución de probabilidad de X = número de sellos en 3 monedas
+x    <- 0:3
+prob <- dbinom(x, size = 3, prob = 0.5)
+barplot(prob, names.arg = x,
+        xlab = "Número de sellos (X)",
+        ylab = "P(X = x)",
+        col  = "#01696f",
+        main = "Distribución de X ~ Binomial(3, 0.5)")
+```
+
+### Funciones de Densidad de Probabilidad
+
+Para variables continuas, la distribución de probabilidad se describe mediante una **función de densidad de probabilidad** $f(x)$. Las propiedades de estas funciones son:
+
+- El área bajo la curva es igual a $1$: $\int_{-\infty}^{\infty} f(x)\,dx = 1$
+- La probabilidad de que $X$ se encuentre en el intervalo $(a, b)$ es el área bajo la curva entre $a$ y $b$: $P(a < X < b) = \int_a^b f(x)\,dx$
+- $P(X = c) = 0$ para cualquier valor puntual $c$
+
+::: {.callout-note icon=false}
+## 🎛️ Demo interactiva: De histograma a curva de densidad
+
+Aumenta el tamaño de muestra y observa cómo el histograma se aproxima a la curva de densidad teórica.
+:::
+
+```{ojs}
+//| echo: false
+viewof n_densidad = Inputs.range([30, 2000], {
+  label: "Tamaño de muestra (n)",
+  step: 10,
+  value: 100
+})
+```
+
+```{ojs}
+//| echo: false
+{
+  // Generar datos normales con Box-Muller
+  function rnorm(n, mean, sd) {
+    const out = [];
+    for (let i = 0; i < n; i += 2) {
+      const u1 = Math.random(), u2 = Math.random();
+      const z1 = Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2);
+      const z2 = Math.sqrt(-2 * Math.log(u1)) * Math.sin(2 * Math.PI * u2);
+      out.push(mean + sd * z1);
+      if (i + 1 < n) out.push(mean + sd * z2);
+    }
+    return out.slice(0, n);
+  }
+
+  const datos = rnorm(n_densidad, 80, 10);
+  const k = Math.max(5, Math.min(30, Math.round(1 + 3.322 * Math.log10(n_densidad))));
+
+  // Curva normal teórica
+  const xrange = d3.range(40, 120, 0.5);
+  const curva = xrange.map(x => ({
+    x,
+    y: (1 / (10 * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - 80) / 10) ** 2)
+  }));
+
+  const bins_k = Math.round(k);
+
+  return Plot.plot({
+    title: `n = ${n_densidad} | k ≈ ${bins_k} clases`,
+    x: { label: "Tiempo de llenado (min)" },
+    y: { label: "Densidad" },
+    marks: [
+      Plot.rectY(datos, Plot.binX({ y: "proportion/width" }, { x: d => d, thresholds: bins_k,
+        fill: "#cedcd8", stroke: "white", strokeWidth: 1.5 })),
+      Plot.line(curva, { x: "x", y: "y", stroke: "#01696f", strokeWidth: 2.5 }),
+      Plot.ruleY([0])
+    ],
+    width: 600, height: 300,
+    style: { fontFamily: "inherit" }
+  });
+}
+```
+
+---
+
+## Distribución Normal {#sec-normal}
+
+La distribución de probabilidad más usada para describir variables aleatorias continuas es la **distribución Normal**. Se encuentra en variables como altura de plantas, peso de frutos, rendimiento de cultivos, mediciones de laboratorio, entre otras.
+
+### Función de densidad y parámetros
+
+La función de densidad de la distribución Normal es:
+
+$$
+f(x) = \dfrac{1}{\sigma\sqrt{2\pi}}\, e^{-\dfrac{(x-\mu)^2}{2\sigma^2}}
+$$ {#eq-normalpdf}
+
+Como se observa en la @eq-normalpdf, la distribución Normal tiene dos parámetros:
+
+- $\mu$ = **media**: parámetro de localización (desplaza la curva horizontalmente)
+- $\sigma$ = **desviación estándar**: parámetro de forma (controla el ancho de la curva)
+
+Cuando una variable $X$ sigue una distribución Normal se escribe $X \sim \mathcal{N}(\mu, \sigma)$.
+
+### Propiedades de la distribución Normal
+
+::: {.callout-important title="Propiedades"}
+1. Es **simétrica** respecto a la media $\mu$ (moda = mediana = media)
+2. La curva tiene forma de **campana**
+3. El área total bajo la curva es $1$
+4. La curva se extiende de $-\infty$ a $+\infty$ pero se aproxima a $0$ en las colas
+:::
+
+::: {.callout-note icon=false}
+## 🎛️ Demo interactiva: Efecto de µ y σ sobre la curva Normal
+
+Ajusta los parámetros para observar cómo cambia la forma y la posición de la distribución.
+:::
+
+```{ojs}
+//| echo: false
+viewof mu_norm = Inputs.range([-3, 3], { label: "Media (µ)", step: 0.1, value: 0 })
+viewof sd_norm = Inputs.range([0.3, 3], { label: "Desviación estándar (σ)", step: 0.1, value: 1 })
+```
+
+```{ojs}
+//| echo: false
+{
+  const xr = d3.range(-8, 8, 0.05);
+  const curva_actual = xr.map(x => ({
+    x, y: (1 / (sd_norm * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mu_norm) / sd_norm) ** 2)
+  }));
+  const curva_ref = xr.map(x => ({
+    x, y: (1 / (1 * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * x ** 2)
+  }));
+
+  return Plot.plot({
+    title: `X ~ N(µ = ${mu_norm.toFixed(1)}, σ = ${sd_norm.toFixed(1)})`,
+    x: { label: "x", domain: [-8, 8] },
+    y: { label: "f(x)", domain: [0, 1.4] },
+    marks: [
+      Plot.line(curva_ref, { x: "x", y: "y", stroke: "#bab9b4", strokeWidth: 1.5, strokeDasharray: "5,3" }),
+      Plot.line(curva_actual, { x: "x", y: "y", stroke: "#01696f", strokeWidth: 2.5 }),
+      Plot.ruleX([mu_norm], { stroke: "#da7101", strokeWidth: 2, strokeDasharray: "6,3" }),
+      Plot.ruleY([0]),
+      Plot.text([{ x: mu_norm, y: 1.35, label: `µ = ${mu_norm.toFixed(1)}` }],
+        { x: "x", y: "y", text: "label", fill: "#da7101", fontSize: 13, fontWeight: "bold" })
+    ],
+    width: 600, height: 300,
+    style: { fontFamily: "inherit" }
+  });
+}
+```
+
+La curva gris punteada es la referencia $\mathcal{N}(0,1)$.
+
+### Regla empírica (68-95-99.7)
+
+Una propiedad práctica muy importante de la distribución Normal es la **regla empírica**:
+
+::: {.callout-important title="Regla empírica"}
+- El **68.3%** de los valores se encuentra entre $\mu - \sigma$ y $\mu + \sigma$
+- El **95.4%** de los valores se encuentra entre $\mu - 2\sigma$ y $\mu + 2\sigma$
+- El **99.7%** de los valores se encuentra entre $\mu - 3\sigma$ y $\mu + 3\sigma$
+:::
+
+::: {.callout-note icon=false}
+## 🎛️ Demo interactiva: Regla empírica 68-95-99.7
+:::
+
+```{ojs}
+//| echo: false
+viewof regla_sd = Inputs.range([1, 3], { label: "Desviaciones de la media (k)", step: 1, value: 1 })
+```
+
+```{ojs}
+//| echo: false
+{
+  const colores = { 1: "#437a22", 2: "#006494", 3: "#a12c7b" };
+  const pcts    = { 1: "68.3%", 2: "95.4%", 3: "99.7%" };
+  const color   = colores[regla_sd];
+  const pct     = pcts[regla_sd];
+  const xr      = d3.range(-4, 4, 0.02);
+  const curva   = xr.map(x => ({ x, y: Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI) }));
+  const area    = xr.filter(x => Math.abs(x) <= regla_sd).map(x => ({
+    x, y: Math.exp(-0.5 * x * x) / Math.sqrt(2 * Math.PI)
+  }));
+
+  return Plot.plot({
+    title: `${regla_sd}σ → ${pct} de los datos`,
+    x: { label: "z (desviaciones estándar)", tickValues: [-3,-2,-1,0,1,2,3] },
+    y: { label: "f(z)", axis: null },
+    marks: [
+      Plot.areaY(area, { x: "x", y: "y", fill: color, fillOpacity: 0.35 }),
+      Plot.line(curva, { x: "x", y: "y", stroke: "#01696f", strokeWidth: 2.5 }),
+      Plot.ruleX([-regla_sd, regla_sd], { stroke: color, strokeWidth: 2, strokeDasharray: "6,3" }),
+      Plot.ruleY([0]),
+      Plot.text([{ x: 0, y: 0.25, label: pct }],
+        { x: "x", y: "y", text: "label", fill: color, fontSize: 18, fontWeight: "bold" })
+    ],
+    width: 600, height: 280,
+    style: { fontFamily: "inherit" }
+  });
+}
+```
+
+### Distribución Normal Estándar {#dne}
+
+Para calcular probabilidades de cualquier distribución $\mathcal{N}(\mu, \sigma)$ se utiliza la **estandarización**: transformar $X$ a una variable $Z$ con media $0$ y desviación $1$:
+
+$$
+Z = \dfrac{X - \mu}{\sigma}, \quad Z \sim \mathcal{N}(0,1)
+$$ {#eq-normalest}
+
+En este texto usaremos R para calcular probabilidades directamente sin tablas.
+
+### Cálculo de probabilidades con R {#sec-prob-normal}
+
+R ofrece cuatro funciones para la distribución Normal:
+
+| Función | Descripción |
+|---------|-------------|
+| `dnorm(x, mean, sd)` | Valor de la función de densidad $f(x)$ |
+| `pnorm(q, mean, sd)` | Probabilidad acumulada $P(X \leq q)$ |
+| `qnorm(p, mean, sd)` | Cuantil: valor $x$ tal que $P(X \leq x) = p$ |
+| `rnorm(n, mean, sd)` | Genera $n$ valores aleatorios normales |
+
+::: {.callout-tip title="Ejemplo: rendimiento de cacao"}
+El rendimiento de una variedad de cacao se distribuye normalmente con media $\mu = 800$ kg/ha y desviación $\sigma = 80$ kg/ha. Es decir, $X \sim \mathcal{N}(800, 80)$.
+
+**a)** ¿Qué probabilidad hay de que una parcela rinda más de 900 kg/ha?
+
+$$P(X > 900) = 1 - P(X \leq 900)$$
+
+```{r echo=TRUE}
+1 - pnorm(900, mean = 800, sd = 80)
+```
+
+**b)** ¿Qué probabilidad hay de que rinda entre 700 y 900 kg/ha?
+
+$$P(700 < X < 900) = P(X \leq 900) - P(X \leq 700)$$
+
+```{r echo=TRUE}
+pnorm(900, mean = 800, sd = 80) - pnorm(700, mean = 800, sd = 80)
+```
+
+**c)** ¿Cuál es el rendimiento mínimo del 10% de parcelas con mayor producción?
+
+```{r echo=TRUE}
+qnorm(0.90, mean = 800, sd = 80)
+```
+:::
+
+::: {.callout-note icon=false}
+## 🎛️ Demo interactiva: Calculadora de probabilidades Normal
+
+Ajusta los parámetros y los límites para calcular $P(a < X < b)$ visualmente.
+:::
+
+```{ojs}
+//| echo: false
+viewof mu_calc  = Inputs.range([0, 200], { label: "Media (µ)", step: 1, value: 800 })
+viewof sd_calc  = Inputs.range([1, 100], { label: "Desviación (σ)", step: 1, value: 80 })
+viewof a_calc   = Inputs.range([-500, 500], { label: "Límite inferior (a)", step: 1, value: 700 })
+viewof b_calc   = Inputs.range([-500, 500], { label: "Límite superior (b)", step: 1, value: 900 })
+```
+
+```{ojs}
+//| echo: false
+{
+  // Normal CDF usando aproximación numérica (erf)
+  function normCDF(x, mu, sd) {
+    const z = (x - mu) / (sd * Math.SQRT2);
+    return 0.5 * (1 + erf(z));
+  }
+  function erf(x) {
+    const t = 1 / (1 + 0.3275911 * Math.abs(x));
+    const y = 1 - (((((1.061405429 * t - 1.453152027) * t) + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+    return x >= 0 ? y : -y;
+  }
+
+  const a_v = Math.min(a_calc, b_calc);
+  const b_v = Math.max(a_calc, b_calc);
+
+  const xmin = mu_calc - 4 * sd_calc;
+  const xmax = mu_calc + 4 * sd_calc;
+  const xr   = d3.range(xmin, xmax, sd_calc / 50);
+
+  const norm_y = x => (1 / (sd_calc * Math.sqrt(2 * Math.PI))) * Math.exp(-0.5 * ((x - mu_calc) / sd_calc) ** 2);
+  const curva  = xr.map(x => ({ x, y: norm_y(x) }));
+  const area   = xr.filter(x => x >= a_v && x <= b_v).map(x => ({ x, y: norm_y(x) }));
+
+  const prob = normCDF(b_v, mu_calc, sd_calc) - normCDF(a_v, mu_calc, sd_calc);
+
+  return Plot.plot({
+    title: `P(${a_v} < X < ${b_v}) = ${prob.toFixed(4)}  [${(prob * 100).toFixed(2)}%]`,
+    x: { label: "X" },
+    y: { label: "f(x)", axis: null },
+    marks: [
+      Plot.areaY(area, { x: "x", y: "y", fill: "#01696f", fillOpacity: 0.4 }),
+      Plot.line(curva, { x: "x", y: "y", stroke: "#01696f", strokeWidth: 2.5 }),
+      Plot.ruleX([a_v], { stroke: "#da7101", strokeWidth: 2, strokeDasharray: "5,3" }),
+      Plot.ruleX([b_v], { stroke: "#da7101", strokeWidth: 2, strokeDasharray: "5,3" }),
+      Plot.ruleX([mu_calc], { stroke: "#a12c7b", strokeWidth: 1.5, strokeDasharray: "3,3" }),
+      Plot.ruleY([0]),
+      Plot.text([{ x: (a_v + b_v) / 2, y: norm_y(mu_calc) * 0.45, label: `${(prob * 100).toFixed(1)}%` }],
+        { x: "x", y: "y", text: "label", fill: "#01696f", fontSize: 16, fontWeight: "bold" })
+    ],
+    width: 600, height: 300,
+    style: { fontFamily: "inherit" }
+  });
+}
+```
+
+```{webr}
+# Prueba la calculadora de probabilidades Normal en R
+# P(700 < X < 900) con X ~ N(800, 80)
+mu <- 800
+sigma <- 80
+pnorm(900, mean = mu, sd = sigma) - pnorm(700, mean = mu, sd = sigma)
+```
+
+---
+
+## Distribución $t$ de Student {#sec-student}
+
+La distribución $t$ de Student fue obtenida por William S. Gosset en 1908, quien publicó sus hallazgos bajo el seudónimo *Student*. La distribución $t$ es fundamental en inferencia estadística, especialmente cuando la desviación de la población es desconocida y el tamaño muestral es pequeño.
+
+### Función de densidad y grados de libertad
+
+$$
+f(t) = \dfrac{\Gamma\!\left[\dfrac{\nu+1}{2}\right]}{\sqrt{\nu\pi}\;\Gamma\!\left(\dfrac{\nu}{2}\right)}\left[1 + \dfrac{t^2}{\nu}\right]^{-\frac{\nu+1}{2}}
+$$ {#eq-studentpdf}
+
+El parámetro $\nu$ (letra griega *nu*) se llama **grados de libertad** y determina la forma de la distribución. Para un problema con muestra de tamaño $n$, generalmente $\nu = n - 1$.
+
+### Propiedades de la distribución $t$
+
+::: {.callout-important title="Propiedades"}
+1. Es **simétrica** respecto a $0$ (igual que la Normal estándar)
+2. Tiene forma de campana, pero con **colas más pesadas** que la Normal
+3. A mayor $\nu$ (más grados de libertad), la $t$ se aproxima a la $\mathcal{N}(0,1)$
+4. Para $\nu > 30$ la diferencia con $\mathcal{N}(0,1)$ es prácticamente despreciable
+:::
+
+::: {.callout-note icon=false}
+## 🎛️ Demo interactiva: $t$ de Student vs. Normal estándar
+
+Cambia los grados de libertad y observa cómo la distribución $t$ se aproxima a la Normal estándar $\mathcal{N}(0,1)$.
+:::
+
+```{ojs}
+//| echo: false
+viewof gl_t = Inputs.range([1, 60], {
+  label: "Grados de libertad (ν)",
+  step: 1,
+  value: 5
+})
+```
+
+```{ojs}
+//| echo: false
+{
+  function gammaln(n) {
+    if (n === 0.5) return 0.5 * Math.log(Math.PI);
+    if (n === 1) return 0;
+    if (n === 1.5) return 0.5 * Math.log(Math.PI) - Math.log(2);
+    // Stirling approximation for larger values
+    const x = n - 1;
+    return 0.5 * Math.log(2 * Math.PI) + (x + 0.5) * Math.log(x + 0.5) - (x + 0.5) + 
+           1/(12*(x+0.5)) - 1/(360*Math.pow(x+0.5,3));
+  }
+
+  function tpdf(t, df) {
+    const num = gammaln((df + 1) / 2);
+    const den = 0.5 * Math.log(df * Math.PI) + gammaln(df / 2);
+    return Math.exp(num - den) * Math.pow(1 + t * t / df, -(df + 1) / 2);
+  }
+
+  const xr = d3.range(-5, 5, 0.05);
+  const curva_t   = xr.map(x => ({ x, y: tpdf(x, gl_t) }));
+  const curva_z   = xr.map(x => ({ x, y: Math.exp(-0.5*x*x) / Math.sqrt(2*Math.PI) }));
+
+  const diff_cola = ((curva_t.find(d => Math.abs(d.x - 2) < 0.06)?.y || 0) -
+                     (curva_z.find(d => Math.abs(d.x - 2) < 0.06)?.y || 0));
+  const aprox = Math.abs(diff_cola) < 0.003 ? " ✅ t ≈ Z" : "";
+
+  return Plot.plot({
+    title: `t(ν=${gl_t}) vs N(0,1)${aprox}`,
+    x: { label: "t / z" },
+    y: { label: "f(t)", axis: null },
+    marks: [
+      Plot.line(curva_z, { x: "x", y: "y", stroke: "#bab9b4", strokeWidth: 2, strokeDasharray: "6,3" }),
+      Plot.line(curva_t, { x: "x", y: "y", stroke: "#006494", strokeWidth: 2.5 }),
+      Plot.ruleY([0]),
+      Plot.text([
+        { x: 3.5, y: 0.32, label: "N(0,1)" },
+        { x: 3.5, y: 0.28, label: `t(${gl_t})` }
+      ], { x: "x", y: "y", text: "label",
+           fill: d => d.label.startsWith("N") ? "#bab9b4" : "#006494",
+           fontSize: 12 })
+    ],
+    width: 600, height: 300,
+    style: { fontFamily: "inherit" }
+  });
+}
+```
+
+### Cálculo de probabilidades con R {#sec-prob-t}
+
+Al igual que con la distribución Normal, R ofrece cuatro funciones para la distribución $t$:
+
+| Función | Descripción |
+|---------|-------------|
+| `dt(x, df)` | Valor de la función de densidad $f(t)$ |
+| `pt(q, df)` | Probabilidad acumulada $P(T \leq q)$ |
+| `qt(p, df)` | Cuantil: valor $t$ tal que $P(T \leq t) = p$ |
+| `rt(n, df)` | Genera $n$ valores aleatorios $t$ |
+
+::: {.callout-tip title="Ejemplo: valor crítico para prueba de hipótesis"}
+En un experimento con $n = 15$ parcelas de banano se quiere realizar una prueba de hipótesis con un nivel de significancia $\alpha = 0.05$ (dos colas). Los grados de libertad son $\nu = n - 1 = 14$.
+
+**¿Cuál es el valor crítico $t_{0.025, 14}$?**
+
+```{r echo=TRUE}
+# Valor crítico t (cola derecha, α/2 = 0.025, gl = 14)
+qt(0.975, df = 14)
+```
+
+**¿Cuánta probabilidad hay de observar un valor $|t| > 2.5$ con 14 gl?**
+
+```{r echo=TRUE}
+# P(|T| > 2.5) con 14 gl (prueba bilateral)
+2 * pt(-2.5, df = 14)
+```
+:::
+
+```{webr}
+# Calcule valores críticos t para diferentes tamaños de muestra
+# y observe la convergencia hacia z = 1.96
+alpha <- 0.05
+gls   <- c(5, 10, 15, 20, 30, 60, 120)
+t_criticos <- qt(1 - alpha/2, df = gls)
+data.frame(
+  gl = gls,
+  t_critico = round(t_criticos, 4)
+)
+```
+
+### Comparación Normal estándar vs $t$ de Student
+
+```{r}
+#| label: fig-tz
+#| echo: false
+#| fig-cap: "$t$ de Student con diferentes grados de libertad comparada con la Normal estándar $\\mathcal{N}(0,1)$"
+#| fig-align: center
+#| out-width: 75%
+#| warning: false
+#| message: false
+
+x <- seq(-4, 4, length.out = 1000)
+data <- data.frame(
+  x = rep(x, 4),
+  y = c(dt(x, df = 3), dt(x, df = 9), dt(x, df = 30), dnorm(x)),
+  Distribución = factor(rep(c("t (gl=3)", "t (gl=9)", "t (gl=30)", "Normal Z"), each = length(x)),
+                        levels = c("t (gl=3)", "t (gl=9)", "t (gl=30)", "Normal Z"))
+)
+
+ggplot(data, aes(x = x, y = y, color = Distribución, size = Distribución, linetype = Distribución)) +
+  geom_line() +
+  scale_color_manual(values = c("#a12c7b", "#da7101", "#437a22", "#01696f")) +
+  scale_size_manual(values  = c(0.9, 0.9, 0.9, 1.4)) +
+  scale_linetype_manual(values = c("dashed", "dashed", "dashed", "solid")) +
+  labs(x = "", y = "", color = "Distribución",
+       size = "Distribución", linetype = "Distribución") +
+  scale_y_continuous(breaks = NULL) +
+  geom_hline(yintercept = 0, colour = "black") +
+  theme_light(base_size = 13) +
+  theme(legend.position = "right",
+        panel.grid.minor = element_blank())
+```
+
+---
+
+## Resumen comparativo: Normal vs $t$ de Student
+
+| Característica | Normal $\mathcal{N}(\mu, \sigma)$ | $t$ de Student $t(\nu)$ |
+|---|---|---|
+| Parámetros | $\mu$ y $\sigma$ | $\nu$ (grados de libertad) |
+| Media | $\mu$ | $0$ |
+| Varianza | $\sigma^2$ | $\nu/(\nu-2)$ para $\nu > 2$ |
+| Forma | Campana | Campana con colas más pesadas |
+| Uso típico | $\sigma$ conocida o $n$ grande | $\sigma$ desconocida y $n$ pequeño |
+| Convergencia | — | $t(\nu) \to Z$ cuando $\nu \to \infty$ |
+
+---
+
+## Ejercicios {.unnumbered}
+
+1. En una finca se monitorean 40 plantas de tomate y se clasifican como: sanas (22), con virus (10), con plaga (8). Si se selecciona una planta al azar:
+   a. ¿Cuál es el espacio muestral $\Omega$?
+   b. Calcule $P(\text{con virus})$, $P(\text{sin virus})$ y $P(\text{con virus o plaga})$.
+   c. Verifique en R que la suma de todas las probabilidades es 1.
+
+2. El peso de frutos de aguacate de una variedad sigue una distribución Normal con media $\mu = 320$ g y desviación $\sigma = 45$ g.
+   a. ¿Qué porcentaje de frutos pesa entre 275 g y 365 g? *(Use la regla empírica)*
+   b. Calcule $P(X > 400)$ usando `pnorm()`.
+   c. ¿Cuál es el peso del fruto que supera al 95% de la producción? Use `qnorm()`.
+
+3. La altura de plantas de banano en cierta parcela sigue $X \sim \mathcal{N}(250, 20)$ cm.
+   a. Grafique la distribución en R usando `ggplot2`.
+   b. Calcule $P(230 < X < 270)$ y verifique que coincide con la regla empírica.
+   c. Estandarice el valor $x = 280$ cm usando la @eq-normalest y calcule $P(Z > z)$.
+
+4. En un ensayo con $n = 10$ tratamientos de fertilización se quiere evaluar si el rendimiento promedio difiere de un valor de referencia ($\alpha = 0.05$, bilateral).
+   a. ¿Cuántos grados de libertad tiene la prueba?
+   b. Calcule el valor crítico $t_{\alpha/2, \nu}$ con `qt()`.
+   c. Compare el valor crítico con $z = 1.96$ y explique la diferencia.
+
+5. Genere 500 valores de $X \sim \mathcal{N}(150, 25)$ usando `rnorm()`. Construya un histograma con `ggplot2` y superponga la curva de densidad teórica. Comente si los datos generados se ajustan bien a la distribución teórica.
+
+```{webr}
+# Ejercicio 5: genere los datos y construya el histograma
+set.seed(123)
+# Escriba su código aquí
+```
+

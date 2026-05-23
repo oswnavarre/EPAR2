@@ -1,4 +1,999 @@
-# Muestreo {#sampl}
+```{r paquetes, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(tidyverse)
+library(agricolae)
+library(writexl)
+library(readxl)
+library(formatdown)
+```
 
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
 
-## Técnicas de muestreo
+# Muestreo {#muestreo}
+
+## Objetivos del capítulo
+
+Al finalizar este capítulo, el lector será capaz de:
+
+- Distinguir entre población, muestra, parámetro y estadístico
+- Justificar la necesidad del muestreo en investigación agrícola
+- Identificar y aplicar los cuatro tipos de muestreo probabilístico en R
+- Comprender la distribución muestral de $\bar{x}$ y el Teorema Central del Límite
+- Calcular el tamaño de muestra necesario para estimar una media poblacional
+
+---
+
+## ¿Por qué muestrear? {#sec-por-que}
+
+En investigación agrícola es frecuente querer conocer características de una población completa: el rendimiento promedio de todos los árboles de una plantación de cacao, el peso de todos los frutos de una parcela de aguacate, o la concentración de nitrógeno en todos los lotes de una finca. Sin embargo, estudiar *toda* la población rara vez es posible por razones prácticas:
+
+1. **Costo**: medir el rendimiento de 10 000 árboles de una finca requiere recursos humanos y materiales prohibitivos.
+2. **Tiempo**: completar el censo de una plantación puede tomar más tiempo del disponible para tomar decisiones de manejo.
+3. **Destrucción de unidades**: en algunos casos la medición destruye la unidad (análisis de laboratorio de suelos, madurez de frutos mediante corte).
+4. **Poblaciones inaccesibles**: no es posible acceder físicamente a cada unidad de la población.
+
+La solución es obtener una **muestra** que sea representativa de la población y usar sus resultados para hacer inferencias sobre ella. Esta idea conecta directamente con las etapas del proceso estadístico vistas en el Capítulo 2: la planificación y recolección de datos siempre involucran una decisión de muestreo [@agresti2023].
+
+---
+
+## Conceptos clave {#sec-conceptos}
+
+::: {#def-poblacion}
+La **población** es el conjunto completo de unidades sobre las cuales se desea obtener información.
+:::
+
+::: {#def-muestra}
+La **muestra** es un subconjunto de la población seleccionado para ser medido u observado.
+:::
+
+::: {#def-parametro}
+Un **parámetro** es una medida numérica que describe una característica de la **población** (e.g., $\mu$, $\sigma$, $p$). Los parámetros generalmente son desconocidos.
+:::
+
+::: {#def-estadistico}
+Un **estadístico** es una medida numérica calculada a partir de los datos de la **muestra** (e.g., $\bar{x}$, $s$, $\hat{p}$). Los estadísticos se usan para estimar los parámetros.
+:::
+
+::: {#def-marco}
+El **marco muestral** es la lista o representación de todas las unidades de la población de las cuales puede seleccionarse la muestra (e.g., un plano de la finca con numeración de parcelas, un registro de productores).
+:::
+
+::: {#def-error-muestreo}
+El **error de muestreo** es la diferencia entre el estadístico calculado de la muestra y el parámetro verdadero de la población: $\bar{x} - \mu$.
+:::
+
+```{r}
+#| label: tbl-conceptos
+#| tbl-cap: "Conceptos de muestreo con ejemplos en agricultura"
+#| echo: false
+
+tibble::tribble(
+  ~Concepto,            ~Símbolo,      ~`Ejemplo agrícola`,
+  "Población",          "N unidades",  "Todos los árboles de cacao de una finca (N = 2 500)",
+  "Muestra",            "n unidades",  "80 árboles seleccionados aleatoriamente",
+  "Parámetro (media)",  "μ",           "Rendimiento promedio real de todos los árboles",
+  "Estadístico (media)","x̄",           "Promedio calculado de los 80 árboles muestreados",
+  "Marco muestral",     "—",           "Plano de la finca con numeración de árboles",
+  "Error de muestreo",  "x̄ − μ",       "Diferencia entre el promedio muestral y el real"
+) |>
+  knitr::kable()
+```
+
+---
+
+## Tipos de muestreo probabilístico {#sec-tipos}
+
+En el **muestreo probabilístico** cada unidad de la población tiene una probabilidad conocida y mayor que cero de ser seleccionada. Esto garantiza que la muestra sea representativa y permite cuantificar el error de muestreo.
+
+### Muestreo Aleatorio Simple (MAS) {#sec-mas}
+
+En el MAS todas las unidades de la población tienen la **misma probabilidad** de ser seleccionadas. Es el método más básico y es la base teórica de los demás tipos de muestreo.
+
+**En R** se implementa con la función `sample()`:
+
+```{r echo=TRUE}
+set.seed(42)
+# Población: 500 árboles numerados del 1 al 500
+N <- 500
+n <- 30
+
+# Selección aleatoria simple sin reemplazo
+muestra_mas <- sample(1:N, size = n, replace = FALSE)
+sort(muestra_mas)
+```
+
+```{webr}
+# Modifique N y n para ver diferentes muestras
+set.seed(123)
+N <- 200    # Tamaño de la población
+n <- 20     # Tamaño de la muestra
+
+muestra <- sample(1:N, size = n, replace = FALSE)
+cat("Unidades seleccionadas:\n")
+sort(muestra)
+```
+
+::: {.callout-note icon=false}
+#### Demo interactiva: Muestreo Aleatorio Simple
+
+Selecciona el tamaño de muestra y observa qué parcelas son seleccionadas de una grilla de 100 parcelas.
+:::
+
+```{ojs}
+//| echo: false
+viewof n_mas = Inputs.range([5, 40], {
+  label: "Tamaño de muestra (n)",
+  step: 1,
+  value: 15
+})
+viewof semilla_mas = Inputs.button("🔀 Nueva muestra aleatoria")
+```
+
+```{ojs}
+//| echo: false
+{
+  semilla_mas; // reactivo al botón
+  const N = 100, cols = 10, rows = 10;
+  const celdas = d3.range(N);
+
+  // Selección aleatoria simple
+  const shuffled = [...celdas].sort(() => Math.random() - 0.5);
+  const seleccionadas = new Set(shuffled.slice(0, n_mas));
+
+  const w = 400, h = 420, margin = 30;
+  const cw = (w - margin) / cols;
+  const ch = (h - margin - 30) / rows;
+
+  const svg = d3.create("svg").attr("width", w).attr("height", h);
+
+  svg.append("text")
+    .attr("x", w / 2).attr("y", 18)
+    .attr("text-anchor", "middle")
+    .attr("font-size", 13).attr("fill", "#28251d")
+    .text(`MAS: n = ${n_mas} parcelas de N = ${N}`);
+
+  celdas.forEach(i => {
+    const col = i % cols, row = Math.floor(i / cols);
+    const x = margin / 2 + col * cw, y = 25 + row * ch;
+    const sel = seleccionadas.has(i);
+
+    svg.append("rect")
+      .attr("x", x + 1).attr("y", y + 1)
+      .attr("width", cw - 2).attr("height", ch - 2)
+      .attr("rx", 3)
+      .attr("fill", sel ? "#01696f" : "#f3f0ec")
+      .attr("stroke", sel ? "#0c4e54" : "#d4d1ca")
+      .attr("stroke-width", sel ? 2 : 1);
+
+    svg.append("text")
+      .attr("x", x + cw / 2).attr("y", y + ch / 2 + 4)
+      .attr("text-anchor", "middle")
+      .attr("font-size", 9)
+      .attr("fill", sel ? "white" : "#7a7974")
+      .text(i + 1);
+  });
+
+  // Leyenda
+  const leg = svg.append("g").attr("transform", `translate(${margin/2}, ${h - 18})`);
+  leg.append("rect").attr("width", 12).attr("height", 12).attr("rx", 2).attr("fill", "#01696f");
+  leg.append("text").attr("x", 16).attr("y", 10).attr("font-size", 11).attr("fill", "#28251d").text("Seleccionada");
+  leg.append("rect").attr("x", 130).attr("width", 12).attr("height", 12).attr("rx", 2).attr("fill", "#f3f0ec").attr("stroke", "#d4d1ca");
+  leg.append("text").attr("x", 146).attr("y", 10).attr("font-size", 11).attr("fill", "#28251d").text("No seleccionada");
+
+  return svg.node();
+}
+```
+
+### Muestreo Sistemático {#sec-sistematico}
+
+En el muestreo sistemático se selecciona una unidad de arranque al azar entre las primeras $k$ unidades, y luego se toma cada $k$-ésima unidad. El intervalo de muestreo es:
+
+$$k = \left\lfloor \dfrac{N}{n} \right\rfloor$$
+
+Es especialmente útil en transectos de campo, revisión de plantas en hileras de cultivo o muestreo de suelos a lo largo de un perfil.
+
+```{r echo=TRUE}
+set.seed(7)
+N <- 500; n <- 25
+k <- floor(N / n)           # intervalo de muestreo
+inicio <- sample(1:k, 1)    # arranque aleatorio
+muestra_sist <- seq(inicio, N, by = k)
+cat("Intervalo k =", k, "| Arranque =", inicio, "\n")
+head(muestra_sist, 10)
+```
+
+```{webr}
+# Muestreo sistemático
+N <- 300; n <- 20
+k <- floor(N / n)
+inicio <- sample(1:k, 1)
+muestra_sist <- seq(inicio, N, by = k)
+cat("Intervalo k:", k, "\nArranque:", inicio, "\n")
+muestra_sist
+```
+
+::: {.callout-note icon=false}
+#### Demo interactiva: Muestreo Sistemático vs. Aleatorio Simple
+
+Observa cómo el muestreo sistemático distribuye uniformemente las unidades a lo largo del marco muestral.
+:::
+
+```{ojs}
+//| echo: false
+viewof n_sist = Inputs.range([5, 30], { label: "Tamaño de muestra (n)", step: 1, value: 10 })
+viewof nueva_sist = Inputs.button("🔀 Nuevo arranque")
+```
+
+```{ojs}
+//| echo: false
+{
+  nueva_sist;
+  const N = 100, cols = 10, rows = 10;
+  const k = Math.floor(N / n_sist);
+  const inicio = Math.floor(Math.random() * k);
+  const sel_sist = new Set(d3.range(inicio, N, k));
+
+  const w = 420, h = 430, margin = 30;
+  const cw = (w - margin) / cols;
+  const ch = (h - margin - 30) / rows;
+
+  const svg = d3.create("svg").attr("width", w).attr("height", h);
+
+  svg.append("text")
+    .attr("x", w / 2).attr("y", 18)
+    .attr("text-anchor", "middle")
+    .attr("font-size", 13).attr("fill", "#28251d")
+    .text(`Sistemático: k = ${k} | arranque = ${inicio + 1} | n = ${sel_sist.size}`);
+
+  d3.range(N).forEach(i => {
+    const col = i % cols, row = Math.floor(i / cols);
+    const x = margin / 2 + col * cw, y = 25 + row * ch;
+    const sel = sel_sist.has(i);
+
+    svg.append("rect")
+      .attr("x", x + 1).attr("y", y + 1)
+      .attr("width", cw - 2).attr("height", ch - 2).attr("rx", 3)
+      .attr("fill", sel ? "#da7101" : "#f3f0ec")
+      .attr("stroke", sel ? "#ac3e00" : "#d4d1ca")
+      .attr("stroke-width", sel ? 2 : 1);
+
+    svg.append("text")
+      .attr("x", x + cw / 2).attr("y", y + ch / 2 + 4)
+      .attr("text-anchor", "middle").attr("font-size", 9)
+      .attr("fill", sel ? "white" : "#7a7974")
+      .text(i + 1);
+  });
+
+  const leg = svg.append("g").attr("transform", `translate(${margin/2}, ${h - 18})`);
+  leg.append("rect").attr("width", 12).attr("height", 12).attr("rx", 2).attr("fill", "#da7101");
+  leg.append("text").attr("x", 16).attr("y", 10).attr("font-size", 11).attr("fill", "#28251d").text("Seleccionada (sistemática)");
+
+  return svg.node();
+}
+```
+
+### Muestreo Estratificado {#sec-estratificado}
+
+La población se divide en **estratos** (grupos homogéneos entre sí pero heterogéneos entre grupos) y se extrae una muestra aleatoria de cada estrato. Garantiza representación de todos los grupos.
+
+**Ejemplo**: en una finca con parcelas en tres zonas de altitud (baja, media, alta), cada zona es un estrato.
+
+```{r echo=TRUE}
+library(dplyr)
+set.seed(10)
+
+# Marco muestral: 300 parcelas distribuidas en 3 estratos
+marco <- tibble(
+  parcela  = 1:300,
+  estrato  = rep(c("Baja", "Media", "Alta"), times = c(150, 100, 50)),
+  rend_pob = c(rnorm(150, 45, 5), rnorm(100, 55, 6), rnorm(50, 65, 7))
+)
+
+# Muestreo estratificado proporcional: n = 30
+muestra_estrat <- marco |>
+  group_by(estrato) |>
+  slice_sample(prop = 0.10) |>   # 10% de cada estrato
+  ungroup()
+
+muestra_estrat |>
+  group_by(estrato) |>
+  summarise(n = n(), media = mean(rend_pob)) |>
+  knitr::kable(digits = 2, caption = "Resultados por estrato")
+```
+
+```{webr}
+library(dplyr)
+set.seed(99)
+
+marco <- tibble(
+  parcela = 1:200,
+  estrato = rep(c("Ladera alta", "Ladera media", "Valle"), c(60, 80, 60)),
+  rendimiento = c(rnorm(60, 62, 8), rnorm(80, 50, 7), rnorm(60, 44, 6))
+)
+
+# Cambie prop para ver diferentes tamaños de muestra
+muestra <- marco |>
+  group_by(estrato) |>
+  slice_sample(prop = 0.15) |>
+  ungroup()
+
+muestra |>
+  group_by(estrato) |>
+  summarise(n = n(), media_rend = round(mean(rendimiento), 2))
+```
+
+### Muestreo por Conglomerados {#sec-conglomerados}
+
+La población se divide en **conglomerados** (grupos naturales como fincas, lotes, bloques) y se seleccionan aleatoriamente algunos conglomerados completos. Es útil cuando no existe un marco muestral individual pero sí una lista de grupos.
+
+```{r echo=TRUE}
+set.seed(5)
+# 20 fincas (conglomerados), cada una con ~15 parcelas
+n_fincas_total <- 20
+fincas_muestra <- sample(1:n_fincas_total, size = 5, replace = FALSE)
+
+parcelas <- tibble(
+  finca   = rep(1:n_fincas_total, each = 15),
+  parcela = 1:(n_fincas_total * 15),
+  rend    = rnorm(n_fincas_total * 15, 48, 10)
+)
+
+muestra_congl <- parcelas |>
+  filter(finca %in% fincas_muestra)
+
+cat("Fincas seleccionadas:", fincas_muestra, "\n")
+cat("Total parcelas en muestra:", nrow(muestra_congl))
+```
+
+---
+
+## Distribución muestral y Teorema Central del Límite {#sec-tcl}
+
+### Distribución muestral de $\bar{x}$
+
+Cuando se extrae una muestra de tamaño $n$ de una población y se calcula $\bar{x}$, ese valor cambia de muestra en muestra. Si repitiéramos el proceso de muestreo muchas veces, obtendríamos una distribución de todos los posibles valores de $\bar{x}$. A esta distribución se le llama **distribución muestral de $\bar{x}$**.
+
+::: {#def-dist-muestral}
+La **distribución muestral de $\bar{x}$** es la distribución de probabilidad del estadístico $\bar{x}$ obtenido de todas las posibles muestras de tamaño $n$ extraídas de una población.
+:::
+
+Sus propiedades son:
+
+- **Media de la distribución muestral**: $\mu_{\bar{x}} = \mu$
+- **Error estándar**: $\sigma_{\bar{x}} = \dfrac{\sigma}{\sqrt{n}}$
+
+### Teorema Central del Límite (TCL)
+
+::: {.callout-important title="Teorema Central del Límite"}
+Si se extraen muestras aleatorias de tamaño $n$ de una población con media $\mu$ y desviación estándar $\sigma$, entonces para $n$ suficientemente grande ($n \geq 30$ como regla general):
+
+$$\bar{X} \sim \mathcal{N}\!\left(\mu,\; \dfrac{\sigma}{\sqrt{n}}\right)$$
+
+**independientemente de la forma de la distribución de la población original**.
+:::
+
+Este teorema es uno de los resultados más importantes de la estadística porque justifica el uso de la distribución Normal en la inferencia estadística aun cuando la población no es normal [@agresti2023].
+
+::: {.callout-note icon=false}
+#### Demo interactiva: Teorema Central del Límite
+
+Elige la **forma de la población** (uniforme, exponencial, sesgada o normal) y el **tamaño de muestra** $n$. Observa cómo la distribución de las medias muestrales $\bar{x}$ se aproxima a la Normal a medida que $n$ aumenta, *sin importar la forma original*.
+:::
+
+```{ojs}
+//| echo: false
+viewof poblacion_tipo = Inputs.radio(
+  ["Uniforme", "Exponencial (sesgada)", "Bimodal", "Normal"],
+  { label: "Distribución de la población", value: "Exponencial (sesgada)" }
+)
+viewof n_tcl = Inputs.range([2, 50], {
+  label: "Tamaño de muestra (n)",
+  step: 1,
+  value: 5
+})
+viewof m_tcl = Inputs.range([200, 2000], {
+  label: "Número de muestras (M)",
+  step: 100,
+  value: 1000
+})
+viewof simular = Inputs.button("▶ Simular")
+```
+
+```{ojs}
+//| echo: false
+{
+  simular; // reactivo
+
+  // Generadores según tipo de población
+  function generar_obs(tipo) {
+    const u = Math.random();
+    if (tipo === "Uniforme") return u * 10;
+    if (tipo === "Exponencial (sesgada)") return -Math.log(1 - u) * 2;
+    if (tipo === "Bimodal") return Math.random() < 0.5
+      ? 2 + d3.randomNormal(0, 0.7)()
+      : 8 + d3.randomNormal(0, 0.7)();
+    // Normal
+    const u2 = Math.random();
+    return 5 + Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * u2) * 1.5;
+  }
+
+  // Poblaciòn de referencia para el panel izquierdo
+  const pop_data = d3.range(3000).map(() => generar_obs(poblacion_tipo));
+  const pop_mean = d3.mean(pop_data);
+  const pop_sd   = Math.sqrt(d3.variance(pop_data));
+
+  // Simular M muestras de tamaño n y calcular medias
+  const medias = d3.range(m_tcl).map(() => {
+    let s = 0;
+    for (let i = 0; i < n_tcl; i++) s += generar_obs(poblacion_tipo);
+    return s / n_tcl;
+  });
+
+  const se_teo = pop_sd / Math.sqrt(n_tcl);
+  const media_medias = d3.mean(medias);
+
+  // Curva normal teórica para las medias
+  const x_min = media_medias - 4 * se_teo;
+  const x_max = media_medias + 4 * se_teo;
+  const xr_norm = d3.range(x_min, x_max, (x_max - x_min) / 100);
+  const curva_norm = xr_norm.map(x => ({
+    x, y: (1 / (se_teo * Math.sqrt(2 * Math.PI))) *
+           Math.exp(-0.5 * ((x - media_medias) / se_teo) ** 2)
+  }));
+
+  // Bins manuales para histograma de medias (compatible con Plot antiguo)
+  const k_m = Math.max(10, Math.min(30, Math.round(1 + 3.322 * Math.log10(m_tcl))));
+  const min_m = d3.min(medias), max_m = d3.max(medias);
+  const ancho_m = (max_m - min_m) / k_m;
+  const bins_medias = d3.range(k_m).map(i => {
+    const x0 = min_m + i * ancho_m;
+    const x1 = x0 + ancho_m;
+    const count = medias.filter(v => v >= x0 && (i < k_m-1 ? v < x1 : v <= x1)).length;
+    return { x0, x1, dens: count / (medias.length * ancho_m) };
+  });
+
+  // Bins manuales para histograma de población
+  const k_p = 25;
+  const min_p = d3.min(pop_data), max_p = d3.max(pop_data);
+  const ancho_p = (max_p - min_p) / k_p;
+  const bins_pop = d3.range(k_p).map(i => {
+    const x0 = min_p + i * ancho_p;
+    const x1 = x0 + ancho_p;
+    const count = pop_data.filter(v => v >= x0 && (i < k_p-1 ? v < x1 : v <= x1)).length;
+    return { x0, x1, dens: count / (pop_data.length * ancho_p) };
+  });
+
+  // Gráfico 1: Población
+  const g1 = Plot.plot({
+    title: `Población: ${poblacion_tipo}`,
+    x: { label: "x" }, y: { label: "Densidad", axis: null },
+    marks: [
+      Plot.rectY(bins_pop, { x1: "x0", x2: "x1", y: "dens", fill: "#cedcd8", stroke: "white" }),
+      Plot.ruleX([pop_mean], { stroke: "#da7101", strokeWidth: 2.5, strokeDasharray: "6,3" }),
+      Plot.ruleY([0]),
+      Plot.text([{ x: pop_mean, y: d3.max(bins_pop, d => d.dens) * 0.9, label: `μ = ${pop_mean.toFixed(2)}` }],
+        { x: "x", y: "y", text: "label", fill: "#da7101", fontSize: 12, fontWeight: "bold" })
+    ],
+    width: 320, height: 240, style: { fontFamily: "inherit" }
+  });
+
+  // Gráfico 2: Distribución de x̄
+  const g2 = Plot.plot({
+    title: `Distribución de x̄ (n = ${n_tcl}, M = ${m_tcl})`,
+    x: { label: "x̄" }, y: { label: "Densidad", axis: null },
+    marks: [
+      Plot.rectY(bins_medias, { x1: "x0", x2: "x1", y: "dens", fill: "#cedcd8", stroke: "white" }),
+      Plot.line(curva_norm, { x: "x", y: "y", stroke: "#01696f", strokeWidth: 2.5 }),
+      Plot.ruleX([media_medias], { stroke: "#da7101", strokeWidth: 2, strokeDasharray: "6,3" }),
+      Plot.ruleY([0]),
+      Plot.text([{ x: media_medias, y: d3.max(curva_norm, d => d.y) * 0.88,
+        label: `x̄ = ${media_medias.toFixed(2)} | SE = σ/√n = ${se_teo.toFixed(2)}` }],
+        { x: "x", y: "y", text: "label", fill: "#28251d", fontSize: 11 })
+    ],
+    width: 320, height: 240, style: { fontFamily: "inherit" }
+  });
+
+  const container = document.createElement("div");
+  container.style.cssText = "display:flex;gap:1rem;flex-wrap:wrap;align-items:flex-start";
+  container.appendChild(g1);
+  container.appendChild(g2);
+  return container;
+}
+```
+
+::: {.callout-tip title="¿Qué observar?"}
+- Con **n pequeño** (2-5), la distribución de $\bar{x}$ aún refleja la forma de la población original.
+- Con **n = 30 o más**, la distribución de $\bar{x}$ es aproximadamente normal **sin importar** si la población es uniforme, exponencial o bimodal.
+- El **error estándar** $\sigma/\sqrt{n}$ disminuye al aumentar $n$: muestras más grandes dan estimaciones más precisas.
+:::
+
+### Verificación en R
+
+```{r echo=TRUE}
+set.seed(2024)
+
+# Población exponencial (muy sesgada): peso de frutos en g
+# Media verdadera μ = 200 g
+pop <- rexp(100000, rate = 1/200)
+cat("Población exponencial:\n")
+cat("  μ =", round(mean(pop), 2), "g\n")
+cat("  σ =", round(sd(pop), 2), "g\n\n")
+
+# Simular 1000 muestras de n = 40 y calcular x̄
+set.seed(2024)
+medias <- replicate(1000, mean(sample(pop, 40)))
+
+cat("Distribución de x̄ (n = 40, M = 1000):\n")
+cat("  Media de x̄ =", round(mean(medias), 2), "≈ μ\n")
+cat("  DE de x̄ =", round(sd(medias), 2), "≈ σ/√n =",
+    round(sd(pop)/sqrt(40), 2), "\n")
+```
+
+```{r}
+#| label: fig-tcl-r
+#| echo: false
+#| fig-cap: "Distribución de 1000 medias muestrales de una población exponencial con n = 40. La curva roja es la densidad Normal teórica predicha por el TCL."
+#| out-width: 70%
+#| warning: false
+
+set.seed(2024)
+pop2 <- rexp(100000, rate = 1/200)
+medias2 <- replicate(1000, mean(sample(pop2, 40)))
+
+mu_t <- mean(pop2); se_t <- sd(pop2)/sqrt(40)
+
+ggplot(data.frame(x = medias2), aes(x = x)) +
+  geom_histogram(aes(y = after_stat(density)), bins = 30,
+                 fill = "#cedcd8", color = "white") +
+  stat_function(fun = dnorm, args = list(mean = mu_t, sd = se_t),
+                color = "#a12c7b", linewidth = 1.3) +
+  geom_vline(xintercept = mu_t, color = "#da7101",
+             linetype = "dashed", linewidth = 1) +
+  labs(x = "x̄ (g)", y = "Densidad",
+       title = "TCL: población exponencial, n = 40") +
+  theme_light(base_size = 13)
+```
+
+---
+
+## Tamaño de muestra {#sec-n}
+
+Una pregunta fundamental en la planificación de un estudio es: **¿cuántas unidades debo muestrear?**
+
+Para estimar la media poblacional $\mu$ con un **margen de error máximo** $E$ y un nivel de confianza $1 - \alpha$, el tamaño de muestra necesario es:
+
+$$n = \left(\dfrac{z_{\alpha/2} \cdot \sigma}{E}\right)^2$$ {#eq-tamano}
+
+donde:
+
+- $z_{\alpha/2}$ es el valor crítico de la distribución Normal estándar (e.g., $z_{0.025} = 1.96$ para 95% de confianza)
+- $\sigma$ es la desviación estándar de la población (si se desconoce, se puede estimar con datos previos o un estudio piloto)
+- $E$ es el margen de error deseado (máxima diferencia tolerable entre $\bar{x}$ y $\mu$)
+
+::: {.callout-tip title="Ejemplo: muestreo de rendimiento de cacao"}
+Se desea estimar el rendimiento promedio de una plantación de cacao con un margen de error de $\pm 50$ kg/ha y 95% de confianza. Estudios previos indican $\sigma = 200$ kg/ha.
+
+```{r echo=TRUE}
+sigma  <- 200   # desviación estándar (kg/ha)
+E      <- 50    # margen de error (kg/ha)
+z      <- qnorm(0.975)  # z_{0.025} = 1.96
+
+n_calc <- ceiling((z * sigma / E)^2)
+cat("Tamaño de muestra necesario: n =", n_calc, "parcelas")
+```
+:::
+
+### Calculadora interactiva de tamaño de muestra
+
+::: {.callout-note icon=false}
+#### Demo interactiva: Calculadora de tamaño de muestra
+
+Ajusta los parámetros y observa cómo cambia el tamaño de muestra requerido.
+:::
+
+```{ojs}
+//| echo: false
+viewof sigma_n  = Inputs.range([10, 500], { label: "Desviación estándar (σ)", step: 5, value: 200 })
+viewof E_n      = Inputs.range([5, 200],  { label: "Margen de error (E)",      step: 5, value: 50 })
+viewof conf_n   = Inputs.radio([90, 95, 99], { label: "Nivel de confianza (%)", value: 95 })
+```
+
+```{ojs}
+//| echo: false
+{
+  // Inversa de la CDF Normal estándar (Acklam)
+  function qnorm_approx(p) {
+    if (!(p > 0 && p < 1)) return NaN;
+
+    const a = [
+      -3.969683028665376e+01,
+       2.209460984245205e+02,
+      -2.759285104469687e+02,
+       1.383577518672690e+02,
+      -3.066479806614716e+01,
+       2.506628277459239e+00
+    ];
+
+    const b = [
+      -5.447609879822406e+01,
+       1.615858368580409e+02,
+      -1.556989798598866e+02,
+       6.680131188771972e+01,
+      -1.328068155288572e+01
+    ];
+
+    const c = [
+      -7.784894002430293e-03,
+      -3.223964580411365e-01,
+      -2.400758277161838e+00,
+      -2.549732539343734e+00,
+       4.374664141464968e+00,
+       2.938163982698783e+00
+    ];
+
+    const d = [
+       7.784695709041462e-03,
+       3.224671290700398e-01,
+       2.445134137142996e+00,
+       3.754408661907416e+00
+    ];
+
+    const plow = 0.02425;
+    const phigh = 1 - plow;
+    let q, r;
+
+    if (p < plow) {
+      q = Math.sqrt(-2 * Math.log(p));
+      return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+             ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+    }
+
+    if (p > phigh) {
+      q = Math.sqrt(-2 * Math.log(1 - p));
+      return -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+              ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+    }
+
+    q = p - 0.5;
+    r = q * q;
+
+    return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q /
+           (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+  }
+
+  const sigma = Number(sigma_n);
+  const E = Number(E_n);
+  const conf = Number(conf_n);
+
+  const alpha = (100 - conf) / 100;
+  const p = 1 - alpha / 2;
+  const z = qnorm_approx(p);
+  const n_req = Math.ceil((z * sigma / E) ** 2);
+
+  const E_vals = d3.range(5, 205, 5);
+  const curva_n = E_vals.map(e => ({
+    e,
+    n: Math.ceil(((z * sigma )/ e) ** 2)
+  }));
+
+  const info = document.createElement("div");
+  info.style.background = "#f9f8f5";
+  info.style.border = "1px solid #d4d1ca";
+  info.style.borderRadius = "8px";
+  info.style.padding = "1rem";
+  info.style.marginBottom = "1rem";
+  info.style.fontFamily = "inherit";
+
+  const p1 = document.createElement("p");
+  p1.style.margin = "0 0 0.5rem";
+  p1.innerHTML = `<strong>Parámetros:</strong> σ = ${sigma}, E = ${E}, confianza = ${conf}%, z = ${z.toFixed(3)}`;
+
+  const p2 = document.createElement("p");
+  p2.style.margin = "0";
+  p2.style.fontSize = "1.3rem";
+  p2.style.color = "#01696f";
+  p2.innerHTML = `<strong>n requerido = ${n_req} unidades</strong>`;
+
+  info.appendChild(p1);
+  info.appendChild(p2);
+
+  const plot = Plot.plot({
+    title: `n vs. margen de error (σ = ${sigma}, ${conf}% confianza)`,
+    x: { label: "Margen de error E" },
+    y: { label: "Tamaño de muestra n" },
+    marks: [
+      Plot.line(curva_n, {
+        x: "e",
+        y: "n",
+        stroke: "#01696f",
+        strokeWidth: 2
+      }),
+      Plot.dot([{ e: E, n: n_req }], {
+        x: "e",
+        y: "n",
+        fill: "#a12c7b",
+        r: 7,
+        tip: true,
+        title: d => `E = ${d.e}\nn = ${d.n}`
+      }),
+      Plot.ruleX([E], {
+        stroke: "#a12c7b",
+        strokeWidth: 1.5,
+        strokeDasharray: "4,3"
+      }),
+      Plot.ruleY([n_req], {
+        stroke: "#a12c7b",
+        strokeWidth: 1.5,
+        strokeDasharray: "4,3"
+      })
+    ],
+    width: 560,
+    height: 280,
+    style: { fontFamily: "inherit" }
+  });
+
+  const div = document.createElement("div");
+  div.appendChild(info);
+  div.appendChild(plot);
+  return div;
+}
+```
+
+```{webr}
+# Función para calcular tamaño de muestra
+tamanio_muestra <- function(sigma, E, confianza = 0.95) {
+  z <- qnorm(1 - (1 - confianza)/2)
+  n <- ceiling((z * sigma / E)^2)
+  cat(sprintf("σ = %.1f | E = %.1f | Confianza = %.0f%%\n", sigma, E, confianza*100))
+  cat(sprintf("z = %.3f\nn requerido = %d unidades\n", z, n))
+}
+
+# Ejemplo: rendimiento de banano, σ = 150 cajas/ha, E = ±30 cajas/ha
+tamanio_muestra(sigma = 150, E = 30, confianza = 0.95)
+```
+
+### Tamaño de muestra con población finita
+
+La fórmula anterior para el tamaño de muestra supone una población muy grande. Sin embargo, cuando la población total \(N\) es conocida y la muestra representa una fracción importante de ella, conviene aplicar la **corrección por población finita**.
+
+Si \(n_0\) es el tamaño de muestra calculado sin corrección,
+
+\[
+n_0 = \left(\dfrac{z_{\alpha/2}\sigma}{E}\right)^2
+\]
+
+entonces el tamaño ajustado para una población finita de tamaño \(N\) es:
+
+\[
+n = \frac{N n_0}{N + n_0 - 1}
+\]
+
+Este ajuste reduce el tamaño de muestra requerido cuando la población no es muy grande.
+
+::: {.callout-note icon=false}
+#### Demo interactiva: Tamaño de muestra con población finita
+
+Ajusta el tamaño de la población total \(N\), la desviación estándar, el margen de error y el nivel de confianza. Compara el tamaño de muestra sin corrección y con corrección por población finita.
+:::
+
+```{ojs}
+//| echo: false
+viewof N_fin = Inputs.range([30, 5000], {
+  label: "Tamaño de la población (N)",
+  step: 10,
+  value: 300
+})
+
+viewof sigma_fin = Inputs.range([5, 500], {
+  label: "Desviación estándar (σ)",
+  step: 5,
+  value: 80
+})
+
+viewof E_fin = Inputs.range([1, 100], {
+  label: "Margen de error (E)",
+  step: 1,
+  value: 10
+})
+
+viewof conf_fin = Inputs.radio([90, 95, 99], {
+  label: "Nivel de confianza (%)",
+  value: 95
+})
+```
+
+```{ojs}
+//| echo: false
+{
+  function qnorm_approx(p) {
+    if (!(p > 0 && p < 1)) return NaN;
+
+    const a = [
+      -3.969683028665376e+01,
+       2.209460984245205e+02,
+      -2.759285104469687e+02,
+       1.383577518672690e+02,
+      -3.066479806614716e+01,
+       2.506628277459239e+00
+    ];
+
+    const b = [
+      -5.447609879822406e+01,
+       1.615858368580409e+02,
+      -1.556989798598866e+02,
+       6.680131188771972e+01,
+      -1.328068155288572e+01
+    ];
+
+    const c = [
+      -7.784894002430293e-03,
+      -3.223964580411365e-01,
+      -2.400758277161838e+00,
+      -2.549732539343734e+00,
+       4.374664141464968e+00,
+       2.938163982698783e+00
+    ];
+
+    const d = [
+       7.784695709041462e-03,
+       3.224671290700398e-01,
+       2.445134137142996e+00,
+       3.754408661907416e+00
+    ];
+
+    const plow = 0.02425;
+    const phigh = 1 - plow;
+    let q, r;
+
+    if (p < plow) {
+      q = Math.sqrt(-2 * Math.log(p));
+      return (((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+             ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+    }
+
+    if (p > phigh) {
+      q = Math.sqrt(-2 * Math.log(1 - p));
+      return -(((((c[0] * q + c[1]) * q + c[2]) * q + c[3]) * q + c[4]) * q + c[5]) /
+              ((((d[0] * q + d[1]) * q + d[2]) * q + d[3]) * q + 1);
+    }
+
+    q = p - 0.5;
+    r = q * q;
+
+    return (((((a[0] * r + a[1]) * r + a[2]) * r + a[3]) * r + a[4]) * r + a[5]) * q /
+           (((((b[0] * r + b[1]) * r + b[2]) * r + b[3]) * r + b[4]) * r + 1);
+  }
+
+  const N = Number(N_fin);
+  const sigma = Number(sigma_fin);
+  const E = Number(E_fin);
+  const conf = Number(conf_fin);
+
+  const alpha = (100 - conf) / 100;
+  const z = qnorm_approx(1 - alpha / 2);
+
+  const n0 = (z * sigma / E) ** 2;
+  const n_infinita = Math.ceil(n0);
+  const n_finita = Math.ceil((N * n0) / (N + n0 - 1));
+  const fraccion = n_finita / N;
+
+  const info = document.createElement("div");
+  info.style.background = "#f9f8f5";
+  info.style.border = "1px solid #d4d1ca";
+  info.style.borderRadius = "8px";
+  info.style.padding = "1rem";
+  info.style.marginBottom = "1rem";
+  info.style.fontFamily = "inherit";
+
+  info.innerHTML = `
+    <p style="margin:0 0 0.6rem">
+      <strong>Parámetros:</strong> N = ${N}, σ = ${sigma}, E = ${E}, confianza = ${conf}%, z = ${z.toFixed(3)}
+    </p>
+    <p style="margin:0.2rem 0;color:#28251d">
+      <strong>Sin corrección:</strong> n₀ = ${n_infinita}
+    </p>
+    <p style="margin:0.2rem 0;color:#01696f;font-size:1.15rem">
+      <strong>Con población finita:</strong> n = ${n_finita}
+    </p>
+    <p style="margin:0.4rem 0 0;color:#7a7974">
+      Fracción de muestreo: ${(100 * fraccion).toFixed(1)}%
+    </p>
+  `;
+
+  const datos = [
+    { tipo: "Sin corrección", n: n_infinita },
+    { tipo: "Con población finita", n: n_finita }
+  ];
+
+  const plot = Plot.plot({
+    y: { label: "Tamaño de muestra" },
+    x: { label: null },
+    marks: [
+      Plot.barY(datos, {
+        x: "tipo",
+        y: "n",
+        fill: d => d.tipo === "Con población finita" ? "#01696f" : "#bab9b4"
+      }),
+      Plot.text(datos, {
+        x: "tipo",
+        y: "n",
+        text: d => d.n,
+        dy: -10,
+        fontWeight: "bold",
+        fill: "#28251d"
+      }),
+      Plot.ruleY([0])
+    ],
+    width: 520,
+    height: 300,
+    style: { fontFamily: "inherit" }
+  });
+
+  const div = document.createElement("div");
+  div.appendChild(info);
+  div.appendChild(plot);
+  return div;
+}
+```
+
+```{webr}
+tamano_finita <- function(N, sigma, E, confianza = 0.95) {
+  z  <- qnorm(1 - (1 - confianza)/2)
+  n0 <- (z * sigma / E)^2
+  n  <- ceiling((N * n0) / (N + n0 - 1))
+  
+  cat(sprintf("N = %d\n", N))
+  cat(sprintf("σ = %.1f | E = %.1f | Confianza = %.0f%%\n", sigma, E, confianza * 100))
+  cat(sprintf("z = %.3f\n", z))
+  cat(sprintf("n sin corrección = %d\n", ceiling(n0)))
+  cat(sprintf("n con corrección por población finita = %d\n", n))
+}
+
+tamano_finita(N = 300, sigma = 80, E = 10, confianza = 0.95)
+```
+
+---
+
+## Ejercicios {.unnumbered}
+
+1. Una finca de café tiene 800 árboles. Se desea estimar el rendimiento promedio con una muestra de 60 árboles.
+   a. Implemente un MAS en R con `sample()`.
+   b. ¿Cuál es la probabilidad de selección de cada árbol?
+   c. Repita la selección con tres semillas diferentes (`set.seed()`) y compare las muestras.
+
+2. Una parcela experimental de maíz tiene 240 plantas distribuidas en 12 surcos de 20 plantas cada uno. Se desea seleccionar 24 plantas con muestreo sistemático.
+   a. Calcule el intervalo $k$.
+   b. Implemente la selección en R.
+   c. ¿Qué ventaja tiene el muestreo sistemático sobre el MAS en este contexto?
+
+3. Una región tiene 500 fincas productoras de cacao distribuidas en tres pisos altitudinales: 200 en zona baja (0-500 m), 180 en zona media (500-1000 m) y 120 en zona alta (> 1000 m). Se quiere una muestra de 50 fincas.
+   a. ¿Cuántas fincas corresponden a cada estrato en un muestreo estratificado proporcional?
+   b. Implemente la selección en R con `group_by()` y `slice_sample()`.
+   c. Compare el promedio muestral con el poblacional.
+
+4. Usando el Teorema Central del Límite:
+   a. Genere una población de 50 000 valores con distribución uniforme entre 10 y 50 (`runif()`).
+   b. Simule 2 000 muestras de tamaño $n = 35$ y calcule $\bar{x}$ para cada una (`replicate()`).
+   c. Grafique la distribución de los $\bar{x}$ con `ggplot2` y superponga la curva Normal teórica.
+   d. Verifique que la media y el error estándar de las $\bar{x}$ coincidan con los predichos por el TCL.
+
+5. Para estimar el peso promedio de frutos de aguacate en una plantación, estudios previos indican $\sigma = 85$ g.
+   a. ¿Cuántos frutos deben medirse para un margen de error de $\pm 20$ g con 95% de confianza?
+   b. ¿Cuántos se necesitarían con 99% de confianza?
+   c. ¿Cómo cambia $n$ si se reduce $\sigma$ a 60 g (por selección de variedad más homogénea)?
+
+```{webr}
+# Ejercicio 5: calcule los tamaños de muestra
+sigma  <- 85
+E      <- 20
+
+n_95  <- ceiling((qnorm(0.975) * sigma / E)^2)
+n_99  <- ceiling((qnorm(0.995) * sigma / E)^2)
+n_60  <- ceiling((qnorm(0.975) * 60   / E)^2)
+
+data.frame(
+  Escenario  = c("σ=85, 95%", "σ=85, 99%", "σ=60, 95%"),
+  n_requerido = c(n_95, n_99, n_60)
+)
+```
+

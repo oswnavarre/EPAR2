@@ -1,0 +1,870 @@
+```{r paquetes, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(tidyverse)
+library(agricolae)
+library(jtools)
+library(writexl)
+library(readxl)
+library(DescTools)
+library(cowplot)
+library(formatdown)
+```
+
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+# Diseño de experimentos {#doe}
+
+## Objetivos del capítulo
+
+Al finalizar este capítulo, el estudiante será capaz de:
+
+1. Explicar la importancia del diseño experimental en la investigación agrícola y su papel en el control de la variabilidad.
+2. Identificar y diferenciar los conceptos de unidad experimental, tratamiento, repetición, unidad de muestreo y error experimental.
+3. Describir los principios fundamentales del diseño experimental: aleatorización, repetición y bloqueo.
+4. Reconocer y comparar las características del diseño completamente al azar (DCA), el diseño de bloques completos al azar (DBCA), el cuadrado latino (CL) y el diseño en parcelas divididas (DPD).
+5. Aplicar el análisis de varianza (ANOVA) en R para evaluar diferencias entre tratamientos en los diseños mencionados.
+6. Interpretar los resultados del ANOVA y de las pruebas de comparaciones múltiples de medias.
+7. Implementar diseños factoriales y en parcelas divididas en R usando `aov()` y el paquete `agricolae`.
+
+---
+
+## Introducción
+
+En investigación agrícola, las diferencias observadas entre tratamientos no siempre se deben exclusivamente al tratamiento que se desea evaluar. En un experimento de campo, variables como la fertilidad del suelo, la humedad, la sombra, la presencia de malezas, la presión de plagas o pequeñas variaciones en el manejo agronómico pueden influir sobre la respuesta observada. Por esta razón, para obtener conclusiones válidas no basta con aplicar tratamientos y comparar resultados: es necesario planificar cuidadosamente cómo se asignarán los tratamientos a las unidades experimentales y cómo se controlará la variabilidad natural del ambiente.
+
+Supongamos que se desea comparar dos variedades de maíz: una variedad estándar ya conocida, a la que llamaremos V1, y una variedad nueva, a la que llamaremos V2. Una posibilidad aparentemente sencilla sería sembrar la mitad de un campo con V1 y la otra mitad con V2, manejar ambas zonas de la misma manera durante todo el ciclo y, al final, comparar el rendimiento obtenido. Si la variedad nueva produce un 20 % más que la variedad estándar, podría pensarse que V2 es superior. Sin embargo, esta conclusión no sería necesariamente correcta. La diferencia observada podría deberse, total o parcialmente, a otras causas:
+
+- V2 pudo haberse sembrado en la parte del terreno con mejor fertilidad.
+- Un extremo del campo pudo haber retenido más humedad que el otro.
+- Las diferencias de textura del suelo pudieron afectar la disponibilidad de agua.
+- Una parte del terreno pudo recibir sombra en ciertas horas del día.
+- La presencia de malezas pudo haber sido mayor en una mitad del campo.
+- La cercanía a bosques o áreas silvestres pudo favorecer una mayor incidencia de plagas o enfermedades en uno de los extremos.
+
+En este caso, el experimento no fue preparado para controlar la variabilidad del campo, por lo que no es posible saber con certeza si la diferencia en rendimiento se debe realmente a la variedad o a diferencias en las condiciones de cultivo. Además, al no existir repeticiones adecuadas, tampoco sería posible estimar el error experimental ni aplicar correctamente una prueba estadística.
+
+El diseño de experimentos surge precisamente para resolver este problema. Su propósito es organizar los tratamientos y las unidades experimentales de tal manera que sea posible separar el efecto real de los tratamientos de la variabilidad natural del ambiente. Con un diseño experimental y un análisis estadístico adecuados, el investigador puede reducir el sesgo, mejorar la precisión de sus resultados y determinar si las diferencias observadas entre tratamientos son estadísticamente significativas.
+
+Aunque el diseño de experimentos tuvo su desarrollo formal en la agricultura, especialmente a partir del trabajo de Ronald A. Fisher en las décadas de 1920 y 1930 en la Estación Experimental de Rothamsted, sus principios se aplican hoy en muchas otras áreas. Fisher mostró que era posible obtener conclusiones válidas aun en presencia de fluctuaciones naturales como la temperatura, las condiciones del suelo o la lluvia, sentando así las bases de la experimentación moderna.
+
+En la @sec-tipest se presentaron los tipos de estudio. En este capítulo se desarrollan los principios básicos del diseño experimental y los principales diseños utilizados en agricultura, así como su relación con el análisis de varianza y la comparación de tratamientos.
+
+---
+
+## Conceptos básicos
+
+Antes de estudiar los distintos diseños experimentales, es necesario definir algunos conceptos fundamentales que aparecen con frecuencia en la planificación y análisis de experimentos agrícolas.
+
+**1. Unidad experimental**
+
+La unidad experimental es el objeto o espacio al cual se aplica un tratamiento de manera independiente y sobre el cual se evalúa la respuesta del experimento. Dependiendo del tipo de estudio, la unidad experimental puede ser un animal, un árbol, una planta individual o una parcela de terreno.
+
+En experimentos de campo es común que la unidad experimental sea una parcela. En estos casos puede presentarse el efecto borde, el cual debe considerarse al momento de definir el tamaño y la forma de las parcelas.
+
+::: {.callout-note}
+### Efecto borde
+
+El efecto borde se refiere a las diferencias en crecimiento o producción que pueden presentar las plantas ubicadas en los bordes de una parcela en comparación con las plantas ubicadas en el interior. Este fenómeno puede ocurrir por:
+
+- Menor competencia por luz, agua o nutrientes en los bordes de la parcela.
+- Influencia de parcelas vecinas con tratamientos distintos.
+- Influencia de áreas no cultivadas adyacentes.
+
+Para reducir este efecto, es común excluir las plantas del perímetro al momento de realizar las mediciones o definir áreas útiles dentro de la parcela.
+:::
+
+**2. Factor**
+
+Un factor es una variable controlada o de interés en un experimento cuyos niveles se comparan para evaluar su efecto sobre una variable respuesta. Los niveles de un factor determinan los tratamientos cuando se considera un solo factor. En experimentos con varios factores, los tratamientos corresponden a las combinaciones de los niveles de dichos factores.
+
+- Si el factor es "Fertilizante", sus niveles podrían ser: 0, 50 y 100 kg/ha.
+- Si el factor es "Variedad", sus niveles podrían ser: A, B y C.
+
+**3. Tratamiento**
+
+Un tratamiento es la condición o intervención cuyo efecto se desea evaluar en un experimento. Los tratamientos representan los diferentes niveles del factor o factores de interés. Cuando un experimento incluye varios factores, un tratamiento corresponde a una combinación específica de niveles de esos factores.
+
+Ejemplos de tratamientos en experimentos agrícolas incluyen: variedades de cultivos, dosis de fertilizante, programas de riego, diferentes herbicidas o fungicidas, combinaciones de temperatura y humedad.
+
+**4. Unidad de muestreo**
+
+La unidad de muestreo es la entidad específica sobre la cual se realiza la medición de la variable de interés. En algunos casos la unidad de muestreo coincide con la unidad experimental, pero en otros casos corresponde a una fracción de esta.
+
+Por ejemplo:
+
+- Si el tratamiento se aplica a una parcela, pero la medición se realiza en 10 plantas dentro de la parcela, la parcela es la unidad experimental y cada planta medida es una unidad de muestreo.
+- Si el tratamiento se aplica a un animal y la medición se realiza sobre ese mismo animal, la unidad experimental y la unidad de muestreo coinciden.
+
+Distinguir correctamente entre unidad experimental y unidad de muestreo es fundamental para evitar errores en el análisis estadístico.
+
+::: {.callout-warning}
+### Pseudorreplicación
+
+La pseudorreplicación ocurre cuando varias mediciones tomadas dentro de una misma unidad experimental se analizan como si fueran repeticiones independientes del tratamiento. Esto puede inflar artificialmente el tamaño de muestra y conducir a conclusiones incorrectas.
+:::
+
+**5. Variable respuesta**
+
+La variable respuesta es la medición observada en cada unidad experimental y representa el resultado que se desea explicar o predecir a partir de los factores estudiados. Es "lo que queremos explicar" o "lo que cambia" según el tratamiento. Puede ser cuantitativa (rendimiento, altura, peso) o cualitativa (sí/no, presencia/ausencia, categoría).
+
+**6. Error experimental**
+
+El error experimental es la variabilidad observada entre unidades experimentales que reciben el mismo tratamiento. Representa la variabilidad de la variable respuesta que no puede ser explicada por los tratamientos incluidos en el experimento.
+
+::: {.callout-tip}
+### Fuentes de la variación
+- Variabilidad inherente del material experimental, como diferencias genéticas entre plantas o animales.
+- Variación ambiental, como cambios en suelo, temperatura, humedad o radiación.
+- Variación en la ejecución del experimento, como pequeñas diferencias en la aplicación de tratamientos o en las mediciones realizadas.
+:::
+
+**7. Repeticiones**
+
+Las repeticiones (o replicaciones) corresponden al número de unidades experimentales que reciben el mismo tratamiento dentro de un experimento.
+
+::: {.callout-tip}
+### Funciones de las repeticiones
+- Permitir la estimación del error experimental.
+- Mejorar la precisión de las estimaciones de las medias de tratamiento.
+- Aumentar la capacidad para detectar diferencias reales entre tratamientos.
+- Ampliar el alcance de la inferencia cuando las unidades experimentales representan una población más amplia.
+:::
+
+En muchos experimentos agrícolas se utilizan al menos tres o cuatro repeticiones por tratamiento, aunque en algunos casos pueden requerirse más.
+
+---
+
+## Principios básicos
+
+En el diseño de experimentos, el **control del error experimental** consiste en reducir, en la mayor medida posible, la variabilidad de la respuesta que no se debe a los tratamientos estudiados. Para lograrlo, el diseño experimental se apoya en tres principios fundamentales: **aleatorización, repetición y bloqueo**.
+
+### Aleatorización
+
+La aleatorización consiste en asignar los tratamientos al azar a las unidades experimentales. Su propósito principal es evitar sesgos sistemáticos y distribuir, de la forma más equilibrada posible, las fuentes desconocidas de variación entre los tratamientos.
+
+En R, una asignación aleatoria simple puede realizarse con la función `sample()`:
+
+```{r}
+#| echo: true
+tratamientos <- c("A", "B", "C")
+sample(tratamientos)
+```
+
+::: {.callout-tip}
+#### ¿Por qué es importante la aleatorización?
+- Reduce el sesgo en la asignación de tratamientos.
+- Ayuda a balancear fuentes desconocidas de variación.
+- Justifica el uso de pruebas estadísticas basadas en el azar.
+:::
+
+**Ejemplo:** si se comparan tres fertilizantes en un lote, no conviene asignarlos siempre en el mismo orden espacial, porque una parte del terreno podría tener mejores condiciones que otra.
+
+### Repetición
+
+La repetición consiste en aplicar cada tratamiento a varias unidades experimentales independientes. Gracias a la repetición es posible estimar el error experimental y aumentar la precisión de las comparaciones entre tratamientos.
+
+::: {.callout-tip}
+#### ¿Por qué es importante la repetición?
+- Permite estimar el error experimental.
+- Mejora la precisión de las medias de tratamiento.
+- Aumenta la capacidad para detectar diferencias reales.
+- Hace más robustas las conclusiones del experimento.
+:::
+
+**Ejemplo:** si se desea comparar cuatro variedades de maíz, no es suficiente sembrar una sola parcela por variedad. Se necesitan varias parcelas para cada variedad.
+
+### Bloqueo
+
+El bloqueo o control local consiste en agrupar unidades experimentales similares en bloques y asignar los tratamientos dentro de cada bloque. Su objetivo es controlar fuentes **conocidas** de variación que podrían afectar la respuesta del experimento.
+
+::: {.callout-tip}
+#### ¿Por qué es importante el bloqueo?
+- Controla fuentes conocidas de variación.
+- Reduce el error experimental.
+- Mejora la precisión de las comparaciones.
+- Hace más eficiente el experimento cuando el material no es completamente homogéneo.
+:::
+
+**Ejemplo:** si un lote presenta un gradiente de fertilidad de un extremo al otro, puede dividirse en bloques perpendiculares a ese gradiente. Luego, dentro de cada bloque, se asignan aleatoriamente los tratamientos.
+
+---
+
+## Diseño completamente al azar (DCA) {#sec-dca}
+
+El diseño completamente al azar (DCA) es el diseño experimental más simple. En este diseño, los tratamientos se asignan aleatoriamente a las unidades experimentales, de manera que cada unidad tenga la misma probabilidad de recibir cualquiera de los tratamientos.
+
+El DCA funciona mejor cuando las unidades experimentales son relativamente homogéneas. Por esta razón, suele utilizarse en condiciones muy controladas: ensayos en invernadero, cámaras de crecimiento, laboratorios, o experimentos de campo realizados en áreas muy uniformes.
+
+### Ventajas y limitaciones
+
+| Aspecto | Descripción |
+|---------|-------------|
+| ✅ Ventaja | Es el diseño más sencillo de implementar |
+| ✅ Ventaja | Permite gran flexibilidad en el número de tratamientos y repeticiones |
+| ✅ Ventaja | Su análisis estadístico es relativamente simple |
+| ❌ Limitación | No controla fuentes conocidas de variación |
+| ❌ Limitación | Puede ser poco eficiente en experimentos de campo heterogéneos |
+
+### Modelo matemático
+
+El modelo matemático del DCA es:
+
+$$
+y_{ij} = \mu + \alpha_i + \epsilon_{ij}
+$$ {#eq-dca}
+
+donde:
+
+- $y_{ij}$ es la respuesta observada en la $j$-ésima repetición del tratamiento $i$,
+- $\mu$ es la media general,
+- $\alpha_i$ es el efecto del tratamiento $i$,
+- $\epsilon_{ij}$ es el error aleatorio, con $\epsilon_{ij} \sim N(0, \sigma^2)$.
+
+### Generación del diseño en R con `agricolae`
+
+```{r}
+library(agricolae)
+
+tratamientos <- c("T1", "T2", "T3", "T4")
+
+dca <- design.crd(
+  trt = tratamientos,
+  r = 3,
+  seed = 123,
+  serie = 2
+)
+
+dca$book
+```
+
+```{webr}
+library(agricolae)
+tratamientos <- c("T1", "T2", "T3", "T4")
+dca <- design.crd(trt = tratamientos, r = 3, seed = 123, serie = 2)
+dca$book
+```
+
+La tabla generada muestra la distribución aleatoria de los tratamientos en las unidades experimentales. En este ejemplo hay 4 tratamientos × 3 repeticiones = 12 unidades experimentales en total.
+
+---
+
+## Análisis de Varianza (ANOVA, ANDEVA) {#sec-anova}
+
+El **An**álisis **De** **Va**rianza o prueba ANOVA es una técnica utilizada para comparar las medias de más de dos grupos o tratamientos. Su lógica consiste en descomponer la variabilidad total observada en los datos en componentes atribuibles a distintas fuentes:
+
+- la variabilidad **entre tratamientos**, y
+- la variabilidad **dentro de tratamientos** o **error experimental**.
+
+Las hipótesis del ANOVA son:
+
+$$
+\begin{cases}
+H_0: \mu_1 = \mu_2 = \ldots = \mu_k \\
+H_1: \exists \; i, \; j \; \text{tal que} \; \mu_i \neq \mu_j
+\end{cases}
+$$
+
+El ANOVA no indica directamente entre cuáles tratamientos existen diferencias, sino únicamente si hay evidencia estadística de que al menos una media es distinta.
+
+### Modelos para el análisis de varianza
+
+Los datos de un experimento de un factor único con $k$ tratamientos y $r$ repeticiones se representan como en la @tbl-datosanova:
+
+| Trat.-Nivel | Rep. 1 | Rep. 2 | $\ldots$ | Rep. $r$ |
+|------------:|-------:|-------:|---------:|---------:|
+| 1 | $y_{11}$ | $y_{12}$ | $\ldots$ | $y_{1r}$ |
+| 2 | $y_{21}$ | $y_{22}$ | $\ldots$ | $y_{2r}$ |
+| $\vdots$ | $\vdots$ | $\vdots$ | $\ldots$ | $\vdots$ |
+| $k$ | $y_{k1}$ | $y_{k2}$ | $\ldots$ | $y_{kr}$ |
+
+: Datos de un experimento de un factor único {#tbl-datosanova}
+
+El **modelo de efectos** es:
+
+$$
+y_{ij} = \mu + \alpha_i + \epsilon_{ij} \quad \forall \; i,j
+$$ {#eq-modeff}
+
+donde $\mu$ es la media general y $\alpha_i$ es el efecto del tratamiento $i$.
+
+::: {.callout-important}
+### ¿Efectos fijos o aleatorios?
+
+- **Modelo de efectos fijos**: los $k$ tratamientos fueron elegidos deliberadamente por el investigador. Las conclusiones aplican solo a esos tratamientos.
+- **Modelo de efectos aleatorios**: los $k$ tratamientos son una muestra aleatoria de una población más amplia. Las conclusiones se pueden generalizar a todos los posibles tratamientos.
+:::
+
+### Tabla ANOVA
+
+La variabilidad total se descompone como:
+
+$$
+SCT = SCTr + SCE
+$$ {#eq-sct3}
+
+donde $SCTr$ es la suma de cuadrados de tratamientos y $SCE$ es la suma de cuadrados del error.
+
+El estadístico de prueba es:
+
+$$
+F = \frac{MCTr}{MCE} = \frac{SCTr / (k-1)}{SCE / (n-k)}
+$$ {#eq-fstat}
+
+La @tbl-anova resume el procedimiento:
+
+| Fuente | GL | SC | MC | $F$ |
+|--------|----|----|-----|-----|
+| Tratamientos | $k-1$ | $SCTr = \sum_i n_i (\bar{y}_i - \bar{y})^2$ | $MCTr = SCTr/(k-1)$ | $F = MCTr/MCE$ |
+| Error | $n-k$ | $SCE = \sum_i\sum_j (y_{ij}-\bar{y}_i)^2$ | $MCE = SCE/(n-k)$ | |
+| Total | $n-1$ | $SCT$ | | |
+
+: Tabla del Análisis de Varianza para un factor único {#tbl-anova}
+
+### Supuestos del ANOVA
+
+Para que las conclusiones del ANOVA sean válidas, deben cumplirse los siguientes supuestos sobre los errores $\epsilon_{ij}$:
+
+1. **Independencia**: las observaciones son independientes entre sí.
+2. **Normalidad**: los errores siguen una distribución normal.
+3. **Homocedasticidad**: las varianzas son iguales en todos los grupos.
+
+En R, estos supuestos pueden verificarse con los gráficos de diagnóstico del modelo:
+
+```{r}
+#| eval: false
+par(mfrow = c(2, 2))
+plot(mod)   # donde mod es el objeto aov()
+```
+
+::: {.callout-tip}
+### Verificación de supuestos en R
+
+| Supuesto | Función en R | Prueba |
+|----------|-------------|--------|
+| Normalidad de residuos | `shapiro.test(residuals(mod))` | Shapiro-Wilk |
+| Homocedasticidad | `bartlett.test(y ~ trt, data)` | Bartlett |
+| Homocedasticidad (alternativa) | `leveneTest(y ~ trt, data)` del paquete `car` | Levene |
+:::
+
+---
+
+## Ejemplo de DCA desarrollado en R
+
+A modo de ejemplo vamos a analizar los datos correspondientes a la última medición del proyecto de Alfredo Aguilar y José C. Flores para verificar la existencia de diferencias significativas en la altura entre los tratamientos.
+
+```{r}
+library(tidyverse)
+library(readxl)
+
+datos24004 <- read_excel("datos/datos24004.xlsx", sheet = "datos")
+
+datos24004 <- datos24004 |>
+  mutate(
+    DDS = as.numeric(Fecha - Siembra)
+  )
+
+dds56 <- datos24004 |>
+  filter(DDS == 56)
+```
+
+```{r}
+mod1 <- aov(Altura ~ Tratamiento, data = dds56)
+summary(mod1)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+
+tbl_anova1 <- anova(mod1)
+valp_anova1 <- tbl_anova1[1, 5]
+```
+
+Se observa que $SCTr < SCE$, lo que sugiere que **la mayor parte de la variabilidad en la altura no se explica por los tratamientos**. El valor $p$ de la prueba ANOVA es `r round(valp_anova1, 4)`, mayor a $\alpha = 0.05$.
+
+::: {.callout-important}
+Comparamos el valor $p$ contra $\alpha = 0.05$ por convención y porque funciona muy bien como equilibrio entre los errores tipo I y tipo II. Como dato histórico, Ronald Fisher propuso este umbral práctico. Siempre es recomendable preguntarse:
+
+**¿Qué es más grave en este contexto: rechazar una hipótesis verdadera o no detectar una diferencia real?**
+:::
+
+De acuerdo con el valor $p$, se concluye que no hay evidencia suficiente para afirmar que los tratamientos afectan significativamente la altura.
+
+Ahora trabajamos con los datos del rendimiento en toneladas por hectárea:
+
+```{r}
+rend24004 <- read_excel("datos/rend_24004.xlsx", sheet = "rendimiento_ha")
+
+resu_rend <- rend24004 |>
+  group_by(Tratamiento) |>
+  summarise(
+    Media = mean(Rendimiento_ha),
+    Desv = sd(Rendimiento_ha)
+  )
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| tbl-cap: Estadística descriptiva del rendimiento
+#| label: tbl-rendaj
+
+knitr::kable(resu_rend)
+```
+
+```{r}
+#| echo: false
+#| warning: false
+#| message: false
+#| fig-cap: Rendimiento por tratamiento
+#| label: fig-rendaj
+
+ggplot(rend24004, aes(x = Tratamiento, y = Rendimiento_ha)) +
+  geom_boxplot(fill = "#cedcd8", color = "#01696f") +
+  jtools::theme_apa() +
+  labs(y = "Rendimiento (t/ha)")
+```
+
+```{r}
+mod2 <- aov(Rendimiento_ha ~ Tratamiento, data = rend24004)
+summary(mod2)
+```
+
+El valor $p$ es muy bajo, inclusive menor que $0.001$. Hay suficiente evidencia estadística para rechazar $H_0$. Se concluye que los tratamientos tienen un efecto significativo sobre el rendimiento: al menos uno de los tratamientos presenta una media significativamente distinta respecto a los demás.
+
+---
+
+## Pruebas de comparaciones múltiples de medias {#sec-pcm}
+
+Cuando la prueba ANOVA es estadísticamente significativa, el paso posterior consiste en buscar entre qué grupos existen diferencias. En algunos casos el investigador podría tener comparaciones planificadas (**contrastes _a priori_**); en otros podría no tener hipótesis predefinidas (**contrastes _a posteriori_**).
+
+### Contrastes _a priori_
+
+Los **contrastes planificados** se definen antes de observar los datos, con base en hipótesis sustentadas teóricamente.
+
+#### Contrastes ortogonales
+
+Dos contrastes $C_1$ y $C_2$ con coeficientes $c_{1i}$ y $c_{2i}$ son **ortogonales** (independientes) si:
+
+$$
+\sum_{i=1}^k c_{1i} \cdot c_{2i} = 0
+$$
+
+**Reglas para definir contrastes ortogonales:**
+
+1. Los coeficientes de cada contraste deben sumar cero: $\sum c_i = 0$.
+2. Los productos cruzados entre pares de contrastes deben sumar cero.
+3. Se pueden definir máximo $k-1$ contrastes ortogonales si hay $k$ grupos.
+
+#### Contrastes polinomiales
+
+Los **contrastes polinomiales** son un caso especial de contrastes ortogonales que se utilizan cuando los niveles del factor están ordenados cuantitativamente (por ejemplo, dosis de un fertilizante). Sirven para detectar tendencias lineales, cuadráticas o cúbicas.
+
+- **Lineal**: verifica si hay un aumento o disminución constante.
+- **Cuadrático**: sirve para detectar curvaturas.
+- **Cúbico**: detecta cambios más complejos en la pendiente.
+
+En R los contrastes polinomiales pueden obtenerse con `contr.poly(k)` donde `k` es el número de niveles del factor.
+
+```{r}
+# Contrastes polinomiales para 4 niveles (dosis: 0, 50, 100, 150 kg/ha)
+contr.poly(4)
+```
+
+```{webr}
+# Prueba aquí los contrastes polinomiales para distintos valores de k
+contr.poly(4)
+contr.poly(5)
+```
+
+### Contrastes _a posteriori_
+
+La siguiente tabla resume las pruebas de comparación múltiple más usadas:
+
+| Criterio | Prueba | Características |
+|----------|--------|-----------------|
+| Control estricto de error tipo I | Bonferroni, Holm | Muy conservadoras, pocos falsos positivos |
+| Control moderado | Tukey HSD, Scheffé | Buen equilibrio entre error y potencia |
+| Control laxo | Fisher LSD, Duncan | Mayor riesgo error tipo I, más potentes |
+| Comparación con control | Dunnett | Compara grupos contra un grupo de referencia |
+| Sin homocedasticidad | Games-Howell | No requiere varianzas iguales |
+
+### Comparaciones múltiples en R con `agricolae`
+
+Las pruebas de comparaciones múltiples en R se pueden realizar con las funciones del paquete `agricolae`. Las más comunes son:
+
+| Función | Prueba |
+|---------|--------|
+| `LSD.test(mod, "trt")` | Fisher LSD |
+| `HSD.test(mod, "trt")` | Tukey HSD |
+| `scheffe.test(mod, "trt")` | Scheffé |
+| `duncan.test(mod, "trt")` | Duncan |
+
+A continuación se muestra cómo aplicar la prueba de Tukey al modelo de rendimiento:
+
+```{r}
+comp_tukey <- HSD.test(mod2, "Tratamiento", group = TRUE)
+comp_tukey$groups
+```
+
+```{r}
+#| fig-cap: "Comparación de medias por prueba de Tukey — Rendimiento (t/ha)"
+#| label: fig-tukey
+
+grupos <- comp_tukey$groups |>
+  rownames_to_column("Tratamiento")
+
+ggplot(grupos, aes(x = reorder(Tratamiento, Rendimiento_ha), 
+                    y = Rendimiento_ha,
+                    fill = groups)) +
+  geom_col(show.legend = FALSE) +
+  geom_text(aes(label = groups), vjust = -0.5, size = 4) +
+  scale_fill_brewer(palette = "Set2") +
+  jtools::theme_apa() +
+  labs(x = "Tratamiento", y = "Rendimiento promedio (t/ha)",
+       title = "Comparación de medias — Prueba de Tukey")
+```
+
+```{webr}
+# Modifica la prueba: prueba LSD.test o scheffe.test con tus propios datos
+library(agricolae)
+# comp <- LSD.test(mod2, "Tratamiento", group = TRUE)
+# comp$groups
+```
+
+::: {.callout-tip}
+### ¿Cuándo usar cada prueba?
+
+- **Tukey HSD**: cuando se comparan todas las medias por pares y se desea un control moderado del error tipo I. Es la más recomendada para experimentos agrícolas estándar.
+- **Bonferroni**: cuando el número de comparaciones es pequeño y se requiere un control muy estricto.
+- **Fisher LSD**: cuando la potencia es prioritaria y el ANOVA global ya fue significativo.
+- **Dunnett**: cuando se tiene un tratamiento control y solo interesa comparar el resto contra ese control.
+:::
+
+---
+
+## Diseño de bloques completos al azar (DBCA) {#sec-dbca}
+
+El diseño de bloques completos al azar (DBCA) incorpora el principio de **bloqueo** para controlar una fuente de variación conocida. Este diseño es el más utilizado en experimentación agrícola de campo cuando existe heterogeneidad en el terreno.
+
+### ¿Cuándo usar el DBCA?
+
+Se usa el DBCA cuando:
+
+- Existe un **gradiente** de fertilidad, humedad, pendiente o sombra en el terreno.
+- Las unidades experimentales tienen **características heterogéneas** (por ejemplo, diferente tamaño inicial de plantas).
+- Se desea controlar el efecto de una variable que no es de interés (el bloque).
+
+### Estructura del diseño
+
+En el DBCA, el campo experimental se divide en **bloques** lo más homogéneos posible. Dentro de cada bloque, todos los tratamientos aparecen exactamente una vez, asignados de manera **aleatoria**.
+
+```
+Bloque 1: [T3] [T1] [T4] [T2]
+Bloque 2: [T2] [T4] [T1] [T3]
+Bloque 3: [T1] [T3] [T2] [T4]
+Bloque 4: [T4] [T2] [T3] [T1]
+```
+
+### Modelo matemático
+
+$$
+y_{ij} = \mu + \alpha_i + \beta_j + \epsilon_{ij}
+$$ {#eq-dbca}
+
+donde:
+
+- $y_{ij}$ es la respuesta del tratamiento $i$ en el bloque $j$,
+- $\mu$ es la media general,
+- $\alpha_i$ es el efecto del tratamiento $i$,
+- $\beta_j$ es el efecto del bloque $j$,
+- $\epsilon_{ij}$ es el error aleatorio.
+
+### Tabla ANOVA para el DBCA
+
+| Fuente | GL | SC | MC | $F$ |
+|--------|----|----|-----|-----|
+| Bloques | $b-1$ | $SCB$ | $MCB$ | $MCB/MCE$ |
+| Tratamientos | $k-1$ | $SCTr$ | $MCTr$ | $MCTr/MCE$ |
+| Error | $(b-1)(k-1)$ | $SCE$ | $MCE$ | |
+| Total | $bk-1$ | $SCT$ | | |
+
+: Tabla ANOVA para el DBCA {#tbl-anova-dbca}
+
+donde $b$ es el número de bloques y $k$ el número de tratamientos.
+
+### Generación del diseño y análisis en R
+
+```{r}
+library(agricolae)
+
+tratamientos <- c("T1", "T2", "T3", "T4")
+
+dbca <- design.rcbd(
+  trt = tratamientos,
+  r = 4,          # número de bloques
+  seed = 456,
+  serie = 2
+)
+
+dbca$book
+```
+
+```{webr}
+library(agricolae)
+tratamientos <- c("T1", "T2", "T3", "T4")
+dbca <- design.rcbd(trt = tratamientos, r = 4, seed = 456, serie = 2)
+dbca$book
+```
+
+Para el análisis estadístico con `aov()`, el bloque se incluye como factor adicional en la fórmula:
+
+```{r}
+#| eval: false
+# Estructura del modelo para DBCA
+mod_dbca <- aov(Rendimiento ~ Tratamiento + Bloque, data = datos_dbca)
+summary(mod_dbca)
+```
+
+::: {.callout-important}
+### DCA vs. DBCA: ¿cuál elegir?
+
+| Situación | Diseño recomendado |
+|-----------|-------------------|
+| Material experimental muy uniforme (laboratorio, invernadero) | DCA |
+| Existe un gradiente o fuente de variación conocida en el campo | DBCA |
+| Se desea aumentar la precisión controlando la heterogeneidad | DBCA |
+| La variación ambiental es impredecible o pequeña | DCA |
+
+En general, **el DBCA es más eficiente que el DCA en condiciones de campo**, ya que separa la variabilidad debida a los bloques del error experimental, reduciendo el error residual.
+:::
+
+### Ejemplo: análisis de rendimiento con bloques
+
+Supongamos un experimento con 4 variedades de arroz evaluadas en 3 bloques definidos por la disponibilidad de agua en el lote:
+
+```{r}
+#| eval: false
+datos_arroz <- read_excel("datos/arroz_dbca.xlsx")
+
+mod_arroz <- aov(Rendimiento ~ Variedad + Bloque, data = datos_arroz)
+summary(mod_arroz)
+
+# Comparaciones múltiples (Tukey)
+comp_arroz <- HSD.test(mod_arroz, "Variedad", group = TRUE)
+comp_arroz$groups
+```
+
+```{webr}
+# Simula un DBCA con datos de ejemplo
+set.seed(42)
+datos_sim <- data.frame(
+  Variedad = rep(paste0("V", 1:4), times = 3),
+  Bloque   = rep(paste0("B", 1:3), each = 4),
+  Rend     = c(4.2, 5.1, 3.8, 4.9,
+               4.5, 5.3, 4.0, 5.1,
+               4.1, 4.8, 3.6, 4.7)
+)
+
+mod_sim <- aov(Rend ~ Variedad + Bloque, data = datos_sim)
+summary(mod_sim)
+```
+
+---
+
+## Diseño de cuadrado latino (CL) {#sec-cl}
+
+El diseño de cuadrado latino permite controlar simultáneamente **dos fuentes de variación conocidas**, organizadas en filas y columnas. Es especialmente útil cuando existen dos gradientes perpendiculares en el terreno (por ejemplo, fertilidad en dirección norte-sur y humedad en dirección este-oeste).
+
+### Estructura del diseño
+
+En un cuadrado latino con $k$ tratamientos:
+
+- Hay $k$ filas y $k$ columnas.
+- Cada tratamiento aparece exactamente **una vez** en cada fila y **una vez** en cada columna.
+- El número de tratamientos es igual al número de filas y columnas.
+
+**Ejemplo: cuadrado latino 4×4**
+
+```
+       Col 1  Col 2  Col 3  Col 4
+Fila 1   A      B      C      D
+Fila 2   B      C      D      A
+Fila 3   C      D      A      B
+Fila 4   D      A      B      C
+```
+
+### Modelo matemático
+
+$$
+y_{ijk} = \mu + \alpha_i + \beta_j + \gamma_k + \epsilon_{ijk}
+$$ {#eq-cl}
+
+donde $\alpha_i$ es el efecto del tratamiento $i$, $\beta_j$ es el efecto de la fila $j$, $\gamma_k$ es el efecto de la columna $k$.
+
+### Tabla ANOVA para el cuadrado latino
+
+| Fuente | GL | MC | $F$ |
+|--------|----|----|-----|
+| Filas | $k-1$ | $MCF$ | $MCF/MCE$ |
+| Columnas | $k-1$ | $MCC$ | $MCC/MCE$ |
+| Tratamientos | $k-1$ | $MCTr$ | $MCTr/MCE$ |
+| Error | $(k-1)(k-2)$ | $MCE$ | |
+| Total | $k^2-1$ | | |
+
+### Generación en R con `agricolae`
+
+```{r}
+cl <- design.lsd(
+  trt = c("A", "B", "C", "D"),
+  seed = 789,
+  serie = 2
+)
+
+cl$book
+```
+
+```{webr}
+library(agricolae)
+cl <- design.lsd(trt = c("A", "B", "C", "D"), seed = 789, serie = 2)
+cl$book
+```
+
+::: {.callout-warning}
+### Limitaciones del cuadrado latino
+- Solo es aplicable cuando el número de tratamientos es igual al número de filas y columnas.
+- Para más de 8-10 tratamientos, el diseño se vuelve impráctico.
+- Si los efectos de fila y columna son pequeños, el DBCA puede ser más eficiente.
+:::
+
+---
+
+## Diseño factorial {#sec-factorial}
+
+El diseño factorial evalúa simultáneamente el efecto de **dos o más factores** y, lo que es más importante, permite estudiar la **interacción** entre ellos. La interacción ocurre cuando el efecto de un factor depende del nivel del otro factor.
+
+### Notación y estructura
+
+Un diseño factorial $a \times b$ tiene:
+
+- Factor A con $a$ niveles,
+- Factor B con $b$ niveles,
+- $a \times b$ combinaciones de tratamientos,
+- $r$ repeticiones por combinación.
+
+**Ejemplo**: un experimento factorial $3 \times 2$ con el factor Variedad (V1, V2, V3) y el factor Riego (R0, R1) produce $3 \times 2 = 6$ combinaciones de tratamientos.
+
+### Modelo matemático
+
+$$
+y_{ijk} = \mu + \alpha_i + \beta_j + (\alpha\beta)_{ij} + \epsilon_{ijk}
+$$ {#eq-factorial}
+
+donde $(\alpha\beta)_{ij}$ es el término de interacción entre los factores A y B.
+
+### Tabla ANOVA para el factorial
+
+| Fuente | GL |
+|--------|-----|
+| Factor A | $a - 1$ |
+| Factor B | $b - 1$ |
+| Interacción A×B | $(a-1)(b-1)$ |
+| Error | $ab(r-1)$ |
+| Total | $abr - 1$ |
+
+### Análisis factorial en R
+
+En R, el diseño factorial se especifica con el operador `*` (efectos principales + interacción) o `:` (solo interacción):
+
+```{r}
+#| eval: false
+# Factorial: efectos principales de Variedad y Riego + su interacción
+mod_fact <- aov(Rendimiento ~ Variedad * Riego, data = datos)
+
+# Equivalente explícito:
+mod_fact <- aov(Rendimiento ~ Variedad + Riego + Variedad:Riego, data = datos)
+
+summary(mod_fact)
+```
+
+```{r}
+# Ejemplo con datos simulados de un factorial 3x2
+set.seed(101)
+datos_fact <- expand.grid(
+  Variedad = c("V1", "V2", "V3"),
+  Riego    = c("R0", "R1"),
+  Rep      = 1:4
+)
+datos_fact$Rendimiento <- c(
+  rnorm(4, 3.5, 0.3), rnorm(4, 4.2, 0.3), rnorm(4, 3.8, 0.3),
+  rnorm(4, 4.8, 0.3), rnorm(4, 5.5, 0.3), rnorm(4, 4.2, 0.3)
+)
+
+mod_fact <- aov(Rendimiento ~ Variedad * Riego, data = datos_fact)
+summary(mod_fact)
+```
+
+```{webr}
+set.seed(101)
+datos_fact <- expand.grid(
+  Variedad = c("V1", "V2", "V3"),
+  Riego    = c("R0", "R1"),
+  Rep      = 1:4
+)
+datos_fact$Rendimiento <- c(
+  rnorm(4, 3.5, 0.3), rnorm(4, 4.2, 0.3), rnorm(4, 3.8, 0.3),
+  rnorm(4, 4.8, 0.3), rnorm(4, 5.5, 0.3), rnorm(4, 4.2, 0.3)
+)
+mod_fact <- aov(Rendimiento ~ Variedad * Riego, data = datos_fact)
+summary(mod_fact)
+```
+
+### Gráfico de interacción
+
+El gráfico de interacción es fundamental para interpretar el efecto conjunto de dos factores:
+
+```{r}
+#| fig-cap: "Gráfico de interacción Variedad × Riego"
+#| label: fig-interact
+
+medias_fact <- datos_fact |>
+  group_by(Variedad, Riego) |>
+  summarise(Media = mean(Rendimiento), .groups = "drop")
+
+ggplot(medias_fact, aes(x = Variedad, y = Media, 
+                         color = Riego, group = Riego)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 3) +
+  scale_color_manual(values = c("#01696f", "#964219")) +
+  jtools::theme_apa() +
+  labs(y = "Rendimiento promedio (t/ha)",
+       title = "Interacción Variedad × Riego")
+```
+
+::: {.callout-tip}
+### ¿Cómo interpretar el gráfico de interacción?
+
+- Si las líneas son **paralelas**: no hay interacción. El efecto de un factor es el mismo en todos los niveles del otro.
+- Si las líneas se **cruzan** o **divergen**: existe interacción. El efecto de un factor depende del nivel del otro.
+
+Cuando la interacción es significativa, las comparaciones de los efectos principales deben interpretarse con cautela.
+:::
+
+```{webr}
+# Modifica los valores para ver cómo cambia el gráfico de interacción
+medias <- data.frame(
+  Variedad = rep(c("V1","V2","V3"), 2),
+  Riego    = rep(c("R0","R1"), each = 3),
+  Media    = c(3.5, 4.2, 3.8,   # Sin riego
+               4.8, 4.4, 5.2)   # Con riego (prueba cambiar estos valores)
+)
+
+library(ggplot2)
+ggplot(medias, aes(x = Variedad, y = Media, color = Riego, group = Riego)) +
+  geom_line(linewidth = 1.1) +
+  geom_point(size = 3) +
+  labs(y = "Rendimiento (t/ha)")
+```
+

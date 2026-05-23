@@ -1,0 +1,772 @@
+{{< include ./_extensions/r-wasm/live/_knitr.qmd >}}
+
+```{r paquetes, echo=FALSE, message=FALSE, warning=FALSE}
+library(knitr)
+library(tidyverse)
+library(jtools)
+library(DescTools)
+library(cowplot)
+library(webexercises)
+library(kableExtra)
+```
+
+# Correlación y Regresión {#sec-correg}
+
+## Objetivos del capítulo
+
+Al finalizar este capítulo, el lector será capaz de:
+
+- Construir e interpretar **diagramas de dispersión** identificando dirección, forma y fuerza de la relación entre dos variables cuantitativas
+- Calcular e interpretar la **covarianza** como medida de asociación lineal
+- Calcular e interpretar el **coeficiente de correlación de Pearson** y reconocer sus limitaciones
+- Ajustar un modelo de **regresión lineal simple** usando mínimos cuadrados ordinarios (MCO) en R
+- Interpretar los coeficientes $\beta_0$ y $\beta_1$ y evaluar la bondad de ajuste mediante $R^2$
+- Extender el modelo a **regresión lineal múltiple** e interpretar el $R^2$ ajustado
+- Ajustar e interpretar un modelo de **regresión logística** para variables respuesta binarias
+
+---
+
+## Datos del capítulo
+
+A lo largo de este capítulo usaremos datos simulados representativos de experimentos agrícolas típicos en Costa Rica. El conjunto principal contiene observaciones de parcelas de cacao donde se registró la dosis de nitrógeno aplicada (kg N/ha) y el rendimiento obtenido (kg/ha).
+
+```{r datos-cacao}
+set.seed(42)
+n <- 60
+
+fertilizacion <- round(runif(n, min = 40, max = 200), 1)
+precipitacion  <- round(rnorm(n, mean = 2800, sd = 300), 0)
+
+rendimiento <- 250 + 1.8 * fertilizacion +
+               0.05 * precipitacion +
+               rnorm(n, 0, 35)
+rendimiento <- round(rendimiento, 1)
+
+# Presencia de monilia (enfermedad): más probable con alta humedad relativa
+humedad_rel <- round(rnorm(n, mean = 82, sd = 6), 1)
+prob_monilia <- plogis(-10 + 0.12 * humedad_rel)
+monilia      <- rbinom(n, 1, prob_monilia)
+
+cacao <- tibble(
+  fertilizacion,
+  precipitacion,
+  rendimiento,
+  humedad_rel,
+  monilia
+)
+
+glimpse(cacao)
+```
+
+```{webr}
+# Carga el conjunto de datos y explóralo
+set.seed(42)
+n <- 60
+fertilizacion <- round(runif(n, 40, 200), 1)
+precipitacion <- round(rnorm(n, 2800, 300), 0)
+rendimiento   <- round(250 + 1.8*fertilizacion + 0.05*precipitacion + rnorm(n,0,35), 1)
+humedad_rel   <- round(rnorm(n, 82, 6), 1)
+prob_monilia  <- plogis(-10 + 0.12*humedad_rel)
+monilia       <- rbinom(n, 1, prob_monilia)
+
+cacao <- data.frame(fertilizacion, precipitacion, rendimiento, humedad_rel, monilia)
+summary(cacao)
+```
+
+---
+
+## Gráficos de dispersión {#sec-dispersion}
+
+### ¿Cómo saber si dos variables están relacionadas?
+
+A veces queremos responder preguntas como: ¿a mayor fertilización, mayor rendimiento? ¿a mayor humedad relativa, mayor presencia de enfermedades? Para estudiar la relación entre dos variables cuantitativas, el primer paso es siempre **mirar los datos** mediante un **diagrama de dispersión**.
+
+En un diagrama de dispersión cada punto representa una unidad de observación (por ejemplo, una parcela). Nos permite detectar rápidamente tres características de la relación:
+
+- **Dirección**: ¿es positiva, negativa o nula?
+- **Forma**: ¿es lineal o no lineal?
+- **Fuerza**: ¿qué tan cerca están los puntos de una recta?
+
+### Dirección de la relación
+
+La dirección indica el sentido de la asociación entre las variables:
+
+- **Positiva**: cuando al aumentar $X$, tiende a aumentar $Y$.
+- **Negativa**: cuando al aumentar $X$, tiende a disminuir $Y$.
+- **Nula o casi nula**: cuando no se aprecia un patrón claro.
+
+```{r fig-dispersion-dir}
+#| label: fig-dispersion-dir
+#| fig-cap: "Ejemplos de dirección en diagramas de dispersión"
+#| fig-align: "center"
+#| echo: false
+#| out-width: "90%"
+
+set.seed(7)
+n_ex <- 80
+x_ex <- rnorm(n_ex)
+
+d_pos <- tibble(x = x_ex, y = 0.8*x_ex + rnorm(n_ex, 0, 0.5),  tipo = "Positiva")
+d_neg <- tibble(x = x_ex, y = -0.8*x_ex + rnorm(n_ex, 0, 0.5), tipo = "Negativa")
+d_nul <- tibble(x = x_ex, y = rnorm(n_ex),                      tipo = "Nula")
+
+bind_rows(d_pos, d_neg, d_nul) |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point(alpha = 0.6, color = "#01696f") +
+  facet_wrap(~tipo) +
+  labs(x = "X", y = "Y") +
+  theme_light(base_size = 13)
+```
+
+```{webr}
+# Construye el diagrama de dispersión de fertilización vs rendimiento
+plot(cacao$fertilizacion, cacao$rendimiento,
+     xlab = "Fertilización (kg N/ha)",
+     ylab = "Rendimiento (kg/ha)",
+     main = "Diagrama de dispersión",
+     pch = 19, col = "#01696f")
+```
+
+### Forma y fuerza de la relación
+
+La **forma** indica si la relación sigue una recta (lineal) o una curva (no lineal). La **fuerza** indica qué tan cerca están los puntos de esa recta: una relación fuerte tiene puntos muy agrupados alrededor de la línea, mientras que una relación débil los tiene muy dispersos.
+
+```{r fig-fuerza}
+#| label: fig-fuerza
+#| fig-cap: "Fuerza de la relación lineal: débil, moderada y fuerte"
+#| fig-align: "center"
+#| echo: false
+#| out-width: "90%"
+
+set.seed(99)
+x_f <- rnorm(80)
+d_deb <- tibble(x = x_f, y = 0.3*x_f + rnorm(80, 0, 1.0),  fuerza = "Débil (r ≈ 0.3)")
+d_mod <- tibble(x = x_f, y = 0.6*x_f + rnorm(80, 0, 0.6),  fuerza = "Moderada (r ≈ 0.6)")
+d_fue <- tibble(x = x_f, y = 0.9*x_f + rnorm(80, 0, 0.2),  fuerza = "Fuerte (r ≈ 0.9)")
+
+bind_rows(d_deb, d_mod, d_fue) |>
+  mutate(fuerza = factor(fuerza, levels = c("Débil (r ≈ 0.3)", "Moderada (r ≈ 0.6)", "Fuerte (r ≈ 0.9)"))) |>
+  ggplot(aes(x = x, y = y)) +
+  geom_point(alpha = 0.6, color = "#01696f") +
+  facet_wrap(~fuerza) +
+  labs(x = "X", y = "Y") +
+  theme_light(base_size = 13)
+```
+
+::: callout-tip
+**Recomendación:** Siempre construye el diagrama de dispersión **antes** de calcular cualquier medida numérica. Un valor de correlación alto puede enmascarar una relación no lineal o la presencia de valores atípicos (*outliers*).
+:::
+
+---
+
+## Análisis de correlación {#sec-correl}
+
+### Covarianza
+
+Para cuantificar la relación lineal entre dos variables, necesitamos entender primero la **covarianza**. La idea central es que si dos variables tienden a estar por encima (o por debajo) de sus medias al mismo tiempo, su producto $(x_i - \bar{x})(y_i - \bar{y})$ será positivo, lo que indica una relación positiva.
+
+El punto $(\bar{x}, \bar{y})$ se denomina **centroide** y divide el diagrama de dispersión en cuatro cuadrantes. Los puntos en los cuadrantes I y III aportan productos positivos; los de los cuadrantes II y IV, productos negativos.
+
+```{r fig-centroide}
+#| label: fig-centroide
+#| fig-cap: "Centroide y cuadrantes en el diagrama de dispersión de fertilización vs rendimiento"
+#| fig-align: "center"
+#| echo: false
+#| out-width: "70%"
+
+mx <- mean(cacao$fertilizacion)
+my <- mean(cacao$rendimiento)
+
+ggplot(cacao, aes(x = fertilizacion, y = rendimiento)) +
+  geom_point(alpha = 0.6, color = "#01696f") +
+  geom_vline(xintercept = mx, color = "#006494", linewidth = 1, linetype = "dashed") +
+  geom_hline(yintercept = my, color = "#006494", linewidth = 1, linetype = "dashed") +
+  annotate("point", x = mx, y = my, color = "#a12c7b", size = 4) +
+  annotate("text", x = mx + 20, y = my + 60, label = "Cuadrante I",  size = 4) +
+  annotate("text", x = mx - 25, y = my + 60, label = "Cuadrante II", size = 4) +
+  annotate("text", x = mx - 25, y = my - 60, label = "Cuadrante III",size = 4) +
+  annotate("text", x = mx + 20, y = my - 60, label = "Cuadrante IV", size = 4) +
+  annotate("text", x = mx + 2,  y = my + 105,
+           label = paste0("Centroide (", round(mx,1), ", ", round(my,1), ")"),
+           color = "#a12c7b", size = 3.5, hjust = 0) +
+  labs(x = "Fertilización (kg N/ha)", y = "Rendimiento (kg/ha)") +
+  theme_light(base_size = 13)
+```
+
+La **covarianza muestral** se define formalmente como:
+
+$$S_{xy} = \dfrac{1}{n-1} \sum_{i=1}^{n}(x_i - \bar{x})(y_i - \bar{y})$$
+
+Una forma equivalente que facilita el cálculo es:
+
+$$S_{xy} = \dfrac{1}{n}\sum_{i=1}^{n} x_i y_i - \bar{x}\,\bar{y}$$
+
+::: callout-important
+**Limitación de la covarianza**: su valor depende de las unidades de medida. Si cambiamos kg/ha por toneladas/ha, la covarianza cambia, pero la relación entre variables no ha cambiado. Por eso necesitamos estandarizarla.
+:::
+
+### Coeficiente de correlación de Pearson
+
+El **coeficiente de correlación de Pearson** $r$ resuelve la limitación de la covarianza al dividirla entre el producto de las desviaciones estándar:
+
+$$r = \dfrac{S_{xy}}{S_x \cdot S_y} = \dfrac{\dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}(x_i-\bar{x})(y_i-\bar{y})}{\sqrt{\dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}(x_i-\bar{x})^2 \cdot \dfrac{1}{n-1}\displaystyle\sum_{i=1}^{n}(y_i-\bar{y})^2}}$$
+
+El coeficiente $r$ toma valores entre $-1$ y $1$:
+
+- $r = 1$: relación lineal positiva perfecta
+- $r = -1$: relación lineal negativa perfecta
+- $r \approx 0$: no hay relación lineal clara
+
+### Escala de interpretación
+
+Una guía práctica para interpretar la magnitud de $r$ es:
+
+| $|r|$ | Interpretación |
+|:---|:---|
+| $0 < |r| < 0.30$ | Relación casi inexistente |
+| $0.30 \leq |r| < 0.50$ | Relación débil |
+| $0.50 \leq |r| < 0.70$ | Relación moderada |
+| $0.70 \leq |r| < 1$ | Relación fuerte |
+| $|r| = 1$ | Relación perfecta |
+
+### Correlación en R
+
+En R la covarianza y la correlación se calculan con `cov()` y `cor()`. Para pruebas de hipótesis sobre la correlación se usa `cor.test()`:
+
+```{r correlacion-r}
+# Covarianza
+cov(cacao$fertilizacion, cacao$rendimiento)
+
+# Coeficiente de correlación
+cor(cacao$fertilizacion, cacao$rendimiento)
+
+# Prueba de hipótesis: H0: rho = 0  vs  H1: rho ≠ 0
+cor.test(cacao$fertilizacion, cacao$rendimiento)
+```
+
+```{webr}
+# Calcula la correlación y prueba de hipótesis
+cor(cacao$fertilizacion, cacao$rendimiento)
+cor.test(cacao$fertilizacion, cacao$rendimiento)
+```
+
+::: callout-important
+**Correlación no es causalidad.** Una correlación alta indica asociación lineal, no que una variable cause a la otra. Pueden existir variables confusoras que expliquen la relación observada.
+:::
+
+### Matriz de correlaciones
+
+Cuando tenemos varias variables numéricas, es útil obtener la **matriz de correlaciones**:
+
+```{r matriz-cor}
+cacao |>
+  select(fertilizacion, precipitacion, rendimiento, humedad_rel) |>
+  cor() |>
+  round(3)
+```
+
+```{webr}
+# Matriz de correlaciones
+cor(cacao[, c("fertilizacion", "precipitacion", "rendimiento", "humedad_rel")])
+```
+
+---
+
+## Regresión {#sec-regresion}
+
+La correlación nos dice si existe una asociación lineal y qué tan fuerte es, pero no nos permite:
+
+- Cuantificar **cuánto cambia $Y$ por cada unidad de cambio en $X$**
+- **Predecir** el valor de $Y$ para un valor dado de $X$
+- Controlar el efecto de **múltiples variables** simultáneamente
+
+Para responder estas preguntas usamos la **regresión**.
+
+| Pregunta | Correlación | Regresión |
+|:---|:---:|:---:|
+| ¿Existe relación lineal? | Sí | Sí |
+| ¿Cuál es la dirección? | Sí | Sí |
+| ¿Cuánto cambia $Y$ cuando cambia $X$? | No | **Sí** |
+| ¿Permite predecir $Y$? | No | **Sí** |
+| ¿Permite controlar covariables? | No | **Sí** |
+
+### Regresión lineal simple {#sec-regsimple}
+
+#### El modelo
+
+La **regresión lineal simple** modela la relación entre una variable explicativa $X$ y una variable respuesta $Y$ mediante:
+
+$$Y_i = \beta_0 + \beta_1 X_i + \varepsilon_i$$
+
+donde:
+
+- $\hat{Y}_i = \beta_0 + \beta_1 X_i$ es el **valor predicho** (la recta de regresión)
+- $\beta_0$ es el **intercepto**: el valor de $Y$ cuando $X = 0$
+- $\beta_1$ es la **pendiente**: el cambio promedio en $Y$ por cada unidad de aumento en $X$
+- $\varepsilon_i = Y_i - \hat{Y}_i$ es el **error o residuo**: la diferencia entre el valor real y el predicho
+
+#### Mínimos Cuadrados Ordinarios (MCO)
+
+La recta de mejor ajuste se determina encontrando los valores $\beta_0$ y $\beta_1$ que **minimizan la suma de los cuadrados de los residuos**:
+
+$$\min_{\beta_0,\, \beta_1} \sum_{i=1}^{n} e_i^2 = \sum_{i=1}^{n}(Y_i - \beta_0 - \beta_1 X_i)^2$$
+
+La razón de elevar al cuadrado (en lugar de sumar los errores directamente) es que $\sum_{i=1}^n e_i = 0$ siempre, por lo que la suma simple no distingue entre modelos buenos y malos. Las soluciones analíticas del método MCO son:
+
+$$\hat{\beta}_1 = \dfrac{n\displaystyle\sum_{i=1}^{n} X_i Y_i - \displaystyle\sum_{i=1}^{n} X_i \displaystyle\sum_{i=1}^{n} Y_i}{n\displaystyle\sum_{i=1}^{n} X_i^2 - \left(\displaystyle\sum_{i=1}^{n} X_i\right)^2} = \dfrac{S_{xy}}{S_x^2}$$
+
+$$\hat{\beta}_0 = \bar{Y} - \hat{\beta}_1 \bar{X}$$
+
+```{r fig-regresion-residuos}
+#| label: fig-regresion-residuos
+#| fig-cap: "Recta de regresión y residuos: cada segmento vertical representa un error $e_i = Y_i - \\hat{Y}_i$"
+#| fig-align: "center"
+#| echo: false
+#| out-width: "70%"
+
+modelo_simple <- lm(rendimiento ~ fertilizacion, data = cacao)
+cacao_pred <- cacao |> mutate(pred = fitted(modelo_simple))
+
+ggplot(cacao_pred, aes(x = fertilizacion, y = rendimiento)) +
+  geom_segment(aes(xend = fertilizacion, yend = pred),
+               color = "#a12c7b", alpha = 0.4, linewidth = 0.5) +
+  geom_point(alpha = 0.6, color = "#01696f") +
+  geom_smooth(method = "lm", se = FALSE, color = "#006494", linewidth = 1.2) +
+  labs(x = "Fertilización (kg N/ha)", y = "Rendimiento (kg/ha)") +
+  theme_light(base_size = 13)
+```
+
+#### Ajuste del modelo en R
+
+En R la regresión lineal se ajusta con la función `lm()`. La sintaxis es `lm(Y ~ X, data = datos)`:
+
+```{r modelo-simple}
+modelo1 <- lm(rendimiento ~ fertilizacion, data = cacao)
+summary(modelo1)
+```
+
+```{webr}
+# Ajusta el modelo de regresión lineal simple
+modelo1 <- lm(rendimiento ~ fertilizacion, data = cacao)
+summary(modelo1)
+```
+
+#### Interpretación de los coeficientes
+
+A partir de la salida del modelo podemos escribir la ecuación estimada:
+
+$$\widehat{\text{Rendimiento}} = \hat{\beta}_0 + \hat{\beta}_1 \times \text{Fertilización}$$
+
+- **$\hat{\beta}_1$** se interpreta como: *por cada kg adicional de nitrógeno por hectárea aplicado, el rendimiento de cacao aumenta, en promedio, $\hat{\beta}_1$ kg/ha*, manteniendo lo demás constante.
+- **$\hat{\beta}_0$** se interpreta como: *el rendimiento esperado cuando la fertilización es cero*. Este valor solo tiene interpretación práctica si $X = 0$ es un valor plausible en el contexto del estudio.
+
+#### Predicción
+
+La función `predict()` permite obtener predicciones para nuevos valores de $X$:
+
+```{r prediccion}
+nuevos <- data.frame(fertilizacion = c(80, 120, 160))
+predict(modelo1, newdata = nuevos, interval = "confidence")
+```
+
+```{webr}
+# Predicción para nuevas dosis de fertilización
+nuevos <- data.frame(fertilizacion = c(80, 120, 160))
+predict(modelo1, newdata = nuevos, interval = "confidence")
+```
+
+#### Bondad de ajuste: $R^2$
+
+Para medir qué tan bien se ajusta el modelo, comparamos la **variabilidad total** de $Y$ con la **variabilidad no explicada** por el modelo:
+
+- **STC** (Suma Total de Cuadrados): $\displaystyle\sum_{i=1}^n (Y_i - \bar{Y})^2$ — variabilidad total de $Y$
+- **SCE** (Suma de Cuadrados del Error): $\displaystyle\sum_{i=1}^n (Y_i - \hat{Y}_i)^2$ — variabilidad no explicada
+- **SCR** (Suma de Cuadrados de la Regresión): $\text{STC} - \text{SCE}$ — variabilidad explicada
+
+El coeficiente de determinación $R^2$ se define como:
+
+$$R^2 = \dfrac{\text{STC} - \text{SCE}}{\text{STC}} = 1 - \dfrac{\text{SCE}}{\text{STC}}$$
+
+Se interpreta como **la proporción de la variabilidad total de $Y$ que es explicada por el modelo**. Toma valores entre 0 y 1; valores cercanos a 1 indican mejor ajuste.
+
+::: callout-tip
+En regresión lineal simple, $R^2 = r^2$, donde $r$ es el coeficiente de correlación de Pearson.
+:::
+
+#### Pruebas de hipótesis sobre los coeficientes
+
+La salida de `summary(modelo)` incluye pruebas $t$ individuales para cada coeficiente:
+
+- $H_0: \beta_1 = 0$ (la variable $X$ no tiene efecto lineal sobre $Y$)
+- $H_1: \beta_1 \neq 0$ (la variable $X$ tiene efecto lineal sobre $Y$)
+
+El estadístico $F$ al final del resumen evalúa la significancia global del modelo.
+
+#### Diagnósticos del modelo
+
+Los supuestos del modelo de regresión lineal son: **linealidad, normalidad de los residuos, homocedasticidad** (varianza constante) e **independencia** de los errores. En R estos se evalúan visualmente con `plot(modelo)`:
+
+```{r diagnosticos}
+#| label: fig-diagnosticos
+#| fig-cap: "Gráficos de diagnóstico del modelo de regresión lineal simple"
+#| fig-align: "center"
+#| out-width: "90%"
+
+par(mfrow = c(2, 2))
+plot(modelo1)
+par(mfrow = c(1, 1))
+```
+
+Los cuatro gráficos de diagnóstico son:
+
+| Gráfico | Qué evalúa | Patrón deseado |
+|:---|:---|:---|
+| **Residuals vs Fitted** | Linealidad y homocedasticidad | Puntos dispersos aleatoriamente alrededor de cero |
+| **Normal Q-Q** | Normalidad de residuos | Puntos sobre la línea diagonal |
+| **Scale-Location** | Homocedasticidad | Banda horizontal sin pendiente |
+| **Residuals vs Leverage** | Valores influyentes | Sin puntos fuera de la distancia de Cook |
+
+```{webr}
+# Diagnósticos del modelo
+par(mfrow = c(2,2))
+plot(modelo1)
+par(mfrow = c(1,1))
+```
+
+---
+
+### Regresión lineal múltiple {#sec-regmultiple}
+
+En la práctica, una variable respuesta raramente depende de una sola variable explicativa. El rendimiento de cacao, por ejemplo, puede depender tanto de la fertilización como de la precipitación. La **regresión lineal múltiple** extiende el modelo simple a $k$ variables explicativas:
+
+$$Y_i = \beta_0 + \beta_1 X_{1,i} + \beta_2 X_{2,i} + \cdots + \beta_k X_{k,i} + \varepsilon_i$$
+
+Los principios de estimación (MCO) son los mismos que en regresión simple. En notación matricial, si definimos:
+
+$$\mathbf{y} = \mathbf{X}\boldsymbol{\beta} + \boldsymbol{\varepsilon}$$
+
+donde $\mathbf{X}$ es la **matriz de diseño** (una columna de unos más las columnas de variables explicativas), el estimador MCO es:
+
+$$\hat{\boldsymbol{\beta}} = (\mathbf{X}'\mathbf{X})^{-1}\mathbf{X}'\mathbf{y}$$
+
+#### Ajuste en R
+
+```{r modelo-multiple}
+modelo2 <- lm(rendimiento ~ fertilizacion + precipitacion, data = cacao)
+summary(modelo2)
+```
+
+```{webr}
+# Regresión lineal múltiple
+modelo2 <- lm(rendimiento ~ fertilizacion + precipitacion, data = cacao)
+summary(modelo2)
+```
+
+#### $R^2$ ajustado
+
+Al añadir variables al modelo, el $R^2$ **siempre aumenta** aunque la nueva variable no sea útil. Para corregir este comportamiento, se utiliza el **$R^2$ ajustado** que penaliza por el número de predictores $k$:
+
+$$R^2_{\text{adj}} = 1 - \dfrac{n-1}{n-k-1} \cdot \dfrac{\text{SCE}}{\text{STC}}$$
+
+::: callout-important
+Para comparar modelos con diferente número de variables, siempre usa el **$R^2$ ajustado**, no el $R^2$ ordinario. El $R^2$ ajustado puede disminuir si se añade una variable que no aporta información real al modelo.
+:::
+
+#### Interpretación en regresión múltiple
+
+En regresión múltiple, cada coeficiente $\hat{\beta}_j$ se interpreta como: *el cambio promedio en $Y$ por cada unidad de aumento en $X_j$, **manteniendo constantes todas las demás variables explicativas del modelo***.
+
+```{r tabla-coef}
+#| echo: false
+
+broom::tidy(modelo2) |>
+  rename(
+    Término     = term,
+    Estimado    = estimate,
+    Error_std   = std.error,
+    Estadístico = statistic,
+    `Valor p`   = p.value
+  ) |>
+  mutate(across(where(is.numeric), ~round(.x, 4))) |>
+  knitr::kable(caption = "Coeficientes del modelo de regresión múltiple")
+```
+
+---
+
+### Regresión logística {#sec-reglogistica}
+
+Hasta ahora hemos modelado variables respuesta **continuas** (rendimiento en kg/ha). ¿Qué hacemos cuando la variable respuesta es **binaria** (sí/no, presencia/ausencia, éxito/fracaso)?
+
+En el caso de nuestros datos de cacao, nos interesa modelar la **presencia de monilia** (0 = ausente, 1 = presente) en función de la humedad relativa.
+
+#### El problema con la regresión lineal
+
+Si aplicáramos regresión lineal a una variable respuesta binaria, obtendríamos predicciones fuera del rango $[0, 1]$, lo que carece de interpretación probabilística.
+
+#### El modelo logístico
+
+La **regresión logística** modela directamente la **probabilidad** de que $Y = 1$:
+
+$$P(Y = 1 \mid X) = \pi(X) = \dfrac{e^{\beta_0 + \beta_1 X}}{1 + e^{\beta_0 + \beta_1 X}} = \text{logístico}(\beta_0 + \beta_1 X)$$
+
+La función logística garantiza que la probabilidad esté siempre entre 0 y 1. El modelo se linealiza mediante la transformación **logit**:
+
+$$\log\left(\dfrac{\pi}{1-\pi}\right) = \beta_0 + \beta_1 X$$
+
+El cociente $\dfrac{\pi}{1-\pi}$ se llama **odds** (razón de probabilidades). Su logaritmo es el logit.
+
+#### Ajuste en R con `glm()`
+
+```{r modelo-logistico}
+modelo_log <- glm(monilia ~ humedad_rel,
+                  data   = cacao,
+                  family = binomial(link = "logit"))
+summary(modelo_log)
+```
+
+```{webr}
+# Regresión logística: presencia de monilia ~ humedad relativa
+modelo_log <- glm(monilia ~ humedad_rel,
+                  data   = cacao,
+                  family = binomial(link = "logit"))
+summary(modelo_log)
+```
+
+#### Interpretación: odds ratio
+
+Los coeficientes de regresión logística se interpretan más fácilmente en términos del **odds ratio (OR)**. Para obtenerlo, se exponencia el coeficiente:
+
+```{r odds-ratio}
+exp(coef(modelo_log))
+exp(confint(modelo_log))
+```
+
+Un odds ratio de $e^{\hat{\beta}_1}$ significa: *por cada unidad de aumento en $X$, los odds de que $Y=1$ se multiplican por $e^{\hat{\beta}_1}$*.
+
+- OR $> 1$: la variable $X$ aumenta la probabilidad del evento
+- OR $< 1$: la variable $X$ disminuye la probabilidad del evento
+- OR $= 1$: la variable $X$ no tiene efecto
+
+#### Visualización de la curva logística
+
+```{r fig-logistica}
+#| label: fig-logistica
+#| fig-cap: "Probabilidad estimada de presencia de monilia según la humedad relativa"
+#| fig-align: "center"
+#| out-width: "70%"
+
+cacao |>
+  mutate(prob_est = fitted(modelo_log)) |>
+  ggplot(aes(x = humedad_rel)) +
+  geom_point(aes(y = monilia), alpha = 0.4, color = "#964219") +
+  geom_line(aes(y = prob_est), color = "#01696f", linewidth = 1.3) +
+  labs(x = "Humedad relativa (%)",
+       y = "P(Presencia de monilia)") +
+  theme_light(base_size = 13)
+```
+
+```{webr}
+# Visualiza la curva logística
+prob_est <- fitted(modelo_log)
+plot(cacao$humedad_rel, cacao$monilia,
+     xlab = "Humedad relativa (%)", ylab = "P(monilia)",
+     pch = 19, col = "#964219", alpha = 0.3)
+lines(sort(cacao$humedad_rel), prob_est[order(cacao$humedad_rel)],
+      col = "#01696f", lwd = 2)
+```
+
+---
+
+## Resumen de funciones R del capítulo
+
+| Función | Descripción |
+|:---|:---|
+| `plot(x, y)` / `ggplot() + geom_point()` | Diagrama de dispersión |
+| `cov(x, y)` | Covarianza muestral |
+| `cor(x, y)` | Correlación de Pearson |
+| `cor.test(x, y)` | Prueba de hipótesis para la correlación |
+| `lm(Y ~ X, data)` | Regresión lineal (simple o múltiple) |
+| `summary(modelo)` | Resumen del modelo: coeficientes, $R^2$, $F$ |
+| `fitted(modelo)` | Valores ajustados $\hat{Y}_i$ |
+| `residuals(modelo)` | Residuos $e_i$ |
+| `predict(modelo, newdata)` | Predicciones para nuevos datos |
+| `plot(modelo)` | Gráficos de diagnóstico (4 paneles) |
+| `glm(Y ~ X, family = binomial)` | Regresión logística |
+| `exp(coef(modelo))` | Odds ratios en regresión logística |
+
+---
+
+## Ejercicios {.unnumbered}
+
+::: {#exr-dispersion}
+
+**Interpretación del diagrama de dispersión**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q1 <- "Al observar un diagrama de dispersión, si los puntos siguen de cerca una línea con pendiente negativa, la relación es:"
+q1_ch <- c(
+  "Positiva y fuerte",
+  answer = "Negativa y fuerte",
+  "Negativa y débil",
+  "Nula"
+)
+
+q2 <- "Si un diagrama de dispersión muestra una nube de puntos con forma de U invertida (parabólica), lo más apropiado es concluir que:"
+q2_ch <- c(
+  "No existe relación entre las variables",
+  "La correlación de Pearson será cercana a 1",
+  answer = "Puede existir una relación, pero no es lineal",
+  "La covarianza será negativa"
+)
+cat(q1, longmcq(q1_ch), "\n\n", q2, longmcq(q2_ch))
+```
+
+:::
+:::
+
+::: {#exr-correlacion}
+
+**Correlación de Pearson**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q3 <- "¿Cuál es la principal ventaja del coeficiente de correlación de Pearson frente a la covarianza?"
+q3_ch <- c(
+  "Siempre implica causalidad entre las variables",
+  answer = "No depende de las unidades de medida",
+  "Solo se aplica a relaciones no lineales",
+  "Puede tomar cualquier valor real"
+)
+
+q4 <- "Un investigador obtiene r = -0.85 entre temperatura nocturna y rendimiento de banano. ¿Cuál afirmación es correcta?"
+q4_ch <- c(
+  "Las bajas temperaturas causan mayor rendimiento",
+  "La relación es positiva y fuerte",
+  answer = "Existe una relación negativa fuerte, pero la correlación sola no establece causalidad",
+  "La covarianza es necesariamente cero"
+)
+cat(q3, longmcq(q3_ch), "\n\n", q4, longmcq(q4_ch))
+```
+
+:::
+:::
+
+::: {#exr-regsimple}
+
+**Regresión lineal simple**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q5 <- "En la ecuación de regresión lineal simple Ŷ = β₀ + β₁X, el parámetro β₁ representa:"
+q5_ch <- c(
+  "El valor de Y cuando X = 0",
+  "La correlación entre X y Y",
+  answer = "El cambio promedio en Y por cada unidad de cambio en X",
+  "El error del modelo"
+)
+
+q6 <- "¿Por qué en MCO se minimiza la suma de cuadrados de los errores y no la suma de los errores?"
+q6_ch <- c(
+  "Porque los errores son siempre positivos",
+  "Porque la suma de cuadrados es más fácil de calcular",
+  answer = "Porque la suma de los errores siempre es igual a cero, por lo que no sirve para discriminar entre modelos",
+  "Porque los cuadrados son siempre menores que los errores originales"
+)
+cat(q5, longmcq(q5_ch), "\n\n", q6, longmcq(q6_ch))
+```
+
+:::
+:::
+
+::: {#exr-r2}
+
+**Bondad de ajuste**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q7 <- "Un modelo de regresión simple tiene R² = 0.72. ¿Cuál es la interpretación correcta?"
+q7_ch <- c(
+  "El 72% de las observaciones están sobre la recta de regresión",
+  "La correlación entre X y Y es 0.72",
+  answer = "El 72% de la variabilidad de Y es explicada por el modelo",
+  "El modelo predice correctamente el 72% de los casos"
+)
+
+q8 <- "¿Por qué se prefiere el R² ajustado sobre el R² ordinario al comparar modelos con diferente número de variables?"
+q8_ch <- c(
+  "Porque el R² ajustado siempre es mayor",
+  "Porque el R² ordinario no puede calcularse en regresión múltiple",
+  answer = "Porque el R² ordinario siempre aumenta al añadir variables, incluso si no son útiles",
+  "Porque el R² ajustado es más fácil de calcular"
+)
+cat(q7, longmcq(q7_ch), "\n\n", q8, longmcq(q8_ch))
+```
+
+:::
+:::
+
+::: {#exr-logistica}
+
+**Regresión logística**
+
+::: {.webex-check .webex-box}
+
+```{r}
+#| echo: false
+#| results: asis
+
+q9 <- "¿Por qué no es apropiado usar regresión lineal ordinaria cuando la variable respuesta es binaria (0/1)?"
+q9_ch <- c(
+  "Porque lm() no acepta datos binarios",
+  "Porque la correlación entre variables binarias siempre es cero",
+  answer = "Porque la regresión lineal puede producir predicciones fuera del rango [0,1], que no tienen interpretación como probabilidades",
+  "Porque los residuos de una variable binaria siempre son normales"
+)
+
+q10 <- "En regresión logística, un odds ratio de 1.15 para la humedad relativa significa:"
+q10_ch <- c(
+  "La probabilidad de monilia aumenta en 15 puntos porcentuales por cada % de humedad",
+  answer = "Por cada punto porcentual de aumento en humedad relativa, los odds de presencia de monilia se multiplican por 1.15",
+  "La correlación entre humedad y monilia es 0.15",
+  "La humedad reduce la probabilidad de monilia en un 15%"
+)
+cat(q9, longmcq(q9_ch), "\n\n", q10, longmcq(q10_ch))
+```
+
+:::
+:::
+
+::: {#exr-libre}
+
+**Análisis libre en R**
+
+Usando el conjunto de datos `cacao` del capítulo:
+
+1. Construye el diagrama de dispersión de `precipitacion` vs `rendimiento` e interpreta la relación.
+2. Calcula la correlación entre `precipitacion` y `rendimiento` y realiza la prueba de hipótesis.
+3. Ajusta un modelo de regresión simple con `precipitacion` como predictor.
+4. Compara el $R^2$ del modelo simple (`fertilizacion`) con el modelo múltiple (`fertilizacion + precipitacion`). ¿Mejoró el ajuste?
+5. Genera los gráficos de diagnóstico del modelo múltiple e identifica si se cumplen los supuestos.
+
+```{webr}
+# Tu análisis aquí
+```
+
+:::
